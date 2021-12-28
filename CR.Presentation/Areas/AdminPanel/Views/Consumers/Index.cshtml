@@ -1,0 +1,81 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@model CR.Core.DTOs.ResultDTOs.ResultGetAllConsumersDto
+@{
+}
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-7 col-auto">
+            <h3 class="page-title">لیست مراجعان</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">دشبرد</a></li>
+                <li class="breadcrumb-item"><a href="javascript:(0);">کاربران</a></li>
+                <li class="breadcrumb-item active">مراجعه‌کننده</li>
+            </ul>
+        </div>
+        <div class="col-sm-5 col">
+            <a data-toggle="modal" class="btn btn-primary float-right mt-2" asp-action="AddNewConsumer" asp-controller="Consumers">افزودن</a>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div class="table-responsive">
+                        <table class="datatable table table-hover table-center mb-0">
+                            <thead>
+                            <tr>
+                                <th>شناسه مراجعه کننده</th>
+                                <th>نام مراجعه کننده</th>
+                                <th>سن</th>
+                                <th>آدرس</th>
+                                <th>شماره</th>
+                                <th>آخرین ویزیت</th>
+                                <th class="text-right">پرداخت شده</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var consumer in Model.Consumers)
+                            {
+                                <tr>
+                                    <td>@consumer.Id</td>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.IconSrc" alt="User Image"></a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@consumer.Id">@consumer.FullName </a>
+                                        </h2>
+                                    </td>
+                                    <td>@consumer.Age</td>
+                                    <td>@consumer.Address</td>
+                                    <td>@consumer.PhoneNumber</td>
+                                    <td>@consumer.LastAppointment</td>
+                                    <td class="text-right">@consumer.PaidAmount تومان</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    show-first-numbered-page="true"
+                    show-last-numbered-page="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize"
+                    gap-size="2">
+            </paging>
+        </div>
+    </div>
+</div>

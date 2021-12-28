@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title> داک‌کیور - دشبرد</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/AdminTemplate/assets/img/favicon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/bootstrap-rtl/css/bootstrap.min.css">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="~/AdminTemplate/assets/css/font-awesome.min.css">
+
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="~/AdminTemplate/assets/css/feathericon.min.css">
+
+    <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/morris/morris.css">
+
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="~/AdminTemplate/assets/css/select2.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="~/AdminTemplate/assets/css/style.css">
+
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <!--[if lt IE 9]>
+        <script src="assets/js/html5shiv.min.js"></script>
+        <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- Header -->
+        <div class="header">
+
+            <!-- Logo -->
+            <div class="header-left">
+                <a asp-controller="Home" asp-action="Index" class="logo">
+                    <img src="~/AdminTemplate/assets/img/logo.png" alt="Logo">
+                </a>
+                <a asp-controller="Home" asp-action="Index" class="logo logo-small">
+                    <img src="~/AdminTemplate/assets/img/logo-small.png" alt="Logo" width="30" height="30">
+                </a>
+            </div>
+            <!-- /Logo -->
+
+            <a href="javascript:void(0);" id="toggle_btn">
+                <i class="fe fe-text-align-left"></i>
+            </a>
+
+            <div class="top-nav-search">
+                <form>
+                    <input type="text" class="form-control" placeholder="جستجو کنید">
+                    <button class="btn" type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <a class="mobile_btn" id="mobile_btn">
+                <i class="fa fa-bars"></i>
+            </a>
+            <!-- /Mobile Menu Toggle -->
+            <!-- Header Right Menu -->
+            <ul class="nav user-menu">
+
+                <!-- Notifications -->
+                <li class="nav-item dropdown noti-dropdown">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <i class="fe fe-bell"></i> <span class="badge badge-pill">3</span>
+                    </a>
+                    <div class="dropdown-menu notifications">
+                        <div class="topnav-dropdown-header">
+                            <span class="notification-title">اطلاعیه‌ها</span>
+                            <a href="javascript:void(0)" class="clear-noti">پاک کردن</a>
+                        </div>
+                        <div class="noti-content">
+                            <ul class="notification-list">
+                                <li class="notification-message">
+                                    <a href="#">
+                                        <div class="media">
+                                            <span class="avatar avatar-sm">
+                                                <img class="avatar-img rounded-circle" alt="User Image" src="~/AdminTemplate/assets/img/doctors/doctor-thumb-01.jpg">
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span class="noti-title">پرشک رابی پرین</span> برنامه <span class="noti-title"> نوبت داد </span></p>
+                                                <p class="noti-time"><span class="notification-time">4 دقیقه قبل </span></p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="notification-message">
+                                    <a href="#">
+                                        <div class="media">
+                                            <span class="avatar avatar-sm">
+                                                <img class="avatar-img rounded-circle" alt="User Image" src="~/AdminTemplate/assets/img/patients/patient1.jpg">
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span class="noti-title">چارلوت راد</span> قرار ملاقات خود را قطعی کرد با <span class="noti-title">پرشک رابی پرین</span></p>
+                                                <p class="noti-time"><span class="notification-time">6 دقیقه قبل </span></p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="notification-message">
+                                    <a href="#">
+                                        <div class="media">
+                                            <span class="avatar avatar-sm">
+                                                <img class="avatar-img rounded-circle" alt="User Image" src="~/AdminTemplate/assets/img/patients/patient2.jpg">
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span class="noti-title">تراویس تریمبل</span> مبلغ را پرداخت کرد برای <span class="noti-title">رزرو نوبت</span></p>
+                                                <p class="noti-time"><span class="notification-time">8 دقیقه قبل </span></p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="notification-message">
+                                    <a href="#">
+                                        <div class="media">
+                                            <span class="avatar avatar-sm">
+                                                <img class="avatar-img rounded-circle" alt="User Image" src="~/AdminTemplate/assets/img/patients/patient3.jpg">
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span class="noti-title">کارل کلی</span> پیام ارسال کرد <span class="noti-title"> به پزشکش </span></p>
+                                                <p class="noti-time"><span class="notification-time">12 دقیقه قبل </span></p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="topnav-dropdown-footer">
+                            <a href="#">مشاهده همه اطلاعیه‌ها</a>
+                        </div>
+                    </div>
+                </li>
+                <!-- /Notifications -->
+                <!-- User Menu -->
+                <li class="nav-item dropdown has-arrow">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <span class="user-img"><img class="rounded-circle" src="~/AdminTemplate/assets/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="user-header">
+                            <div class="avatar avatar-sm">
+                                <img src="~/AdminTemplate/assets/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
+                            </div>
+                            <div class="user-text">
+                                <h6>رایان تیلور</h6>
+                                <p class="text-muted mb-0">مدیریت</p>
+                            </div>
+                        </div>
+                        <a class="dropdown-item" asp-controller="Home" asp-action="Profile">پروفایل من</a>
+                        <a class="dropdown-item" href="settings.html">تنظیمات</a>
+                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">خروج</a>
+                    </div>
+                </li>
+                <!-- /User Menu -->
+
+            </ul>
+            <!-- /Header Right Menu -->
+
+        </div>
+        <!-- /Header -->
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><i class="fe fe-home"></i> <span>صفحه اصلی سایت</span></a>
+                        </li>
+                        <li class="active">
+                            <a asp-controller="Home" asp-action="Index"><i class="fe fe-home"></i> <span>دشبرد</span></a>
+                        </li>
+                        <li>
+                            <a asp-controller="Appointments" asp-action="Index"><i class="fe fe-layout"></i> <span>نوبت‌دهی</span></a>
+                        </li>
+                        <li>
+                            <a asp-controller="Speciality" asp-action="Index"><i class="fe fe-users"></i> <span>تخصص ها</span></a>
+                        </li>
+                        <li>
+                            <a asp-controller="Experts" asp-action="Index"><i class="fe fe-user-plus"></i> <span>پزشکان</span></a>
+                        </li>
+                        <li>
+                            <a asp-controller="Consumers" asp-action="Index"><i class="fe fe-user"></i> <span>مراجعان</span></a>
+                        </li>
+                        @*                        <li>
+                            <a href="reviews.html"><i class="fe fe-star-o"></i> <span>نظرات</span></a>
+                        </li>
+                        <li>
+                            <a href="transactions-list.html"><i class="fe fe-activity"></i> <span>تراکنش ها</span></a>
+                        </li>
+                        <li>
+                            <a href="settings.html"><i class="fe fe-vector"></i> <span>تنظیمات</span></a>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fe fe-document"></i> <span>گزارش‌ها</span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a href="invoice-report.html">گزارش فاکتورها </a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-title">
+                            <span>صفحات</span>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="fe fe-document"></i> <span>بلاگ </span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a href="blog.html">بلاگ </a></li>
+                                <li><a href="blog-details.html">جزییات بلاگ </a></li>
+                                <li><a href="add-blog.html"> افزودن بلاگ </a></li>
+                                <li><a href="edit-blog.html"> ویرایش بلاگ </a></li>
+                            </ul>
+                        </li>*@
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Sidebar -->
+        <!-- Page Wrapper -->
+        <div class="page-wrapper">
+
+            <div class="content container-fluid">
+
+                @RenderBody();
+
+            </div>
+        </div>
+        <!-- /Page Wrapper -->
+
+
+
+
+
+    </div>
+    <!-- /Main Wrapper -->
+    <!-- jQuery -->
+    <script src="~/AdminTemplate/assets/js/jquery-3.2.1.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="~/AdminTemplate/assets/js/popper.min.js"></script>
+    <script src="~/AdminTemplate/assets/plugins/bootstrap-rtl/js/bootstrap.min.js"></script>
+
+    <!-- Slimscroll JS -->
+    <script src="~/AdminTemplate/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script src="~/AdminTemplate/assets/plugins/raphael/raphael.min.js"></script>
+    <script src="~/AdminTemplate/assets/plugins/morris/morris.min.js"></script>
+    <script src="~/AdminTemplate/assets/js/chart.morris.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="~/AdminTemplate/assets/js/select2.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="~/AdminTemplate/assets/js/script.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,359 @@
+﻿@model CR.Presentation.Models.ViewModels.PresentationViewModel
+@{
+}
+
+<!-- Home Banner -->
+<section class="section section-search">
+    <div class="container-fluid">
+        <div class="banner-wrapper">
+            <div class="banner-header text-center">
+                <h1>جستجوی پزشک و رزرو نوبت</h1>
+                <p>جستجو و کشف بهترین پزشکان، کلینیک‌ها، بیمارستان‌ها و داروخانه‌های نزدیک شما</p>
+            </div>
+
+            <!-- Search -->
+            <div class="search-box">
+                <form asp-controller="Experts" asp-action="Index">
+                    <div class="form-group search-location">
+                        <input type="text" class="form-control" placeholder="جستجو لوکیشن" name="location" id="location">
+                        <span class="form-text">بر اساس لوکیشن</span>
+                    </div>
+                    <div class="form-group search-info">
+                        <input type="text" class="form-control" placeholder="جستجو پزشکان و کلینیک‌ها و بیمارستان‌ها و ..." name="searchKey" id="searchKey">
+                        <span class="form-text">مثال: دندان‌پزشکی یا تست قند خون و...</span>
+                    </div>
+                    <button type="submit" class="btn btn-primary search-btn"><i class="fas fa-search"></i> <span>جستجو</span></button>
+                </form>
+            </div>
+            <!-- /Search -->
+
+        </div>
+    </div>
+</section>
+<!-- /Home Banner -->
+
+
+<section class="section home-tile-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9 m-auto">
+                <div class="section-header text-center">
+                    <h2>دنبال چه چیزی می‌گردید؟</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 mb-3">
+                        <div class="card text-center doctor-book-card">
+                            <img src="assets/img/doctors/doctor-07.jpg" alt="" class="img-fluid">
+                            <div class="doctor-book-card-content tile-card-content-1">
+                                <div>
+                                    <h3 class="card-title mb-0">ویزیت پزشک</h3>
+                                    <a href="search.html" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">رزرو کنید</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <div class="card text-center doctor-book-card">
+                            <img src="assets/img/img-pharmacy1.jpg" alt="" class="img-fluid">
+                            <div class="doctor-book-card-content tile-card-content-1">
+                                <div>
+                                    <h3 class="card-title mb-0">جستجو داروخانه</h3>
+                                    <a href="pharmacy-search.html" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">پیدا کن</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-3">
+                        <div class="card text-center doctor-book-card">
+                            <img src="assets/img/lab-image.jpg" alt="" class="img-fluid">
+                            <div class="doctor-book-card-content tile-card-content-1">
+                                <div>
+                                    <h3 class="card-title mb-0">پیدا کردن آزمایشگاه</h3>
+                                    <a href="javascript:void(0);" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">به زودی</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Clinic and Specialities -->
+<section class="section section-specialities">
+    <div class="container-fluid">
+        <div class="section-header text-center">
+            <h2>کلینیک‌ها و تخصص‌ها</h2>
+            <p class="sub-title">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <!-- Slider -->
+                <div class="specialities-slider slider" dir="rtl">
+                    @foreach (var speciality in Model.SpecialityDtos)
+                    {
+                        <!-- Slider Item -->
+                        <div class="speicality-item text-center">
+                            <div class="speicality-img">
+                                <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="@speciality.Name"><img src="~/@speciality.ImageSrc" class="img-fluid" alt="Speciality"></a>
+                                <span><i class="fa fa-circle" aria-hidden="true"></i></span>
+                            </div>
+                            <p>@speciality.Name</p>
+                        </div>
+                        <!-- /Slider Item -->
+                    }
+                </div>
+                <!-- /Slider -->
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Clinic and Specialities -->
+<!-- Popular Section -->
+<section class="section section-doctor">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="section-header ">
+                    <h2> دکتر خود را رزرو کنید </h2>
+                    <p> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم </p>
+                </div>
+                <div class="about-content">
+                    <p>  برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
+                    <p>تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد</p>
+                    <a href="javascript:;">بیشتر بخوانید...</a>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="doctor-slider slider" dir="rtl">
+                   @foreach (var expert in Model.ExpertForPresentationDtos)
+                   {
+                        <!-- Doctor Widget -->
+                    <div class="profile-widget">
+                        <div class="doc-img">
+                            <a href="doctor-profile.html">
+                                <img class="img-fluid" alt="User Image" src="~/@expert.IconSrc">
+                            </a>
+                            <a href="javascript:void(0)" class="fav-btn">
+                                <i class="far fa-bookmark"></i>
+                            </a>
+                        </div>
+                        <div class="pro-content">
+                            <h3 class="title">
+                                <a href="doctor-profile.html">@expert.FullName</a>
+                                <i class="fas fa-check-circle verified"></i>
+                            </h3>
+                            <p class="speciality"> @expert.Tags </p>
+                            <div class="rating">
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <span class="d-inline-block average-rating">(17)</span>
+                            </div>
+                            <ul class="available-info">
+                                <li>
+                                    <p class="doc-department"><img src="~/@expert.SpecialitySrc" class="img-fluid" alt="Speciality">‌@expert.Speciality</p>
+                                </li>
+                                <li>
+                                    <i class="far fa-clock"></i> @expert.FirstAvailability
+                                </li>
+                                <li>
+                                    @if (expert.Price != "0")
+                                    {
+                                        <i class="far fa-money-bill-alt"></i>@expert.Price
+                                    }
+                                    else
+                                    {
+                                        <i class="far fa-money-bill-alt">رایگان </i>
+                                    }
+                                    <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>
+                                </li>
+                            </ul>
+                            <div class="row row-sm">
+                                <div class="col-6">
+                                    <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId" class="btn view-btn">مشاهده پروفایل</a>
+                                </div>
+                                <div class="col-6">
+                                    <a asp-controller="Experts" asp-action="Reservation" asp-route-expertInformationId="@expert.ExpertInformationId" class="btn book-btn">رزرو کنید</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Doctor Widget -->
+                   }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Popular Section -->
+<!-- Availabe Features -->
+<section class="section section-features">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5 features-img">
+                <img src="assets/img/features/feature.png" class="img-fluid" alt="Feature">
+            </div>
+            <div class="col-md-7">
+                <div class="section-header">
+                    <h2 class="mt-2"> امکانات موجود در کلینیک ما </h2>
+                    <p>کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. </p>
+                </div>
+                <div class="features-slider slider" dir="rtl">
+                    <!-- Slider Item -->
+                    <div class="feature-item text-center">
+                        <img src="assets/img/features/feature-01.jpg" class="img-fluid" alt="Feature">
+                        <p>پیشنت وارد</p>
+                    </div>
+                    <!-- /Slider Item -->
+                    <!-- Slider Item -->
+                    <div class="feature-item text-center">
+                        <img src="assets/img/features/feature-02.jpg" class="img-fluid" alt="Feature">
+                        <p>تست روم</p>
+                    </div>
+                    <!-- /Slider Item -->
+                    <!-- Slider Item -->
+                    <div class="feature-item text-center">
+                        <img src="assets/img/features/feature-03.jpg" class="img-fluid" alt="Feature">
+                        <p>ای سو یو</p>
+                    </div>
+                    <!-- /Slider Item -->
+                    <!-- Slider Item -->
+                    <div class="feature-item text-center">
+                        <img src="assets/img/features/feature-04.jpg" class="img-fluid" alt="Feature">
+                        <p>لابراتوری</p>
+                    </div>
+                    <!-- /Slider Item -->
+                    <!-- Slider Item -->
+                    <div class="feature-item text-center">
+                        <img src="assets/img/features/feature-05.jpg" class="img-fluid" alt="Feature">
+                        <p>اوپریشن</p>
+                    </div>
+                    <!-- /Slider Item -->
+                    <!-- Slider Item -->
+                    <div class="feature-item text-center">
+                        <img src="assets/img/features/feature-06.jpg" class="img-fluid" alt="Feature">
+                        <p>مدیکال</p>
+                    </div>
+                    <!-- /Slider Item -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Availabe Features -->
+<!-- Blog Section -->
+<section class="section section-blogs">
+    <div class="container-fluid">
+
+        <!-- Section Header -->
+        <div class="section-header text-center">
+            <h2>بلاگ و اخبار</h2>
+            <p class="sub-title">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+        </div>
+        <!-- /Section Header -->
+
+        <div class="row blog-grid-row">
+            <div class="col-md-6 col-lg-3 col-sm-12">
+
+                <!-- Blog Post -->
+                <div class="blog grid-blog">
+                    <div class="blog-image">
+                        <a href="blog-details.html"><img class="img-fluid" src="assets/img/blog/blog-01.jpg" alt="Post Image"></a>
+                    </div>
+                    <div class="blog-content">
+                        <ul class="entry-meta meta-item">
+                            <li>
+                                <div class="post-author">
+                                    <a href="doctor-profile.html"><img src="assets/img/doctors/doctor-thumb-01.jpg" alt="Post Author"> <span>پرشک رابی پرین</span></a>
+                                </div>
+                            </li>
+                            <li><i class="far fa-clock"></i> 4 مهر 1399</li>
+                        </ul>
+                        <h3 class="blog-title"><a href="blog-details.html"> سؤال - بازدید از کلینیک به راحتی </a></h3>
+                        <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                    </div>
+                </div>
+                <!-- /Blog Post -->
+
+            </div>
+            <div class="col-md-6 col-lg-3 col-sm-12">
+
+                <!-- Blog Post -->
+                <div class="blog grid-blog">
+                    <div class="blog-image">
+                        <a href="blog-details.html"><img class="img-fluid" src="assets/img/blog/blog-02.jpg" alt="Post Image"></a>
+                    </div>
+                    <div class="blog-content">
+                        <ul class="entry-meta meta-item">
+                            <li>
+                                <div class="post-author">
+                                    <a href="doctor-profile.html"><img src="assets/img/doctors/doctor-thumb-02.jpg" alt="Post Author"> <span>پزشک دارن الدر</span></a>
+                                </div>
+                            </li>
+                            <li><i class="far fa-clock"></i> 3 مهر 1399</li>
+                        </ul>
+                        <h3 class="blog-title"><a href="blog-details.html"> فواید رزرو آنلاین پزشک چیست؟ </a></h3>
+                        <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                    </div>
+                </div>
+                <!-- /Blog Post -->
+
+            </div>
+            <div class="col-md-6 col-lg-3 col-sm-12">
+
+                <!-- Blog Post -->
+                <div class="blog grid-blog">
+                    <div class="blog-image">
+                        <a href="blog-details.html"><img class="img-fluid" src="assets/img/blog/blog-03.jpg" alt="Post Image"></a>
+                    </div>
+                    <div class="blog-content">
+                        <ul class="entry-meta meta-item">
+                            <li>
+                                <div class="post-author">
+                                    <a href="doctor-profile.html"><img src="assets/img/doctors/doctor-thumb-03.jpg" alt="Post Author"> <span>پزشک دبرا انجل</span></a>
+                                </div>
+                            </li>
+                            <li><i class="far fa-clock"></i> 3 مهر 1399</li>
+                        </ul>
+                        <h3 class="blog-title"><a href="blog-details.html"> مزایای مشاوره با پزشک آنلاین </a></h3>
+                        <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                    </div>
+                </div>
+                <!-- /Blog Post -->
+
+            </div>
+            <div class="col-md-6 col-lg-3 col-sm-12">
+
+                <!-- Blog Post -->
+                <div class="blog grid-blog">
+                    <div class="blog-image">
+                        <a href="blog-details.html"><img class="img-fluid" src="assets/img/blog/blog-04.jpg" alt="Post Image"></a>
+                    </div>
+                    <div class="blog-content">
+                        <ul class="entry-meta meta-item">
+                            <li>
+                                <div class="post-author">
+                                    <a href="doctor-profile.html"><img src="assets/img/doctors/doctor-thumb-04.jpg" alt="Post Author"> <span>پزشک صوفیا برینت</span></a>
+                                </div>
+                            </li>
+                            <li><i class="far fa-clock"></i> 2 مهر 1399</li>
+                        </ul>
+                        <h3 class="blog-title"><a href="blog-details.html"> 5 دلیل عالی برای استفاده از یک دکتر آنلاین </a></h3>
+                        <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                    </div>
+                </div>
+                <!-- /Blog Post -->
+
+            </div>
+        </div>
+        <div class="view-all text-center">
+            <a href="blog-list.html" class="btn btn-primary">مشاهده همه</a>
+        </div>
+    </div>
+</section>
+<!-- /Blog Section -->

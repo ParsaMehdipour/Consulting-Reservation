@@ -1,0 +1,242 @@
+﻿@using CR.Core.DTOs.Consumers
+@model ConsumerDetailsForSiteDto
+@{
+    Layout = "_ConsumerLayout";
+}
+
+<form id="consumerProfileForm">
+    <div class="card">
+        <div class="card-body">
+            <!-- Profile Settings Form -->
+            <div class="row form-row">
+                <div class="col-12 col-md-12">
+                    <div class="form-group">
+                        <div class="change-avatar">
+                            <div class="profile-img">
+                                @if (Model == null)
+                                {
+                                    <img src="~/assets/img/icon-256x256.png" alt="User Image">
+                                }
+                                else
+                                {
+                                    <img src="~/@Model.iconSrc" alt="User Image">
+                                }
+                            </div>
+                            <div class="upload-img">
+                                <div class="change-photo-btn">
+                                    <span><i class="fa fa-upload"></i> بارگذاری تصویر </span>
+                                    <input type="file" class="upload" id="iconImage" name="iconImage">
+                                </div>
+                                <small class="form-text text-muted">
+                                    JPG ، GIF یا PNG مجاز است. حداکثر اندازه 2
+                                    مگابایت
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>نام</label>
+                        <input type="text" class="form-control" asp-for="firstName" id="firstName" name="firstName">
+                        <span asp-validation-for="firstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>نام خانوادگی</label>
+                        <input type="text" class="form-control" asp-for="lastName" id="lastName" name="lastName">
+                        <span asp-validation-for="lastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>تاریخ تولد</label>
+                        <div class="cal-icon">
+                            <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate_String">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>گروه خونی</label>
+                        <select class="form-control select" asp-for="bloodType" id="bloodType" name="bloodType">
+                            <option>A-</option>
+                            <option>A+</option>
+                            <option>B-</option>
+                            <option>B+</option>
+                            <option>AB-</option>
+                            <option>AB+</option>
+                            <option>O-</option>
+                            <option>O+</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>ایمیل</label>
+                        <input type="email" class="form-control" asp-for="email" id="email" name="email">
+                        <span asp-validation-for="email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>موبایل</label>
+                        <input type="text" class="form-control" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
+                        <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>آدرس</label>
+                        <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
+                        <span asp-validation-for="specificAddress" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>شهر</label>
+                        <input type="text" class="form-control" asp-for="city" id="city" name="city">
+                        <span asp-validation-for="city" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>استان</label>
+                        <input type="text" class="form-control" asp-for="province" id="province" name="province">
+                        <span asp-validation-for="province" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>کد پستی</label>
+                        <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
+                        <span asp-validation-for="postalCode" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="submit-section submit-btn-bottom">
+                @if (Model == null)
+                {
+                    <button onclick="Add()" type="submit" class="btn btn-success submit-btn">افزودن اطلاعات</button>
+                }
+                else
+                {
+                    <button onclick="Edit(@Model.id)" type="submit" class="btn btn-warning submit-btn">ذخیره تغییرات</button>
+                }
+            </div>
+
+            <!-- /Profile Settings Form -->
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+
+<link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+<script src="~/Sweetalert2/sweetalert2.min.js"></script>
+
+<script>
+
+    function Add() {
+        if ($("#consumerProfileForm").valid()) {
+
+        var select = document.getElementById('bloodType');
+
+        var addConsumerProfileForm = new FormData();
+
+        addConsumerProfileForm.append("firstName",$("#consumerProfileForm #firstName").val());
+        addConsumerProfileForm.append("lastName",$("#consumerProfileForm #lastName").val());
+        addConsumerProfileForm.append("birthDate_String",$("#consumerProfileForm #birthDate_String").val());
+        addConsumerProfileForm.append("bloodType",select.options[select.selectedIndex].value);
+        addConsumerProfileForm.append("email",$("#consumerProfileForm #email").val());
+        addConsumerProfileForm.append("phoneNumber",$("#consumerProfileForm #phoneNumber").val());
+        addConsumerProfileForm.append("specificAddress",$("#consumerProfileForm #specificAddress").val());
+        addConsumerProfileForm.append("city",$("#consumerProfileForm #city").val());
+        addConsumerProfileForm.append("province",$("#consumerProfileForm #province").val());
+        addConsumerProfileForm.append("postalCode",$("#consumerProfileForm #postalCode").val());
+        addConsumerProfileForm.append("iconImage",$("#consumerProfileForm #iconImage").get(0).files[0]);
+
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddProfileDetails", "Profile")',
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            cache: false,
+            data: addConsumerProfileForm,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+
+        }
+    }
+
+    function Edit(id){
+        if ($("#consumerProfileForm").valid()) {
+
+        var select = document.getElementById('bloodType');
+
+        var editConsumerProfileForm = new FormData();
+
+        editConsumerProfileForm.append("firstName",$("#consumerProfileForm #firstName").val());
+        editConsumerProfileForm.append("lastName",$("#consumerProfileForm #lastName").val());
+        editConsumerProfileForm.append("birthDate_String",$("#consumerProfileForm #birthDate_String").val());
+        editConsumerProfileForm.append("bloodType",select.options[select.selectedIndex].value);
+        editConsumerProfileForm.append("email",$("#consumerProfileForm #email").val());
+        editConsumerProfileForm.append("phoneNumber",$("#consumerProfileForm #phoneNumber").val());
+        editConsumerProfileForm.append("specificAddress",$("#consumerProfileForm #specificAddress").val());
+        editConsumerProfileForm.append("city",$("#consumerProfileForm #city").val());
+        editConsumerProfileForm.append("province",$("#consumerProfileForm #province").val());
+        editConsumerProfileForm.append("postalCode",$("#consumerProfileForm #postalCode").val());
+        editConsumerProfileForm.append("consumerInformationId",id);
+        editConsumerProfileForm.append("iconImage",$("#consumerProfileForm #iconImage").get(0).files[0]);
+
+
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("EditProfileDetails", "Profile")',
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            cache: false,
+            data: editConsumerProfileForm,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+
+        }
+    }
+</script>
+
+}

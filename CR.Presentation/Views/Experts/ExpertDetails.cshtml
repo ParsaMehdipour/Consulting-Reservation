@@ -1,0 +1,698 @@
+﻿@model CR.Core.DTOs.Experts.ExpertDetailsForSiteDto
+@{
+}
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">پروفایل پزشک</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">پروفایل متخصص</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container">
+
+        <!-- Doctor Widget -->
+        <div class="card">
+            <div class="card-body">
+                <div class="doctor-widget">
+                    <div class="doc-info-left">
+                        <div class="doctor-img">
+                            <img src="~/@Model.IconSrc" class="img-fluid" alt="User Image">
+                        </div>
+                        <div class="doc-info-cont">
+                            <h4 class="doc-name">متخصص @Model.FullName</h4>
+                            <p class="doc-speciality"> @Model.Tag </p>
+                            <p class="doc-department"><img src="~/@Model.SpecialityImage" class="img-fluid" alt="Speciality">‌@Model.Speciality</p>
+                            <div class="rating">
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="d-inline-block average-rating">(35)</span>
+                            </div>
+                            <div class="clinic-details">
+                                <p class="doc-location"><i class="fas fa-map-marker-alt"></i>  @Model.City، @Model.Province -  <a href="javascript:void(0);">مشاهده مسیر</a></p>
+                                <ul class="clinic-gallery">
+                                    <li>
+                                        <a href="~/assets/img/features/feature-01.jpg" data-fancybox="gallery">
+                                            <img src="~/assets/img/features/feature-01.jpg" alt="Feature">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="assets/img/features/feature-02.jpg" data-fancybox="gallery">
+                                            <img src="~/assets/img/features/feature-02.jpg" alt="Feature Image">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="assets/img/features/feature-03.jpg" data-fancybox="gallery">
+                                            <img src="~/assets/img/features/feature-03.jpg" alt="Feature">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="assets/img/features/feature-04.jpg" data-fancybox="gallery">
+                                            <img src="~/assets/img/features/feature-04.jpg" alt="Feature">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="clinic-services">
+                                <span>پرکردن دندان</span>
+                                <span>سفید کردن دندان</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doc-info-right">
+                        <div class="clini-infos">
+                            <ul>
+                                <li><i class="far fa-thumbs-up"></i> 99%</li>
+                                <li><i class="far fa-comment"></i> @Model.RateCount فیدبک </li>
+                                <li><i class="fas fa-map-marker-alt"></i>@Model.City , @Model.Province</li>
+                                @if (@Model.Price != 0)
+                                {
+                                    <li><i class="far fa-money-bill-alt"></i> @Model.Price?.ToString("n0") تومان ساعتی </li>
+                                }
+                                else
+                                {
+                                    <li><i class="far fa-money-bill-alt"></i>  رایگان </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="doctor-action">
+                            <a href="javascript:void(0)" class="btn btn-white fav-btn">
+                                <i class="far fa-bookmark"></i>
+                            </a>
+                            <a href="chat.html" class="btn btn-white msg-btn">
+                                <i class="far fa-comment-alt"></i>
+                            </a>
+                            <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#voice_call">
+                                <i class="fas fa-phone"></i>
+                            </a>
+                            <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#video_call">
+                                <i class="fas fa-video"></i>
+                            </a>
+                        </div>
+                        @if (Model.DayDtos.Count > 0)
+                        {
+                            <div class="clinic-booking">
+                                <a class="apt-btn" asp-controller="Experts" asp-action="Reservation" asp-route-expertInformationId="@Model.id">رزرو نوبت</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="clinic-booking">
+                                <button type="button" class="btn btn-block btn-outline-danger active">نوبتی جهت رزرو وجود ندارد</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Doctor Widget -->
+        <!-- Doctor Details Tab -->
+        <div class="card">
+            <div class="card-body pt-0">
+
+                <!-- Tab Menu -->
+                <nav class="user-tabs mb-4">
+                    <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#doc_overview" data-toggle="tab"> نمای کل </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#doc_locations" data-toggle="tab"> محل ها </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#doc_reviews" data-toggle="tab">نظرات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#doc_business_hours" data-toggle="tab">ساعات کاری هفت روز آینده </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /Tab Menu -->
+                <!--  محتوای تب -->
+                <div class="tab-content pt-0">
+
+                    <!-- Overview Content -->
+                    <div role="tabpanel" id="doc_overview" class="tab-pane fade show active">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-9">
+
+                                <!-- About Details -->
+                                <div class="widget about-widget">
+                                    <h4 class="widget-title"> درباره من </h4>
+                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
+                                </div>
+                                <!-- /About Details -->
+                                <!-- Education Details -->
+                                <div class="widget education-widget">
+                                    <h4 class="widget-title"> تحصیلات </h4>
+                                    <div class="experience-box">
+                                        <ul class="experience-list">
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <a href="#/" class="name"> دانشگاه دندان پزشکی آمریکا </a>
+                                                        <div>BDS</div>
+                                                        <span class="time">1361 - 1375</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <a href="#/" class="name"> دانشگاه دندان پزشکی آمریکا </a>
+                                                        <div>MDS</div>
+                                                        <span class="time">1380 - 1385</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Education Details -->
+                                <!-- Experience Details -->
+                                <div class="widget experience-widget">
+                                    <h4 class="widget-title"> کار و تجربه </h4>
+                                    <div class="experience-box">
+                                        <ul class="experience-list">
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <a href="#/" class="name">کلینیک دندانپزشکی خانواده لبخندهای درخشان</a>
+                                                        <span class="time">1398 - الان (5سال)</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <a href="#/" class="name">کلینیک دندانپزشکی کامفورت کر</a>
+                                                        <span class="time">1392 - 1398 (3 سال)</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <a href="#/" class="name">لبخند رویایی دندانپزشکی</a>
+                                                        <span class="time">1390 - 1392 (2 سال)</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Experience Details -->
+                                <!-- Awards Details -->
+                                <div class="widget awards-widget">
+                                    <h4 class="widget-title">جایزه ها</h4>
+                                    <div class="experience-box">
+                                        <ul class="experience-list">
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <p class="exp-year">مهر 1362</p>
+                                                        <h4 class="exp-title">جایزه بشردوستانه</h4>
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <p class="exp-year">مهر 1380</p>
+                                                        <h4 class="exp-title">گواهی خدمات داوطلب بین المللی</h4>
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <p class="exp-year">مهر 1390</p>
+                                                        <h4 class="exp-title">جایزه حرفه ای دندانپزشکی سال</h4>
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /Awards Details -->
+                                <!-- Services List -->
+                                <div class="service-list">
+                                    <h4>خدمات</h4>
+                                    <ul class="clearfix">
+                                        <li>تمیز کردن دندان</li>
+                                        <li>عصب کشی</li>
+                                        <li>ایمپلمنت</li>
+                                        <li>کامپوزیت</li>
+                                        <li>فیشور سیلانت</li>
+                                        <li>جراحی دندان</li>
+                                    </ul>
+                                </div>
+                                <!-- /Services List -->
+                                <!-- Specializations List -->
+                                <div class="service-list">
+                                    <h4>تخصص ها</h4>
+                                    <ul class="clearfix">
+                                        <li>دندان کودک</li>
+                                        <li>مراقبت دندان</li>
+                                        <li>بهداشت دهانی و جراحی </li>
+                                        <li>ارتودونسی</li>
+                                        <li>پریودنتیست</li>
+                                        <li>پروتزهای دندانی</li>
+                                    </ul>
+                                </div>
+                                <!-- /Specializations List -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Overview Content -->
+                    <!-- Locations Content -->
+                    <div role="tabpanel" id="doc_locations" class="tab-pane fade">
+
+                        <!-- Location List -->
+                        <div class="location-list">
+                            <div class="row">
+
+                                <!-- Clinic Content -->
+                                <div class="col-md-6">
+                                    <div class="clinic-content">
+                                        <h4 class="clinic-name"><a href="#"> @Model.ClinicName </a></h4>
+                                        <p class="doc-speciality"> MDS - پریودنتولوژی و ایمپلنت دهانی ، BDS </p>
+                                        <div class="rating">
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star"></i>
+                                            <span class="d-inline-block average-rating">(4)</span>
+                                        </div>
+                                        <div class="clinic-details mb-0">
+                                            <h5 class="clinic-direction"> <i class="fas fa-map-marker-alt"></i> @Model.City ، @Model.Province <br><a href="javascript:void(0);">مشاهده مسیر</a></h5>
+                                            <ul>
+                                                <li>
+                                                    <a href="assets/img/features/feature-01.jpg" data-fancybox="gallery2">
+                                                        <img src="~/assets/img/features/feature-01.jpg" alt="Feature Image">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="assets/img/features/feature-02.jpg" data-fancybox="gallery2">
+                                                        <img src="~/assets/img/features/feature-02.jpg" alt="Feature Image">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="assets/img/features/feature-03.jpg" data-fancybox="gallery2">
+                                                        <img src="~/assets/img/features/feature-03.jpg" alt="Feature Image">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="assets/img/features/feature-04.jpg" data-fancybox="gallery2">
+                                                        <img src="~/assets/img/features/feature-04.jpg" alt="Feature Image">
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Clinic Content -->
+                                <!-- Clinic Timing -->
+                                @if (Model.DayDtos.Count > 0)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="clinic-timing">
+                                            <div>
+                                                @foreach (var day in Model.DayDtos)
+                                                {
+                                                    <p class="timings-days">
+                                                        <span> @day.dayOfWeek </span>
+                                                    </p>
+                                                    @if (day.TimeOfDayDtos.Count > 0)
+                                                    {
+                                                        @foreach (var timeOfDay in day.TimeOfDayDtos)
+                                                        {
+                                                            <p class="timings-times">
+                                                                <span class="alert-success">@timeOfDay.start - @timeOfDay.finish</span>
+                                                            </p>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="timings-times">
+                                                            <span class ="alert-danger">بسته</span>
+                                                        </p>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-4">
+                                        <div class="clinic-timing">
+                                            <h3>زمانبندی جهت نمایش وجود ندارد</h3>
+                                        </div>
+                                    </div>
+                                }
+                                <!-- /Clinic Timing -->
+                                @if (Model.Price != 0)
+                                {
+                                    <div class="col-md-2">
+                                        <div class="consult-price">
+                                            @Model.Price?.ToString("n0") تومان
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-2">
+                                        <div class="consult-price">
+                                            رایگان
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <!-- /Location List -->
+                    </div>
+                    <!-- /Locations Content -->
+                    <!-- Reviews Content -->
+                    <div role="tabpanel" id="doc_reviews" class="tab-pane fade">
+
+                        <!-- Review Listing -->
+                        <div class="widget review-listing">
+                            <ul class="comments-list">
+
+                                <!-- Comment List -->
+                                <li>
+                                    <div class="comment">
+                                        <img class="avatar avatar-sm rounded-circle" alt="User Image" src="~/assets/img/patients/patient.jpg">
+                                        <div class="comment-body">
+                                            <div class="meta-data">
+                                                <span class="comment-author">ریچارد ویلسون</span>
+                                                <span class="comment-date">نظر داده شده 2 روز پیش</span>
+                                                <div class="review-count rating">
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p class="recommended"><i class="far fa-thumbs-up"></i> این دکتر را پیشنهاد میکنم</p>
+                                            <p class="comment-content">
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
+                                            </p>
+                                            <div class="comment-reply">
+                                                <a class="comment-btn" href="#">
+                                                    <i class="fas fa-reply"></i> پاسخ
+                                                </a>
+                                                <p class="recommend-btn">
+                                                    <span>پیشنهاد؟</span>
+                                                    <a href="#" class="like-btn">
+                                                        <i class="far fa-thumbs-up"></i> بله
+                                                    </a>
+                                                    <a href="#" class="dislike-btn">
+                                                        <i class="far fa-thumbs-down"></i> نه
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Comment Reply -->
+                                    <ul class="comments-reply">
+                                        <li>
+                                            <div class="comment">
+                                                <img class="avatar avatar-sm rounded-circle" alt="User Image" src="~/assets/img/patients/patient1.jpg">
+                                                <div class="comment-body">
+                                                    <div class="meta-data">
+                                                        <span class="comment-author">چارلوت راد</span>
+                                                        <span class="comment-date">نظر داده شده 3 روز پیش</span>
+                                                        <div class="review-count rating">
+                                                            <i class="fas fa-star filled"></i>
+                                                            <i class="fas fa-star filled"></i>
+                                                            <i class="fas fa-star filled"></i>
+                                                            <i class="fas fa-star filled"></i>
+                                                            <i class="fas fa-star"></i>
+                                                        </div>
+                                                    </div>
+                                                    <p class="comment-content">
+                                                        کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
+                                                    </p>
+                                                    <div class="comment-reply">
+                                                        <a class="comment-btn" href="#">
+                                                            <i class="fas fa-reply"></i> پاسخ
+                                                        </a>
+                                                        <p class="recommend-btn">
+                                                            <span>پیشنهاد؟</span>
+                                                            <a href="#" class="like-btn">
+                                                                <i class="far fa-thumbs-up"></i> بله
+                                                            </a>
+                                                            <a href="#" class="dislike-btn">
+                                                                <i class="far fa-thumbs-down"></i> نه
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <!-- /Comment Reply -->
+
+                                </li>
+                                <!-- /Comment List -->
+                                <!-- Comment List -->
+                                <li>
+                                    <div class="comment">
+                                        <img class="avatar avatar-sm rounded-circle" alt="User Image" src="~/assets/img/patients/patient2.jpg">
+                                        <div class="comment-body">
+                                            <div class="meta-data">
+                                                <span class="comment-author">تراویس تریمبل</span>
+                                                <span class="comment-date">نظر داده شده 4 روز پیش</span>
+                                                <div class="review-count rating">
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p class="comment-content">
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
+                                            </p>
+                                            <div class="comment-reply">
+                                                <a class="comment-btn" href="#">
+                                                    <i class="fas fa-reply"></i> پاسخ
+                                                </a>
+                                                <p class="recommend-btn">
+                                                    <span>پیشنهاد؟</span>
+                                                    <a href="#" class="like-btn">
+                                                        <i class="far fa-thumbs-up"></i> بله
+                                                    </a>
+                                                    <a href="#" class="dislike-btn">
+                                                        <i class="far fa-thumbs-down"></i> نه
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- /Comment List -->
+
+                            </ul>
+
+                            <!-- Show All -->
+                            <div class="all-feedback text-center">
+                                <a href="#" class="btn btn-primary btn-sm">
+                                    نمایش همگی فیدبک ها <strong>(167)</strong>
+                                </a>
+                            </div>
+                            <!-- /Show All -->
+
+                        </div>
+                        <!-- /Review Listing -->
+                        <!-- Write Review -->
+                        <div class="write-review">
+                            <h4>یک نظر بنویسید برای <strong>پزشک دارن الدر</strong></h4>
+
+                            <!-- Write Review Form -->
+                            <form>
+                                <div class="form-group">
+                                    <label>نظر</label>
+                                    <div class="star-rating">
+                                        <input id="star-5" type="radio" name="rating" value="star-5">
+                                        <label for="star-5" title="5 stars">
+                                            <i class="active fa fa-star"></i>
+                                        </label>
+                                        <input id="star-4" type="radio" name="rating" value="star-4">
+                                        <label for="star-4" title="4 stars">
+                                            <i class="active fa fa-star"></i>
+                                        </label>
+                                        <input id="star-3" type="radio" name="rating" value="star-3">
+                                        <label for="star-3" title="3 stars">
+                                            <i class="active fa fa-star"></i>
+                                        </label>
+                                        <input id="star-2" type="radio" name="rating" value="star-2">
+                                        <label for="star-2" title="2 stars">
+                                            <i class="active fa fa-star"></i>
+                                        </label>
+                                        <input id="star-1" type="radio" name="rating" value="star-1">
+                                        <label for="star-1" title="1 star">
+                                            <i class="active fa fa-star"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>عنوان نظر</label>
+                                    <input class="form-control" type="text" placeholder="اگر می توانستید آن را در یک جمله بگویید ، چه می گویید؟">
+                                </div>
+                                <div class="form-group">
+                                    <label>نظر شما</label>
+                                    <textarea id="review_desc" maxlength="100" class="form-control"></textarea>
+
+
+
+                                    <div class="d-flex justify-content-between mt-3"><small class="text-muted"><span id="chars">100</span> کارکتر مانده</small></div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <div class="terms-accept">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="terms_accept">
+                                            <label for="terms_accept">من با تمامی <a href="#">شرایط و مقررات موافقم</a></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="submit-section">
+                                    <button type="submit" class="btn btn-primary submit-btn">افزودن نظر</button>
+                                </div>
+                            </form>
+                            <!-- /Write Review Form -->
+
+                        </div>
+                        <!-- /Write Review -->
+
+                    </div>
+                    <!-- /Reviews Content -->
+                    <!-- Business Hours Content -->
+                    <div role="tabpanel" id="doc_business_hours" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+
+                                @if (Model.DayDtos.Count > 0)
+                                {
+                                    <!-- Business Hours Widget -->
+                                    <div class="widget business-widget">
+                                        <div class="widget-content">
+                                            <div class="listing-hours">
+                                                <div class="listing-day current">
+                                                    <div class="day">امروز<span>@Model.DayDtos.FirstOrDefault()?.date_String</span></div>
+                                                    <div class="time-items">
+                                                        @if (@Model.DayDtos.FirstOrDefault()?.TimeOfDayDtos.Count > 0)
+                                                        {
+                                                            <span class="open-status"><span class="badge bg-success-light">باز</span></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="open-status"><span class="badge bg-danger-light">بسته</span></span>
+                                                        }
+                                                        @foreach (var timeOfDay in Model.DayDtos.FirstOrDefault()?.TimeOfDayDtos!)
+                                                        {
+                                                            <span class="time">@timeOfDay.start - @timeOfDay.finish</span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                @foreach (var day in Model.DayDtos.Skip(1))
+                                                {
+                                                    @if (day.TimeOfDayDtos.Count > 0)
+                                                    {
+                                                        <div class="listing-day">
+                                                            <div class="day">@day.dayOfWeek<br /><span>@day.date_String</span></div>
+                                                            <div class="time-items">
+                                                                @foreach (var timeOfDay in day.TimeOfDayDtos)
+                                                                {
+                                                                    <span class="time">@timeOfDay.start - @timeOfDay.finish</span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="listing-day closed">
+                                                            <div class="day">@day.dayOfWeek<br /><span>@day.date_String</span></div>
+                                                            <div class="time-items">
+                                                                <span class="time"><span class="badge bg-danger-light">بسته</span></span>
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Business Hours Widget -->
+                                }
+                                else
+                                {
+                                    <div class="widget business-widget">
+                                        <div class="widget-content">
+                                            <h3>اطلاعاتی جهت نمایش وجود ندارد</h3>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Business Hours Content -->
+
+                </div>
+            </div>
+        </div>
+        <!-- /Doctor Details Tab -->
+
+    </div>
+</div>
+<!-- /Page Content -->

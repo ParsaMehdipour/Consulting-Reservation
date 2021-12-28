@@ -1,0 +1,154 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@model CR.Core.DTOs.ResultDTOs.ResultGetAllExpertsDto
+@{
+}
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-7 col-auto">
+            <h3 class="page-title"> لیست پزشکان </h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">دشبرد</a></li>
+                <li class="breadcrumb-item"><a href="javascript:(0);">کاربران</a></li>
+                <li class="breadcrumb-item active">پزشک</li>
+            </ul>
+        </div>
+        <div class="col-sm-5 col">
+            <a data-toggle="modal" class="btn btn-primary float-right mt-2" asp-action="AddNewExpert" asp-controller="Experts">افزودن</a>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="datatable table table-hover table-center mb-0">
+                        <thead>
+                        <tr>
+                            <th>نام پزشک</th>
+                            <th>شماره</th>
+                            <th>تخصص</th>
+                            <th>عضویت از</th>
+                            <th>درآمد</th>
+                            <th>وضعیت اکانت</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var expert in Model.Experts)
+                        {
+                            <tr>
+                                <td>
+                                    <h2 class="table-avatar">
+                                        <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@expert.IconSrc" alt="User Image"></a>
+                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@expert.Id">پزشک @expert.FullName</a>
+                                    </h2>
+                                </td>
+                                <td>@expert.PhoneNumber</td>
+
+                                <td>@expert.Speciality</td>
+
+                                <td>@expert.RegisterDate</td>
+
+                                <td>@expert.Income تومان</td>
+                                    
+                                <td>
+                                    <div class="status-toggle">
+                                        @if (expert.IsActive == true)
+                                        {
+                                            <input onchange="ChangeStatus(@expert.Id)" type="checkbox" id="status_@expert.Id" name="status" class="check" checked>
+                                        }
+                                        else
+                                        {
+                                            <input onchange="ChangeStatus(@expert.Id)" type="checkbox" id="status_@expert.Id" name="status" class="check">
+                                        }
+                                        <label for="status_@expert.Id" class="checktoggle">checkbox</label>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    show-first-numbered-page="true"
+                    show-last-numbered-page="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize"
+                    gap-size="2">
+            </paging>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet"/>
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+
+    <script>
+        function ChangeStatus(id) {
+            var activateStatus = false;
+            var expertId = id;
+
+            if (document.getElementById("status_" + expertId).checked) {
+                activateStatus = true;
+            } else {
+                activateStatus = false;
+            }
+
+
+            var postData = {
+                'expertId': expertId,
+                'activeStatus': activateStatus
+            };
+            $.ajax({
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "POST",
+                url: '@Url.Action("ChangeExpertStatus", "Experts")',
+                data: postData,
+                success: function (data) {
+                    if (data.isSuccess == true) {
+                        swal.fire(
+                            'موفق!',
+                            data.message,
+                            'success'
+                        ).then(function (isConfirm) {
+                            location.reload();
+                        });
+                    }
+                    else {
+                        swal.fire(
+                            'هشدار!',
+                            data.message,
+                            'warning'
+                        );
+
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
+        function hello() {
+            alert();
+        }
+
+    </script>
+
+}

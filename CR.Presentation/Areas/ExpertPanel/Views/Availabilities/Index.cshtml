@@ -1,0 +1,283 @@
+﻿@model CR.Presentation.Areas.ExpertPanel.Models.ViewModels.ExpertAvailabilitiesViewModel
+@{
+    Layout = "_ExpertLayout";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">زمان‌بندی</h4>
+                <div class="profile-box">
+                    <div class="row">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>تاریخ نوبت</label>
+                                <div class="cal-icon">
+                                    <input type="text" class="form-control datetimepicker" id="availabilityDate">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="submit-section submit-btn-bottom">
+                                    <button onclick="AddDay()" type="submit" class="btn btn-primary submit-btn">افزودن روز</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card schedule-widget mb-0">
+
+                            <!-- Schedule Header -->
+                            <div class="schedule-header">
+
+                                <!-- Schedule Nav -->
+                                <div class="schedule-nav">
+                                    <ul class="nav nav-tabs">
+                                        @foreach (var day in Model.DayDtos)
+                                        {
+                                            <li class="nav-item">
+                                                <a onclick="SetId(@day.id)" class="nav-link" data-toggle="tab" href="#slot_@day.id">@day.dayOfWeek</a>
+                                                <p>@day.date_String</p>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <!-- /Schedule Nav -->
+
+                            </div>
+                            <!-- /Schedule Header -->
+                            <!-- Schedule Content -->
+                            <div class="tab-content schedule-cont">
+                                @foreach (var day in Model.DayDtos)
+                                {
+                                    <div id="slot_@day.id" class="tab-pane fade">
+                                        <h4 class="card-title d-flex justify-content-between">
+                                            <span>زمان بندی</span>
+                                            @if (day.TimeOfDayDtos.Count > 0)
+                                            {
+                                                <a class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-plus-circle"></i> ویرایش  </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> افزودن  </a>
+                                            }
+                                        </h4>
+                                        @if (day.TimeOfDayDtos.Count < 0)
+                                        {
+                                            <p class="text-muted mb-0"> موجود نیست </p>
+                                        }
+                                        else
+                                        {
+                                            <div class="doc-times">
+                                                @foreach (var time in day.TimeOfDayDtos)
+                                                {
+                                                    <div class="doc-slot-list">
+                                                        ساعت @time.start - ساعت @time.finish
+                                                        <a onclick="RemoveTimeOfDay(@time.id)" class="delete_schedule">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                            <input type="hidden" value="@Model.ExpertInformationId" id="expId" />
+                            <!-- /Schedule Content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script>
+
+    var dayId = 0;
+    var startMatches = [];
+    var finishMatches = [];
+
+    function AddDay() {
+        var addDayData = new FormData();
+
+        addDayData.append("date", $("#availabilityDate").val());
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddDay", "Availabilities")',
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            cache: false,
+            data: addDayData,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    $(".hours-info").on('click', '.trash', function () {
+        $(this).closest('.hours-cont').remove();
+        return false;
+    });
+
+    $(".add-newHours").on('click', function () {
+
+        var hourscontent = '<div class="row form-row hours-cont">' +
+            '<div class="col-12 col-md-10">' +
+            '<div class="row form-row">' +
+            '<div class="col-12 col-md-6">' +
+            '<div class="form-group">' +
+            '<label>زمان شروع</label>' +
+            '<div class="form-group">'+
+            '<input type="time" class="form-control startHourInput" id="endTime">'+
+            '</div>'+
+            '</div>' +
+            '</div>' +
+            '<div class="col-12 col-md-6">' +
+            '<div class="form-group">' +
+            '<label>زمان پایان</label>' +
+            '<div class="form-group">'+
+            '<input type="time" class="form-control finishHourInput" id="endTime">'+
+            '</div>'+
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
+            '</div>';
+
+        $(".hours-info").append(hourscontent);
+        return false;
+    });
+
+    function SetId(id) {
+        dayId = id;
+    }
+
+    function AddHours() {
+
+        var startInputs = document.getElementsByClassName( 'startHourInput' );
+        var finishInputs = document.getElementsByClassName('finishHourInput');
+
+
+        var xForm = new FormData();
+
+        for (var i = 0; i < startInputs.length; i++) {
+
+             var startValue = startInputs.item(i).value;
+
+             startMatches.push(startValue);
+        }
+
+
+        for (var i = 0; i < finishInputs.length; i++) {
+
+            var finishValue =  finishInputs.item(i).value;
+
+            finishMatches.push(finishValue);
+        }
+        xForm.append("dayId",dayId);
+        xForm.append("expertInformationId",$("#expId").val());
+        xForm.append("start",startMatches);
+        xForm.append("finish",finishMatches);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddTimeOfDay", "Availabilities")',
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            cache: false,
+            data: xForm,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+
+    }
+
+    function RemoveTimeOfDay(id) {
+
+        swal.fire({
+                    title: 'حذف زمانبندی',
+                    text: "متخصص گرامی از حذف زمانبندی مطمئن هستید؟",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#7cacbe',
+                    confirmButtonText: 'بله ، حذف شود',
+                    cancelButtonText: 'خیر'
+                }).then((result) => {
+                    if (result.value) {
+                        var postData = {
+                            'id': id,
+                        };
+                        $.ajax({
+                            contentType: 'application/x-www-form-urlencoded',
+                            dataType: 'json',
+                            type: "POST",
+                            url: "@Url.Action("RemoveTimeOfDay", "Availabilities")",
+                            data: postData,
+                            success: function (data) {
+                                if (data.isSuccess == true) {
+                                    swal.fire(
+                                        'موفق!',
+                                        data.message,
+                                        'success'
+                                    ).then(function (isConfirm) {
+                                        location.replace("@Url.Action("Index", "Availabilities")");
+                                    });
+                                }
+                                else {
+                                    swal.fire(
+                                        'هشدار!',
+                                        data.message,
+                                        'warning'
+                                    );
+
+                                }
+                            },
+                            error: function (request, status, error) {
+                                alert(request.responseText);
+                            }
+
+                        });
+                    }
+                })
+    }
+</script>
+}
+

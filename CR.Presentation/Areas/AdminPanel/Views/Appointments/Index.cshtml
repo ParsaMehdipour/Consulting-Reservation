@@ -1,0 +1,167 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@model CR.Core.DTOs.ResultDTOs.ResultGetAllAppointmentsForAdminPanelDto
+@{
+}
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">نوبت‌دهی</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">دشبرد</a></li>
+                <li class="breadcrumb-item active">نوبت‌دهی</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <!-- Recent Orders -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="datatable table table-hover table-center mb-0">
+                        <thead>
+                            <tr>
+                                <th>نام پزشک</th>
+                                <th>تخصص</th>
+                                <th>نام مراجعه کننده</th>
+                                <th>وقت ویزیت</th>
+                                <th class="text-right">مقدار</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var appointment in Model.AppointmentForAdminDtos)
+                            {
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image"></a>
+                                            <a href="profile.html">متخصص @appointment.ExpertFullName</a>
+                                        </h2>
+                                    </td>
+                                    <td>دندان پزشک</td>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ConsumerIconSrc" alt="User Image"></a>
+                                            <a href="profile.html">@appointment.ConsumerFullName </a>
+                                        </h2>
+                                    </td>
+                                    <td> @appointment.AppointmentDate <span class="text-primary d-block">@appointment.AppointmentTime</span></td>
+                                  @*  <td>
+                                        <div class="status-toggle">
+                                            @if (appointment.AppointmentStatus == true)
+                                            {
+                                                <input onchange="ChangeStatus(@appointment.Id)" type="checkbox" id="status_@appointment.Id" class="check" checked>
+                                                <label for="status_@appointment.Id" class="checktoggle">checkbox</label>
+                                            }
+                                            else
+                                            {
+                                                <input onchange="ChangeStatus(@appointment.Id)" type="checkbox" id="status_@appointment.Id" class="check">
+                                                <label for="status_@appointment.Id" class="checktoggle">checkbox</label>
+                                            }
+                                        </div>
+                                    </td>*@
+                                    @if (appointment.AppointmentPrice == "0")
+                                    {
+                                        <td class="text-right">
+                                            رایگان
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-right">
+                                            @appointment.AppointmentPrice تومان
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /Recent Orders -->
+        <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    show-first-numbered-page="true"
+                    show-last-numbered-page="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize"
+                    gap-size="2">
+            </paging>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script>
+
+    //function ChangeStatus(id) {
+
+    //    //var changeAppointmentStatusForm = new FormData();
+
+    //    //changeAppointmentStatusForm.append("appointmentId",id);
+
+    //    //if (document.getElementById("status_" + id).checked) {
+    //    //    changeAppointmentStatusForm.append("activeStatus",true);
+    //    //} else {
+    //    //    changeAppointmentStatusForm.append("activeStatus",false);
+    //    //}
+
+    //    var activateStatus = false;
+    //    var appointmentId = id;
+
+    //    if (document.getElementById("status_" + appointmentId).checked) {
+    //        activateStatus = true;
+    //    } else {
+    //        activateStatus = false;
+    //    }
+
+
+    //    var postData = {
+    //        'appointmentId': appointmentId,
+    //        'activeStatus': activateStatus
+    //    };
+
+    //    $.ajax({
+    //        contentType: 'application/x-www-form-urlencoded',
+    //        dataType: 'json',
+    //        type: "POST",
+    //        url: 'Url.Action("ChangeAppointmentStatus", "Appointments")',
+    //        data: postData,
+    //        success: function (data) {
+    //            if (data.isSuccess == true) {
+    //                swal.fire(
+    //                    'موفق!',
+    //                    data.message,
+    //                    'success'
+    //                ).then(function (isConfirm) {
+    //                    location.reload();
+    //                });
+    //            }
+    //            else {
+    //                swal.fire(
+    //                    'هشدار!',
+    //                    data.message,
+    //                    'warning'
+    //                );
+
+    //            }
+    //        },
+    //        error: function (request, status, error) {
+    //            alert(request.responseText);
+    //        }
+    //    });
+    //}
+
+</script>
+}

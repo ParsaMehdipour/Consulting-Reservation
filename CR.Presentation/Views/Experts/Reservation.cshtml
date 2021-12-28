@@ -1,0 +1,198 @@
+﻿@using CR.Common.Convertor
+@model CR.Core.DTOs.Experts.ExpertDetailsForReservationDto
+@{
+}
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">رزرو نوبت</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">رزرو نوبت</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="booking-doc-info">
+                            <a href="doctor-profile.html" class="booking-doc-img">
+                                <img src="~/@Model.IconSrc" alt="User Image">
+                            </a>
+                            <div class="booking-info">
+                                <h4><a href="doctor-profile.html">متخصص @Model.FullName</a></h4>
+                                <div class="rating">
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="d-inline-block average-rating">35</span>
+                                </div>
+                                <p class="doc-department"><img src="~/@Model.SpecialitySrc" class="img-fluid" alt="Speciality">‌@Model.Speciality</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-6">
+                        <h4 class="mb-1">@DateTime.Now.ToShamsi()</h4>
+                        <p class="text-muted">@DateConvertor.GetDayOfWeek(@DateTime.Now)</p>
+                    </div>
+                    <div class="col-12 col-sm-8 col-md-6 text-sm-right">
+                        <div class="bookingrange btn btn-white btn-sm mb-3">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <span></span>
+                            <i class="fas fa-chevron-down ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Schedule Widget -->
+                <div class="card booking-schedule schedule-widget">
+
+                    <!-- Schedule Header -->
+                    <div class="schedule-header">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <!-- Day Slot -->
+                                <div class="day-slot">
+                                    <ul>
+                                        <li class="left-arrow">
+                                            <a href="#">
+                                                <i class="fa fa-chevron-left"></i>
+                                            </a>
+                                            @foreach (var day in Model.DayDtos)
+                                            {
+                                            <li>
+                                                <span>@day.dayOfWeek</span>
+                                                <span class="slot-date">@day.date_String</span>
+                                            </li>
+                                            }
+                                        <li class="right-arrow">
+                                            <a href="#">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- /Day Slot -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Schedule Header -->
+                    <!-- Schedule Content -->
+                    <div class="schedule-cont">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Time Slot -->
+                                <div class="time-slot">
+                                    <ul class="clearfix">
+                                        @foreach (var day in Model.DayDtos)
+                                        {
+                                            <li>
+                                                @if (day.TimeOfDayDtos.Count > 0)
+                                                {
+                                                    @foreach (var timeOfDay in day.TimeOfDayDtos)
+                                                    {
+                                                        <a class="timing" onclick="SetId(@timeOfDay.id)">
+                                                            <span>@timeOfDay.start - @timeOfDay.finish</span>
+                                                        </a>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" class="btn btn-block btn-outline-danger active">نوبتی وجود ندارد</button>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <!-- /Time Slot -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Schedule Content -->
+                    <input type="hidden" value="@Model.ExpertInformationId" id="expertInformationId"/>
+                </div>
+                <!-- /Schedule Widget -->
+                <!-- Submit Section -->
+                <div class="submit-section proceed-btn text-right">
+                    <a onclick="Checkout()" class="btn btn-primary submit-btn">ادامه فرایند خرید</a>
+                </div>
+                <!-- /Submit Section -->
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /Page Content -->
+
+@section Scripts
+{
+    <script>
+
+        var timeOfDayId = 0;
+
+        function SetId(id) {
+            timeOfDayId = id;
+        }
+
+        function Checkout() {
+            var checkoutForm = new FormData();
+
+            if (timeOfDayId === 0) {
+                swal.fire('هشدار!',
+                    'لطفا یک زمانبندی را انتخاب کنید',
+                    'warning');
+                return;
+            }
+
+            checkoutForm.append("timeOfDayId",timeOfDayId);
+            checkoutForm.append("expertInformationId",$("#expertInformationId").val());
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Index", "Checkout")',
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                cache: false,
+                data: checkoutForm,
+                success: function(data) {
+                    if (data.isSuccess == true) {
+                        swal.fire('موفقیت!',
+                            data.message,
+                            'success').then(function(isConfirm) {
+                            window.location.href = "/checkout/successful";
+                        });
+                    } else {
+                        swal.fire('هشدار!',
+                            data.message,
+                            'warning');
+                    }
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
+    </script>
+}

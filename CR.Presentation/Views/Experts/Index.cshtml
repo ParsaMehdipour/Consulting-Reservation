@@ -1,0 +1,260 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using CR.DataAccess.Enums
+@model CR.Presentation.Models.ViewModels.SearchViewModel
+@{
+}
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">جستجو</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">2245مسابقات یافت شده برای: دندانپزشک در بنگلور</h2>
+            </div>
+            <div class="col-md-4 col-12 d-md-block d-none">
+                <div class="sort-by">
+                    <span class="sort-title">مرتب سازی</span>
+                    <span class="sortby-fliter">
+                        <select class="select">
+                            <option>انتخاب</option>
+                            <option class="sorting">رتبه</option>
+                            <option class="sorting">محبوبیت</option>
+                            <option class="sorting">آخرین</option>
+                            <option class="sorting">رایگان</option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">
+                <form asp-controller="Experts" asp-action="Index">
+                <!-- Search Filter -->
+                <div class="card search-filter">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">فیلتر جستجو</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="filter-widget">
+                            <div class="cal-icon">
+                                <input type="text" class="form-control" placeholder="جستحو" name="searchKey" id="searchKey">
+                            </div>
+                        </div>
+                        <div class="filter-widget">
+                            <h4>جنسیت</h4>
+                            <div>
+                                <label class="custom_check">
+                                    <input type="checkbox" name="gender" id="gender_male" value="1">
+                                    <span class="checkmark"></span> متخصص مرد
+                                </label>
+                            </div>
+                            <div>
+                                <label class="custom_check">
+                                    <input type="checkbox" name="gender" id="gender_female" value="2">
+                                    <span class="checkmark"></span> متخصص زن
+                                </label>
+                            </div>
+                        </div>
+                        <div class="filter-widget">
+                            <h4> متخصص را انتخاب کنید </h4>
+                            @foreach (var speciality in Model.Specialities)
+                            {
+                                <div>
+                                    <label class="custom_check">
+                                        <input type="checkbox" name="speciality" id="speciality" value="@speciality">
+                                        <span class="checkmark"></span> @speciality
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                        <div class="btn-search">
+                            <button type="submit" class="btn btn-block">جستجو</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Search Filter -->
+                </form>
+            </div>
+
+            <div class="col-md-12 col-lg-8 col-xl-9">
+
+                @foreach (var expert in Model.ResultGetExpertsForSiteDto.ExpertForSiteDtos)
+                {
+                    <!-- Doctor Widget -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="doctor-widget">
+                                <div class="doc-info-left">
+                                    <div class="doctor-img">
+                                        <a href="doctor-profile.html">
+                                            <img src="~/@expert.IconSrc" class="img-fluid" alt="User Image">
+                                        </a>
+                                    </div>
+                                    <div class="doc-info-cont">
+                                        <h4 class="doc-name"><a href="doctor-profile.html">متخصص @expert.FullName</a></h4>
+                                        <p class="doc-speciality"> @expert.Bio </p>
+                                        <h5 class="doc-department">
+
+                                            <img src="~/@expert.SpecialitySrc"
+                                             class="img-fluid" alt="Speciality">@expert.Speciality
+
+                                        </h5>
+                                        <div class="rating">
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star"></i>
+                                            <span class="d-inline-block average-rating">(@expert.RateCount)</span>
+                                        </div>
+                                        <div class="clinic-details">
+                                            <p class="doc-location"><i class="fas fa-map-marker-alt"></i> @expert.City، @expert.Province</p>
+                                            <ul class="clinic-gallery">
+                                                <li>
+                                                    <a href="~/assets/img/features/feature-01.jpg" data-fancybox="gallery">
+                                                        <img src="~/assets/img/features/feature-01.jpg" alt="Feature">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="assets/img/features/feature-02.jpg" data-fancybox="gallery">
+                                                        <img src="~/assets/img/features/feature-02.jpg" alt="Feature">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="assets/img/features/feature-03.jpg" data-fancybox="gallery">
+                                                        <img src="~/assets/img/features/feature-03.jpg" alt="Feature">
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="assets/img/features/feature-04.jpg" data-fancybox="gallery">
+                                                        <img src="~/assets/img/features/feature-04.jpg" alt="Feature">
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="clinic-services">
+                                            @foreach (var tag in expert.Tags)
+                                            {
+                                                <span>@tag</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="doc-info-right">
+                                    <div class="clini-infos">
+                                        <ul>
+                                            <li><i class="far fa-thumbs-up"></i> 98%</li>
+                                            <li><i class="far fa-comment"></i> @expert.RateCount فید بک </li>
+                                            <li><i class="fas fa-map-marker-alt"></i> @expert.City، @expert.Province</li>
+                                            @if (@expert.Price != 0)
+                                            {
+                                                <li>
+                                                    <i class="far fa-money-bill-alt"></i> @expert.Price?.ToString("n0") تومان <i class="fas fa-info-circle"
+                                                                                                                         data-toggle="tooltip" title="Lorem Ipsum"></i>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <i class="far fa-money-bill-alt"></i> رایگان <i class="fas fa-info-circle"
+                                                                                            data-toggle="tooltip" title="Lorem Ipsum"></i>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <div class="clinic-booking">
+                                        <a class="view-pro-btn" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">مشاهده پروفایل</a>
+                                        @if (@expert.HasTimeOfDays == true)
+                                        {
+                                            <a class="apt-btn" asp-controller="Experts" asp-action="Reservation" asp-route-expertInformationId="@expert.expertInformationId">رزرو نوبت</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="apt-btn" style="background-color: red">نوبتی جهت رزرو وجود ندارد</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Doctor Widget -->
+                }
+                <div class="text-center">
+                    <paging total-records="Model.ResultGetExpertsForSiteDto.RowCount"
+                            page-no="Model.ResultGetExpertsForSiteDto.CurrentPage"
+                            page-size="Model.ResultGetExpertsForSiteDto.PageSize"
+                            show-prev-next="true"
+                            show-total-pages="false"
+                            show-total-records="false"
+                            show-page-size-nav="true"
+                            show-first-numbered-page="true"
+                            show-last-numbered-page="true"
+                            query-string-key-page-no="Page"
+                            query-string-key-page-size="PageSize"
+                            gap-size="2">
+                    </paging>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- /Page Content -->
+@*@section Scripts
+{
+<script>
+
+    function Search() {
+        var searchForm = new FormData();
+
+        if (document.getElementById("gender_male").checked === true) {
+            searchForm.append("gender",1);
+        }
+        else if(document.getElementById("gender_female").checked === true) {
+            searchForm.append("gender",2);
+        }
+
+        searchForm.append("searchKey",$("#searchKey").val());
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("Index", "Experts")',
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            cache: false,
+            data: searchForm,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success');
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+
+    }
+
+</script>
+}*@

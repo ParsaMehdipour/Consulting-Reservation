@@ -1,0 +1,192 @@
+﻿@using CR.DataAccess.Enums
+@model CR.Core.DTOs.Users.RegisterExpertFromAdminDto
+@{
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title"> ثبت متخصص </h4>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">اطلاعات شخصی</h4>
+                <form id="registerExpertForm">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">نام</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="firstName" id="firstName" name="firstName">
+                                    <span asp-validation-for="firstName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">نام خانوادگی</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="lastName" id="lastName" name="lastName">
+                                    <span asp-validation-for="lastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">جنسیت</label>
+                                <div class="col-lg-9">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="gender_male">
+                                        <label class="form-check-label" for="gender_male">
+                                            مرد
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="gender_female" >
+                                        <label class="form-check-label" for="gender_female">
+                                            زن
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+@*                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">گروه خونی</label>
+                                <div class="col-lg-9">
+                                    <select class="select">
+                                        <option>انتخاب</option>
+                                        <option value="1">A+</option>
+                                        <option value="2">O+</option>
+                                        <option value="3">B+</option>
+                                        <option value="4">AB+</option>
+                                    </select>
+                                </div>
+                            </div>*@
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">شماره تماس </label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
+                                    <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                                    <small class="form-text text-muted">توجه: شماره تماس متخصص همان نام کاربری اوست</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">ایمیل</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="email" id="email" name="email">
+                                    <span asp-validation-for="email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">رمزعبور</label>
+                                <div class="col-lg-9">
+                                    <input type="password" class="form-control" asp-for="password" id="password" name="password">
+                                    <span asp-validation-for="password" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">تکرار رمزعبور</label>
+                                <div class="col-lg-9">
+                                    <input type="password" class="form-control" asp-for="confirmPassword" id="confirmPassword" name="confirmPassword">
+                                    <span asp-validation-for="confirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="card-title">آدرس</h4>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">آدرس</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
+                                    <span asp-validation-for="specificAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">استان</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="province" id="province" name="province">
+                                    <span asp-validation-for="province" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">شهر</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="city" id="city" name="city">
+                                    <span asp-validation-for="city" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">کدپستی</label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
+                                    <span asp-validation-for="postalCode" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <button onclick="RegisterExpert()" type="submit" class="btn btn-primary"> ارسال</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        function RegisterExpert() {
+            if ($("#registerExpertForm").valid()) {
+
+                var formData = new FormData();
+
+                formData.append("firstName", $("#registerExpertForm #firstName").val());
+                formData.append("lastName", $("#registerExpertForm #lastName").val());
+                formData.append("phoneNumber", $("#registerExpertForm #phoneNumber").val());
+                formData.append("email", $("#registerExpertForm #email").val());
+                formData.append("password", $("#registerExpertForm #password").val());
+                formData.append("specificAddress", $("#registerExpertForm #specificAddress").val());
+                formData.append("province", $("#registerExpertForm #province").val());
+                formData.append("city", $("#registerExpertForm #city").val());
+                formData.append("postalCode", $("#registerExpertForm #postalCode").val());
+
+
+                if (document.getElementById("gender_male").checked === true) {
+                    var result = formData.append("gender", 0);
+                }
+
+                if (document.getElementById("gender_female").checked === true) {
+                    formData.append("gender", 1);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddNewExpert", "Experts")',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    cache: false,
+                    data: formData,
+                    success: function(data) {
+                        if (data.isSuccess == true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        } else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning');
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+        }
+    </script>
+}

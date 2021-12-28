@@ -1,0 +1,303 @@
+﻿@model CR.Core.DTOs.Experts.ExpertDetailsForAdminDto
+@{
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col">
+            <h3 class="page-title">پروفایل</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item active">پروفایل</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="profile-header">
+            <div class="row align-items-center">
+                <div class="col-auto profile-image">
+                    <a href="#">
+                        <img class="rounded-circle" alt="User Image" src="~/@Model.iconSrc">
+                    </a>
+                </div>
+                <div class="col ml-md-n2 profile-user-info">
+                    <h4 class="user-name mb-0">@Model?.firstName @Model?.lastName</h4>
+                    <h6 class="text-muted">@Model?.email</h6>
+                    <div class="user-Location"><i class="fa fa-map-marker"></i> @Model?.province ، @Model?.city</div>
+                    <div class="about-text">@Model?.bio</div>
+                </div>
+                <div class="col-auto profile-btn">
+
+                    <a href="#" class="btn btn-primary">
+                        ویرایش
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="profile-menu">
+            <ul class="nav nav-tabs nav-tabs-solid">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#per_details_tab">درباره ما</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#password_tab">رمزعبور</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content profile-tab-cont">
+
+            <!-- Personal Details Tab -->
+            <div class="tab-pane fade show active" id="per_details_tab">
+
+                <!-- Personal Details -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title d-flex justify-content-between">
+                                    <span> مشخصات شخصی</span>
+                                    <a class="edit-link" data-toggle="modal" href="#edit_personal_details"><i class="fa fa-edit mr-1"></i> ویرایش </a>
+                                </h5>
+                                <div class="row">
+                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">نقش</p>
+                                    <p class="col-sm-10">متخصص</p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">نام</p>
+                                    <p class="col-sm-10">@Model?.firstName</p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">نام خانوادگی</p>
+                                    <p class="col-sm-10">@Model?.lastName</p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">تاریخ تولد</p>
+                                    <p class="col-sm-10">@Model?.birthDate</p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">ایمیل</p>
+                                    <p class="col-sm-10">@Model?.email</p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">موبایل</p>
+                                    <p class="col-sm-10">@Model?.phoneNumber</p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-sm-2 text-muted text-sm-right mb-0">استان</p>
+                                    <p class="col-sm-10">
+                                        @Model?.province
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-sm-2 text-muted text-sm-right mb-0">شهر</p>
+                                    <p class="col-sm-10">
+                                        @Model?.city
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-sm-2 text-muted text-sm-right mb-0">آدرس</p>
+                                    <p class="col-sm-10">
+                                        @Model?.specificAddress
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-sm-2 text-muted text-sm-right mb-0">کد پستی</p>
+                                    <p class="col-sm-10">
+                                        @Model?.postalCode
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Edit Details Modal -->
+                        <div class="modal fade" id="edit_personal_details" aria-hidden="true" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"> مشخصات شخصی</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="editExpertDetailsFromAdminForm">
+                                            <div class="row form-row">
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>نام</label>
+                                                        <input type="text" class="form-control" asp-for="firstName" id="firstName" name="firstName">
+                                                        <span asp-validation-for="firstName" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>نام خانوادگی</label>
+                                                        <input type="text" class="form-control" asp-for="lastName" id="lastName" name="lastName">
+                                                        <span asp-validation-for="lastName" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label>تاریخ تولد</label>
+                                                        <div class="cal-icon">
+                                                            <input type="text" class="form-control" asp-for="birthDate" id="birthDate" name="birthDate">
+                                                            <span asp-validation-for="birthDate" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>ایمیل</label>
+                                                        <input type="email" class="form-control" asp-for="email" id="email" name="email">
+                                                        <span asp-validation-for="email" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>موبایل</label>
+                                                        <input type="text" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber" class="form-control">
+                                                        <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <h5 class="form-title"><span>آدرس</span></h5>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label>آدرس</label>
+                                                        <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
+                                                        <span asp-validation-for="specificAddress" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>شهر</label>
+                                                        <input type="text" class="form-control" asp-for="city" id="city" name="city">
+                                                        <span asp-validation-for="city" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>استان</label>
+                                                        <input type="text" class="form-control" asp-for="province" id="province" name="province">
+                                                        <span asp-validation-for="province" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>کد پستی</label>
+                                                        <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
+                                                        <span asp-validation-for="postalCode" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" value="@Model.expertInformationId" id="expertInformationId"/>
+                                            <button onclick="Edit()" type="submit" class="btn btn-primary btn-block">ذخیره تغییرات</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Edit Details Modal -->
+
+                    </div>
+
+
+                </div>
+                <!-- /Personal Details -->
+
+            </div>
+            <!-- /Personal Details Tab -->
+            <!-- Change Password Tab -->
+            <div id="password_tab" class="tab-pane fade">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">‌تغییر رمز عبور</h5>
+                        <div class="row">
+                            <div class="col-md-10 col-lg-6">
+                                <form>
+                                    <div class="form-group">
+                                        <label>رمزعبور قبل</label>
+                                        <input type="password" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>رمزعبور جدید</label>
+                                        <input type="password" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>تایید رمزعبور</label>
+                                        <input type="password" class="form-control">
+                                    </div>
+                                    <button onclick="Edit()" class="btn btn-primary" type="submit">ذخیره تغییرات</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Change Password Tab -->
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+
+        function Edit() {
+            if ($("#editExpertDetailsFromAdminForm").valid()) {
+
+                var editData = new FormData();
+
+                editData.append("firstName", $("#editExpertDetailsFromAdminForm #firstName").val());
+                editData.append("lastName", $("#editExpertDetailsFromAdminForm #lastName").val());
+                editData.append("birthDate", $("#editExpertDetailsFromAdminForm #birthDate").val());
+                editData.append("email", $("#editExpertDetailsFromAdminForm #email").val());
+                editData.append("phoneNumber", $("#editExpertDetailsFromAdminForm #phoneNumber").val());
+                editData.append("specificAddress", $("#editExpertDetailsFromAdminForm #specificAddress").val());
+                editData.append("province", $("#editExpertDetailsFromAdminForm #province").val());
+                editData.append("city", $("#editExpertDetailsFromAdminForm #city").val());
+                editData.append("postalCode", $("#editExpertDetailsFromAdminForm #postalCode").val());
+                editData.append("expertInformationId", $("#editExpertDetailsFromAdminForm #expertInformationId").val());
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("EditExpertDetails", "Experts")',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    cache: false,
+                    data: editData,
+                    success: function(data) {
+                        if (data.isSuccess == true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        } else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning');
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+
+            }
+        }
+
+
+    </script>
+}

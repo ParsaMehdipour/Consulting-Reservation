@@ -1,0 +1,349 @@
+﻿@using CR.DataAccess.Entities.Users
+@inject Microsoft.AspNetCore.Identity.SignInManager<User> SignInManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>داک‌کیور</title>
+
+    <!-- Favicons -->
+    <link type="image/x-icon" href="~/assets/img/favicon.png" rel="icon">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap-rtl/css/bootstrap.min.css">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="assets/js/html5shiv.min.js"></script>
+        <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- Header -->
+        <header class="header">
+            <nav class="navbar navbar-expand-lg header-nav">
+                <div class="navbar-header">
+                    <a id="mobile_btn" href="javascript:void(0);">
+                        <span class="bar-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand logo">
+                        <img src="~/assets/img/logo.png" class="img-fluid" alt="Logo">
+                    </a>
+                </div>
+                <div class="main-menu-wrapper">
+                    <div class="menu-header">
+                        <a href="index.html" class="menu-logo">
+                            <img src="~/assets/img/logo.png" class="img-fluid" alt="Logo">
+                        </a>
+                        <a id="menu_close" class="menu-close" href="javascript:void(0);">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </div>
+                    <ul class="main-nav">
+                        <li class="active">
+                            <a href="/">خانه</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">پزشک‌ها<i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a asp-area="ExpertPanel" asp-controller="Home" asp-action="Index">دشبرد پزشک</a></li>
+                                @*<li><a href="appointments.html">نوبت‌دهی</a></li>*@
+                                <li><a asp-area="ExpertPanel" asp-controller="Availabilities" asp-action="Index">زمان‌بندی</a></li>
+                                @*<li><a href="my-patients.html">لیست بیماران</a></li>
+                                <li><a href="patient-profile.html">پروفایل بیماران</a></li>*@
+                                @*<li><a href="chat-doctor.html">چت</a></li>
+                                <li><a href="invoices.html">صورت‌حساب</a></li>*@
+                                <li><a asp-area="ExpertPanel" asp-controller="Profile" asp-action="Index">تنظیمات پروفایل</a></li>
+                                @*<li><a href="reviews.html">نظرات</a></li>*@
+                                <li><a asp-controller="Account" asp-action="ExpertSignup" asp-area="">ثبت‌نام پزشک</a></li>
+                               @* <li class="has-submenu">
+                                    <a href="doctor-blog.html">بلاگ</a>
+                                    <ul class="submenu">
+                                        <li><a href="doctor-blog.html">بلاگ</a></li>
+                                        <li><a href="blog-details.html">مشاهده بلاگ</a></li>
+                                        <li><a href="doctor-add-blog.html">افزودن بلاگ</a></li>
+                                    </ul>
+                                </li>*@
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">مراجعه‌کنندگان<i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li class="has-submenu">
+                                    <a asp-controller="Experts" asp-action="Index">پزشکان</a>
+                                   @* <ul class="submenu">
+                                        <li><a href="map-grid.html">گرید نقشه</a></li>
+                                        <li><a href="map-list.html">لیست نقشه</a></li>
+                                    </ul>*@
+                                </li>
+                                <li><a asp-controller="Experts" asp-action="Index">جستجو پزشک</a></li>
+@*                                <li><a href="doctor-profile.html">پروفایل پزشک</a></li>
+                                <li><a href="booking.html">رزرو نوبت</a></li>
+                                <li><a href="checkout.html">پرداخت</a></li>
+                                <li><a href="booking-success.html">رزرو موفق</a></li>*@
+                                <li><a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Index">دشبرد مراجعه‌کننده</a></li>
+                                @*<li><a href="favourites.html">‌علاقه‌مندیها</a></li>
+                                <li><a href="chat.html">چت</a></li>*@
+                                <li><a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Profile">تنظیمات پروفایل</a></li>
+                                <li><a asp-area="ConsumerPanel" asp-controller="Home" asp-action="ResetPassword">‌تغییر رمز عبور</a></li>
+                            </ul>
+                        </li>
+                      @*  <li class="has-submenu">
+                            <a href="#">‌داروخانه<i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="pharmacy-index.html">‌داروخانه</a></li>
+                                <li><a href="pharmacy-details.html">‌جزییات داروخانه</a></li>
+                                <li><a href="pharmacy-search.html">‌جستجو داروخانه</a></li>
+                                <li><a href="product-all.html">‌محصولات</a></li>
+                                <li><a href="product-description.html">توضیحات محصول</a></li>
+                                <li><a href="cart.html">‌سبد خرید</a></li>
+                                <li><a href="product-checkout.html">‌خرید محصولات</a></li>
+                                <li><a href="payment-success.html">‌پرداخت موفق</a></li>
+                            </ul>
+                        </li>*@
+                      @*  <li class="has-submenu">
+                            <a href="#">‌صفحات<i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="voice-call.html">‌تماس صوتی</a></li>
+                                <li><a href="video-call.html">‌تماس تصویری</a></li>
+                                <li><a href="search.html">‌جستجو پزشک</a></li>
+                                <li><a href="calendar.html">‌تقویم</a></li>
+
+                                <li><a href="components.html">‌کامپوننت‌ها</a></li>
+                                <li class="has-submenu">
+                                    <a href="invoices.html">صورت‌حساب</a>
+                                    <ul class="submenu">
+                                        <li><a href="invoices.html">صورت‌حساب</a></li>
+                                        <li><a href="invoice-view.html">‌مشاهده صورت‌حساب</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="blank-page.html">‌صفحه شروع</a></li>
+                                <li><a href="login.html">‌ورود</a></li>
+                                <li><a href="register.html">‌ثبت‌نام</a></li>
+                                <li><a href="forgot-password.html">‌فراموشی رمزعبور</a></li>
+                            </ul>
+                        </li>*@
+                      @*  <li class="has-submenu">
+                            <a href="#">‌بلاگ<i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="blog-list.html">‌لیست بلاگ</a></li>
+                                <li><a href="blog-grid.html">‌گرید بلاگ</a></li>
+                                <li><a href="blog-details.html">‌جزییات بلاگ</a></li>
+                            </ul>
+                        </li>*@
+                        <li class="has-submenu">
+                            <a href="#" target="_blank">ادمین<i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a asp-area="AdminPanel" asp-controller="Home" asp-action="Index" target="_blank">‌ادمین</a></li>
+                                @*<li><a href="pharmacy/index.html" target="_blank">ادمین داروخانه</a></li>*@
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+                <ul class="nav header-navbar-rht">
+                    <li class="nav-item contact-item">
+                        <div class="header-contact-img">
+                            <i class="far fa-hospital"></i>
+                        </div>
+                        <div class="header-contact-detail">
+                            <p class="contact-header">‌تماس با ما</p>
+                            <p class="contact-info-header"> +1 315 369 5943</p>
+                        </div>
+                    </li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-block btn-outline-danger" asp-controller="Account" asp-action="Logout">خروج</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link header-login" asp-controller="Account" asp-action="Login">ورود / ثبت‌نام</a>
+                        </li>
+                    }
+
+                </ul>
+            </nav>
+        </header>
+        <!-- /Header -->
+        @RenderBody()
+
+        <!-- Footer -->
+        <footer class="footer">
+
+            <!-- Footer Top -->
+            <div class="footer-top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+
+                            <!-- Footer Widget -->
+                            <div class="footer-widget footer-about">
+                                <div class="footer-logo">
+                                    <img src="assets/img/footer-logo.png" alt="logo">
+                                </div>
+                                <div class="footer-about-content">
+                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                                    <div class="social-icon">
+                                        <ul>
+                                            <li>
+                                                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                                            </li>
+                                            <li>
+                                                <a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Footer Widget -->
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <!-- Footer Widget -->
+                            <div class="footer-widget footer-menu">
+                                <h2 class="footer-title">برای مراجعه‌کنندگان</h2>
+                                <ul>
+                                    <li><a href="search.html">جستجو پزشکان</a></li>
+                                    <li><a href="login.html">‌ورود</a></li>
+                                    <li><a href="register.html">‌ثبت‌نام</a></li>
+                                    <li><a href="booking.html">رزرو نوبت</a></li>
+                                    <li><a href="/ConsumerPanel">دشبرد مراجعه‌کننده</a></li>
+                                </ul>
+                            </div>
+                            <!-- /Footer Widget -->
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <!-- Footer Widget -->
+                            <div class="footer-widget footer-menu">
+                                <h2 class="footer-title">برای پزشکان</h2>
+                                <ul>
+                                    <li><a href="appointments.html">نوبت‌دهی</a></li>
+                                    <li><a href="chat.html">چت</a></li>
+                                    <li><a href="login.html">‌ورود</a></li>
+                                    <li><a href="doctor-register.html">‌ثبت‌نام</a></li>
+                                    <li><a href="/expertpanel">دشبرد پزشک</a></li>
+                                </ul>
+                            </div>
+                            <!-- /Footer Widget -->
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <!-- Footer Widget -->
+                            <div class="footer-widget footer-contact">
+                                <h2 class="footer-title">ارتباط با ما</h2>
+                                <div class="footer-contact-info">
+                                    <div class="footer-address">
+                                        <span><i class="fas fa-map-marker-alt"></i></span>
+                                        <p> خیابان مطهری، برج مینا<br> طبقه 5 واحد 54 </p>
+                                    </div>
+                                    <p>
+                                        <i class="fas fa-phone-alt"></i>
+                                        +98 911 900 7106
+                                    </p>
+                                    <p class="mb-0">
+                                        <i class="fas fa-envelope"></i>
+                                        doccure@example.com
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- /Footer Widget -->
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /Footer Top -->
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="container-fluid">
+
+                    <!-- Copyright -->
+                    <div class="copyright">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="copyright-text">
+                                    <p class="mb-0">&copy; تمامی حقوق این وبسایت متعلق به فروشگاه چاله چوله میباشد.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+
+                                <!-- Copyright Menu -->
+                                <div class="copyright-menu">
+                                    <ul class="policy-menu">
+                                        <li><a href="term-condition.html">شرایط و مقررات</a></li>
+                                        <li><a href="privacy-policy.html">حریم شخصی</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /Copyright Menu -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Copyright -->
+
+                </div>
+            </div>
+            <!-- /Footer Bottom -->
+
+        </footer>
+        <!-- /Footer -->
+
+    </div>
+    <!-- /Main Wrapper -->
+    <!-- jQuery -->
+    <script src="~/assets/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="~/assets/js/popper.min.js"></script>
+    <script src="~/assets/plugins/bootstrap-rtl/js/bootstrap.min.js"></script>
+
+    <!-- Slick JS -->
+    <script src="~/assets/js/slick.js"></script>
+
+    <!-- Custom JS -->
+    <script src="~/assets/js/script.js"></script>
+
+    <!-- Sweet Alert JS -->
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
