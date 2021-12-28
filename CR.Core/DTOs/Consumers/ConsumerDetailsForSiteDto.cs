@@ -21,6 +21,8 @@ namespace CR.Core.DTOs.Consumers
 
         public DateTime birthDate { get; set; }
 
+        public GenderType gender { get; set; }
+
         [Required(ErrorMessage = "گروه خونی را وارد کنید")]
         public string bloodType { get; set; }
 

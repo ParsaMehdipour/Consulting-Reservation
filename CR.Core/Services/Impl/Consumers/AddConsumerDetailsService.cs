@@ -8,6 +8,7 @@ using System.Linq;
 using CR.Common.Convertor;
 using CR.Core.DTOs.Images;
 using CR.Core.Services.Interfaces.Images;
+using CR.DataAccess.Enums;
 
 namespace CR.Core.Services.Impl.Consumers
 {
@@ -54,6 +55,15 @@ namespace CR.Core.Services.Impl.Consumers
                     ConsumerId = request.consumerId,
                     Consumer = consumer,
                 };
+
+                if (request.gender != 0)
+                {
+                    consumerInformation.Gender = request.gender;
+                }
+                else
+                {
+                    consumerInformation.Gender = GenderType.Male;
+                }
 
                 if (request.iconImage != null)
                 {

@@ -42,6 +42,7 @@ namespace CR.Core.Services.Impl.Consumers
                     phoneNumber = consumer.PhoneNumber.GetPersianNumber(),
                     email = consumer.Email,
                     birthDate = consumerInformation.BirthDate,
+                    gender = consumerInformation.Gender
                 };
 
                 return new ResultDto<ResultGetConsumerDetailsForSiteDto>

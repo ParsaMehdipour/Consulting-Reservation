@@ -1,4 +1,5 @@
 ﻿using System;
+using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Http;
 
 namespace CR.Core.DTOs.RequestDTOs
@@ -19,5 +20,6 @@ namespace CR.Core.DTOs.RequestDTOs
         public long ConsumerInformationId { get; set; }
         public long ConsumerId { get; set; }
         public string Email { get; set; }
+        public GenderType gender { get; set; }
     }
 }

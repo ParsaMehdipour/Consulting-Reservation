@@ -1,4 +1,5 @@
 ﻿@using CR.Core.DTOs.Consumers
+@using CR.DataAccess.Enums
 @model ConsumerDetailsForSiteDto
 @{
     Layout = "_ConsumerLayout";
@@ -86,13 +87,24 @@
                         <span asp-validation-for="phoneNumber" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>آدرس</label>
                         <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
                         <span asp-validation-for="specificAddress" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>جنسیت</label>
+                        <select class="form-control select" id="gender" asp-for="gender">
+                            <option>انتخاب</option>
+                            <option value="@GenderType.Male">مرد</option>
+                            <option value="@GenderType.Female">زن</option>
+                        </select>
+                    </div>
+                </div>
+              
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>شهر</label>
@@ -142,6 +154,7 @@
         if ($("#consumerProfileForm").valid()) {
 
         var select = document.getElementById('bloodType');
+        var genderSelect = document.getElementById('gender')
 
         var addConsumerProfileForm = new FormData();
 
@@ -156,7 +169,7 @@
         addConsumerProfileForm.append("province",$("#consumerProfileForm #province").val());
         addConsumerProfileForm.append("postalCode",$("#consumerProfileForm #postalCode").val());
         addConsumerProfileForm.append("iconImage",$("#consumerProfileForm #iconImage").get(0).files[0]);
-
+        addConsumerProfileForm.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
 
         $.ajax({
             type: 'POST',
@@ -191,6 +204,7 @@
         if ($("#consumerProfileForm").valid()) {
 
         var select = document.getElementById('bloodType');
+        var genderSelect = document.getElementById('gender');
 
         var editConsumerProfileForm = new FormData();
 
@@ -206,6 +220,7 @@
         editConsumerProfileForm.append("postalCode",$("#consumerProfileForm #postalCode").val());
         editConsumerProfileForm.append("consumerInformationId",id);
         editConsumerProfileForm.append("iconImage",$("#consumerProfileForm #iconImage").get(0).files[0]);
+        editConsumerProfileForm.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
 
 
 
