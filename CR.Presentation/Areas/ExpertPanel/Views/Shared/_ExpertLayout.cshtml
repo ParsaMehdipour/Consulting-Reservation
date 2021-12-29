@@ -79,7 +79,7 @@
                             <a href="#">پزشک‌ها<i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu">
                                 <li><a asp-area="ExpertPanel" asp-controller="Home" asp-action="Index">دشبرد پزشک</a></li>
-                                <li><a href="appointments.html">نوبت‌دهی</a></li>
+                                <li><a asp-area="ExpertPanel" asp-controller="Appointments" asp-action="Index">نوبت‌دهی</a></li>
                                 <li><a asp-area="ExpertPanel" asp-controller="Availabilities" asp-action="Index">زمان‌بندی</a></li>
                                 @*  <li><a href="my-patients.html">لیست بیماران</a></li>
                                     <li><a href="patient-profile.html">پروفایل بیماران</a></li>
@@ -265,7 +265,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="appointments.html">
+                                            <a asp-controller="Appointments" asp-action="Index">
                                                 <i class="fas fa-calendar-check"></i>
                                                 <span>نوبت‌دهی</span>
                                             </a>
@@ -308,19 +308,13 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="social-media.html">
-                                                <i class="fas fa-share-alt"></i>
-                                                <span>شبکه‌های اجتماعی</span>
-                                            </a>
-                                        </li>
-                                        <li>
                                             <a asp-controller="Account" asp-action="Index">
                                                 <i class="fas fa-lock"></i>
                                                 <span>‌تغییر رمز عبور</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="index.html">
+                                            <a asp-area="" asp-controller="Account" asp-action="Logout">
                                                 <i class="fas fa-sign-out-alt"></i>
                                                 <span>خروج</span>
                                             </a>

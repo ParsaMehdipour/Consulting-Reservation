@@ -137,11 +137,12 @@ namespace CR.Presentation
             services.AddScoped<IGetSpecialtiesForExpertProfileDropDownService, GetSpecialtiesForExpertProfileDropDownService>();
             services.AddScoped<IGetSpecialitiesForPresentationService, GetSpecialitiesForPresentationService>();
             services.AddScoped<IGetSpecialitiesForSearchService, GetSpecialitiesForSearchService>();
-            //Appointment
+            //Appointments
             services.AddScoped<IAddAppointmentService, AddAppointmentService>();
             services.AddScoped<IGetAllAppointmentsForAdminPanelService, GetAllAppointmentsForAdminPanelService>();
             services.AddScoped<IChangeAppointmentStatusService, ChangeAppointmentStatusService>();
             services.AddScoped<IGetAllAppointmentsForConsumerPanelService, GetAllAppointmentsForConsumerPanelService>();
+            services.AddScoped<IGetAllAppointmentsForExpertPanelService, GetAllAppointmentsForExpertPanelService>();
             //Images
             services.AddScoped<IImageUploaderService, ImageUploaderService>();
             //Statistics

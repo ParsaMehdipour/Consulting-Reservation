@@ -57,7 +57,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             {
                 ResultGetTodayConsumersForExpertDashboardDto = _getTodayConsumersForExpertDashboardService
                     .Execute(expertId, page, pageSize).Data,
-                ResultGetIncomingConsumersForExpertDashboardDto = _getIncomingConsumersForExpertDashboardService.Execute(expertId).Data,
+                ResultGetIncomingConsumersForExpertDashboardDto = _getIncomingConsumersForExpertDashboardService.Execute(expertId,page,pageSize).Data,
                 StatisticsForExpertPanelDto = _getStatisticsForExpertPanelService.Execute(expertId)
             };
 

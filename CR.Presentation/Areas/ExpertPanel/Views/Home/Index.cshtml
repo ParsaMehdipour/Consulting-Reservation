@@ -1,4 +1,5 @@
-﻿@using CR.Common.Convertor
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using CR.Common.Convertor
 @model CR.Presentation.Areas.ExpertPanel.Models.ViewModels.ExpertPanelDashboardViewModel
 @{
 }
@@ -93,50 +94,50 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover table-center mb-0">
                                         <thead>
-                                            <tr>
-                                                <th>نام مراجعه کننده</th>
-                                                <th>تاریخ نوبت</th>
-                                                <th>نوع</th>
-                                                <th class="text-center">مقدار پرداختی</th>
-                                                <th></th>
-                                            </tr>
+                                        <tr>
+                                            <th>نام مراجعه کننده</th>
+                                            <th>تاریخ نوبت</th>
+                                            <th>نوع</th>
+                                            <th class="text-center">مقدار پرداختی</th>
+                                            <th></th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var consumer in Model.ResultGetIncomingConsumersForExpertDashboardDto.ConsumerForExpertDashboardDtos)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            <a href="patient-profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.ConsumerIconSrc" alt="User Image"></a>
-                                                            <a href="patient-profile.html">@consumer.FullName <span>@consumer.ConsumerId</span></a>
-                                                        </h2>
-                                                    </td>
-                                                    <td>@consumer.AppointmentDate<span class="d-block text-info">@consumer.AppointmentTime</span></td>
-                                                    <td>@consumer.ConsumerType</td>
-                                                    @if (consumer.AppointmentPrice == "0")
-                                                    {
-                                                        <td class="text-center">رایگان</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="text-center">@consumer.AppointmentPrice تومان</td>
-                                                    }
-                                                    <td class="text-right">
-                                                        <div class="table-action">
-                                                            <a href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
-                                                                <i class="far fa-eye"></i> مشاهده
-                                                            </a>
+                                        @foreach (var consumer in Model.ResultGetIncomingConsumersForExpertDashboardDto.ConsumerForExpertDashboardDtos)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a href="patient-profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.ConsumerIconSrc" alt="User Image"></a>
+                                                        <a href="patient-profile.html">@consumer.FullName <span>@consumer.ConsumerId</span></a>
+                                                    </h2>
+                                                </td>
+                                                <td>@consumer.AppointmentDate<span class="d-block text-info">@consumer.AppointmentTime</span></td>
+                                                <td>@consumer.ConsumerType</td>
+                                                @if (consumer.AppointmentPrice == "0")
+                                                {
+                                                    <td class="text-center">رایگان</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-center">@consumer.AppointmentPrice تومان</td>
+                                                }
+                                                <td class="text-right">
+                                                    <div class="table-action">
+                                                        <a href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
+                                                            <i class="far fa-eye"></i> مشاهده
+                                                        </a>
 
-                                                            <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-                                                                <i class="fas fa-check"></i> قبول
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-                                                                <i class="fas fa-times"></i> حذف
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            }
+                                                        <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
+                                                            <i class="fas fa-check"></i> قبول
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
+                                                            <i class="fas fa-times"></i> حذف
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -146,6 +147,21 @@
                                 <h3>اطلاعاتی جهت نمایش یافت نشد</h3>
                             }
                         </div>
+                    </div><hr/>
+                    <div class="text-center">
+                        <paging total-records="Model.ResultGetIncomingConsumersForExpertDashboardDto.RowCount"
+                                page-no="Model.ResultGetIncomingConsumersForExpertDashboardDto.CurrentPage"
+                                page-size="Model.ResultGetIncomingConsumersForExpertDashboardDto.PageSize"
+                                show-prev-next="true"
+                                show-total-pages="false"
+                                show-total-records="false"
+                                show-page-size-nav="true"
+                                show-first-numbered-page="true"
+                                show-last-numbered-page="true"
+                                query-string-key-page-no="Page"
+                                query-string-key-page-size="PageSize"
+                                gap-size="2">
+                        </paging>
                     </div>
                 </div>
                 <!-- /Upcoming Appointment Tab -->
@@ -158,50 +174,50 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover table-center mb-0">
                                         <thead>
-                                            <tr>
-                                                <th>نام مراجعه کننده</th>
-                                                <th>تاریخ نوبت</th>
-                                                <th>نوع</th>
-                                                <th class="text-center">مقدار پرداختی</th>
-                                                <th></th>
-                                            </tr>
+                                        <tr>
+                                            <th>نام مراجعه کننده</th>
+                                            <th>تاریخ نوبت</th>
+                                            <th>نوع</th>
+                                            <th class="text-center">مقدار پرداختی</th>
+                                            <th></th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var consumer in Model.ResultGetTodayConsumersForExpertDashboardDto.ConsumerForExpertDashboardDtos)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        <h2 class="table-avatar">
-                                                            <a href="patient-profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.ConsumerIconSrc" alt="User Image"></a>
-                                                            <a href="patient-profile.html">@consumer.FullName <span>@consumer.ConsumerId</span></a>
-                                                        </h2>
-                                                    </td>
-                                                    <td>@consumer.AppointmentDate <span class="d-block text-info">@consumer.AppointmentTime</span></td>
-                                                    <td>@consumer.ConsumerType</td>
-                                                    @if (consumer.AppointmentPrice == "0")
-                                                    {
-                                                        <td class="text-center">رایگان</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="text-center">@consumer.AppointmentPrice تومان</td>
-                                                    }
-                                                    <td class="text-right">
-                                                        <div class="table-action">
-                                                            <a href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
-                                                                <i class="far fa-eye"></i> مشاهده
-                                                            </a>
+                                        @foreach (var consumer in Model.ResultGetTodayConsumersForExpertDashboardDto.ConsumerForExpertDashboardDtos)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a href="patient-profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.ConsumerIconSrc" alt="User Image"></a>
+                                                        <a href="patient-profile.html">@consumer.FullName <span>@consumer.ConsumerId</span></a>
+                                                    </h2>
+                                                </td>
+                                                <td>@consumer.AppointmentDate <span class="d-block text-info">@consumer.AppointmentTime</span></td>
+                                                <td>@consumer.ConsumerType</td>
+                                                @if (consumer.AppointmentPrice == "0")
+                                                {
+                                                    <td class="text-center">رایگان</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-center">@consumer.AppointmentPrice تومان</td>
+                                                }
+                                                <td class="text-right">
+                                                    <div class="table-action">
+                                                        <a href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
+                                                            <i class="far fa-eye"></i> مشاهده
+                                                        </a>
 
-                                                            <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-                                                                <i class="fas fa-check"></i> قبول
-                                                            </a>
-                                                            <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-                                                                <i class="fas fa-times"></i> حذف
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            }
+                                                        <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
+                                                            <i class="fas fa-check"></i> قبول
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
+                                                            <i class="fas fa-times"></i> حذف
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -211,6 +227,21 @@
                                 <h3>اطلاعاتی جهت نمایش موجود نیست</h3>
                             }
                         </div>
+                    </div><hr/>
+                    <div class="text-center">
+                        <paging total-records="Model.ResultGetTodayConsumersForExpertDashboardDto.RowCount"
+                                page-no="Model.ResultGetTodayConsumersForExpertDashboardDto.CurrentPage"
+                                page-size="Model.ResultGetTodayConsumersForExpertDashboardDto.PageSize"
+                                show-prev-next="true"
+                                show-total-pages="false"
+                                show-total-records="false"
+                                show-page-size-nav="true"
+                                show-first-numbered-page="true"
+                                show-last-numbered-page="true"
+                                query-string-key-page-no="Page"
+                                query-string-key-page-size="PageSize"
+                                gap-size="2">
+                        </paging>
                     </div>
                 </div>
                 <!-- /Today Appointment Tab -->
