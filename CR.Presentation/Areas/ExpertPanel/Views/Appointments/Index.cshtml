@@ -1,0 +1,62 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@model CR.Core.DTOs.ResultDTOs.ResultGetAllAppointmentsForExpertPanelDto
+@{
+}
+<div class="appointments">
+
+    @if (Model.AppointmentForExpertPanelDtos.Count > 0)
+    {
+        @foreach (var appointment in Model.AppointmentForExpertPanelDtos)
+        {
+            <!-- Appointment List -->
+            <div class="appointment-list">
+                <div class="profile-info-widget">
+                    <a href="patient-profile.html" class="booking-doc-img">
+                        <img src="~/@appointment.ConsumerIconSrc" alt="User Image">
+                    </a>
+                    <div class="profile-det-info">
+                        <h3><a href="patient-profile.html">@appointment.ConsumerFullName</a></h3>
+                        <div class="patient-details">
+                            <h4><i class="far fa-clock"></i> @appointment.AppointmentDate ، @appointment.AppointmentTime</h4>
+                            <h5><i class="fas fa-map-marker-alt"></i>@appointment.City، @appointment.Province</h5>
+                            <h5><i class="fas fa-envelope"></i> @appointment.Email</h5>
+                            <h5 class="mb-0"><i class="fas fa-phone"></i> @appointment.PhoneNumber</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="appointment-action">
+                    <a href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
+                        <i class="far fa-eye"></i> مشاهده
+                    </a>
+                    <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
+                        <i class="fas fa-check"></i> قبول
+                    </a>
+                    <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
+                        <i class="fas fa-times"></i> حذف
+                    </a>
+                </div>
+            </div>
+            <!-- /Appointment List -->
+        }
+    }
+    else
+    {
+        <h3>اطلاعاتی جهت نمایش موجود نیست</h3>
+    }
+
+</div>
+<div class="text-center">
+    <paging total-records="Model.RowCount"
+            page-no="Model.CurrentPage"
+            page-size="Model.PageSize"
+            show-prev-next="true"
+            show-total-pages="false"
+            show-total-records="false"
+            show-page-size-nav="true"
+            show-first-numbered-page="true"
+            show-last-numbered-page="true"
+            query-string-key-page-no="Page"
+            query-string-key-page-size="PageSize"
+            gap-size="2">
+    </paging>
+</div>
