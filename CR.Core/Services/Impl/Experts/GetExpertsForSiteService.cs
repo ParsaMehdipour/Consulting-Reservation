@@ -20,7 +20,7 @@ namespace CR.Core.Services.Impl.Experts
             _context = context;
         }
 
-        public ResultDto<ResultGetExpertsForSiteDto> Execute(string searchKey, string speciality, string location,GenderType gender, int Page = 1, int PageSize = 20)
+        public ResultDto<ResultGetExpertsForSiteDto> Execute(string searchKey, string speciality,GenderType gender, int Page = 1, int PageSize = 20)
         {
 
             int rowCount = 0;
@@ -38,12 +38,6 @@ namespace CR.Core.Services.Impl.Experts
                                || e.ExpertInformation.LastName.Contains(searchKey)
                                || e.ExpertInformation.Specialty.Name.Contains(searchKey)
                                || e.ExpertInformation.Tag.Contains(searchKey));
-            }
-
-            if (!string.IsNullOrWhiteSpace(location))
-            {
-                expertsQuery = expertsQuery.Where(e => e.ExpertInformation.City.Contains(location)
-                               || e.ExpertInformation.Province.Contains(location));
             }
 
             if (!string.IsNullOrWhiteSpace(speciality))

@@ -6,6 +6,6 @@ namespace CR.Core.Services.Interfaces.Experts
 {
     public interface IGetExpertsForSiteService
     {
-        ResultDto<ResultGetExpertsForSiteDto> Execute(string searchKey, string speciality, string location,GenderType gender, int Page = 1, int PageSize = 20);
+        ResultDto<ResultGetExpertsForSiteDto> Execute(string searchKey, string speciality,GenderType gender, int Page = 1, int PageSize = 20);
     }
 }

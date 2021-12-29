@@ -120,31 +120,6 @@
                                             <i class="fas fa-star"></i>
                                             <span class="d-inline-block average-rating">(@expert.RateCount)</span>
                                         </div>
-                                        <div class="clinic-details">
-                                            <p class="doc-location"><i class="fas fa-map-marker-alt"></i> @expert.City، @expert.Province</p>
-                                            <ul class="clinic-gallery">
-                                                <li>
-                                                    <a href="~/assets/img/features/feature-01.jpg" data-fancybox="gallery">
-                                                        <img src="~/assets/img/features/feature-01.jpg" alt="Feature">
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="assets/img/features/feature-02.jpg" data-fancybox="gallery">
-                                                        <img src="~/assets/img/features/feature-02.jpg" alt="Feature">
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="assets/img/features/feature-03.jpg" data-fancybox="gallery">
-                                                        <img src="~/assets/img/features/feature-03.jpg" alt="Feature">
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="assets/img/features/feature-04.jpg" data-fancybox="gallery">
-                                                        <img src="~/assets/img/features/feature-04.jpg" alt="Feature">
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
                                         <div class="clinic-services">
                                             @foreach (var tag in expert.Tags)
                                             {
@@ -156,21 +131,17 @@
                                 <div class="doc-info-right">
                                     <div class="clini-infos">
                                         <ul>
-                                            <li><i class="far fa-thumbs-up"></i> 98%</li>
                                             <li><i class="far fa-comment"></i> @expert.RateCount فید بک </li>
-                                            <li><i class="fas fa-map-marker-alt"></i> @expert.City، @expert.Province</li>
                                             @if (@expert.Price != 0)
                                             {
                                                 <li>
-                                                    <i class="far fa-money-bill-alt"></i> @expert.Price?.ToString("n0") تومان <i class="fas fa-info-circle"
-                                                                                                                         data-toggle="tooltip" title="Lorem Ipsum"></i>
+                                                    <i class="far fa-money-bill-alt"></i> @expert.Price?.ToString("n0") تومان <i class="fas fa-info-circle"data-toggle="tooltip" title="Lorem Ipsum"></i>
                                                 </li>
                                             }
                                             else
                                             {
                                                 <li>
-                                                    <i class="far fa-money-bill-alt"></i> رایگان <i class="fas fa-info-circle"
-                                                                                            data-toggle="tooltip" title="Lorem Ipsum"></i>
+                                                    <i class="far fa-money-bill-alt"></i> رایگان <i class="fas fa-info-circle"data-toggle="tooltip" title="Lorem Ipsum"></i>
                                                 </li>
                                             }
                                         </ul>

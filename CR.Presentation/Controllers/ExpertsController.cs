@@ -26,11 +26,11 @@ namespace CR.Presentation.Controllers
             _getExpertDetailsForReservationService = getExpertDetailsForReservationService;
         }
 
-        public IActionResult Index(string searchKey, string speciality, string location,GenderType gender, int page = 1, int pageSize = 20)
+        public IActionResult Index(string searchKey, string speciality,GenderType gender, int page = 1, int pageSize = 20)
         {
             var searchModel = new SearchViewModel()
             {
-                ResultGetExpertsForSiteDto = _getExpertsForSiteService.Execute(searchKey, speciality, location, gender, page, pageSize).Data,
+                ResultGetExpertsForSiteDto = _getExpertsForSiteService.Execute(searchKey, speciality, gender, page, pageSize).Data,
                 Specialities = _getSpecialitiesForSearchService.Execute()
             };
 
