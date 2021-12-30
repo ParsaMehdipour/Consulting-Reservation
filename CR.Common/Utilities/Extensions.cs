@@ -32,5 +32,31 @@ namespace CR.Common.Utilities
                 return "";
             }
         }
+
+        public static string ToEnglishNumber(this string input)
+        {
+
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                string EnglishNumbers = "";
+                for (int i = 0; i < input.Length; i++)
+                {
+                    if (Char.IsDigit(input[i]))
+                    {
+                        EnglishNumbers += char.GetNumericValue(input, i);
+                    }
+                    else
+                    {
+                        EnglishNumbers += input[i].ToString();
+                    }
+                }
+
+                return EnglishNumbers;
+            }
+            else
+            {
+                return "";
+            }
+        }
     }
 }
