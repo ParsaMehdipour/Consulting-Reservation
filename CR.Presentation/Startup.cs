@@ -143,6 +143,7 @@ namespace CR.Presentation
             services.AddScoped<IChangeAppointmentStatusService, ChangeAppointmentStatusService>();
             services.AddScoped<IGetAllAppointmentsForConsumerPanelService, GetAllAppointmentsForConsumerPanelService>();
             services.AddScoped<IGetAllAppointmentsForExpertPanelService, GetAllAppointmentsForExpertPanelService>();
+            services.AddScoped<IGetConsumerAppointmentsForExpertPanelService, GetConsumerAppointmentsForExpertPanelService>();
             //Images
             services.AddScoped<IImageUploaderService, ImageUploaderService>();
             //Statistics

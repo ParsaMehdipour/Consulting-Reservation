@@ -467,53 +467,6 @@
         </footer>
         <!-- /Footer -->
     </div>
-
-    <!-- Add Time Slot Modal -->
-    <div class="modal fade custom-modal" id="add_time_slot">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">افزودن زمانبندی</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="hours-info">
-                        <div class="row form-row hours-cont">
-                            <div class="col-12 col-md-10">
-                                <div class="row form-row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label>زمان شروع</label>
-                                            <div class="form-group">
-                                                <input type="time" class="form-control startHourInput">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label>زمان پایان</label>
-                                            <div class="form-group">
-                                                <input type="time" class="form-control finishHourInput">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="add-more mb-3">
-                        <a href="javascript:void(0);" class="add-newHours"><i class="fa fa-plus-circle"></i> افزودن</a>
-                    </div>
-                    <div class="submit-section text-center">
-                        <button onclick="AddHours()" type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Add Time Slot Modal -->
     <!-- /Main Wrapper -->
     <!-- jQuery -->
     <script src="~/assets/js/jquery.min.js"></script>
@@ -599,4 +552,92 @@
         });
     </script>
 </body>
+
+<!-- Add Time Slot Modal -->
+<div class="modal fade custom-modal" id="add_time_slot">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">افزودن زمانبندی</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="hours-info">
+                    <div class="row form-row hours-cont">
+                        <div class="col-12 col-md-10">
+                            <div class="row form-row">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>زمان شروع</label>
+                                        <div class="form-group">
+                                            <input type="time" class="form-control startHourInput">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>زمان پایان</label>
+                                        <div class="form-group">
+                                            <input type="time" class="form-control finishHourInput">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-more mb-3">
+                    <a href="javascript:void(0);" class="add-newHours"><i class="fa fa-plus-circle"></i> افزودن</a>
+                </div>
+                <div class="submit-section text-center">
+                    <button onclick="AddHours()" type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add Time Slot Modal -->
+<!-- Appointment Details Modal -->
+<div class="modal fade custom-modal" id="appt_details">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">جزییات نوبت</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="info-details">
+                    <li>
+                        <div class="details-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span class="title">تاریخ و زمان نوبت:</span>
+                                    <span class="text" id="appointmentDateAndTime"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-right">
+                                        <button type="button" class="btn bg-success-light btn-sm" id="topup_status"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="title">وضعیت:</span>
+                        <span class="text" id="appointmentStatus"></span>
+                    </li>
+                    <li>
+                        <span class="title">مقدار پرداختی</span>
+                        <span class="text" id="appointmentPrice"> 450 تومان </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Appointment Details Modal -->
 </html>

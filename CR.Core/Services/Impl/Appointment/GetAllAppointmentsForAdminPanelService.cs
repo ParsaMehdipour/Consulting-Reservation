@@ -24,16 +24,17 @@ namespace CR.Core.Services.Impl.Appointment
 
             var appointments = _context.Appointments
                 .Include(a => a.ExpertInformation)
-                .ThenInclude(e=>e.Specialty)
+                .ThenInclude(e => e.Specialty)
                 .Include(a => a.ConsumerInformation)
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(d => d.Day)
                 .Select(a => new AppointmentForAdminDto
                 {
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
-                    AppointmentTime = (a.TimeOfDay.StartDate.Hour + ":" + a.TimeOfDay.StartDate.Minute).ToString() +
-                                      " - " + (a.TimeOfDay.FinishDate.Hour + ":" + a.TimeOfDay.FinishDate.Minute)
-                                      .ToString(),
+                    AppointmentTime = (a.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" +
+                                       a.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()) +
+                                      " - " + (a.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() + ":" +
+                                               a.TimeOfDay.FinishDate.Minute.ToString().GetPersianNumber()),
                     AppointmentPrice = a.TimeOfDay.Price.ToString().GetPersianNumber(),
                     AppointmentStatus = a.IsActive,
                     Speciality = a.ExpertInformation.Specialty.Name,

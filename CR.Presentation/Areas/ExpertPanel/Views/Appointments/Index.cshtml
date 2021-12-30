@@ -17,15 +17,17 @@
                     <div class="profile-det-info">
                         <h3><a href="patient-profile.html">@appointment.ConsumerFullName</a></h3>
                         <div class="patient-details">
-                            <h4><i class="far fa-clock"></i> @appointment.AppointmentDate ، @appointment.AppointmentTime</h4>
+                            <h4 id="appointmentDateAndTime"><i class="far fa-clock"></i> @appointment.AppointmentDate ، @appointment.AppointmentTime</h4>
                             <h5><i class="fas fa-map-marker-alt"></i>@appointment.City، @appointment.Province</h5>
                             <h5><i class="fas fa-envelope"></i> @appointment.Email</h5>
                             <h5 class="mb-0"><i class="fas fa-phone"></i> @appointment.PhoneNumber</h5>
+                            <input type="hidden" id="topup_status" value="@appointment.AppointmentStatus"/>
+                            <input type="hidden" id="price" value="10"/>
                         </div>
                     </div>
                 </div>
                 <div class="appointment-action">
-                    <a href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
+                    <a id="ShowDetails_@appointment.ConsumerId" onclick="ShowDetails(@appointment.ConsumerId)" href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
                         <i class="far fa-eye"></i> مشاهده
                     </a>
                     <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
@@ -60,3 +62,26 @@
             gap-size="2">
     </paging>
 </div>
+
+@section Scripts
+{
+    <script>
+
+        function ShowDetails(id) {
+            $(document).on("click", $("#ShowDetails_" + id) + id, function () {
+                var appointmentDate = $("#appointmentDateAndTime").text();
+                var topup_status = $("#topup_status").val();
+                var price = $("#price").val();
+
+                $("#appt_details #appointmentDateAndTime").text(appointmentDate);
+                $("#appt_details #topup_status").text(topup_status.toString());
+                $("#appt_details #appointmentStatus").text(topup_status.toString());
+                $("#appt_details #appointmentPrice").text(price.toString());
+                // As pointed out in comments, 
+                // it is unnecessary to have to manually call the modal.
+                // $('#addBookDialog').modal('show');
+            });
+        }
+
+    </script>
+}
