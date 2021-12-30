@@ -1,87 +1,249 @@
 ﻿@addTagHelper *, LazZiya.TagHelpers
 @model CR.Core.DTOs.ResultDTOs.ResultGetAllAppointmentsForExpertPanelDto
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="appointments">
 
-    @if (Model.AppointmentForExpertPanelDtos.Count > 0)
-    {
-        @foreach (var appointment in Model.AppointmentForExpertPanelDtos)
-        {
-            <!-- Appointment List -->
-            <div class="appointment-list">
-                <div class="profile-info-widget">
-                    <a href="patient-profile.html" class="booking-doc-img">
-                        <img src="~/@appointment.ConsumerIconSrc" alt="User Image">
-                    </a>
-                    <div class="profile-det-info">
-                        <h3><a href="patient-profile.html">@appointment.ConsumerFullName</a></h3>
-                        <div class="patient-details">
-                            <h4 id="appointmentDateAndTime"><i class="far fa-clock"></i> @appointment.AppointmentDate ، @appointment.AppointmentTime</h4>
-                            <h5><i class="fas fa-map-marker-alt"></i>@appointment.City، @appointment.Province</h5>
-                            <h5><i class="fas fa-envelope"></i> @appointment.Email</h5>
-                            <h5 class="mb-0"><i class="fas fa-phone"></i> @appointment.PhoneNumber</h5>
-                            <input type="hidden" id="topup_status" value="@appointment.AppointmentStatus"/>
-                            <input type="hidden" id="price" value="10"/>
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">تنظیمات پروفایل</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">تنظیمات پروفایل</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+
+                <!-- Profile Sidebar -->
+                <div class="profile-sidebar">
+                    <div class="widget-profile pro-widget-content">
+                        <div class="profile-info-widget">
+                            <a href="#" class="booking-doc-img">
+                                <img src="~/assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                            </a>
+                            <div class="profile-det-info">
+                                <h3>پزشک دارن الدر</h3>
+
+                                <div class="patient-details">
+                                    <h5 class="mb-0"> BDS ، MDS - جراحی دهان و فک و صورت </h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="dashboard-widget">
+                        <nav class="dashboard-menu">
+                            <ul>
+                                <li class="active">
+                                    <a asp-controller="Home" asp-action="Index">
+                                        <i class="fas fa-columns"></i>
+                                        <span>داشبورد</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Appointments" asp-action="Index">
+                                        <i class="fas fa-calendar-check"></i>
+                                        <span>نوبت‌دهی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Consumers" asp-action="Index" asp-area="ExpertPanel">
+                                        <i class="fas fa-user-injured"></i>
+                                        <span>مراجعه‌کنندگان من</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Availabilities" asp-action="Index" asp-area="ExpertPanel">
+                                        <i class="fas fa-hourglass-start"></i>
+                                        <span>زمان‌بندی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <i class="fas fa-file-invoice"></i>
+                                        <span>صورت‌حساب</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="reviews.html">
+                                        <i class="fas fa-star"></i>
+                                        <span>نظرات</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="chat-doctor.html">
+                                        <i class="fas fa-comments"></i>
+                                        <span>پیام‌ها</span>
+                                        <small class="unread-msg">23</small>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Profile" asp-action="Index" asp-area="ExpertPanel">
+                                        <i class="fas fa-user-cog"></i>
+                                        <span>تنظیمات پروفایل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Index">
+                                        <i class="fas fa-lock"></i>
+                                        <span>‌تغییر رمز عبور</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Account" asp-action="Logout">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span>خروج</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-                <div class="appointment-action">
-                    <a id="ShowDetails_@appointment.ConsumerId" onclick="ShowDetails(@appointment.ConsumerId)" href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
-                        <i class="far fa-eye"></i> مشاهده
-                    </a>
-                    <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-                        <i class="fas fa-check"></i> قبول
-                    </a>
-                    <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-                        <i class="fas fa-times"></i> حذف
-                    </a>
+                <!-- /Profile Sidebar -->
+            </div>
+            <div class="col-md-7 col-lg-8 col-xl-9">
+                <div class="appointments">
+
+                    @if (Model.AppointmentForExpertPanelDtos.Count > 0)
+                    {
+                        @foreach (var appointment in Model.AppointmentForExpertPanelDtos)
+                        {
+                            <!-- Appointment List -->
+                            <div class="appointment-list">
+                                <div class="profile-info-widget">
+                                    <a href="patient-profile.html" class="booking-doc-img">
+                                        <img src="~/@appointment.ConsumerIconSrc" alt="User Image">
+                                    </a>
+                                    <div class="profile-det-info">
+                                        <h3><a href="patient-profile.html">@appointment.ConsumerFullName</a></h3>
+                                        <div class="patient-details">
+                                            <h4 id="appointmentDateAndTime"><i class="far fa-clock"></i> @appointment.AppointmentDate ، @appointment.AppointmentTime</h4>
+                                            <h5><i class="fas fa-map-marker-alt"></i>@appointment.City، @appointment.Province</h5>
+                                            <h5><i class="fas fa-envelope"></i> @appointment.Email</h5>
+                                            <h5 class="mb-0"><i class="fas fa-phone"></i> @appointment.PhoneNumber</h5>
+                                            <input type="hidden" id="topup_status" value="@appointment.AppointmentStatus" />
+                                            <input type="hidden" id="price" value="10" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="appointment-action">
+                                    <a id="ShowDetails_@appointment.ConsumerId" onclick="ShowDetails(@appointment.ConsumerId)" href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
+                                        <i class="far fa-eye"></i> مشاهده
+                                    </a>
+                                    <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
+                                        <i class="fas fa-check"></i> قبول
+                                    </a>
+                                    <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
+                                        <i class="fas fa-times"></i> حذف
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- /Appointment List -->
+                        }
+                    }
+                    else
+                    {
+                        <h3>اطلاعاتی جهت نمایش موجود نیست</h3>
+                    }
+
+                </div>
+                <div class="text-center">
+                    <paging total-records="Model.RowCount"
+                            page-no="Model.CurrentPage"
+                            page-size="Model.PageSize"
+                            show-prev-next="true"
+                            show-total-pages="false"
+                            show-total-records="false"
+                            show-page-size-nav="true"
+                            show-first-numbered-page="true"
+                            show-last-numbered-page="true"
+                            query-string-key-page-no="Page"
+                            query-string-key-page-size="PageSize"
+                            gap-size="2">
+                    </paging>
                 </div>
             </div>
-            <!-- /Appointment List -->
-        }
-    }
-    else
-    {
-        <h3>اطلاعاتی جهت نمایش موجود نیست</h3>
-    }
-
+        </div>
+    </div>
 </div>
-<div class="text-center">
-    <paging total-records="Model.RowCount"
-            page-no="Model.CurrentPage"
-            page-size="Model.PageSize"
-            show-prev-next="true"
-            show-total-pages="false"
-            show-total-records="false"
-            show-page-size-nav="true"
-            show-first-numbered-page="true"
-            show-last-numbered-page="true"
-            query-string-key-page-no="Page"
-            query-string-key-page-size="PageSize"
-            gap-size="2">
-    </paging>
-</div>
-
+<!-- /Page Content -->
 @section Scripts
 {
-    <script>
+<script>
 
-        function ShowDetails(id) {
-            $(document).on("click", $("#ShowDetails_" + id) + id, function () {
-                var appointmentDate = $("#appointmentDateAndTime").text();
-                var topup_status = $("#topup_status").val();
-                var price = $("#price").val();
+    function ShowDetails(id) {
+        $(document).on("click", $("#ShowDetails_" + id) + id, function () {
+            var appointmentDate = $("#appointmentDateAndTime").text();
+            var topup_status = $("#topup_status").val();
+            var price = $("#price").val();
 
-                $("#appt_details #appointmentDateAndTime").text(appointmentDate);
-                $("#appt_details #topup_status").text(topup_status.toString());
-                $("#appt_details #appointmentStatus").text(topup_status.toString());
-                $("#appt_details #appointmentPrice").text(price.toString());
-                // As pointed out in comments, 
-                // it is unnecessary to have to manually call the modal.
-                // $('#addBookDialog').modal('show');
-            });
-        }
+            $("#appt_details #appointmentDateAndTime").text(appointmentDate);
+            $("#appt_details #topup_status").text(topup_status.toString());
+            $("#appt_details #appointmentStatus").text(topup_status.toString());
+            $("#appt_details #appointmentPrice").text(price.toString());
+        });
+    }
 
-    </script>
+</script>
+}
+
+@section ModalAppointmentInformation{
+    <!-- Appointment Details Modal -->
+    <div class="modal fade custom-modal" id="appt_details">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">جزییات نوبت</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="info-details">
+                        <li>
+                            <div class="details-header">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <span class="title">#APT0001</span>
+                                        <span class="text" id="appointmentDateAndTime"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-right">
+                                            <button type="button" class="btn bg-success-light btn-sm" id="topup_status">تکمیل شده</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="title">وضعیت:</span>
+                            <span class="text">تکمیل شده</span>
+                        </li>
+                        <li>
+                            <span class="title">تاریخ قبول:</span>
+                            <span class="text">29 مهر 1399</span>
+                        </li>
+                        <li>
+                            <span class="title">مقدار پرداختی</span>
+                            <span class="text"> 450 تومان </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Appointment Details Modal -->
 }

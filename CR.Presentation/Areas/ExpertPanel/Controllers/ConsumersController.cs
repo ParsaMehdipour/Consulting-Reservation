@@ -14,7 +14,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         private readonly IGetConsumerAppointmentsForExpertPanelService _getConsumerAppointmentsForExpertPanelService;
 
         public ConsumersController(IGetConsumersForExpertPanelService getConsumersForExpertPanelService
-        ,IGetConsumerAppointmentsForExpertPanelService getConsumerAppointmentsForExpertPanelService)
+        , IGetConsumerAppointmentsForExpertPanelService getConsumerAppointmentsForExpertPanelService)
         {
             _getConsumersForExpertPanelService = getConsumersForExpertPanelService;
             _getConsumerAppointmentsForExpertPanelService = getConsumerAppointmentsForExpertPanelService;
@@ -24,7 +24,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         {
             var expertId = ClaimUtility.GetUserId(User).Value;
 
-            var model = _getConsumersForExpertPanelService.Execute(expertId,page, pageSize).Data;
+            var model = _getConsumersForExpertPanelService.Execute(expertId, page, pageSize).Data;
 
             return View(model);
         }

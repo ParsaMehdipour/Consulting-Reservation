@@ -1,419 +1,537 @@
 ﻿@model CR.Core.DTOs.Experts.ExpertDetailsForProfileDto
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 
-<form id="expertProfileForm">
-    <!-- Basic Information -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">اطلاعات پایه</h4>
-            <div class="row form-row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <div class="change-avatar">
-                            <div class="profile-img">
-                                <img src="~/@Model.iconSrc" alt="User Image">
-                            </div>
-                            <div class="upload-img">
-                                <div class="change-photo-btn">
-                                    <span><i class="fa fa-upload"></i> بارگذاری تصویر </span>
-                                    <input type="file" class="upload" id="iconImage">
-                                </div>
-                                <small class="form-text text-muted">JPG ، GIF یا PNG مجاز است. حداکثر اندازه 2 مگابایت</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>نام کاربری <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" readonly="readonly" asp-for="userName">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>ایمیل<span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" asp-for="email" id="email" name="email">
-                        <span asp-validation-for="email" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>نام<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="firstName" id="firstName" name="firstName">
-                        <span asp-validation-for="firstName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label> نام خانوادگی <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" asp-for="lastName" id="lastName" name="firstName">
-                        <span asp-validation-for="lastName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>شماره تماس</label>
-                        <input type="text" class="form-control" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
-                        <span asp-validation-for="phoneNumber" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-lg-3 col-form-label">جنسیت</label>
-                        <div class="col-lg-9">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="gender_male">
-                                <label class="form-check-label" for="gender_male">
-                                    مرد
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="gender_female">
-                                <label class="form-check-label" for="gender_female">
-                                    زن
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>تاریخ تولد</label>
-                        <div class="cal-icon">
-                            <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate_String">
-                        </div>
-                    </div>
-                </div>
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">تنظیمات پروفایل</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">تنظیمات پروفایل</h2>
             </div>
         </div>
     </div>
-    <!-- /Basic Information -->
-    <!-- About Me -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title"> درباره من </h4>
-            <div class="form-group mb-0">
-                <label>بیوگرافی</label>
-                <textarea class="form-control" rows="5" asp-for="bio" id="bio" name="bio"></textarea>
-                <span asp-validation-for="bio" class="text-danger"></span>
-            </div>
-        </div>
-    </div>
-    <!-- /About Me -->
-    <!-- Clinic Info -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">اطلاعات کلینیک</h4>
-            <div class="row form-row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>نام کلینیک</label>
-                        <input type="text" class="form-control" asp-for="clinicName" id="clinicName" name="clinicName">
-                        <span asp-validation-for="clinicName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>آدرس کلینیک</label>
-                        <input type="text" class="form-control" asp-for="clinicAddress" id="clinicAddress" name="clinicAddress">
-                        <span asp-validation-for="clinicAddress" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>تصویر کلینیک</label>
-                        <form action="#" class="dropzone"></form>
-                    </div>
-                    <div class="upload-wrap">
-                        <div class="upload-images">
-                            <img src="~/assets/img/features/feature-01.jpg" alt="Upload Image">
-                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-                        </div>
-                        <div class="upload-images">
-                            <img src="~/assets/img/features/feature-02.jpg" alt="Upload Image">
-                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Clinic Info -->
-    <!-- Contact Details -->
-    <div class="card contact-card">
-        <div class="card-body">
-            <h4 class="card-title">جزییات تماس</h4>
-            <div class="row form-row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>آدرس خط یک</label>
-                        <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
-                        <span asp-validation-for="specificAddress" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label">شهر</label>
-                        <input type="text" class="form-control" asp-for="city" id="city" name="city">
-                        <span asp-validation-for="city" class="text-danger"></span>
-                    </div>
-                </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
 
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label">استان</label>
-                        <input type="text" class="form-control" asp-for="province" id="province" name="province">
-                        <span asp-validation-for="province" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label">کدپستی</label>
-                        <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
-                        <span asp-validation-for="postalCode" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label">لینک اینستاگرام</label>
-                        <input type="text" class="form-control" asp-for="instagram" id="instagram" name="instagram">
-                        <span asp-validation-for="instagram" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Contact Details -->
-    <!-- Pricing -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">هزینه ها</h4>
+                <!-- Profile Sidebar -->
+                <div class="profile-sidebar">
+                    <div class="widget-profile pro-widget-content">
+                        <div class="profile-info-widget">
+                            <a href="#" class="booking-doc-img">
+                                <img src="~/assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                            </a>
+                            <div class="profile-det-info">
+                                <h3>پزشک دارن الدر</h3>
 
-            <div class="form-group mb-0">
-                <div id="pricing_select">
-                    @if (Model.isFreeOfCharge == true)
-                    {
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="price_free" name="rating_option" class="custom-control-input" value="price_free" checked>
-                            <label class="custom-control-label" for="price_free">رایگان</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="price_custom" name="rating_option" value="custom_price" class="custom-control-input">
-                            <label class="custom-control-label" for="price_custom">سفارشی (ساعتی )</label>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="price_free" name="rating_option" class="custom-control-input" value="price_free">
-                            <label class="custom-control-label" for="price_free">رایگان</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="price_custom" name="rating_option" value="custom_price" class="custom-control-input" checked>
-                            <label class="custom-control-label" for="price_custom">سفارشی (ساعتی )</label>
-                        </div>
-                    }
-                </div>
-
-            </div>
-
-            @if (@Model.isFreeOfCharge == true)
-            {
-                <div class="row custom_price_cont" id="custom_price_cont" style="display: none;">
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" id="custom_rating_input" name="custom_rating_count" value="@Model.price">
-                        <small class="form-text text-muted">مبلغ موردنظر شما</small>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="row custom_price_cont" id="custom_price_cont">
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" id="custom_rating_input" name="custom_rating_count" value="@Model.price">
-                        <small class="form-text text-muted">مبلغ موردنظر شما</small>
-                    </div>
-                </div>
-            }
-
-        </div>
-    </div>
-    <!-- /Pricing -->
-    <!-- Services and Specialization -->
-    <div class="card services-card">
-        <div class="card-body">
-            <h4 class="card-title">خدمات و تخصص</h4>
-            <div class="form-group">
-                <label>تخصص</label>
-                <select class="form-control" asp-items="ViewBag.Specialties" asp-for="specialtyId" id="specialtyId">
-                    <option value="0">تخصص ...</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>خدمات</label>
-                <input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="وارد کردن خدمت" name="services" asp-for="tag" id="services">
-                <small class="form-text text-muted">توجه: برای افزودن سرویس های جدید ، اینتر را فشار داده و وارد کنید</small>
-            </div>
-        </div>
-    </div>
-    <!-- /Services and Specialization -->
-    <!-- Education -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title"> تحصیلات </h4>
-            <div class="education-info">
-                <div class="row form-row education-cont">
-                    <div class="col-12 col-md-10 col-lg-11">
-                        <div class="row form-row">
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label>مدرک</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label>دانشگاه/موسسه</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label>سال اتمام</label>
-                                    <input type="text" class="form-control">
+                                <div class="patient-details">
+                                    <h5 class="mb-0"> BDS ، MDS - جراحی دهان و فک و صورت </h5>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="dashboard-widget">
+                        <nav class="dashboard-menu">
+                            <ul>
+                                <li class="active">
+                                    <a asp-controller="Home" asp-action="Index">
+                                        <i class="fas fa-columns"></i>
+                                        <span>داشبورد</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Appointments" asp-action="Index">
+                                        <i class="fas fa-calendar-check"></i>
+                                        <span>نوبت‌دهی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Consumers" asp-action="Index" asp-area="ExpertPanel">
+                                        <i class="fas fa-user-injured"></i>
+                                        <span>مراجعه‌کنندگان من</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Availabilities" asp-action="Index" asp-area="ExpertPanel">
+                                        <i class="fas fa-hourglass-start"></i>
+                                        <span>زمان‌بندی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <i class="fas fa-file-invoice"></i>
+                                        <span>صورت‌حساب</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="reviews.html">
+                                        <i class="fas fa-star"></i>
+                                        <span>نظرات</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="chat-doctor.html">
+                                        <i class="fas fa-comments"></i>
+                                        <span>پیام‌ها</span>
+                                        <small class="unread-msg">23</small>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Profile" asp-action="Index" asp-area="ExpertPanel">
+                                        <i class="fas fa-user-cog"></i>
+                                        <span>تنظیمات پروفایل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Index">
+                                        <i class="fas fa-lock"></i>
+                                        <span>‌تغییر رمز عبور</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Account" asp-action="Logout">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span>خروج</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
+                <!-- /Profile Sidebar -->
             </div>
-            <div class="add-more">
-                <a href="javascript:void(0);" class="add-education"><i class="fa fa-plus-circle"></i> افزودن</a>
-            </div>
-        </div>
-    </div>
-    <!-- /Education -->
-    <!-- Experience -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">تجربه</h4>
-            <div class="experience-info">
-                <div class="row form-row experience-cont">
-                    <div class="col-12 col-md-10 col-lg-11">
-                        <div class="row form-row">
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label>نام بیمارستان</label>
-                                    <input type="text" class="form-control">
+            <div class="col-md-7 col-lg-8 col-xl-9">
+                <form id="expertProfileForm">
+                    <!-- Basic Information -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">اطلاعات پایه</h4>
+                            <div class="row form-row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="change-avatar">
+                                            <div class="profile-img">
+                                                <img src="~/@Model.iconSrc" alt="User Image">
+                                            </div>
+                                            <div class="upload-img">
+                                                <div class="change-photo-btn">
+                                                    <span><i class="fa fa-upload"></i> بارگذاری تصویر </span>
+                                                    <input type="file" class="upload" id="iconImage">
+                                                </div>
+                                                <small class="form-text text-muted">JPG ، GIF یا PNG مجاز است. حداکثر اندازه 2 مگابایت</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>نام کاربری <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" readonly="readonly" asp-for="userName">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>ایمیل<span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" asp-for="email" id="email" name="email">
+                                        <span asp-validation-for="email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>نام<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" asp-for="firstName" id="firstName" name="firstName">
+                                        <span asp-validation-for="firstName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> نام خانوادگی <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" asp-for="lastName" id="lastName" name="firstName">
+                                        <span asp-validation-for="lastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>شماره تماس</label>
+                                        <input type="text" class="form-control" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
+                                        <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-lg-3 col-form-label">جنسیت</label>
+                                        <div class="col-lg-9">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender_male">
+                                                <label class="form-check-label" for="gender_male">
+                                                    مرد
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="gender" id="gender_female">
+                                                <label class="form-check-label" for="gender_female">
+                                                    زن
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>تاریخ تولد</label>
+                                        <div class="cal-icon">
+                                            <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate_String">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label>از</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label>تا</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
-                                    <label> نقش</label>
-                                    <input type="text" class="form-control">
-                                </div>
+                        </div>
+                    </div>
+                    <!-- /Basic Information -->
+                    <!-- About Me -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title"> درباره من </h4>
+                            <div class="form-group mb-0">
+                                <label>بیوگرافی</label>
+                                <textarea class="form-control" rows="5" asp-for="bio" id="bio" name="bio"></textarea>
+                                <span asp-validation-for="bio" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="add-more">
-                <a href="javascript:void(0);" class="add-experience"><i class="fa fa-plus-circle"></i> افزودن</a>
-            </div>
-        </div>
-    </div>
-    <!-- /Experience -->
-    <!-- Awards -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">جایزه ها</h4>
-            <div class="awards-info">
-                <div class="row form-row awards-cont">
-                    <div class="col-12 col-md-5">
-                        <div class="form-group">
-                            <label>جایزه ها</label>
-                            <input type="text" class="form-control">
+                    <!-- /About Me -->
+                    <!-- Clinic Info -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">اطلاعات کلینیک</h4>
+                            <div class="row form-row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>نام کلینیک</label>
+                                        <input type="text" class="form-control" asp-for="clinicName" id="clinicName" name="clinicName">
+                                        <span asp-validation-for="clinicName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>آدرس کلینیک</label>
+                                        <input type="text" class="form-control" asp-for="clinicAddress" id="clinicAddress" name="clinicAddress">
+                                        <span asp-validation-for="clinicAddress" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>تصویر کلینیک</label>
+                                        <form action="#" class="dropzone"></form>
+                                    </div>
+                                    <div class="upload-wrap">
+                                        <div class="upload-images">
+                                            <img src="~/assets/img/features/feature-01.jpg" alt="Upload Image">
+                                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                                        </div>
+                                        <div class="upload-images">
+                                            <img src="~/assets/img/features/feature-02.jpg" alt="Upload Image">
+                                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-5">
-                        <div class="form-group">
-                            <label>سال</label>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="add-more">
-                <a href="javascript:void(0);" class="add-award"><i class="fa fa-plus-circle"></i> افزودن</a>
-            </div>
-        </div>
-    </div>
-    <!-- /Awards -->
-    <!-- Memberships -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">عضویت ها</h4>
-            <div class="membership-info">
-                <div class="row form-row membership-cont">
-                    <div class="col-12 col-md-10 col-lg-5">
-                        <div class="form-group">
-                            <label>عضویت ها</label>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="add-more">
-                <a href="javascript:void(0);" class="add-membership"><i class="fa fa-plus-circle"></i> افزودن</a>
-            </div>
-        </div>
-    </div>
-    <!-- /Memberships -->
-    <!-- Registrations -->
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title"> ثبت نام ها </h4>
-            <div class="registrations-info">
-                <div class="row form-row reg-cont">
-                    <div class="col-12 col-md-5">
-                        <div class="form-group">
-                            <label> ثبت نام ها </label>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-5">
-                        <div class="form-group">
-                            <label>سال</label>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="add-more">
-                <a href="javascript:void(0);" class="add-reg"><i class="fa fa-plus-circle"></i> افزودن</a>
-            </div>
-        </div>
-    </div>
-    <!-- /Registrations -->
+                    <!-- /Clinic Info -->
+                    <!-- Contact Details -->
+                    <div class="card contact-card">
+                        <div class="card-body">
+                            <h4 class="card-title">جزییات تماس</h4>
+                            <div class="row form-row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>آدرس خط یک</label>
+                                        <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
+                                        <span asp-validation-for="specificAddress" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">شهر</label>
+                                        <input type="text" class="form-control" asp-for="city" id="city" name="city">
+                                        <span asp-validation-for="city" class="text-danger"></span>
+                                    </div>
+                                </div>
 
-    <div class="submit-section submit-btn-bottom">
-        <button onclick="Edit(@Model.id)" type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
-    </div>
-</form>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">استان</label>
+                                        <input type="text" class="form-control" asp-for="province" id="province" name="province">
+                                        <span asp-validation-for="province" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">کدپستی</label>
+                                        <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
+                                        <span asp-validation-for="postalCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">لینک اینستاگرام</label>
+                                        <input type="text" class="form-control" asp-for="instagram" id="instagram" name="instagram">
+                                        <span asp-validation-for="instagram" class="text-danger"></span>
 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Contact Details -->
+                    <!-- Pricing -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">هزینه ها</h4>
+
+                            <div class="form-group mb-0">
+                                <div id="pricing_select">
+                                    @if (Model.isFreeOfCharge == true)
+                                    {
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_free" name="rating_option" class="custom-control-input" value="price_free" checked>
+                                            <label class="custom-control-label" for="price_free">رایگان</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_custom" name="rating_option" value="custom_price" class="custom-control-input">
+                                            <label class="custom-control-label" for="price_custom">سفارشی (ساعتی )</label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_free" name="rating_option" class="custom-control-input" value="price_free">
+                                            <label class="custom-control-label" for="price_free">رایگان</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_custom" name="rating_option" value="custom_price" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="price_custom">سفارشی (ساعتی )</label>
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+
+                            @if (@Model.isFreeOfCharge == true)
+                            {
+                                <div class="row custom_price_cont" id="custom_price_cont" style="display: none;">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="custom_rating_input" name="custom_rating_count" value="@Model.price">
+                                        <small class="form-text text-muted">مبلغ موردنظر شما</small>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row custom_price_cont" id="custom_price_cont">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="custom_rating_input" name="custom_rating_count" value="@Model.price">
+                                        <small class="form-text text-muted">مبلغ موردنظر شما</small>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <!-- /Pricing -->
+                    <!-- Services and Specialization -->
+                    <div class="card services-card">
+                        <div class="card-body">
+                            <h4 class="card-title">خدمات و تخصص</h4>
+                            <div class="form-group">
+                                <label>تخصص</label>
+                                <select class="form-control" asp-items="ViewBag.Specialties" asp-for="specialtyId" id="specialtyId">
+                                    <option value="0">تخصص ...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>خدمات</label>
+                                <input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="وارد کردن خدمت" name="services" asp-for="tag" id="services">
+                                <small class="form-text text-muted">توجه: برای افزودن سرویس های جدید ، اینتر را فشار داده و وارد کنید</small>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Services and Specialization -->
+                    <!-- Education -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title"> تحصیلات </h4>
+                            <div class="education-info">
+                                <div class="row form-row education-cont">
+                                    <div class="col-12 col-md-10 col-lg-11">
+                                        <div class="row form-row">
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>مدرک</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>دانشگاه/موسسه</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>سال اتمام</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-more">
+                                <a href="javascript:void(0);" class="add-education"><i class="fa fa-plus-circle"></i> افزودن</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Education -->
+                    <!-- Experience -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">تجربه</h4>
+                            <div class="experience-info">
+                                <div class="row form-row experience-cont">
+                                    <div class="col-12 col-md-10 col-lg-11">
+                                        <div class="row form-row">
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>نام بیمارستان</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>از</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>تا</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label> نقش</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-more">
+                                <a href="javascript:void(0);" class="add-experience"><i class="fa fa-plus-circle"></i> افزودن</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Experience -->
+                    <!-- Awards -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">جایزه ها</h4>
+                            <div class="awards-info">
+                                <div class="row form-row awards-cont">
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <label>جایزه ها</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <label>سال</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-more">
+                                <a href="javascript:void(0);" class="add-award"><i class="fa fa-plus-circle"></i> افزودن</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Awards -->
+                    <!-- Memberships -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">عضویت ها</h4>
+                            <div class="membership-info">
+                                <div class="row form-row membership-cont">
+                                    <div class="col-12 col-md-10 col-lg-5">
+                                        <div class="form-group">
+                                            <label>عضویت ها</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-more">
+                                <a href="javascript:void(0);" class="add-membership"><i class="fa fa-plus-circle"></i> افزودن</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Memberships -->
+                    <!-- Registrations -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title"> ثبت نام ها </h4>
+                            <div class="registrations-info">
+                                <div class="row form-row reg-cont">
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <label> ثبت نام ها </label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <label>سال</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-more">
+                                <a href="javascript:void(0);" class="add-reg"><i class="fa fa-plus-circle"></i> افزودن</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Registrations -->
+
+                    <div class="submit-section submit-btn-bottom">
+                        <button onclick="Edit(@Model.id)" type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
 @section Scripts
 {
 

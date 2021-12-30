@@ -1,41 +1,139 @@
 ﻿@model CR.Core.DTOs.Account.ResetPasswordViewModel
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-12 col-lg-6">
-                <!-- Change Password Form -->
-                <form asp-controller="Account" asp-action="ResetPassword" method="post">
-                    <div asp-validation-summary="ModelOnly"></div>
-                    
-                    @if (ViewData["ErrorMessage"] != null)
-                    {
-                        <div class="text-danger">@ViewData["ErrorMessage"]</div>
-                    }
-
-                    <div class="form-group">
-                        <label>رمزعبور قبل</label>
-                        <input type="password" class="form-control" asp-for="oldPassword">
-                        <span asp-validation-for="oldPassword" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label>رمزعبور جدید</label>
-                        <input type="password" class="form-control" asp-for="newPassword">
-                        <span asp-validation-for="newPassword" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label>تایید رمزعبور</label>
-                        <input type="password" class="form-control" asp-for="confirmNewPassword">
-                        <span asp-validation-for="confirmNewPassword" class="text-danger"></span>
-                    </div>
-                    <div class="submit-section">
-                        <button type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
-                    </div>
-                </form>
-                <!-- /Change Password Form -->
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">داشبورد</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">داشبورد</h2>
             </div>
         </div>
     </div>
 </div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Profile Sidebar -->
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+                <div class="profile-sidebar">
+                    <div class="widget-profile pro-widget-content">
+                        <div class="profile-info-widget">
+                            <a href="#" class="booking-doc-img">
+                                <img src="~/assets/img/patients/patient.jpg" alt="User Image">
+                            </a>
+                            <div class="profile-det-info">
+                                <h3>ریچارد ویلسون</h3>
+                                <div class="patient-details">
+                                    <h5><i class="fas fa-birthday-cake"></i> 24 مهر 1362، 32 سال</h5>
+                                    <h5 class="mb-0"><i class="fas fa-map-marker-alt"></i>نیویورک، آمریکا</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-widget">
+                        <nav class="dashboard-menu">
+                            <ul>
+                                <li>
+                                    <a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Index">
+                                        <i class="fas fa-columns"></i>
+                                        <span>داشبورد</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="favourites.html">
+                                        <i class="fas fa-bookmark"></i>
+                                        <span>‌علاقه‌مندیها</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="chat.html">
+                                        <i class="fas fa-comments"></i>
+                                        <span>پیام‌ها</span>
+                                        <small class="unread-msg">23</small>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Profile" asp-action="Index">
+                                        <i class="fas fa-user-cog"></i>
+                                        <span>تنظیمات پروفایل</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a asp-controller="Account" asp-action="Index">
+                                        <i class="fas fa-lock"></i>
+                                        <span>‌تغییر رمز عبور</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Account" asp-action="Logout">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span>خروج</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /Profile Sidebar -->
+
+            <div class="col-md-7 col-lg-8 col-xl-9">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <!-- Change Password Form -->
+                                <form asp-controller="Account" asp-action="ResetPassword" method="post">
+                                    <div asp-validation-summary="ModelOnly"></div>
+
+                                    @if (ViewData["ErrorMessage"] != null)
+                                    {
+                                        <div class="text-danger">@ViewData["ErrorMessage"]</div>
+                                    }
+
+                                    <div class="form-group">
+                                        <label>رمزعبور قبل</label>
+                                        <input type="password" class="form-control" asp-for="oldPassword">
+                                        <span asp-validation-for="oldPassword" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>رمزعبور جدید</label>
+                                        <input type="password" class="form-control" asp-for="newPassword">
+                                        <span asp-validation-for="newPassword" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>تایید رمزعبور</label>
+                                        <input type="password" class="form-control" asp-for="confirmNewPassword">
+                                        <span asp-validation-for="confirmNewPassword" class="text-danger"></span>
+                                    </div>
+                                    <div class="submit-section">
+                                        <button type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                                    </div>
+                                </form>
+                                <!-- /Change Password Form -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

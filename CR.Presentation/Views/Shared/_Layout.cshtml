@@ -17,8 +17,23 @@
     <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/all.min.css">
 
+    <!-- Datetimepicker CSS -->
+    <link rel="stylesheet" href="~/assets/css/bootstrap-datetimepicker.min.css">
+
+    <!--persian Datepicker -->
+    <link rel="stylesheet" href="~/Jcal/daterangepicker.css" type="text/css">
+    <link rel="stylesheet" href="~/Jcal/persian-datepicker.css">
+
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="~/assets/plugins/select2/css/select2.min.css">
+
     <!-- Main CSS -->
     <link rel="stylesheet" href="~/assets/css/style.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css">
+
+    <link rel="stylesheet" href="~/assets/plugins/dropzone/dropzone.min.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -67,20 +82,20 @@
                                 @*<li><a href="appointments.html">نوبت‌دهی</a></li>*@
                                 <li><a asp-area="ExpertPanel" asp-controller="Availabilities" asp-action="Index">زمان‌بندی</a></li>
                                 @*<li><a href="my-patients.html">لیست بیماران</a></li>
-                                <li><a href="patient-profile.html">پروفایل بیماران</a></li>*@
+                                    <li><a href="patient-profile.html">پروفایل بیماران</a></li>*@
                                 @*<li><a href="chat-doctor.html">چت</a></li>
-                                <li><a href="invoices.html">صورت‌حساب</a></li>*@
+                                    <li><a href="invoices.html">صورت‌حساب</a></li>*@
                                 <li><a asp-area="ExpertPanel" asp-controller="Profile" asp-action="Index">تنظیمات پروفایل</a></li>
                                 @*<li><a href="reviews.html">نظرات</a></li>*@
                                 <li><a asp-controller="Account" asp-action="ExpertSignup" asp-area="">ثبت‌نام پزشک</a></li>
-                               @* <li class="has-submenu">
+                                @* <li class="has-submenu">
                                     <a href="doctor-blog.html">بلاگ</a>
                                     <ul class="submenu">
-                                        <li><a href="doctor-blog.html">بلاگ</a></li>
-                                        <li><a href="blog-details.html">مشاهده بلاگ</a></li>
-                                        <li><a href="doctor-add-blog.html">افزودن بلاگ</a></li>
+                                    <li><a href="doctor-blog.html">بلاگ</a></li>
+                                    <li><a href="blog-details.html">مشاهده بلاگ</a></li>
+                                    <li><a href="doctor-add-blog.html">افزودن بلاگ</a></li>
                                     </ul>
-                                </li>*@
+                                    </li>*@
                             </ul>
                         </li>
                         <li class="has-submenu">
@@ -88,66 +103,66 @@
                             <ul class="submenu">
                                 <li class="has-submenu">
                                     <a asp-controller="Experts" asp-action="Index">پزشکان</a>
-                                   @* <ul class="submenu">
+                                    @* <ul class="submenu">
                                         <li><a href="map-grid.html">گرید نقشه</a></li>
                                         <li><a href="map-list.html">لیست نقشه</a></li>
-                                    </ul>*@
+                                        </ul>*@
                                 </li>
                                 <li><a asp-controller="Experts" asp-action="Index">جستجو پزشک</a></li>
-@*                                <li><a href="doctor-profile.html">پروفایل پزشک</a></li>
-                                <li><a href="booking.html">رزرو نوبت</a></li>
-                                <li><a href="checkout.html">پرداخت</a></li>
-                                <li><a href="booking-success.html">رزرو موفق</a></li>*@
+                                @*                                <li><a href="doctor-profile.html">پروفایل پزشک</a></li>
+                                    <li><a href="booking.html">رزرو نوبت</a></li>
+                                    <li><a href="checkout.html">پرداخت</a></li>
+                                    <li><a href="booking-success.html">رزرو موفق</a></li>*@
                                 <li><a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Index">دشبرد مراجعه‌کننده</a></li>
                                 @*<li><a href="favourites.html">‌علاقه‌مندیها</a></li>
-                                <li><a href="chat.html">چت</a></li>*@
+                                    <li><a href="chat.html">چت</a></li>*@
                                 <li><a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Profile">تنظیمات پروفایل</a></li>
                                 <li><a asp-area="ConsumerPanel" asp-controller="Home" asp-action="ResetPassword">‌تغییر رمز عبور</a></li>
                             </ul>
                         </li>
-                      @*  <li class="has-submenu">
+                        @*  <li class="has-submenu">
                             <a href="#">‌داروخانه<i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu">
-                                <li><a href="pharmacy-index.html">‌داروخانه</a></li>
-                                <li><a href="pharmacy-details.html">‌جزییات داروخانه</a></li>
-                                <li><a href="pharmacy-search.html">‌جستجو داروخانه</a></li>
-                                <li><a href="product-all.html">‌محصولات</a></li>
-                                <li><a href="product-description.html">توضیحات محصول</a></li>
-                                <li><a href="cart.html">‌سبد خرید</a></li>
-                                <li><a href="product-checkout.html">‌خرید محصولات</a></li>
-                                <li><a href="payment-success.html">‌پرداخت موفق</a></li>
+                            <li><a href="pharmacy-index.html">‌داروخانه</a></li>
+                            <li><a href="pharmacy-details.html">‌جزییات داروخانه</a></li>
+                            <li><a href="pharmacy-search.html">‌جستجو داروخانه</a></li>
+                            <li><a href="product-all.html">‌محصولات</a></li>
+                            <li><a href="product-description.html">توضیحات محصول</a></li>
+                            <li><a href="cart.html">‌سبد خرید</a></li>
+                            <li><a href="product-checkout.html">‌خرید محصولات</a></li>
+                            <li><a href="payment-success.html">‌پرداخت موفق</a></li>
                             </ul>
-                        </li>*@
-                      @*  <li class="has-submenu">
+                            </li>*@
+                        @*  <li class="has-submenu">
                             <a href="#">‌صفحات<i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu">
-                                <li><a href="voice-call.html">‌تماس صوتی</a></li>
-                                <li><a href="video-call.html">‌تماس تصویری</a></li>
-                                <li><a href="search.html">‌جستجو پزشک</a></li>
-                                <li><a href="calendar.html">‌تقویم</a></li>
+                            <li><a href="voice-call.html">‌تماس صوتی</a></li>
+                            <li><a href="video-call.html">‌تماس تصویری</a></li>
+                            <li><a href="search.html">‌جستجو پزشک</a></li>
+                            <li><a href="calendar.html">‌تقویم</a></li>
 
-                                <li><a href="components.html">‌کامپوننت‌ها</a></li>
-                                <li class="has-submenu">
-                                    <a href="invoices.html">صورت‌حساب</a>
-                                    <ul class="submenu">
-                                        <li><a href="invoices.html">صورت‌حساب</a></li>
-                                        <li><a href="invoice-view.html">‌مشاهده صورت‌حساب</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="blank-page.html">‌صفحه شروع</a></li>
-                                <li><a href="login.html">‌ورود</a></li>
-                                <li><a href="register.html">‌ثبت‌نام</a></li>
-                                <li><a href="forgot-password.html">‌فراموشی رمزعبور</a></li>
+                            <li><a href="components.html">‌کامپوننت‌ها</a></li>
+                            <li class="has-submenu">
+                            <a href="invoices.html">صورت‌حساب</a>
+                            <ul class="submenu">
+                            <li><a href="invoices.html">صورت‌حساب</a></li>
+                            <li><a href="invoice-view.html">‌مشاهده صورت‌حساب</a></li>
                             </ul>
-                        </li>*@
-                      @*  <li class="has-submenu">
+                            </li>
+                            <li><a href="blank-page.html">‌صفحه شروع</a></li>
+                            <li><a href="login.html">‌ورود</a></li>
+                            <li><a href="register.html">‌ثبت‌نام</a></li>
+                            <li><a href="forgot-password.html">‌فراموشی رمزعبور</a></li>
+                            </ul>
+                            </li>*@
+                        @*  <li class="has-submenu">
                             <a href="#">‌بلاگ<i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu">
-                                <li><a href="blog-list.html">‌لیست بلاگ</a></li>
-                                <li><a href="blog-grid.html">‌گرید بلاگ</a></li>
-                                <li><a href="blog-details.html">‌جزییات بلاگ</a></li>
+                            <li><a href="blog-list.html">‌لیست بلاگ</a></li>
+                            <li><a href="blog-grid.html">‌گرید بلاگ</a></li>
+                            <li><a href="blog-details.html">‌جزییات بلاگ</a></li>
                             </ul>
-                        </li>*@
+                            </li>*@
                         <li class="has-submenu">
                             <a href="#" target="_blank">ادمین<i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu">
@@ -329,10 +344,24 @@
     <!-- /Main Wrapper -->
     <!-- jQuery -->
     <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     <!-- Bootstrap Core JS -->
     <script src="~/assets/js/popper.min.js"></script>
     <script src="~/assets/plugins/bootstrap-rtl/js/bootstrap.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="~/assets/plugins/select2/js/select2.min.js"></script>
+
+    <!-- Persian DatePicker JS -->
+    <script src="~/Jcal/persian-date.js"></script>
+    <script src="~/Jcal/persian-datepicker.js"></script>
+
+
+    <!-- Sticky Sidebar JS -->
+    <script src="~/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+    <script src="~/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
 
     <!-- Slick JS -->
     <script src="~/assets/js/slick.js"></script>
@@ -344,6 +373,62 @@
     <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
 
+    <!-- Dropzone JS -->
+    <script src="~/assets/plugins/dropzone/dropzone.min.js"></script>
+
+    <!-- Bootstrap Tagsinput JS -->
+    <script src="~/assets/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+
+    <!-- Profile Settings JS -->
+    <script src="~/assets/js/profile-settings.js"></script>
+
+    <!-- Circle Progress JS -->
+    <script src="~/assets/js/circle-progress.min.js"></script>
+
+
+    <!-- Mask JS -->
+    <script src="~/assets/js/jquery.maskedinput.min.js"></script>
+    <script src="~/assets/js/mask.js"></script>
+
     @RenderSection("Scripts", required: false)
+
+<script type="text/javascript">
+
+    $(".datetimepicker").persianDatepicker({
+        months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+        dowTitle: ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"],
+        shortDowTitle: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
+        showGregorianDate: !1,
+        persianNumbers: !0,
+        formatDate: "YYYY/MM/DD",
+        selectedBefore: !1,
+        selectedDate: null,
+        startDate: null,
+        endDate: null,
+        prevArrow: '\u25c4',
+        nextArrow: '\u25ba',
+        theme: 'default',
+        alwaysShow: !1,
+        selectableYears: null,
+        selectableMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        cellWidth: 25, // by px
+        cellHeight: 20, // by px
+        fontSize: 13, // by px
+        isRTL: !1,
+        format: 'YYYY/MM/DD',
+
+
+        calendarPosition: {
+            x: 0,
+            y: 0,
+        },
+        onShow: function () { },
+        onHide: function () { },
+        onSelect: function () { },
+        onRender: function () { }
+    });
+</script>
+@RenderSection("ModalAdd", required: false)
+@RenderSection("ModalAppointmentInformation",required: false)
 </body>
 </html>

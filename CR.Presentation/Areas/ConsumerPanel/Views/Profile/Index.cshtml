@@ -2,146 +2,245 @@
 @using CR.DataAccess.Enums
 @model ConsumerDetailsForSiteDto
 @{
-    Layout = "_ConsumerLayout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form id="consumerProfileForm">
-    <div class="card">
-        <div class="card-body">
-            <!-- Profile Settings Form -->
-            <div class="row form-row">
-                <div class="col-12 col-md-12">
-                    <div class="form-group">
-                        <div class="change-avatar">
-                            <div class="profile-img">
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">داشبورد</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">داشبورد</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Profile Sidebar -->
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+                <div class="profile-sidebar">
+                    <div class="widget-profile pro-widget-content">
+                        <div class="profile-info-widget">
+                            <a href="#" class="booking-doc-img">
+                                <img src="~/assets/img/patients/patient.jpg" alt="User Image">
+                            </a>
+                            <div class="profile-det-info">
+                                <h3>ریچارد ویلسون</h3>
+                                <div class="patient-details">
+                                    <h5><i class="fas fa-birthday-cake"></i> 24 مهر 1362، 32 سال</h5>
+                                    <h5 class="mb-0"><i class="fas fa-map-marker-alt"></i>نیویورک، آمریکا</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-widget">
+                        <nav class="dashboard-menu">
+                            <ul>
+                                <li>
+                                    <a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Index">
+                                        <i class="fas fa-columns"></i>
+                                        <span>داشبورد</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="favourites.html">
+                                        <i class="fas fa-bookmark"></i>
+                                        <span>‌علاقه‌مندیها</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="chat.html">
+                                        <i class="fas fa-comments"></i>
+                                        <span>پیام‌ها</span>
+                                        <small class="unread-msg">23</small>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a asp-controller="Profile" asp-action="Index">
+                                        <i class="fas fa-user-cog"></i>
+                                        <span>تنظیمات پروفایل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Index">
+                                        <i class="fas fa-lock"></i>
+                                        <span>‌تغییر رمز عبور</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Account" asp-action="Logout">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span>خروج</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /Profile Sidebar -->
+
+            <div class="col-md-7 col-lg-8 col-xl-9">
+
+                <form id="consumerProfileForm">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Profile Settings Form -->
+                            <div class="row form-row">
+                                <div class="col-12 col-md-12">
+                                    <div class="form-group">
+                                        <div class="change-avatar">
+                                            <div class="profile-img">
+                                                @if (Model == null)
+                                                {
+                                                    <img src="~/assets/img/icon-256x256.png" alt="User Image">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/@Model.iconSrc" alt="User Image">
+                                                }
+                                            </div>
+                                            <div class="upload-img">
+                                                <div class="change-photo-btn">
+                                                    <span><i class="fa fa-upload"></i> بارگذاری تصویر </span>
+                                                    <input type="file" class="upload" id="iconImage" name="iconImage">
+                                                </div>
+                                                <small class="form-text text-muted">
+                                                    JPG ، GIF یا PNG مجاز است. حداکثر اندازه 2
+                                                    مگابایت
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>نام</label>
+                                        <input type="text" class="form-control" asp-for="firstName" id="firstName" name="firstName">
+                                        <span asp-validation-for="firstName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>نام خانوادگی</label>
+                                        <input type="text" class="form-control" asp-for="lastName" id="lastName" name="lastName">
+                                        <span asp-validation-for="lastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>تاریخ تولد</label>
+                                        <div class="cal-icon">
+                                            <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate_String">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>گروه خونی</label>
+                                        <select class="form-control select" asp-for="bloodType" id="bloodType" name="bloodType">
+                                            <option>A-</option>
+                                            <option>A+</option>
+                                            <option>B-</option>
+                                            <option>B+</option>
+                                            <option>AB-</option>
+                                            <option>AB+</option>
+                                            <option>O-</option>
+                                            <option>O+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>ایمیل</label>
+                                        <input type="email" class="form-control" asp-for="email" id="email" name="email">
+                                        <span asp-validation-for="email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>موبایل</label>
+                                        <input type="text" class="form-control" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
+                                        <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>آدرس</label>
+                                        <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
+                                        <span asp-validation-for="specificAddress" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>جنسیت</label>
+                                        <select class="form-control select" id="gender" asp-for="gender">
+                                            <option>انتخاب</option>
+                                            <option value="@GenderType.Male">مرد</option>
+                                            <option value="@GenderType.Female">زن</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>شهر</label>
+                                        <input type="text" class="form-control" asp-for="city" id="city" name="city">
+                                        <span asp-validation-for="city" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>استان</label>
+                                        <input type="text" class="form-control" asp-for="province" id="province" name="province">
+                                        <span asp-validation-for="province" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>کد پستی</label>
+                                        <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
+                                        <span asp-validation-for="postalCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="submit-section submit-btn-bottom">
                                 @if (Model == null)
                                 {
-                                    <img src="~/assets/img/icon-256x256.png" alt="User Image">
+                                    <button onclick="Add()" type="submit" class="btn btn-success submit-btn">افزودن اطلاعات</button>
                                 }
                                 else
                                 {
-                                    <img src="~/@Model.iconSrc" alt="User Image">
+                                    <button onclick="Edit(@Model.id)" type="submit" class="btn btn-warning submit-btn">ذخیره تغییرات</button>
                                 }
                             </div>
-                            <div class="upload-img">
-                                <div class="change-photo-btn">
-                                    <span><i class="fa fa-upload"></i> بارگذاری تصویر </span>
-                                    <input type="file" class="upload" id="iconImage" name="iconImage">
-                                </div>
-                                <small class="form-text text-muted">
-                                    JPG ، GIF یا PNG مجاز است. حداکثر اندازه 2
-                                    مگابایت
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label>نام</label>
-                        <input type="text" class="form-control" asp-for="firstName" id="firstName" name="firstName">
-                        <span asp-validation-for="firstName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label>نام خانوادگی</label>
-                        <input type="text" class="form-control" asp-for="lastName" id="lastName" name="lastName">
-                        <span asp-validation-for="lastName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>تاریخ تولد</label>
-                        <div class="cal-icon">
-                            <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate_String">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label>گروه خونی</label>
-                        <select class="form-control select" asp-for="bloodType" id="bloodType" name="bloodType">
-                            <option>A-</option>
-                            <option>A+</option>
-                            <option>B-</option>
-                            <option>B+</option>
-                            <option>AB-</option>
-                            <option>AB+</option>
-                            <option>O-</option>
-                            <option>O+</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label>ایمیل</label>
-                        <input type="email" class="form-control" asp-for="email" id="email" name="email">
-                        <span asp-validation-for="email" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label>موبایل</label>
-                        <input type="text" class="form-control" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
-                        <span asp-validation-for="phoneNumber" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label>آدرس</label>
-                        <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
-                        <span asp-validation-for="specificAddress" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>جنسیت</label>
-                        <select class="form-control select" id="gender" asp-for="gender">
-                            <option>انتخاب</option>
-                            <option value="@GenderType.Male">مرد</option>
-                            <option value="@GenderType.Female">زن</option>
-                        </select>
-                    </div>
-                </div>
-              
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label>شهر</label>
-                        <input type="text" class="form-control" asp-for="city" id="city" name="city">
-                        <span asp-validation-for="city" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label>استان</label>
-                        <input type="text" class="form-control" asp-for="province" id="province" name="province">
-                        <span asp-validation-for="province" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label>کد پستی</label>
-                        <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
-                        <span asp-validation-for="postalCode" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="submit-section submit-btn-bottom">
-                @if (Model == null)
-                {
-                    <button onclick="Add()" type="submit" class="btn btn-success submit-btn">افزودن اطلاعات</button>
-                }
-                else
-                {
-                    <button onclick="Edit(@Model.id)" type="submit" class="btn btn-warning submit-btn">ذخیره تغییرات</button>
-                }
-            </div>
 
-            <!-- /Profile Settings Form -->
+                            <!-- /Profile Settings Form -->
+                        </div>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
-</form>
+
+</div>
+
+
+
+
 
 @section Scripts{
 

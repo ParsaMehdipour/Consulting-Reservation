@@ -1,92 +1,208 @@
 ﻿@model CR.Presentation.Areas.ExpertPanel.Models.ViewModels.ExpertAvailabilitiesViewModel
 @{
-    Layout = "_ExpertLayout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">زمان‌بندی</h4>
-                <div class="profile-box">
-                    <div class="row">
 
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>تاریخ نوبت</label>
-                                <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" id="availabilityDate">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="submit-section submit-btn-bottom">
-                                    <button onclick="AddDay()" type="submit" class="btn btn-primary submit-btn">افزودن روز</button>
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">تنظیمات پروفایل</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">تنظیمات پروفایل</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+
+                <!-- Profile Sidebar -->
+                <div class="profile-sidebar">
+                    <div class="widget-profile pro-widget-content">
+                        <div class="profile-info-widget">
+                            <a href="#" class="booking-doc-img">
+                                <img src="~/assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                            </a>
+                            <div class="profile-det-info">
+                                <h3>پزشک دارن الدر</h3>
+
+                                <div class="patient-details">
+                                    <h5 class="mb-0"> BDS ، MDS - جراحی دهان و فک و صورت </h5>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="dashboard-widget">
+                        <nav class="dashboard-menu">
+                            <ul>
+                                <li class="active">
+                                    <a asp-controller="Home" asp-action="Index">
+                                        <i class="fas fa-columns"></i>
+                                        <span>داشبورد</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Appointments" asp-action="Index">
+                                        <i class="fas fa-calendar-check"></i>
+                                        <span>نوبت‌دهی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Consumers" asp-action="Index" asp-area="ExpertPanel">
+                                        <i class="fas fa-user-injured"></i>
+                                        <span>مراجعه‌کنندگان من</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Availabilities" asp-action="Index" asp-area="ExpertPanel">
+                                        <i class="fas fa-hourglass-start"></i>
+                                        <span>زمان‌بندی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <i class="fas fa-file-invoice"></i>
+                                        <span>صورت‌حساب</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="reviews.html">
+                                        <i class="fas fa-star"></i>
+                                        <span>نظرات</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="chat-doctor.html">
+                                        <i class="fas fa-comments"></i>
+                                        <span>پیام‌ها</span>
+                                        <small class="unread-msg">23</small>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Profile" asp-action="Index" asp-area="ExpertPanel">
+                                        <i class="fas fa-user-cog"></i>
+                                        <span>تنظیمات پروفایل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Index">
+                                        <i class="fas fa-lock"></i>
+                                        <span>‌تغییر رمز عبور</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Account" asp-action="Logout">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span>خروج</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
+                <!-- /Profile Sidebar -->
+            </div>
+            <div class="col-md-7 col-lg-8 col-xl-9">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="card schedule-widget mb-0">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">زمان‌بندی</h4>
+                                <div class="profile-box">
+                                    <div class="row">
 
-                            <!-- Schedule Header -->
-                            <div class="schedule-header">
-
-                                <!-- Schedule Nav -->
-                                <div class="schedule-nav">
-                                    <ul class="nav nav-tabs">
-                                        @foreach (var day in Model.DayDtos)
-                                        {
-                                            <li class="nav-item">
-                                                <a onclick="SetId(@day.id)" class="nav-link" data-toggle="tab" href="#slot_@day.id">@day.dayOfWeek</a>
-                                                <p>@day.date_String</p>
-                                            </li>
-                                        }
-                                    </ul>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>تاریخ نوبت</label>
+                                                <div class="cal-icon">
+                                                    <input type="text" class="form-control datetimepicker" id="availabilityDate">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="submit-section submit-btn-bottom">
+                                                    <button onclick="AddDay()" type="submit" class="btn btn-primary submit-btn">افزودن روز</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- /Schedule Nav -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card schedule-widget mb-0">
 
-                            </div>
-                            <!-- /Schedule Header -->
-                            <!-- Schedule Content -->
-                            <div class="tab-content schedule-cont">
-                                @foreach (var day in Model.DayDtos)
-                                {
-                                    <div id="slot_@day.id" class="tab-pane fade">
-                                        <h4 class="card-title d-flex justify-content-between">
-                                            <span>زمان بندی</span>
-                                            @if (day.TimeOfDayDtos.Count > 0)
-                                            {
-                                                <a class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-plus-circle"></i> ویرایش  </a>
-                                            }
-                                            else
-                                            {
-                                                <a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> افزودن  </a>
-                                            }
-                                        </h4>
-                                        @if (day.TimeOfDayDtos.Count < 0)
-                                        {
-                                            <p class="text-muted mb-0"> موجود نیست </p>
-                                        }
-                                        else
-                                        {
-                                            <div class="doc-times">
-                                                @foreach (var time in day.TimeOfDayDtos)
+                                            <!-- Schedule Header -->
+                                            <div class="schedule-header">
+
+                                                <!-- Schedule Nav -->
+                                                <div class="schedule-nav">
+                                                    <ul class="nav nav-tabs">
+                                                        @foreach (var day in Model.DayDtos)
+                                                        {
+                                                            <li class="nav-item">
+                                                                <a onclick="SetId(@day.id)" class="nav-link" data-toggle="tab" href="#slot_@day.id">@day.dayOfWeek</a>
+                                                                <p>@day.date_String</p>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                                <!-- /Schedule Nav -->
+
+                                            </div>
+                                            <!-- /Schedule Header -->
+                                            <!-- Schedule Content -->
+                                            <div class="tab-content schedule-cont">
+                                                @foreach (var day in Model.DayDtos)
                                                 {
-                                                    <div class="doc-slot-list">
-                                                        ساعت @time.start - ساعت @time.finish
-                                                        <a onclick="RemoveTimeOfDay(@time.id)" class="delete_schedule">
-                                                            <i class="fa fa-times"></i>
-                                                        </a>
+                                                    <div id="slot_@day.id" class="tab-pane fade">
+                                                        <h4 class="card-title d-flex justify-content-between">
+                                                            <span>زمان بندی</span>
+                                                            @if (day.TimeOfDayDtos.Count > 0)
+                                                            {
+                                                                <a class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-plus-circle"></i> ویرایش  </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> افزودن  </a>
+                                                            }
+                                                        </h4>
+                                                        @if (day.TimeOfDayDtos.Count < 0)
+                                                        {
+                                                            <p class="text-muted mb-0"> موجود نیست </p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="doc-times">
+                                                                @foreach (var time in day.TimeOfDayDtos)
+                                                                {
+                                                                    <div class="doc-slot-list">
+                                                                        ساعت @time.start - ساعت @time.finish
+                                                                        <a onclick="RemoveTimeOfDay(@time.id)" class="delete_schedule">
+                                                                            <i class="fa fa-times"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        }
                                                     </div>
                                                 }
                                             </div>
-                                        }
+                                            <input type="hidden" value="@Model.ExpertInformationId" id="expId" />
+                                            <!-- /Schedule Content -->
+                                        </div>
                                     </div>
-                                }
+                                </div>
                             </div>
-                            <input type="hidden" value="@Model.ExpertInformationId" id="expId" />
-                            <!-- /Schedule Content -->
                         </div>
                     </div>
                 </div>
@@ -94,7 +210,7 @@
         </div>
     </div>
 </div>
-
+<!-- /Page Content -->
 @section Scripts
 {
 <script>
@@ -280,4 +396,51 @@
     }
 </script>
 }
-
+@section ModalAdd{
+<!-- Add Time Slot Modal -->
+<div class="modal fade custom-modal" id="add_time_slot">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">افزودن زمانبندی</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="hours-info">
+                    <div class="row form-row hours-cont">
+                        <div class="col-12 col-md-10">
+                            <div class="row form-row">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>زمان شروع</label>
+                                        <div class="form-group">
+                                            <input type="time" class="form-control startHourInput">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>زمان پایان</label>
+                                        <div class="form-group">
+                                            <input type="time" class="form-control finishHourInput">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-more mb-3">
+                    <a href="javascript:void(0);" class="add-newHours"><i class="fa fa-plus-circle"></i> افزودن</a>
+                </div>
+                <div class="submit-section text-center">
+                    <button onclick="AddHours()" type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add Time Slot Modal -->
+}
