@@ -32,6 +32,7 @@ namespace CR.Core.Services.Impl.Consumers
                 .Where(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.Day.Date.Date == DateTime.Now.Date)
                 .Select(a => new ConsumerForExpertDashboardDto()
                 {
+                    AppointmentId = a.Id,
                     FullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentPrice = a.Price.ToString().GetPersianNumber(),

@@ -32,6 +32,7 @@ namespace CR.Core.Services.Impl.Appointment
                 .Where(a => a.ExpertInformation.ExpertId == expertId)
                 .Select(a => new AppointmentForExpertPanelDto
                 {
+                    Id = a.Id,
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentStatus = "HardCode",
                     AppointmentTime =

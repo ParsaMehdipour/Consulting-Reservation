@@ -3,6 +3,7 @@
     public class ConsumerForExpertDashboardDto
     {
         public long ConsumerId { get; set; }
+        public long AppointmentId { get; set; }
         public string ConsumerIconSrc { get; set; }
         public string FullName { get; set; }
         public string AppointmentDate { get; set; }
