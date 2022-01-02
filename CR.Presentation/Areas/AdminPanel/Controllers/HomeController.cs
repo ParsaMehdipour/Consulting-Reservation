@@ -2,6 +2,7 @@
 using CR.Common.Utilities;
 using CR.Core.DTOs.Account;
 using CR.Core.DTOs.Users;
+using CR.Core.Services.Interfaces.Appointment;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Statistics;
@@ -26,6 +27,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         private readonly UserManager<User> _userManager;
         private readonly ApplicationContext _context;
         private readonly IGetStatisticsForAdminPanelService _getStatisticsForAdminPanelService;
+        private readonly IGetAppointmentsForAdminDashboardService _getAppointmentsForAdminDashboardService;
 
         public HomeController(IGetLatestExpertsForAdminService getLatestExpertsForAdminService
         , IGetLatestConsumersForAdminService getLatestConsumersForAdminService
@@ -33,7 +35,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         , IEditAdminDetailsService editAdminDetailsService
         , UserManager<User> userManager
         ,ApplicationContext context
-        ,IGetStatisticsForAdminPanelService getStatisticsForAdminPanelService)
+        ,IGetStatisticsForAdminPanelService getStatisticsForAdminPanelService
+        ,IGetAppointmentsForAdminDashboardService getAppointmentsForAdminDashboardService)
         {
             _getLatestExpertsForAdminService = getLatestExpertsForAdminService;
             _getLatestConsumersForAdminService = getLatestConsumersForAdminService;
@@ -42,6 +45,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
             _userManager = userManager;
             _context = context;
             _getStatisticsForAdminPanelService = getStatisticsForAdminPanelService;
+            _getAppointmentsForAdminDashboardService = getAppointmentsForAdminDashboardService;
         }
 
         public IActionResult Index()
@@ -50,7 +54,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
             {
                 LatestExpertForAdminDtos = _getLatestExpertsForAdminService.Execute().Data,
                 LatestConsumerForAdminDtos = _getLatestConsumersForAdminService.Execute().Data,
-                StatisticsDto = _getStatisticsForAdminPanelService.Execute().Data
+                StatisticsDto = _getStatisticsForAdminPanelService.Execute().Data,
+                AppointmentForAdminDtos = _getAppointmentsForAdminDashboardService.Execute().Data
             };
 
             return View(viewModel);
