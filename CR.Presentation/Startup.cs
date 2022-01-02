@@ -111,12 +111,13 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertsForSiteService, GetExpertsForSiteService>();
             services.AddScoped<IGetExpertDetailsForSiteService, GetExpertDetailsForSiteService>();
             services.AddScoped<IGetExpertsForPresentationService, GetExpertsForPresentationService>();
-            services.AddScoped<IGetExpertDetailsForReservationService, GetExpertDetailsForReservationService>();
             //ExpertAvailabilities
             services.AddScoped<IAddDayService, AddDayService>();
             services.AddScoped<IGetDaysService, GetDaysService>();
             services.AddScoped<IAddTimeOfDayService, AddTimeOfDayService>();
             services.AddScoped<IRemoveTimeOfDayService, RemoveTimeOfDayService>();
+            services.AddScoped<IGetExpertDetailsForReservationService, GetExpertDetailsForReservationService>();
+            services.AddScoped<IGetThisDateExpertDetailsForReservationService, GetThisDateExpertDetailsForReservationService>();
             //Consumers
             services.AddScoped<IGetAllConsumersService, GetAllConsumersService>();
             services.AddScoped<IGetConsumerDetailsForSiteService, GetConsumerDetailsForSiteService>();
@@ -145,6 +146,7 @@ namespace CR.Presentation
             services.AddScoped<IGetAllAppointmentsForExpertPanelService, GetAllAppointmentsForExpertPanelService>();
             services.AddScoped<IGetConsumerAppointmentsForExpertPanelService, GetConsumerAppointmentsForExpertPanelService>();
             services.AddScoped<IGetAppointmentDetailsForExpertPanelService, GetAppointmentDetailsForExpertPanelService>();
+            services.AddScoped<IGetAppointmentsForAdminDashboardService, GetAppointmentsForAdminDashboardService>();
             //Images
             services.AddScoped<IImageUploaderService, ImageUploaderService>();
             //Statistics
