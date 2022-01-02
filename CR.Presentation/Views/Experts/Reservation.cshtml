@@ -32,7 +32,7 @@
                             <a href="doctor-profile.html" class="booking-doc-img">
                                 <img src="~/@Model.IconSrc" alt="User Image">
                             </a>
-                            <div class="booking-info">
+                            <div class="booking-info col-md-8">
                                 <h4><a href="doctor-profile.html">متخصص @Model.FullName</a></h4>
                                 <div class="rating">
                                     <i class="fas fa-star filled"></i>
@@ -44,21 +44,40 @@
                                 </div>
                                 <p class="doc-department"><img src="~/@Model.SpecialitySrc" class="img-fluid" alt="Speciality">‌@Model.Speciality</p>
                             </div>
+                            <div class="booking-info">
+                                <form asp-action="Reservation" asp-controller="Experts" method="post">
+                                    <div class="form-group">
+                                        <label>تاریخ نوبت</label>
+                                        <div class="cal-icon">
+                                            <input type="text" class="form-control datetimepicker" id="passedDate" name="passedDate">
+                                            <input type="hidden" value="@Model.ExpertInformationId" id="expertInformationId" name="expertInformationId"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="submit-section submit-btn-bottom">
+                                            <button type="submit" class="btn btn-primary submit-btn">اعمال تاریخ</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-sm-4 col-md-6">
-                        <h4 class="mb-1">@DateTime.Now.ToShamsi()</h4>
-                        <p class="text-muted">@DateConvertor.GetDayOfWeek(@DateTime.Now)</p>
-                    </div>
-                    <div class="col-12 col-sm-8 col-md-6 text-sm-right">
-                        <div class="bookingrange btn btn-white btn-sm mb-3">
-                            <i class="far fa-calendar-alt mr-2"></i>
-                            <span></span>
-                            <i class="fas fa-chevron-down ml-2"></i>
+                    @if (Model.ThisDate == null)
+                    {
+                        <div class="col-12 col-sm-4 col-md-6">
+                            <h4 class="mb-1">@DateTime.Now.ToShamsi()</h4>
+                            <p class="text-muted">@DateConvertor.GetDayOfWeek(@DateTime.Now)</p>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="col-12 col-sm-4 col-md-6">
+                            <h4 class="mb-1">@Model.ThisDate.Value.ToShamsi()</h4>
+                            <p class="text-muted">@DateConvertor.GetDayOfWeek(@Model.ThisDate.Value)</p>
+                        </div>
+                    }
                 </div>
                 <!-- Schedule Widget -->
                 <div class="card booking-schedule schedule-widget">
@@ -128,7 +147,7 @@
                         </div>
                     </div>
                     <!-- /Schedule Content -->
-                    <input type="hidden" value="@Model.ExpertInformationId" id="expertInformationId"/>
+                    <input type="hidden" value="@Model.ExpertInformationId" id="expertInformationId" />
                 </div>
                 <!-- /Schedule Widget -->
                 <!-- Submit Section -->
@@ -143,56 +162,88 @@
 
 </div>
 <!-- /Page Content -->
-
 @section Scripts
 {
-    <script>
+<script>
 
-        var timeOfDayId = 0;
+    var timeOfDayId = 0;
 
-        function SetId(id) {
-            timeOfDayId = id;
+    function SetId(id) {
+        timeOfDayId = id;
+    }
+
+    //function GetThisDateAvailabilities() {
+
+    //    var thisDateAvailabilitiesForm = new FormData();
+
+    //    thisDateAvailabilitiesForm.append("passedDate",$("#availabilityDate").val());
+    //    thisDateAvailabilitiesForm.append("expertInformationId",$("#expertInformationId").val());
+
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: '@Url.Action("Reservation", "Experts")',
+    //        processData: false,
+    //        contentType: false,
+    //        dataType: 'json',
+    //        cache: false,
+    //        data: thisDateAvailabilitiesForm,
+    //        success: function(data) {
+    //            if (data.isSuccess == true) {
+    //                swal.fire('موفق!',
+    //                    data.message,
+    //                    'success').then(function(isConfirm) {
+    //                });
+    //            } else {
+    //                swal.fire('هشدار!',
+    //                    data.message,
+    //                    'warning');
+    //            }
+    //        },
+    //        error: function(request, status, error) {
+    //            alert(request.responseText);
+    //        }
+    //    });
+    //}
+
+    function Checkout() {
+        var checkoutForm = new FormData();
+
+        if (timeOfDayId === 0) {
+            swal.fire('هشدار!',
+                'لطفا یک زمانبندی را انتخاب کنید',
+                'warning');
+            return;
         }
 
-        function Checkout() {
-            var checkoutForm = new FormData();
+        checkoutForm.append("timeOfDayId",timeOfDayId);
+        checkoutForm.append("expertInformationId",$("#expertInformationId").val());
 
-            if (timeOfDayId === 0) {
-                swal.fire('هشدار!',
-                    'لطفا یک زمانبندی را انتخاب کنید',
-                    'warning');
-                return;
-            }
-
-            checkoutForm.append("timeOfDayId",timeOfDayId);
-            checkoutForm.append("expertInformationId",$("#expertInformationId").val());
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Index", "Checkout")',
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                cache: false,
-                data: checkoutForm,
-                success: function(data) {
-                    if (data.isSuccess == true) {
-                        swal.fire('موفقیت!',
-                            data.message,
-                            'success').then(function(isConfirm) {
-                            window.location.href = "/checkout/successful";
-                        });
-                    } else {
-                        swal.fire('هشدار!',
-                            data.message,
-                            'warning');
-                    }
-                },
-                error: function(request, status, error) {
-                    alert(request.responseText);
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Index", "Checkout")',
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            cache: false,
+            data: checkoutForm,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفقیت!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        window.location.href = "/checkout/successful";
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
                 }
-            });
-        }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
 
-    </script>
+</script>
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CR.Core.DTOs.ExpertAvailabilities;
 
 namespace CR.Core.DTOs.Experts
@@ -13,6 +14,7 @@ namespace CR.Core.DTOs.Experts
         public string IconSrc { get; set; }
         public int Rate { get; set; }
         public int RateCount { get; set; }
+        public DateTime? ThisDate { get; set; }
         public List<DayDto> DayDtos { get; set; }
 
     }
