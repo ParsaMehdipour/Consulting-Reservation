@@ -10,7 +10,6 @@
         public string ConsumerIconSrc { get; set; }
         public string AppointmentDate { get; set; }
         public string AppointmentTime { get; set; }
-        public bool AppointmentStatus { get; set; }
         public string AppointmentPrice { get; set; }
     }
 }
