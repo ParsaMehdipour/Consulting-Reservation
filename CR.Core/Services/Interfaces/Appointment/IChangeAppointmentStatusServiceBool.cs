@@ -2,7 +2,7 @@
 
 namespace CR.Core.Services.Interfaces.Appointment
 {
-    public interface IChangeAppointmentStatusService
+    public interface IChangeAppointmentStatusServiceBool
     {
         ResultDto Execute(long appointmentId, bool activeStatus);
     }
