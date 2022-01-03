@@ -66,7 +66,7 @@ namespace CR.Core.Services.Impl.Appointment
                     TimeOfDay = timeOfDay,
                     TimeOfDayId = timeOfDay.Id,
                     Price = timeOfDay.Price ?? 0,
-                    IsActive = false
+                    //IsActive = false
                 };
 
                 _context.Appointments.Add(appointment);

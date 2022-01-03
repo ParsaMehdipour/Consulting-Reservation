@@ -4,14 +4,15 @@ using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Entities.Users;
 using System;
 using System.Collections.Generic;
+using CR.DataAccess.Enums;
 
 namespace CR.DataAccess.Entities.Appointments
 {
     public class Appointment : BaseEntity
     {
-        public bool IsActive { get; set; }
+        public AppointmentStatus AppointmentStatus { get; set; }
+        public string Reason { get; set; }
         public long? Price { get; set; }
-
 
 
         #region Foreign Keys

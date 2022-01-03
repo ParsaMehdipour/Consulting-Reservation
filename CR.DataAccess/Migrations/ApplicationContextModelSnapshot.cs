@@ -26,6 +26,9 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AppointmentStatus")
+                        .HasColumnType("int");
+
                     b.Property<long>("ConsumerInformationId")
                         .HasColumnType("bigint");
 
@@ -35,11 +38,11 @@ namespace CR.DataAccess.Migrations
                     b.Property<long>("ExpertInformationId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<long?>("Price")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("TimeOfDayId")
                         .HasColumnType("bigint");

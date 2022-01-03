@@ -32,7 +32,7 @@ namespace CR.Core.Services.Impl.Appointment
                     };
                 }
 
-                appointment.IsActive = activeStatus;
+                //appointment.IsActive = activeStatus;
 
                 _context.SaveChanges();
 

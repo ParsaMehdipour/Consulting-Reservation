@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211216104141_AddedGenderTypeToConsumerInformation")]
-    partial class AddedGenderTypeToConsumerInformation
+    [Migration("20220103074928_MergedMigration")]
+    partial class MergedMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,9 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AppointmentStatus")
+                        .HasColumnType("int");
+
                     b.Property<long>("ConsumerInformationId")
                         .HasColumnType("bigint");
 
@@ -37,10 +40,13 @@ namespace CR.DataAccess.Migrations
                     b.Property<long>("ExpertInformationId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<long?>("Price")
+                        .HasColumnType("bigint");
 
-                    b.Property<long>("Price")
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TimeOfDayId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -65,6 +71,9 @@ namespace CR.DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Date_String")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DayOfWeek")
                         .HasColumnType("int");
 
@@ -85,7 +94,7 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("AppointmentId")
+                    b.Property<long?>("AppointmentId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreateDate")
@@ -97,15 +106,23 @@ namespace CR.DataAccess.Migrations
                     b.Property<long>("ExpertInformationId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Finish")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("FinishDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("Start")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsReserved")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppointmentId");
+                    b.HasIndex("AppointmentId")
+                        .IsUnique()
+                        .HasFilter("[AppointmentId] IS NOT NULL");
 
                     b.HasIndex("DayId");
 
@@ -373,6 +390,9 @@ namespace CR.DataAccess.Migrations
                     b.Property<string>("IconSrc")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Instagram")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsFreeOfCharge")
                         .HasColumnType("bit");
 
@@ -382,11 +402,14 @@ namespace CR.DataAccess.Migrations
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<long?>("Price")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Province")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("SpecialtyId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("SpecificAddress")
                         .HasColumnType("nvarchar(max)");
@@ -395,6 +418,8 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SpecialtyId");
 
                     b.ToTable("TBL_ExpertInformations");
                 });
@@ -426,31 +451,6 @@ namespace CR.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-                });
-
-            modelBuilder.Entity("CR.DataAccess.Entities.Specialties.ExpertSpecialty", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("ExpertInformationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("SpecialtyId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExpertInformationId");
-
-                    b.HasIndex("SpecialtyId");
-
-                    b.ToTable("TBL_ExpertSpecialties");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.Specialties.Specialty", b =>
@@ -698,10 +698,8 @@ namespace CR.DataAccess.Migrations
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.TimeOfDay", b =>
                 {
                     b.HasOne("CR.DataAccess.Entities.Appointments.Appointment", "Appointment")
-                        .WithMany("TimeOfDays")
-                        .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("TimeOfDay")
+                        .HasForeignKey("CR.DataAccess.Entities.ExpertAvailabilities.TimeOfDay", "AppointmentId");
 
                     b.HasOne("CR.DataAccess.Entities.ExpertAvailabilities.Day", "Day")
                         .WithMany("TimeOfDays")
@@ -788,21 +786,11 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("ExpertInformation");
                 });
 
-            modelBuilder.Entity("CR.DataAccess.Entities.Specialties.ExpertSpecialty", b =>
+            modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", b =>
                 {
-                    b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
-                        .WithMany("ExpertSpecialties")
-                        .HasForeignKey("ExpertInformationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CR.DataAccess.Entities.Specialties.Specialty", "Specialty")
-                        .WithMany("EspertSpecialties")
-                        .HasForeignKey("SpecialtyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ExpertInformation");
+                        .WithMany("ExpertInformations")
+                        .HasForeignKey("SpecialtyId");
 
                     b.Navigation("Specialty");
                 });
@@ -875,7 +863,7 @@ namespace CR.DataAccess.Migrations
 
             modelBuilder.Entity("CR.DataAccess.Entities.Appointments.Appointment", b =>
                 {
-                    b.Navigation("TimeOfDays");
+                    b.Navigation("TimeOfDay");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.Day", b =>
@@ -906,8 +894,6 @@ namespace CR.DataAccess.Migrations
 
                     b.Navigation("ExpertPrizes");
 
-                    b.Navigation("ExpertSpecialties");
-
                     b.Navigation("ExpertStudies");
 
                     b.Navigation("ExpertSubscriptions");
@@ -917,7 +903,7 @@ namespace CR.DataAccess.Migrations
 
             modelBuilder.Entity("CR.DataAccess.Entities.Specialties.Specialty", b =>
                 {
-                    b.Navigation("EspertSpecialties");
+                    b.Navigation("ExpertInformations");
                 });
 #pragma warning restore 612, 618
         }
