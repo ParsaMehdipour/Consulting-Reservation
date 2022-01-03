@@ -2533,7 +2533,7 @@ html.menu-opened body {
 -----------------------*/
 
 .section-search {
-	background: #f9f9f9 url(../img/search-bg.png) no-repeat bottom center;
+	background: #f9f9f9 url(../img/search-bg-new.png) no-repeat bottom center;
 	min-height: 450px;
 	background-size: 100% auto;
 	position: relative;
@@ -3242,7 +3242,7 @@ html.menu-opened body {
 }
 
 .section-search1 {
-	background: #f9f9f9 url(../img/search-bg.png) no-repeat bottom center;
+	background: #f9f9f9 url(../img/search-bg-new.png) no-repeat bottom center;
 	min-height: 580px;
 	background-size: 100% auto;
 	position: relative;
