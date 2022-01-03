@@ -59,13 +59,13 @@
                         </span>
                     </a>
                     <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand logo">
-                        <img src="~/assets/img/logo.png" class="img-fluid" alt="Logo">
+                        <img src="~/assets/img/لوگوی هدر چاله چوله.png" class="img-fluid" alt="Logo">
                     </a>
                 </div>
                 <div class="main-menu-wrapper">
                     <div class="menu-header">
                         <a href="index.html" class="menu-logo">
-                            <img src="~/assets/img/logo.png" class="img-fluid" alt="Logo">
+                            <img src="~/assets/img/لوگوی هدر چاله چوله.png" class="img-fluid" alt="Logo">
                         </a>
                         <a id="menu_close" class="menu-close" href="javascript:void(0);">
                             <i class="fas fa-times"></i>
@@ -186,7 +186,7 @@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li class="nav-item">
-                            <a class="btn btn-block btn-outline-danger" asp-controller="Account" asp-action="Logout">خروج</a>
+                            <a class="btn btn-block btn-outline-danger" asp-area="" asp-controller="Account" asp-action="Logout">خروج</a>
                         </li>
                     }
                     else
@@ -345,6 +345,7 @@
     @RenderSection("ModalAdd", required: false)
     @RenderSection("ModalEdit", required: false)
     @RenderSection("ModalAppointmentInformation",required: false)
+    @RenderSection("NotDoneAppointmentModal",required: false)
 
     <!-- /Main Wrapper -->
     <!-- jQuery -->

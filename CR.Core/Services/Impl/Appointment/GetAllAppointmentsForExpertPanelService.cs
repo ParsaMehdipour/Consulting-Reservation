@@ -34,7 +34,7 @@ namespace CR.Core.Services.Impl.Appointment
                 {
                     Id = a.Id,
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
-                    AppointmentStatus = "HardCode",
+                    AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     AppointmentTime =
                         (a.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" +
                          a.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()).ToString() +

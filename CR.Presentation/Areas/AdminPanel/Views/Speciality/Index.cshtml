@@ -156,57 +156,158 @@
     </div>
 </div>
 <!-- /Edit Details Modal -->
-
 @section Scripts{
 
 <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
 <script src="~/Sweetalert2/sweetalert2.min.js"></script>
 
 <script>
-    var EditId = 0;
+     var EditId = 0;
 
-    function Add(){
+     function Add(){
 
-        var Name = $("#name").val();
+         var Name = $("#name").val();
 
-        var data = new FormData();
-        data.append("Name",Name);
+         var data = new FormData();
+         data.append("Name",Name);
 
-        var Image = document.getElementById("File");
+         var Image = document.getElementById("File");
 
-         if (Image.files.length > 0) {
-            data.append("File", Image.files[0]);
-         }
-         else {
-             swal.fire(
-            'هشدار!',
-            "یک فایل برای تصویر انتخاب کنید",
-            'warning'
-             );
-             return;
-           }
+          if (Image.files.length > 0) {
+             data.append("File", Image.files[0]);
+          }
+          else {
+              swal.fire(
+             'هشدار!',
+             "یک فایل برای تصویر انتخاب کنید",
+             'warning'
+              );
+              return;
+            }
 
-           $('#loading').show();
+            $('#loading').show();
+                 $.ajax({
+                     type: "POST",
+                     url: "@Url.Action("AddSpeciality", "Speciality")",
+                     contentType: false,
+                     processData: false,
+                     data: data,
+                     success: function (data) {
+                         if (data.isSuccess == true) {
+                             swal.fire(
+                                 'موفق!',
+                                 data.message,
+                                 'success'
+                             ).then(function (isConfirm) {
+                                 location.reload();
+                             });
+
+
+                         }
+                         else {
+
+                             swal.fire(
+                                 'هشدار!',
+                                 data.message,
+                                 'warning'
+                             );
+
+                         }
+                     },
+                     error: function (request, status, error) {
+                         alert(request.responseText);
+                     },
+                     complete: function () {
+                         $('#loading').hide();
+                     }
+
+                 });
+
+     }
+
+     function GetId(id)
+     {
+         EditId = id;
+     }
+
+     function Edit(){
+
+         var Id = EditId;
+         var Name = $("#nameEdit").val();
+
+         var data = new FormData();
+         data.append("Name",Name);
+         data.append("Id",Id);
+
+         var Image = document.getElementById("fileEdit");
+
+          if (Image.files.length > 0) {
+             data.append("File", Image.files[0]);
+          }
+
+         $.ajax({
+             type: "POST",
+             url: "@Url.Action("EditSpeciality", "Speciality")",
+             contentType: false,
+             processData: false,
+             data: data,
+             success: function (data) {
+                 if (data.isSuccess == true) {
+                     swal.fire(
+                         'موفق!',
+                         data.message,
+                         'success'
+                     ).then(function (isConfirm) {
+                         location.reload();
+                     });
+                 }
+                 else {
+
+                     swal.fire(
+                         'هشدار!',
+                         data.message,
+                         'warning'
+                     );
+                 }
+             },
+             error: function (request, status, error) {
+                 alert(request.responseText);
+             },
+         });
+     }
+
+    function Remove(Id) {
+
+        swal.fire({
+            title: 'حذف تخصص',
+            text: "کاربر گرامی از حذف تخصص مطمئن هستید؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'بله ، حذف شود',
+            cancelButtonText: 'خیر'
+        }).then((result) => {
+            if (result.value) {
+                var postData = {
+                    'Id': Id,
+                };
                 $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
                     type: "POST",
-                    url: "@Url.Action("AddSpeciality", "Speciality")",
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (data) {
+                    url: "@Url.Action("Remove", "Speciality")",
+                    data: postData,
+                    success: function(data) {
                         if (data.isSuccess == true) {
                             swal.fire(
                                 'موفق!',
                                 data.message,
                                 'success'
-                            ).then(function (isConfirm) {
-                                location.reload();
+                            ).then(function(isConfirm) {
+                                location.replace("@Url.Action("Index", "Speciality")");
                             });
-
-
-                        }
-                        else {
-
+                        } else {
                             swal.fire(
                                 'هشدار!',
                                 data.message,
@@ -215,125 +316,15 @@
 
                         }
                     },
-                    error: function (request, status, error) {
+                    error: function(request, status, error) {
                         alert(request.responseText);
-                    },
-                    complete: function () {
-                        $('#loading').hide();
                     }
 
                 });
+            }
+        });
 
     }
-
-    function GetId(id)
-    {
-        EditId = id;
-    }
-
-    function Edit(){
-
-        var Id = EditId;
-        var Name = $("#nameEdit").val();
-
-        var data = new FormData();
-        data.append("Name",Name);
-        data.append("Id",Id);
-
-        var Image = document.getElementById("fileEdit");
-
-         if (Image.files.length > 0) {
-            data.append("File", Image.files[0]);
-         }
-           $('#loading').show();
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("EditSpeciality", "Speciality")",
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (data) {
-                        if (data.isSuccess == true) {
-                            swal.fire(
-                                'موفق!',
-                                data.message,
-                                'success'
-                            ).then(function (isConfirm) {
-                                location.reload();
-                            });
-
-
-                        }
-                        else {
-
-                            swal.fire(
-                                'هشدار!',
-                                data.message,
-                                'warning'
-                            );
-
-                        }
-                    },
-                    error: function (request, status, error) {
-                        alert(request.responseText);
-                    },
-                    complete: function () {
-                        $('#loading').hide();
-                    }
-
-                });
-    }
-
-   function Remove(Id) {
-
-                swal.fire({
-                    title: 'حذف تخصص',
-                    text: "کاربر گرامی از حذف تخصص مطمئن هستید؟",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#7cacbe',
-                    confirmButtonText: 'بله ، حذف شود',
-                    cancelButtonText: 'خیر'
-                }).then((result) => {
-                    if (result.value) {
-                        var postData = {
-                            'Id': Id,
-                        };
-                        $.ajax({
-                            contentType: 'application/x-www-form-urlencoded',
-                            dataType: 'json',
-                            type: "POST",
-                            url: "@Url.Action("Remove", "Speciality")",
-                            data: postData,
-                            success: function (data) {
-                                if (data.isSuccess == true) {
-                                    swal.fire(
-                                        'موفق!',
-                                        data.message,
-                                        'success'
-                                    ).then(function (isConfirm) {
-                                        location.replace("@Url.Action("Index", "Speciality")");
-                                    });
-                                }
-                                else {
-                                    swal.fire(
-                                        'هشدار!',
-                                        data.message,
-                                        'warning'
-                                    );
-
-                                }
-                            },
-                            error: function (request, status, error) {
-                                alert(request.responseText);
-                            }
-
-                        });
-                    }
-                })
-
-        }
 </script>
 
 }

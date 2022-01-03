@@ -19,37 +19,14 @@ namespace CR.DataAccess.Enums
         Female = 2,
     }
 
-    public enum BloodType
-    {
-        [Display(Name = "O+")]
-        OPositive,
-        [Display(Name = "A+")]
-        APositive,
-        [Display(Name = "B+")]
-        BPositive,
-        [Display(Name = "AB+")]
-        ABPositive,
-        [Display(Name = "AB-")]
-        ABNegative,
-        [Display(Name = "A-")]
-        ANegative,
-        [Display(Name = "B-")]
-        BNegative,
-        [Display(Name = "O-")]
-        ONegative
-
-    }
-
     public enum AppointmentStatus
     {
-        [Display(Name = "لغو شده")]
-        Denied = 0,
-        [Display(Name = "معلق")]
+        [Display(Name = "در انتظار")]
         Waiting = 0,
-        [Display(Name = "تایید شده")]
-        Accepted = 0,
-        [Display(Name = "تکمیل شده")]
-        Completed = 0,
+        [Display(Name = "انجام نشد")]
+        NotDone = 1,
+        [Display(Name = "انجام شد")]
+        Completed = 2,
     }
 }
 

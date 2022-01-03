@@ -1,4 +1,6 @@
 ﻿@addTagHelper *, LazZiya.TagHelpers
+@using CR.DataAccess.Enums
+@using CR.Common.Utilities
 @model CR.Core.DTOs.ResultDTOs.ResultGetAllAppointmentsForExpertPanelDto
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -141,12 +143,15 @@
                                     <a onclick="ShowDetails(@appointment.Id)" href="#" class="btn btn-sm bg-info-light" data-toggle="ajaxModal" data-target="#appt_details">
                                         <i class="far fa-eye"></i> مشاهده
                                     </a>
-                                    <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-                                        <i class="fas fa-check"></i> قبول
-                                    </a>
-                                    <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-                                        <i class="fas fa-times"></i> حذف
-                                    </a>
+                                    @if (appointment.AppointmentStatus == AppointmentStatus.Waiting.GetDisplayName())
+                                    {
+                                        <a onclick="Completed(@appointment.Id)" class="btn btn-sm bg-success-light">
+                                            <i class="fas fa-check"></i> انجام شد
+                                        </a>
+                                        <a onclick="GetId(@appointment.Id)" data-toggle="modal" data-target="#NotDoneModal" data-original-title="" title="" class="btn btn-sm bg-danger-light">
+                                            <i class="fas fa-times"></i> انجام نشد
+                                        </a>
+                                    }
                                 </div>
                             </div>
                             <!-- /Appointment List -->
@@ -180,7 +185,10 @@
 <!-- /Page Content -->
 @section Scripts
 {
+<link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+<script src="~/Sweetalert2/sweetalert2.min.js"></script>
 <script>
+    var Id = 0;
 
     function ShowDetails(id) {
         $.ajax({
@@ -203,7 +211,15 @@
                 body += '</div>';
                 body += '<div class="col-md-6">';
                 body += '<div class="text-right">';
-                body += '<button type="button" class="btn bg-success-light btn-sm">' + data.appointmentStatus + '</button>';
+                if (data.appointmentStatus === "در انتظار") {
+                    body += '<button type="button" class="btn bg-warning-light btn-sm">' + data.appointmentStatus + '</button>';
+                }
+                else if (data.appointmentStatus === "انجام نشد") {
+                    body += '<button type="button" class="btn bg-danger-light btn-sm">' + data.appointmentStatus + '</button>';
+                }
+                else {
+                    body += '<button type="button" class="btn bg-success-light btn-sm">' + data.appointmentStatus + '</button>';
+                }
                 body += '</div>';
                 body += '</div>';
                 body += '</div>';
@@ -227,9 +243,132 @@
                 alert(request.responseText);
             }
         });
-
     }
 
+    function Completed(id) {
+
+        swal.fire({
+            title: "آیا از تغیر وضعیت این نوبت مطمئن هستید؟",
+            text: "پس از تایید دیگر نمیتوانید وضعیت این نوبت را تغیر دهید!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: "بله , تغیر بده!",
+            cancelButtonText: 'خیر',
+        }).then((result) => {
+            if (result.value) {
+                var postData = {
+                    'appointmentId': id,
+                    'appointmentStatus' : 2
+                };
+                $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: "POST",
+                    url: "@Url.Action("ChangeAppointmentStatus", "Appointments")",
+                    data: postData,
+                    success: function (data) {
+                        if (data.isSuccess == true) {
+                            swal.fire(
+                                'موفق!',
+                                data.message,
+                                'success'
+                            ).then(function (isConfirm) {
+                                location.replace("@Url.Action("Index", "Appointments")");
+                            });
+                        }
+                        else {
+                            swal.fire(
+                                'هشدار!',
+                                data.message,
+                                'warning'
+                            );
+
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+
+                });
+            }
+        });
+    }
+
+    function GetId(id) {
+        Id = id;
+    }
+
+    function populateTextarea(name) {
+        //get the text by id or predefined or however you wish or passed to function
+        var txt = document.getElementById(name).value;
+
+        document.getElementById("reason").value = txt;
+    }
+
+
+    function NotDone() {
+
+        var reason = document.getElementById("reason").value;
+
+        if (reason === "") {
+            swal.fire(
+                'هشدار!',
+                'لطفا دلیل عدم انجام را وارد کنید',
+                'warning'
+            );
+            return;
+        }
+        swal.fire({
+            title: "آیا از تغیر وضعیت این نوبت مطمئن هستید؟",
+            text: "پس از تایید دیگر نمیتوانید وضعیت این نوبت را تغیر دهید!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: "بله , تغیر بده!",
+            cancelButtonText: 'خیر',
+        }).then((result) => {
+            if (result.value) {
+                var postData = {
+                    'appointmentId': Id,
+                    'appointmentStatus' : 1,
+                    'reason' : reason
+                };
+                $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: "POST",
+                    url: "@Url.Action("ChangeAppointmentStatus", "Appointments")",
+                    data: postData,
+                    success: function (data) {
+                        if (data.isSuccess == true) {
+                            swal.fire(
+                                'موفق!',
+                                data.message,
+                                'success'
+                            ).then(function (isConfirm) {
+                                location.replace("@Url.Action("Index", "Appointments")");
+                            });
+                        }
+                        else {
+                            swal.fire(
+                                'هشدار!',
+                                data.message,
+                                'warning'
+                            );
+
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+
+                });
+            }
+        });
+    }
 </script>
 }
 
@@ -250,4 +389,34 @@
     </div>
 </div>
 <!-- /Appointment Details Modal -->
+}
+
+@section NotDoneAppointmentModal{
+<!-- NotDoneAppointmentModal -->
+<div class="modal fade" id="NotDoneModal" tabindex="-1" role="dialog" aria-labelledby="NotDoneModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تغیر وضعیت نوبت : انجام نشد</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-form-label" for="recipient-name">دلیل عدم انجام :</label><hr />
+                    <button onclick="populateTextarea(this.id)" id="NoAnswer" type="button" class="btn btn-block btn-outline-danger active" value="عدم پاسخ به تماس">عدم پاسخ به تماس</button>
+                    <button onclick="populateTextarea(this.id)" id="Bussy" type="button" class="btn btn-block btn-outline-danger active" value="اشغال بودن خط">اشغال بودن خط</button>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="message-text">متن :</label>
+                    <textarea id="reason" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal" data-original-title="" title="">بستن</button>
+                <button onclick="NotDone()" class="btn btn-danger" type="button" data-original-title="" title="">تغیر وضعیت</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /NotDoneAppointmentModal -->
 }

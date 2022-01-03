@@ -1,4 +1,5 @@
-﻿using CR.Core.Services.Interfaces.Users;
+﻿using System;
+using CR.Core.Services.Interfaces.Users;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
@@ -17,26 +18,43 @@ namespace CR.Core.Services.Impl.Users
 
         public void Execute(long userId,string name,string lastName)
         {
-            var user = _context.Users.FirstOrDefault(u=>u.Id == userId);
+            using var transaction = _context.Database.BeginTransaction();
 
-            user.UserFlag = UserFlag.Expert;
-            user.IsActive = false;
-
-            var expertInformation = new ExpertInformation()
+            try
             {
-                FirstName = name,
-                LastName = lastName,
-                Expert = user,
-                ExpertId = user.Id
-            };
+                var user = _context.Users.FirstOrDefault(u => u.Id == userId);
 
-            _context.ExpertInformations.Add(expertInformation);
+                user.UserFlag = UserFlag.Expert;
+                user.IsActive = false;
 
-            _context.SaveChanges();
+                var expertInformation = new ExpertInformation()
+                {
+                    FirstName = name,
+                    LastName = lastName,
+                    Expert = user,
+                    ExpertId = user.Id
+                };
 
-            user.ExpertInformationId = expertInformation.Id;
+                _context.ExpertInformations.Add(expertInformation);
 
-            _context.SaveChanges();
+                _context.SaveChanges();
+
+                user.ExpertInformationId = expertInformation.Id;
+
+                _context.SaveChanges();
+
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+
+                throw;
+            }
+            finally
+            {
+                transaction.Dispose();
+            }
         }
     }
 }

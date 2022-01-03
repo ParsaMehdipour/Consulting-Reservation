@@ -1,5 +1,7 @@
 ﻿@addTagHelper *, LazZiya.TagHelpers
 @using CR.Common.Convertor
+@using CR.Common.Utilities
+@using CR.DataAccess.Enums
 @model CR.Presentation.Areas.ExpertPanel.Models.ViewModels.ExpertPanelDashboardViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -237,16 +239,18 @@
                                                                     }
                                                                     <td class="text-right">
                                                                         <div class="table-action">
-                                                                            <a onclick="ShowDetails(@consumer.AppointmentId)" href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
+                                                                            <a onclick="ShowDetails(@consumer.AppointmentId)" href="#" class="btn btn-sm bg-info-light" data-toggle="ajaxModal" data-target="#appt_details">
                                                                                 <i class="far fa-eye"></i> مشاهده
                                                                             </a>
-
-                                                                            <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-                                                                                <i class="fas fa-check"></i> قبول
-                                                                            </a>
-                                                                            <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-                                                                                <i class="fas fa-times"></i> حذف
-                                                                            </a>
+                                                                            @if (consumer.AppointmentStatus == AppointmentStatus.Waiting.GetDisplayName())
+                                                                            {
+                                                                                <a onclick="Completed(@consumer.AppointmentId)" class="btn btn-sm bg-success-light">
+                                                                                    <i class="fas fa-check"></i> انجام شد
+                                                                                </a>
+                                                                                <a onclick="GetId(@consumer.AppointmentId)" data-toggle="modal" data-target="#NotDoneModal" data-original-title="" title="" class="btn btn-sm bg-danger-light">
+                                                                                    <i class="fas fa-times"></i> انجام نشد
+                                                                                </a>
+                                                                            }
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -317,16 +321,18 @@
                                                                     }
                                                                     <td class="text-right">
                                                                         <div class="table-action">
-                                                                            <a onclick="ShowDetails(@consumer.AppointmentId)" href="#" class="btn btn-sm bg-info-light" data-toggle="modal" data-target="#appt_details">
+                                                                            <a onclick="ShowDetails(@consumer.AppointmentId)" href="#" class="btn btn-sm bg-info-light" data-toggle="ajaxModal" data-target="#appt_details">
                                                                                 <i class="far fa-eye"></i> مشاهده
                                                                             </a>
-
-                                                                            <a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-                                                                                <i class="fas fa-check"></i> قبول
-                                                                            </a>
-                                                                            <a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-                                                                                <i class="fas fa-times"></i> حذف
-                                                                            </a>
+                                                                            @if (consumer.AppointmentStatus == AppointmentStatus.Waiting.GetDisplayName())
+                                                                            {
+                                                                                <a onclick="Completed(@consumer.AppointmentId)" class="btn btn-sm bg-success-light">
+                                                                                    <i class="fas fa-check"></i> انجام شد
+                                                                                </a>
+                                                                                <a onclick="GetId(@consumer.AppointmentId)" data-toggle="modal" data-target="#NotDoneModal" data-original-title="" title="" class="btn btn-sm bg-danger-light">
+                                                                                    <i class="fas fa-times"></i> انجام نشد
+                                                                                </a>
+                                                                            }
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -368,77 +374,239 @@
     </div>
 </div>
 <!-- /Page Content -->
-
 @section Scripts
 {
-    <script>
+<script>
 
-        function ShowDetails(id) {
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("GetDetails", "Appointments")',
-                data: {id : id},
-                dataType: "json",
-                success: function(response) {
-                    var data = response;
+    var Id = 0;
 
-                    var body = '';
+    function ShowDetails(id) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetDetails", "Appointments")',
+            data: {id : id},
+            dataType: "json",
+            success: function(response) {
+                var data = response;
 
-                    body += '<ul class="info-details">';
-                    body += '<li>';
-                    body += '<div class="details-header">';
-                    body += '<div class="row">';
-                    body +='<div class="col-md-6">';
-                    body += '<span class="title">تاریخ و زمان نوبت:</span>';
-                    body += '<span class="text">' + data.appointmentDate + " , " + data.appointmentTime + '</span>';
-                    body += '</div>';
-                    body += '<div class="col-md-6">';
-                    body += '<div class="text-right">';
-                    body += '<button type="button" class="btn bg-success-light btn-sm">' + data.appointmentStatus + '</button>';
-                    body += '</div>';
-                    body += '</div>';
-                    body += '</div>';
-                    body += '</div>';
-                    body += '</li>';
-                    body += '<li>';
-                    body += '<span class="title">وضعیت:</span>';
-                    body += '<span class="text">' + data.appointmentStatus + '</span>';
-                    body += '</li>';
-                    body += '<li>';
-                    body += '<span class="title">مقدار پرداختی:</span>';
-                    body += '<span class="text">' + data.appointmentPrice + "تومان" + '</span>';
-                    body += '</li>';
-                    body += '</ul>';
+                var body = '';
 
-                    $("#appt_details #detailsBody").html(body);
-                    $("#appt_details").modal("show");
-
-                },
-                error: function(request, status, error) {
-                    alert(request.responseText);
+                body += '<ul class="info-details">';
+                body += '<li>';
+                body += '<div class="details-header">';
+                body += '<div class="row">';
+                body +='<div class="col-md-6">';
+                body += '<span class="title">تاریخ و زمان نوبت:</span>';
+                body += '<span class="text">' + data.appointmentDate + " , " + data.appointmentTime + '</span>';
+                body += '</div>';
+                body += '<div class="col-md-6">';
+                body += '<div class="text-right">';
+                if (data.appointmentStatus === "در انتظار") {
+                    body += '<button type="button" class="btn bg-warning-light btn-sm">' + data.appointmentStatus + '</button>';
                 }
-            });
+                else if (data.appointmentStatus === "انجام نشد") {
+                    body += '<button type="button" class="btn bg-danger-light btn-sm">' + data.appointmentStatus + '</button>';
+                }
+                else {
+                    body += '<button type="button" class="btn bg-success-light btn-sm">' + data.appointmentStatus + '</button>';
+                }
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</li>';
+                body += '<li>';
+                body += '<span class="title">وضعیت:</span>';
+                body += '<span class="text">' + data.appointmentStatus + '</span>';
+                body += '</li>';
+                body += '<li>';
+                body += '<span class="title">مقدار پرداختی</span>';
+                body += '<span class="text">' + data.appointmentPrice + "تومان" + '</span>';
+                body += '</li>';
+                body += '</ul>';
 
+                $("#appt_details #detailsBody").html(body);
+                $("#appt_details").modal("show");
+
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function Completed(id) {
+
+        swal.fire({
+            title: "آیا از تغیر وضعیت این نوبت مطمئن هستید؟",
+            text: "پس از تایید دیگر نمیتوانید وضعیت این نوبت را تغیر دهید!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: "بله , تغیر بده!",
+            cancelButtonText: 'خیر',
+        }).then((result) => {
+            if (result.value) {
+                var postData = {
+                    'appointmentId': id,
+                    'appointmentStatus' : 2
+                };
+                $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: "POST",
+                    url: "@Url.Action("ChangeAppointmentStatus", "Appointments")",
+                    data: postData,
+                    success: function (data) {
+                        if (data.isSuccess == true) {
+                            swal.fire(
+                                'موفق!',
+                                data.message,
+                                'success'
+                            ).then(function (isConfirm) {
+                                location.replace("@Url.Action("Index", "Home")");
+                            });
+                        }
+                        else {
+                            swal.fire(
+                                'هشدار!',
+                                data.message,
+                                'warning'
+                            );
+
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+
+                });
+            }
+        });
+    }
+
+    function GetId(id) {
+        Id = id;
+    }
+
+    function populateTextarea(name) {
+        //get the text by id or predefined or however you wish or passed to function
+        var txt = document.getElementById(name).value;
+
+        document.getElementById("reason").value = txt;
+    }
+
+
+    function NotDone() {
+
+        var reason = document.getElementById("reason").value;
+
+        if (reason === "") {
+            swal.fire(
+                'هشدار!',
+                'لطفا دلیل عدم انجام را وارد کنید',
+                'warning'
+            );
+            return;
         }
+        swal.fire({
+            title: "آیا از تغیر وضعیت این نوبت مطمئن هستید؟",
+            text: "پس از تایید دیگر نمیتوانید وضعیت این نوبت را تغیر دهید!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: "بله , تغیر بده!",
+            cancelButtonText: 'خیر',
+        }).then((result) => {
+            if (result.value) {
+                var postData = {
+                    'appointmentId': Id,
+                    'appointmentStatus' : 1,
+                    'reason' : reason
+                };
+                $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: "POST",
+                    url: "@Url.Action("ChangeAppointmentStatus", "Appointments")",
+                    data: postData,
+                    success: function (data) {
+                        if (data.isSuccess == true) {
+                            swal.fire(
+                                'موفق!',
+                                data.message,
+                                'success'
+                            ).then(function (isConfirm) {
+                                location.replace("@Url.Action("Index", "Appointments")");
+                            });
+                        }
+                        else {
+                            swal.fire(
+                                'هشدار!',
+                                data.message,
+                                'warning'
+                            );
 
-    </script>
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+
+                });
+            }
+        });
+    }
+
+</script>
 }
 
 @section ModalAppointmentInformation{
-    <!-- Appointment Details Modal -->
-    <div class="modal fade custom-modal" id="appt_details">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">جزییات نوبت</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="detailsBody">
-                </div>
+<!-- Appointment Details Modal -->
+<div class="modal fade custom-modal" id="appt_details">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">جزییات نوبت</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="detailsBody">
             </div>
         </div>
     </div>
-    <!-- /Appointment Details Modal -->
+</div>
+<!-- /Appointment Details Modal -->
+}
+@section NotDoneAppointmentModal{
+<!-- NotDoneAppointmentModal -->
+<div class="modal fade" id="NotDoneModal" tabindex="-1" role="dialog" aria-labelledby="NotDoneModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تغیر وضعیت نوبت : انجام نشد</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-form-label" for="recipient-name">دلیل عدم انجام :</label><hr />
+                    <button onclick="populateTextarea(this.id)" id="NoAnswer" type="button" class="btn btn-block btn-outline-danger active" value="عدم پاسخ به تماس">عدم پاسخ به تماس</button>
+                    <button onclick="populateTextarea(this.id)" id="Bussy" type="button" class="btn btn-block btn-outline-danger active" value="اشغال بودن خط">اشغال بودن خط</button>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="message-text">متن :</label>
+                    <textarea id="reason" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal" data-original-title="" title="">بستن</button>
+                <button onclick="NotDone()" class="btn btn-danger" type="button" data-original-title="" title="">تغیر وضعیت</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /NotDoneAppointmentModal -->
 }

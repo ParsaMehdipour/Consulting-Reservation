@@ -141,12 +141,13 @@ namespace CR.Presentation
             //Appointments
             services.AddScoped<IAddAppointmentService, AddAppointmentService>();
             services.AddScoped<IGetAllAppointmentsForAdminPanelService, GetAllAppointmentsForAdminPanelService>();
-            services.AddScoped<IChangeAppointmentStatusService, ChangeAppointmentStatusService>();
+            //services.AddScoped<IChangeAppointmentStatusServiceBool, ChangeAppointmentStatusServiceBool>();
             services.AddScoped<IGetAllAppointmentsForConsumerPanelService, GetAllAppointmentsForConsumerPanelService>();
             services.AddScoped<IGetAllAppointmentsForExpertPanelService, GetAllAppointmentsForExpertPanelService>();
             services.AddScoped<IGetConsumerAppointmentsForExpertPanelService, GetConsumerAppointmentsForExpertPanelService>();
             services.AddScoped<IGetAppointmentDetailsForExpertPanelService, GetAppointmentDetailsForExpertPanelService>();
             services.AddScoped<IGetAppointmentsForAdminDashboardService, GetAppointmentsForAdminDashboardService>();
+            services.AddScoped<IChangeAppointmentStatusService, ChangeAppointmentStatusService>();
             //Images
             services.AddScoped<IImageUploaderService, ImageUploaderService>();
             //Statistics

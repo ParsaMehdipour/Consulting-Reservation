@@ -38,7 +38,7 @@ namespace CR.Core.Services.Impl.Appointment
                 Data = new AppointmentDetailsForExpertPanel()
                 {
                     appointmentDate = appointment.TimeOfDay.Day.Date_String,
-                    appointmentStatus = "HardCode",
+                    appointmentStatus = appointment.AppointmentStatus.GetDisplayName(),
                     appointmentTime = (appointment.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" +
                                        appointment.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()) +
                                       " - " + (appointment.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() +

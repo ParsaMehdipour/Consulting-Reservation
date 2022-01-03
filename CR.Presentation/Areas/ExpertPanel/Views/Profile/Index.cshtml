@@ -3,7 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
     <div class="container-fluid">
@@ -383,19 +382,19 @@
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label>مدرک</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" id="degreeOfEducation" name="degreeOfEducation">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label>دانشگاه/موسسه</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" id="university" name="university">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label>سال اتمام</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" id="endDate" name="endDate">
                                                 </div>
                                             </div>
                                         </div>
@@ -539,7 +538,11 @@
 
     function Edit(id) {
 
+        var degreeOfEducationMatches = [];
+
         if ($("#expertProfileForm").valid()) {
+
+            GetStudies();
 
             var expertProfileData = new FormData;
 
@@ -602,6 +605,23 @@
             });
         }
 
+        function GetStudies() {
+            var degreeOfEducationInputs = document.getElementsByClassName( 'degreeOfEducation' );
+            var universityInputs = document.getElementsByClassName('university');
+            var endDateInputs = document.getElementsByClassName('endDate');
+
+
+            for (var i = 0; i < degreeOfEducationInputs.length; i++) {
+
+                var degreeOfEducation = degreeOfEducationInputs.item(i).value;
+
+                alert(degreeOfEducation);
+
+                degreeOfEducationMatches.push(degreeOfEducation);
+            }
+
+            alert(degreeOfEducationMatches);
+        }
     }
 </script>
 }

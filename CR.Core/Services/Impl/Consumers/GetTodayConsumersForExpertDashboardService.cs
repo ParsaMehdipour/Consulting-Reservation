@@ -36,7 +36,7 @@ namespace CR.Core.Services.Impl.Consumers
                     FullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentPrice = a.Price.ToString().GetPersianNumber(),
-                    AppointmentStatus = "HardCode",
+                    AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     AppointmentTime = (a.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" + a.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()).ToString() +
                                       " - " + (a.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() + ":" + a.TimeOfDay.FinishDate.Minute.ToString().GetPersianNumber()),
                     ConsumerIconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
