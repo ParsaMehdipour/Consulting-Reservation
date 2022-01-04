@@ -3,118 +3,994 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Breadcrumb -->
-<div class="breadcrumb-bar">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col-md-12 col-12">
-                <nav aria-label="breadcrumb" class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">تنظیمات پروفایل</li>
-                    </ol>
-                </nav>
-                <h2 class="breadcrumb-title">تنظیمات پروفایل</h2>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Breadcrumb -->
-<!-- Page Content -->
-<div class="content">
-    <div class="container-fluid">
+			<div class="breadcrumb-bar">
+				<div class="container-fluid">
+					<div class="row align-items-center">
+						<div class="col-md-12 col-12">
+							<nav aria-label="breadcrumb" class="page-breadcrumb">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+									<li class="breadcrumb-item active" aria-current="page">پروفایل</li>
+								</ol>
+							</nav>
+							<h2 class="breadcrumb-title">پروفایل</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Breadcrumb -->
+			
+			<!-- Page Content -->
+			<div class="content">
+				<div class="container-fluid">
 
-        <div class="row">
-            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+					<div class="row">
+						<div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar dct-dashbd-lft">
+						
+							<!-- Profile Widget -->
+							<div class="card widget-profile pat-widget-profile">
+								<div class="card-body">
+									<div class="pro-widget-content">
+										<div class="profile-info-widget">
+											<a href="#" class="booking-doc-img">
+												<img src="~/@Model.ConsumerIconSrc" alt="User Image">
+											</a>
+											<div class="profile-det-info">
+												<h3>@Model.ConsumerFullName</h3>
+												
+												<div class="patient-details">
+													<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i>@Model.City، @Model.Province</h5>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="patient-info">
+										<ul>
+											<li>شماره تماس <span>@Model.PhoneNumber</span></li>
+											<li>سن <span>@Model.Age سال، @Model.Gender</span></li>
+											<li>گروه خونی<span>@Model.BloodType</span></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- /Profile Widget -->
+							
+							<!-- Last Booking -->
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title">آخرین رزرو</h4>
+								</div>
+								<ul class="list-group list-group-flush">
+									@if (Model.ConsumerAppointmentsForExpertPanelDtos.Count > 0)
+									{
+										@foreach (var latestAppointment in Enumerable.Reverse(Model.ConsumerAppointmentsForExpertPanelDtos).Take(2).Reverse().ToList())
+										{
+										    <li class="list-group-item">
+                                                <div class="media align-items-center">
+                                                    <div class="mr-3">
+                                                        <img alt="Image placeholder" src="~/@latestAppointment.ExpertIconSrc" class="avatar  rounded-circle">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h5 class="d-block mb-0">@latestAppointment.ExpertFullName </h5>
+                                                        <span class="d-block text-sm text-muted">@latestAppointment.ExpertSpeciality</span>
+                                                        <span class="d-block text-sm text-muted"> @latestAppointment.AppointmentDate @latestAppointment.AppointmentTime</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+										}
+									}
+									else
+									{
+									    <li>اطلاعاتی جهت نمایش موجود نیست</li>
+									}
+                                </ul>
+							</div>
+							<!-- /Last Booking -->
+							
+						</div>
 
-                <!-- Profile Sidebar -->
-                <div class="profile-sidebar">
-                    <div class="widget-profile pro-widget-content">
-                        <div class="profile-info-widget">
-                            <a href="#" class="booking-doc-img">
-                                <img src="~/assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
-                            </a>
-                            <div class="profile-det-info">
-                                <h3>پزشک دارن الدر</h3>
+						<div class="col-md-7 col-lg-8 col-xl-9 dct-appoinment">
+							<div class="card">
+								<div class="card-body pt-0">
+									<div class="user-tabs">
+										<ul class="nav nav-tabs nav-tabs-bottom nav-justified flex-wrap">
+											<li class="nav-item">
+												<a class="nav-link active" href="#pat_appointments" data-toggle="tab">نوبت‌دهی</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="#pres" data-toggle="tab"><span> نسخه</span></a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="#medical" data-toggle="tab"><span class="med-records"> سوابق پزشکی </span></a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="#billing" data-toggle="tab"><span> صورتحساب </span></a>
+											</li> 
+										</ul>
+									</div>
+									<div class="tab-content">
+										
+										<!-- Appointment Tab -->
+										<div id="pat_appointments" class="tab-pane fade show active">
+											<div class="card card-table mb-0">
+												<div class="card-body">
+													@if (Model.ConsumerAppointmentsForExpertPanelDtos.Count > 0)
+													{
+														<div class="table-responsive">
+														<table class="table table-hover table-center mb-0">
+															<thead>
+																<tr>
+																	<th>پزشک</th>
+																	<th>تاریخ نوبت</th>
+																	<th> تاریخ رزرو </th>
+																	<th>مقدار</th>
+																	<th> وضعیت </th>
+																</tr>
+															</thead>
+                                                            <tbody>
+                                                            @foreach (var appointment in Model.ConsumerAppointmentsForExpertPanelDtos)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        <h2 class="table-avatar">
+                                                                            <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                                                                <img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image">
+                                                                            </a>
+                                                                            <a href="doctor-profile.html">@appointment.ExpertFullName <span>@appointment.ExpertSpeciality</span></a>
+                                                                        </h2>
+                                                                    </td>
+                                                                    <td>@appointment.AppointmentDate <span class="d-block text-info">@appointment.AppointmentTime</span></td>
+                                                                    <td>@appointment.AppointmentReservationDate</td>
+                                                                    @if (appointment.AppointmentPrice != "0")
+                                                                    {
+                                                                        <td>@appointment.AppointmentPrice تومان</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>رایگان</td>
+                                                                    }
+																	@if (appointment.AppointmentStatus == "در انتظار")
+																	{
+																	    <td><span class="badge badge-pill bg-warning-light"> @appointment.AppointmentStatus </span></td>
+																	}
+																	else if (appointment.AppointmentStatus == "انجام نشد")
+																	{
+																	    <td><span class="badge badge-pill bg-danger-light"> @appointment.AppointmentStatus </span></td>
+																	}
+																	else
+																	{
+																	    <td><span class="badge badge-pill bg-success-light"> @appointment.AppointmentStatus </span></td>
+																	}
+                                                                </tr>
+                                                            }
+                                                            </tbody>
+														</table>
+													</div>
+													}
+													else
+													{
+														<h3>اطلاعاتی جهت نمایش موجود نیست</h3>
+													}
+												</div>
+											</div>
+										</div>
+										<!-- /Appointment Tab -->
+										
+										<!-- Prescription Tab -->
+										<div class="tab-pane fade" id="pres">
+											<div class="text-right">
+												<a href="add-prescription.html" class="add-new-btn">افزودن مراجعه‌کننده</a>
+											</div>
+											<div class="card card-table mb-0">
+												<div class="card-body">
+													<div class="table-responsive">
+														<table class="table table-hover table-center mb-0">
+															<thead>
+																<tr>
+																	<th> تاریخ</th>
+																	<th>نام</th>									
+																	<th>ایجاد شده توسط</th>
+																	<th></th>
+																</tr>     
+															</thead>
+															<tbody>
+																<tr>
+																	<td>14 مهر 1399</td>
+																	<td> نسخه 1</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک رابی پرین <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>13 مهر 1399</td>
+																	<td> نسخه 2</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">دکتر دارن الدور <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																			<a href="edit-prescription.html" class="btn btn-sm bg-success-light">
+																				<i class="fas fa-edit"></i> ویرایش
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
+																				<i class="far fa-trash-alt"></i> حذف </a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>12 مهر 1399</td>
+																	<td> نسخه 3</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-03.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک دبرا آنجل <span>قلب و عروق</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>11 مهر 1399</td>
+																	<td> نسخه 4</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-04.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک سوفیا برنت <span>اورولوژی</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>10 مهر 1399</td>
+																	<td> نسخه 5</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-05.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک ماروین کمپل <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>9 مهر 1399</td>
+																	<td> نسخه 6</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-06.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک کاترینا برتفولد <span>ارتوپدی</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>8 مهر 1399</td>
+																	<td> نسخه 7</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-07.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک لیندا توبین <span>نئورولوژی</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>7 مهر 1399</td>
+																	<td> نسخه 8</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-08.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک پول ریچارد <span>پوست</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>6 مهر 1399</td>
+																	<td> نسخه 9</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-09.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک جان گیبز <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>5 مهر 1399</td>
+																	<td> نسخه 10</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-10.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک اولگا بارلو <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+															</tbody>	
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- /Prescription Tab -->
 
-                                <div class="patient-details">
-                                    <h5 class="mb-0"> BDS ، MDS - جراحی دهان و فک و صورت </h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dashboard-widget">
-                        <nav class="dashboard-menu">
-                            <ul>
-                                <li class="active">
-                                    <a asp-controller="Home" asp-action="Index">
-                                        <i class="fas fa-columns"></i>
-                                        <span>داشبورد</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Appointments" asp-action="Index">
-                                        <i class="fas fa-calendar-check"></i>
-                                        <span>نوبت‌دهی</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Consumers" asp-action="Index" asp-area="ExpertPanel">
-                                        <i class="fas fa-user-injured"></i>
-                                        <span>مراجعه‌کنندگان من</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Availabilities" asp-action="Index" asp-area="ExpertPanel">
-                                        <i class="fas fa-hourglass-start"></i>
-                                        <span>زمان‌بندی</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <i class="fas fa-file-invoice"></i>
-                                        <span>صورت‌حساب</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="reviews.html">
-                                        <i class="fas fa-star"></i>
-                                        <span>نظرات</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="chat-doctor.html">
-                                        <i class="fas fa-comments"></i>
-                                        <span>پیام‌ها</span>
-                                        <small class="unread-msg">23</small>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Profile" asp-action="Index" asp-area="ExpertPanel">
-                                        <i class="fas fa-user-cog"></i>
-                                        <span>تنظیمات پروفایل</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Account" asp-action="Index">
-                                        <i class="fas fa-lock"></i>
-                                        <span>‌تغییر رمز عبور</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-area="" asp-controller="Account" asp-action="Logout">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                        <span>خروج</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <!-- /Profile Sidebar -->
-            </div>
-            <div class="col-md-7 col-lg-8 col-xl-9">
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Page Content -->
+										<!-- Medical Records Tab -->
+										<div class="tab-pane fade" id="medical">
+											<div class="text-right">		
+												<a href="#" class="add-new-btn" data-toggle="modal" data-target="#add_medical_records"> افزودن سوابق پزشکی </a>
+											</div>
+											<div class="card card-table mb-0">
+												<div class="card-body">
+													<div class="table-responsive">
+														<table class="table table-hover table-center mb-0">
+															<thead>
+																<tr>
+																	<th>شناسه</th>
+																	<th> تاریخ</th>
+																	<th> توضیحات </th>
+																	<th> پیوست </th>
+																	<th> ایجاد شده </th>
+																	<th></th>
+																</tr>     
+															</thead>
+															<tbody>
+																<tr>
+																	<td><a href="javascript:void(0);">#MR-0010</a></td>
+																	<td>14 مهر 1399</td>
+																	<td>پر کردن دندان</td>
+																	<td><a href="#">dental-test.pdf</a></td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک رابی پرین <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td><a href="javascript:void(0);">#MR-0009</a></td>
+																	<td>13 مهر 1399</td>
+																	<td>جرم گیری</td>
+																	<td><a href="#">dental-test.pdf</a></td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">دکتر دارن الدور <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																			<a href="edit-prescription.html" class="btn btn-sm bg-success-light" data-toggle="modal" data-target="#add_medical_records">
+																				<i class="fas fa-edit"></i> ویرایش
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
+																				<i class="far fa-trash-alt"></i> حذف </a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td><a href="javascript:void(0);">#MR-0008</a></td>
+																	<td>12 مهر 1399</td>
+																	<td>چکاپ</td>
+																	<td><a href="#">cardio-test.pdf</a></td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-03.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک دبرا آنجل <span>قلب و عروق</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td><a href="javascript:void(0);">#MR-0007</a></td>
+																	<td>11 مهر 1399</td>
+																	<td>تست کلی</td>
+																	<td><a href="#">general-test.pdf</a></td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-04.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک سوفیا برنت <span>اورولوژی</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td><a href="javascript:void(0);">#MR-0006</a></td>
+																	<td>10 مهر 1399</td>
+																	<td>تست چشم</td>
+																	<td><a href="#">eye-test.pdf</a></td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-05.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک ماروین کمپل <span>چشم پزشکی</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td><a href="javascript:void(0);">#MR-0005</a></td>
+																	<td>9 مهر 1399</td>
+																	<td>درد پا</td>
+																	<td><a href="#">ortho-test.pdf</a></td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-06.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک کاترینا برتفولد <span>ارتوپدی</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td><a href="javascript:void(0);">#MR-0004</a></td>
+																	<td>8 مهر 1399</td>
+																	<td>سردرد</td>
+																	<td><a href="#">neuro-test.pdf</a></td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-07.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک لیندا توبین <span>نئورولوژی</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td><a href="javascript:void(0);">#MR-0003</a></td>
+																	<td>7 مهر 1399</td>
+																	<td>آلرژی پوست</td>
+																	<td><a href="#">alergy-test.pdf</a></td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-08.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک پول ریچارد <span>پوست</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td><a href="javascript:void(0);">#MR-0002</a></td>
+																	<td>6 مهر 1399</td>
+																	<td>کشیدن دندان</td>
+																	<td><a href="#">dental-test.pdf</a></td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-09.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک جان گیبز <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td><a href="javascript:void(0);">#MR-0001</a></td>
+																	<td>5 مهر 1399</td>
+																	<td>پر کردن دندان</td>
+																	<td><a href="#">dental-test.pdf</a></td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-10.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک اولگا بارلو <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+															</tbody>  	
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- /Medical Records Tab -->
+										
+										<!-- Billing Tab -->
+										<div class="tab-pane" id="billing">
+											<div class="text-right">
+												<a class="add-new-btn" href="add-billing.html">افزودن صورت حساب</a>
+											</div>
+											<div class="card card-table mb-0">
+												<div class="card-body">
+													<div class="table-responsive">
+													
+														<table class="table table-hover table-center mb-0">
+															<thead>
+																<tr>
+																	<th>شماره فاکتور</th>
+																	<th>پزشک</th>
+																	<th>مقدار</th>
+																	<th>پرداخت شده</th>
+																	<th></th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>
+																		<a href="invoice-view.html">#INV-0010</a>
+																	</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">رابی پرین <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td> 450 تومان </td>
+																	<td>14 مهر 1399</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<a href="invoice-view.html">#INV-0009</a>
+																	</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">دکتر دارن الدور <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td>300 تومان</td>
+																	<td>13 مهر 1399</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																			<a href="edit-billing.html" class="btn btn-sm bg-success-light">
+																				<i class="fas fa-edit"></i> ویرایش
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
+																				<i class="far fa-trash-alt"></i> حذف </a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<a href="invoice-view.html">#INV-0008</a>
+																	</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-03.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک دبرا آنجل <span>قلب و عروق</span></a>
+																		</h2>
+																	</td>
+																	<td> 150 تومان </td>
+																	<td>12 مهر 1399</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<a href="invoice-view.html">#INV-0007</a>
+																	</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-04.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک سوفیا برنت <span>اورولوژی</span></a>
+																		</h2>
+																	</td>
+																	<td>50 تومان</td>
+																	<td>11 مهر 1399</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<a href="invoice-view.html">#INV-0006</a>
+																	</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-05.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک ماروین کمپل <span>چشم پزشکی</span></a>
+																		</h2>
+																	</td>
+																	<td>600 تومان</td>
+																	<td>10 مهر 1399</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<a href="invoice-view.html">#INV-0005</a>
+																	</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-06.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک کاترینا برتفولد <span>ارتوپدی</span></a>
+																		</h2>
+																	</td>
+																	<td>200 تومان</td>
+																	<td>9 مهر 1399</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<a href="invoice-view.html">#INV-0004</a>
+																	</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-07.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک لیندا توبین <span>نئورولوژی</span></a>
+																		</h2>
+																	</td>
+																	<td>100 تومان</td>
+																	<td>8 مهر 1399</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<a href="invoice-view.html">#INV-0003</a>
+																	</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-08.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک پول ریچارد <span>پوست</span></a>
+																		</h2>
+																	</td>
+																	<td>250 تومان</td>
+																	<td>7 مهر 1399</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<a href="invoice-view.html">#INV-0002</a>
+																	</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-09.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک جان گیبز <span>دندان پزشک</span></a>
+																		</h2>
+																	</td>
+																	<td>175 تومان</td>
+																	<td>6 مهر 1399</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		<a href="invoice-view.html">#INV-0001</a>
+																	</td>
+																	<td>
+																		<h2 class="table-avatar">
+																			<a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-10.jpg" alt="User Image">
+																			</a>
+																			<a href="doctor-profile.html">پزشک اولگا بارلو <span>#0010</span></a>
+																		</h2>
+																	</td>
+																	<td>550 تومان</td>
+																	<td>5 مهر 1399</td>
+																	<td class="text-right">
+																		<div class="table-action">
+																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+																				<i class="fas fa-print"></i> چاپ
+																			</a>
+																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+																				<i class="far fa-eye"></i> مشاهده
+																			</a>
+																		</div>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- Billing Tab -->
+												
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>		
+			<!-- /Page Content -->
+   

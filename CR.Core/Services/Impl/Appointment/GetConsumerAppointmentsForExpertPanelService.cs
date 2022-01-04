@@ -37,7 +37,7 @@ namespace CR.Core.Services.Impl.Appointment
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentPrice = a.TimeOfDay.Price.ToString().GetPersianNumber(),
                     AppointmentReservationDate = a.CreateDate.ToShamsi(),
-                    AppointmentStatus = "HardCode",
+                    AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     AppointmentTime = (a.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" +
                                        a.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()) +
                                       " - " + (a.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() + ":" +
@@ -45,22 +45,29 @@ namespace CR.Core.Services.Impl.Appointment
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,
                     ExpertIconSrc = a.ExpertInformation.IconSrc,
                     ExpertSpeciality = a.ExpertInformation.Specialty.Name,
-                    Age = a.ConsumerInformation.BirthDate.GetAge().ToString().GetPersianNumber(),
-                    Province = a.ConsumerInformation.Province,
-                    City = a.ConsumerInformation.City,
-                    Gender = a.ConsumerInformation.Gender.GetDisplayName(),
-                    PhoneNumber = a.ConsumerInformation.Consumer.PhoneNumber.GetPersianNumber(),
-                    BloodType = a.ConsumerInformation.BloodType
                 }).OrderBy(a => a.AppointmentDate)
                 .AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)
                 .ToList();
+
+            var consumer = _context.Appointments
+                .Include(a => a.ConsumerInformation)
+                .ThenInclude(a => a.Consumer).FirstOrDefault(a => a.ConsumerInformation.ConsumerId == consumerId);
+
+
 
             return new ResultDto<ResultGetConsumerAppointmentsForExpertPanel>()
             {
                 Data = new ResultGetConsumerAppointmentsForExpertPanel()
                 {
                     ConsumerAppointmentsForExpertPanelDtos = consumerAppointments,
+                    ConsumerIconSrc = consumer.ConsumerInformation.IconSrc,
+                    Age = consumer.ConsumerInformation.BirthDate.GetAge().ToString().GetPersianNumber(),
+                    Province = consumer.ConsumerInformation.Province,
+                    City = consumer.ConsumerInformation.City,
+                    Gender = consumer.ConsumerInformation.Gender.GetDisplayName(),
+                    PhoneNumber = consumer.ConsumerInformation.Consumer.PhoneNumber.GetPersianNumber(),
+                    BloodType = consumer.ConsumerInformation.BloodType,
                     CurrentPage = Page,
                     PageSize = PageSize,
                     RowCount = rowCount,
