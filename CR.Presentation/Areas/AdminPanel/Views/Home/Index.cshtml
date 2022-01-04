@@ -241,31 +241,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                           @if (Model.AppointmentForAdminDtos.Count > 0)
-                           {
-                               @foreach(var appointment in Model.AppointmentForAdminDtos)
-                               {
-                                   <tr>
-                                       <td>
-                                           <h2 class="table-avatar">
-                                               <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image"></a>
-                                               <a href="profile.html">@appointment.ExpertFullName</a>
-                                           </h2>
-                                       </td>
-                                       <td>@appointment.Speciality</td>
-                                       <td>
-                                           <h2 class="table-avatar">
-                                               <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ConsumerIconSrc" alt="User Image"></a>
-                                               <a href="profile.html">@appointment.ConsumerFullName </a>
-                                           </h2>
-                                       </td>
-                                       <td>@appointment.AppointmentDate<span class="text-primary d-block">@appointment.AppointmentTime</span></td>
-                                       <td class="text-right">
-                                           @appointment.AppointmentPrice تومان
-                                       </td>
-                                   </tr>
-                               }
-                           }
+                            @if (Model.AppointmentForAdminDtos.Count > 0)
+                            {
+                                @foreach (var appointment in Model.AppointmentForAdminDtos)
+                                {
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image"></a>
+                                                <a href="profile.html">@appointment.ExpertFullName</a>
+                                            </h2>
+                                        </td>
+                                        <td>@appointment.Speciality</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ConsumerIconSrc" alt="User Image"></a>
+                                                <a href="profile.html">@appointment.ConsumerFullName </a>
+                                            </h2>
+                                        </td>
+                                        <td>@appointment.AppointmentDate<span class="text-primary d-block">@appointment.AppointmentTime</span></td>
+                                        <td class="text-right">
+                                            @appointment.AppointmentPrice تومان
+                                        </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -275,3 +275,69 @@
 
     </div>
 </div>
+
+@section Scripts
+{
+<script>
+    $(function(){
+
+        var ConsumerDisplayYear=@Html.Raw(Json.Serialize(Model.StatisticsDto.ConsumerStatisticsCountForAdminPanelDto.Display));
+        var ConsumerValueYear=@Html.Raw(Json.Serialize(Model.StatisticsDto.ConsumerStatisticsCountForAdminPanelDto.Value));
+
+        var ExpertValueYear=@Html.Raw(Json.Serialize(Model.StatisticsDto.ExpertStatisticsCountForAdminPanelDto.Value));
+
+        var ExpertConsumerStatistics = [];
+
+        for (var i = 0; i <= 4; i++) {
+            ExpertConsumerStatistics.push({ y: ConsumerDisplayYear[i].toString(), a: ExpertValueYear[i], b: ConsumerValueYear[i] });
+        }
+
+        /* Morris Area Chart */
+
+        window.mA = Morris.Area({
+            element: 'morrisArea',
+            data: [
+                { y: '1390', a: 60},
+                { y: '1391', a: 100},
+                { y: '1392', a: 240},
+                { y: '1393', a: 120},
+                { y: '1394', a: 80},
+                { y: '1395', a: 100},
+                { y: '1396', a: 300},
+            ],
+            xkey: 'y',
+            ykeys: ['a'],
+            labels: ['سود'],
+            lineColors: ['#1b5a90'],
+            lineWidth: 2,
+
+            fillOpacity: 0.5,
+            gridTextSize: 10,
+            hideHover: 'auto',
+            resize: true,
+            redraw: true
+        });
+
+        /* Morris Line Chart */
+
+        window.mL = Morris.Line({
+            element: 'morrisLine',
+            data: ExpertConsumerStatistics,
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['متخصصین', 'مراجعان'],
+            lineColors: ['#1b5a90','#ff9d00'],
+            lineWidth: 1,
+            gridTextSize: 10,
+            hideHover: 'auto',
+            resize: true,
+            redraw: true
+        });
+        $(window).on("resize", function(){
+            mA.redraw();
+            mL.redraw();
+        });
+
+    });
+</script>
+}

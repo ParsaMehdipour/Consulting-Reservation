@@ -6,5 +6,7 @@
         public string ExpertCount { get; set; }
         public string AppointmentCount { get; set; }
         public string Income { get; set; }
+        public StatisticsCountForAdminPanelDto ConsumerStatisticsCountForAdminPanelDto { get; set; }
+        public StatisticsCountForAdminPanelDto ExpertStatisticsCountForAdminPanelDto { get; set; }
     }
 }
