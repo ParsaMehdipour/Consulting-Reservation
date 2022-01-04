@@ -36,9 +36,16 @@ namespace CR.Core.Services.Impl.Consumers
                     Age = u.ConsumerInfromation.BirthDate.GetAge().ToString().GetPersianNumber(),
                     Address = u.ConsumerInfromation.SpecificAddress,
                     PhoneNumber = u.PhoneNumber.GetPersianNumber(),
-                    LastAppointment = "HardCode",
+                    LastAppointment = _context.Appointments
+                        .Include(a=>a.ConsumerInformation)
+                        .Include(a=>a.TimeOfDay)
+                        .ThenInclude(a=>a.Day)
+                        .OrderBy(a=>a.TimeOfDay.Day.Date)
+                        .LastOrDefault(a=>a.ConsumerInformation.ConsumerId == u.Id)
+                        ?.TimeOfDay.Day.Date_String,
                     PaidAmount = "HardCode",
                 }).ToList();
+
 
             return new ResultDto<ResultGetAllConsumersDto>
             {

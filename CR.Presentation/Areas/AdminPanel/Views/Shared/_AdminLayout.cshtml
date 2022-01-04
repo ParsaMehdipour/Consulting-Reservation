@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title> داک‌کیور - دشبرد</title>
+    <title> چاله چوله - داشبورد</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="~/AdminTemplate/assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/img/favicon-32x32.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/bootstrap-rtl/css/bootstrap.min.css">
@@ -16,6 +16,13 @@
 
     <!-- Feathericon CSS -->
     <link rel="stylesheet" href="~/AdminTemplate/assets/css/feathericon.min.css">
+
+    <!-- Datetimepicker CSS -->
+    <link rel="stylesheet" href="~/assets/css/bootstrap-datetimepicker.min.css">
+
+    <!--persian Datepicker -->
+    <link rel="stylesheet" href="~/Jcal/daterangepicker.css" type="text/css">
+    <link rel="stylesheet" href="~/Jcal/persian-datepicker.css">
 
     <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/morris/morris.css">
 
@@ -43,7 +50,7 @@
             <!-- Logo -->
             <div class="header-left">
                 <a asp-controller="Home" asp-action="Index" class="logo">
-                    <img src="~/AdminTemplate/assets/img/logo.png" alt="Logo">
+                    <img src="~/assets/img/لوگوی هدر چاله چوله.png" alt="Logo">
                 </a>
                 <a asp-controller="Home" asp-action="Index" class="logo logo-small">
                     <img src="~/AdminTemplate/assets/img/logo-small.png" alt="Logo" width="30" height="30">
@@ -194,31 +201,31 @@
                         </li>
                         @*                        <li>
                             <a href="reviews.html"><i class="fe fe-star-o"></i> <span>نظرات</span></a>
-                        </li>
-                        <li>
+                            </li>
+                            <li>
                             <a href="transactions-list.html"><i class="fe fe-activity"></i> <span>تراکنش ها</span></a>
-                        </li>
-                        <li>
+                            </li>
+                            <li>
                             <a href="settings.html"><i class="fe fe-vector"></i> <span>تنظیمات</span></a>
-                        </li>
-                        <li class="submenu">
+                            </li>
+                            <li class="submenu">
                             <a href="#"><i class="fe fe-document"></i> <span>گزارش‌ها</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a href="invoice-report.html">گزارش فاکتورها </a></li>
+                            <li><a href="invoice-report.html">گزارش فاکتورها </a></li>
                             </ul>
-                        </li>
-                        <li class="menu-title">
+                            </li>
+                            <li class="menu-title">
                             <span>صفحات</span>
-                        </li>
-                        <li class="submenu">
+                            </li>
+                            <li class="submenu">
                             <a href="#"><i class="fe fe-document"></i> <span>بلاگ </span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a href="blog.html">بلاگ </a></li>
-                                <li><a href="blog-details.html">جزییات بلاگ </a></li>
-                                <li><a href="add-blog.html"> افزودن بلاگ </a></li>
-                                <li><a href="edit-blog.html"> ویرایش بلاگ </a></li>
+                            <li><a href="blog.html">بلاگ </a></li>
+                            <li><a href="blog-details.html">جزییات بلاگ </a></li>
+                            <li><a href="add-blog.html"> افزودن بلاگ </a></li>
+                            <li><a href="edit-blog.html"> ویرایش بلاگ </a></li>
                             </ul>
-                        </li>*@
+                            </li>*@
                     </ul>
                 </div>
             </div>
@@ -235,10 +242,6 @@
         </div>
         <!-- /Page Wrapper -->
 
-
-
-
-
     </div>
     <!-- /Main Wrapper -->
     <!-- jQuery -->
@@ -250,6 +253,10 @@
 
     <!-- Slimscroll JS -->
     <script src="~/AdminTemplate/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Persian DatePicker JS -->
+    <script src="~/Jcal/persian-date.js"></script>
+    <script src="~/Jcal/persian-datepicker.js"></script>
 
     <script src="~/AdminTemplate/assets/plugins/raphael/raphael.min.js"></script>
     <script src="~/AdminTemplate/assets/plugins/morris/morris.min.js"></script>
@@ -265,5 +272,43 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     @RenderSection("Scripts", required: false)
+
+    <script type="text/javascript">
+
+        $(".datetimepicker").persianDatepicker({
+            months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+            dowTitle: ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"],
+            shortDowTitle: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
+            showGregorianDate: !1,
+            persianNumbers: !0,
+            formatDate: "YYYY/MM/DD",
+            selectedBefore: !1,
+            selectedDate: null,
+            startDate: null,
+            endDate: null,
+            prevArrow: '\u25c4',
+            nextArrow: '\u25ba',
+            theme: 'default',
+            alwaysShow: !1,
+            selectableYears: null,
+            selectableMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            cellWidth: 25, // by px
+            cellHeight: 20, // by px
+            fontSize: 13, // by px
+            isRTL: !1,
+            format: 'YYYY/MM/DD',
+
+
+            calendarPosition: {
+                x: 0,
+                y: 0,
+            },
+            onShow: function () { },
+            onHide: function () { },
+            onSelect: function () { },
+            onRender: function () { }
+        });
+    </script>
+
 </body>
 </html>

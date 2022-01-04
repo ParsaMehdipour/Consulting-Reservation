@@ -29,7 +29,6 @@
                         <table class="datatable table table-hover table-center mb-0">
                             <thead>
                             <tr>
-                                <th>شناسه مراجعه کننده</th>
                                 <th>نام مراجعه کننده</th>
                                 <th>سن</th>
                                 <th>آدرس</th>
@@ -42,7 +41,6 @@
                             @foreach (var consumer in Model.Consumers)
                             {
                                 <tr>
-                                    <td>@consumer.Id</td>
                                     <td>
                                         <h2 class="table-avatar">
                                             <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.IconSrc" alt="User Image"></a>

@@ -143,10 +143,8 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label>تاریخ تولد</label>
-                                                        <div class="cal-icon">
-                                                            <input type="text" class="form-control" asp-for="birthDate" id="birthDate" name="birthDate">
-                                                            <span asp-validation-for="birthDate" class="text-danger"></span>
-                                                        </div>
+                                                        <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate" name="birthDate">
+                                                        <span asp-validation-for="birthDate" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
@@ -195,7 +193,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <input type="hidden" value="@Model.consumerInformationId" id="consumerInformationId"/>
+                                            <input type="hidden" value="@Model.consumerInformationId" id="consumerInformationId" />
                                             <button onclick="Edit()" type="submit" class="btn btn-primary btn-block">ذخیره تغییرات</button>
                                         </form>
                                     </div>
@@ -249,54 +247,54 @@
 
 @section Scripts
 {
-    <script>
+<script>
 
 
-        function Edit() {
-            if ($("#editConsumerDetailsFromAdminForm").valid()) {
+    function Edit() {
+        if ($("#editConsumerDetailsFromAdminForm").valid()) {
 
-                var editData = new FormData();
+            var editData = new FormData();
 
-                editData.append("firstName", $("#editConsumerDetailsFromAdminForm #firstName").val());
-                editData.append("lastName", $("#editConsumerDetailsFromAdminForm #lastName").val());
-                editData.append("birthDate", $("#editConsumerDetailsFromAdminForm #birthDate").val());
-                editData.append("email", $("#editConsumerDetailsFromAdminForm #email").val());
-                editData.append("phoneNumber", $("#editConsumerDetailsFromAdminForm #phoneNumber").val());
-                editData.append("specificAddress", $("#editConsumerDetailsFromAdminForm #specificAddress").val());
-                editData.append("province", $("#editConsumerDetailsFromAdminForm #province").val());
-                editData.append("city", $("#editConsumerDetailsFromAdminForm #city").val());
-                editData.append("postalCode", $("#editConsumerDetailsFromAdminForm #postalCode").val());
-                editData.append("consumerInformationId", $("#editConsumerDetailsFromAdminForm #consumerInformationId").val());
-                
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("EditConsumerDetails", "Consumers")',
-                    processData: false,
-                    contentType: false,
-                    dataType: 'json',
-                    cache: false,
-                    data: editData,
-                    success: function(data) {
-                        if (data.isSuccess == true) {
-                            swal.fire('موفق!',
-                                data.message,
-                                'success').then(function(isConfirm) {
-                                location.reload();
-                            });
-                        } else {
-                            swal.fire('هشدار!',
-                                data.message,
-                                'warning');
-                        }
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
+            editData.append("firstName", $("#editConsumerDetailsFromAdminForm #firstName").val());
+            editData.append("lastName", $("#editConsumerDetailsFromAdminForm #lastName").val());
+            editData.append("birthDate", $("#editConsumerDetailsFromAdminForm #birthDate").val());
+            editData.append("email", $("#editConsumerDetailsFromAdminForm #email").val());
+            editData.append("phoneNumber", $("#editConsumerDetailsFromAdminForm #phoneNumber").val());
+            editData.append("specificAddress", $("#editConsumerDetailsFromAdminForm #specificAddress").val());
+            editData.append("province", $("#editConsumerDetailsFromAdminForm #province").val());
+            editData.append("city", $("#editConsumerDetailsFromAdminForm #city").val());
+            editData.append("postalCode", $("#editConsumerDetailsFromAdminForm #postalCode").val());
+            editData.append("consumerInformationId", $("#editConsumerDetailsFromAdminForm #consumerInformationId").val());
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("EditConsumerDetails", "Consumers")',
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                cache: false,
+                data: editData,
+                success: function(data) {
+                    if (data.isSuccess == true) {
+                        swal.fire('موفق!',
+                            data.message,
+                            'success').then(function(isConfirm) {
+                            location.reload();
+                        });
+                    } else {
+                        swal.fire('هشدار!',
+                            data.message,
+                            'warning');
                     }
-                });
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
+                }
+            });
 
-            }
         }
+    }
 
 
-    </script>
+</script>
 }
