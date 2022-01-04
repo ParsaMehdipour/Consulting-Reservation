@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using CR.Common.Utilities;
 
 namespace CR.Common.Convertor
 {
@@ -47,6 +48,12 @@ namespace CR.Common.Convertor
         {
             PersianCalendar pc = new PersianCalendar();
             return pc.GetYear(dateTime) + "/" + pc.GetMonth(dateTime).ToString("00") + "/" + pc.GetDayOfMonth(dateTime).ToString("00");
+        }
+
+        public static string ToShamsiYear(this DateTime dateTime)
+        {
+            PersianCalendar pc = new PersianCalendar();
+            return pc.GetYear(dateTime).ToString();
         }
 
         private static readonly string[] Pn = { "۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹" };
