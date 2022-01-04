@@ -5,10 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>داک‌کیور</title>
+    <title>چاله چوله</title>
 
     <!-- Favicons -->
-    <link type="image/x-icon" href="~/assets/img/favicon.png" rel="icon">
+    <link type="image/x-icon" href="~/assets/img/favicon-32x32.png" rel="icon">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-rtl/css/bootstrap.min.css">
@@ -76,9 +76,9 @@
                             <a href="/">خانه</a>
                         </li>
                         <li class="has-submenu">
-                            <a href="#">پزشک‌ها<i class="fas fa-chevron-down"></i></a>
+                            <a href="#">متخصصین<i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu">
-                                <li><a asp-area="ExpertPanel" asp-controller="Home" asp-action="Index">دشبرد پزشک</a></li>
+                                <li><a asp-area="ExpertPanel" asp-controller="Home" asp-action="Index">داشبورد متخصص</a></li>
                                 @*<li><a href="appointments.html">نوبت‌دهی</a></li>*@
                                 <li><a asp-area="ExpertPanel" asp-controller="Availabilities" asp-action="Index">زمان‌بندی</a></li>
                                 @*<li><a href="my-patients.html">لیست بیماران</a></li>
@@ -87,7 +87,7 @@
                                     <li><a href="invoices.html">صورت‌حساب</a></li>*@
                                 <li><a asp-area="ExpertPanel" asp-controller="Profile" asp-action="Index">تنظیمات پروفایل</a></li>
                                 @*<li><a href="reviews.html">نظرات</a></li>*@
-                                <li><a asp-controller="Account" asp-action="ExpertSignup" asp-area="">ثبت‌نام پزشک</a></li>
+                                <li><a asp-controller="Account" asp-action="ExpertSignup" asp-area="">ثبت‌نام متخصص</a></li>
                                 @* <li class="has-submenu">
                                     <a href="doctor-blog.html">بلاگ</a>
                                     <ul class="submenu">
@@ -102,18 +102,18 @@
                             <a href="#">مراجعه‌کنندگان<i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu">
                                 <li class="has-submenu">
-                                    <a asp-controller="Experts" asp-action="Index">پزشکان</a>
+                                    <a asp-controller="Experts" asp-action="Index">متخصصین</a>
                                     @* <ul class="submenu">
                                         <li><a href="map-grid.html">گرید نقشه</a></li>
                                         <li><a href="map-list.html">لیست نقشه</a></li>
                                         </ul>*@
                                 </li>
-                                <li><a asp-controller="Experts" asp-action="Index">جستجو پزشک</a></li>
+                                <li><a asp-controller="Experts" asp-action="Index">جستجو متخصص</a></li>
                                 @*                                <li><a href="doctor-profile.html">پروفایل پزشک</a></li>
                                     <li><a href="booking.html">رزرو نوبت</a></li>
                                     <li><a href="checkout.html">پرداخت</a></li>
                                     <li><a href="booking-success.html">رزرو موفق</a></li>*@
-                                <li><a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Index">دشبرد مراجعه‌کننده</a></li>
+                                <li><a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Index">داشبورد مراجعه‌کننده</a></li>
                                 @*<li><a href="favourites.html">‌علاقه‌مندیها</a></li>
                                     <li><a href="chat.html">چت</a></li>*@
                                 <li><a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Profile">تنظیمات پروفایل</a></li>
@@ -164,7 +164,7 @@
                             </ul>
                             </li>*@
                         <li class="has-submenu">
-                            <a href="#" target="_blank">ادمین<i class="fas fa-chevron-down"></i></a>
+                            <a asp-area="AdminPanel" asp-controller="Home" asp-action="Index" target="_blank">ادمین<i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu">
                                 <li><a asp-area="AdminPanel" asp-controller="Home" asp-action="Index" target="_blank">‌ادمین</a></li>
                                 @*<li><a href="pharmacy/index.html" target="_blank">ادمین داروخانه</a></li>*@
@@ -185,15 +185,36 @@
                     </li>
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <li class="nav-item">
+                       @* <li class="nav-item">
                             <a class="btn btn-block btn-outline-danger" asp-area="" asp-controller="Account" asp-action="Logout">خروج</a>
+                        </li>*@
+                        <li class="nav-item dropdown has-arrow logged-item">
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <span class="user-img">
+                                    <img class="rounded-circle" src="assets/img/doctors/doctor-thumb-02.jpg" width="31" alt="دارن الدر">
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="user-header">
+                                    <div class="avatar avatar-sm">
+                                        <img src="~/assets/img/doctors/doctor-thumb-02.jpg" alt="User Image" class="avatar-img rounded-circle">
+                                    </div>
+                                    <div class="user-text">
+                                        <h6>دارا الدار</h6>
+                                        <p class="text-muted mb-0">پزشک</p>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" asp-area="ExpertPanel" asp-controller="Home" asp-action="Index">داشبورد</a>
+                                <a class="dropdown-item" asp-area="ExpertPanel" asp-controller="Profile" asp-action="Index">تنظیمات پروفایل</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">خروج</a>
+                            </div>
                         </li>
                     }
                     else
                     {
                         <li class="nav-item">
                             <a class="nav-link header-login" asp-controller="Account" asp-action="Login">ورود / ثبت‌نام</a>
-                        </li>
+                            </li>
                     }
 
                 </ul>
@@ -363,7 +384,6 @@
     <!-- Persian DatePicker JS -->
     <script src="~/Jcal/persian-date.js"></script>
     <script src="~/Jcal/persian-datepicker.js"></script>
-
 
     <!-- Sticky Sidebar JS -->
     <script src="~/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
