@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Account;
 using CR.Core.DTOs.Experts;
@@ -64,11 +66,19 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
 
 
         [HttpPost]
-        public IActionResult EditProfile(ExpertDetailsForProfileDto request)
+        public IActionResult EditProfile([FromForm]ExpertDetailsForProfileDto request)
         {
+            var degree = request.expertStudies[1];
+
             var result = _editExpertDetailsService.Execute(request);
 
             return new JsonResult(result);
+        }
+
+        [HttpPost]
+        public void Test(List<ExpertStudyDto> expertStudies)
+        {
+            Console.WriteLine(expertStudies);
         }
 
     }

@@ -4,6 +4,7 @@ using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Entities.Users;
 using System;
 using System.Collections.Generic;
+using CR.DataAccess.Entities.Factors;
 using CR.DataAccess.Enums;
 
 namespace CR.DataAccess.Entities.Appointments
@@ -20,6 +21,7 @@ namespace CR.DataAccess.Entities.Appointments
         public long ExpertInformationId { get; set; }
         public long ConsumerInformationId { get; set; }
         public long TimeOfDayId { get; set; }
+        public long? FactorId { get; set; }
 
         #endregion
 
@@ -28,6 +30,7 @@ namespace CR.DataAccess.Entities.Appointments
         public TimeOfDay TimeOfDay { get; set; }
         public ExpertInformation ExpertInformation { get; set; }
         public ConsumerInfromation ConsumerInformation { get; set; }
+        public virtual Factor Factor { get; set; }
 
         #endregion
 

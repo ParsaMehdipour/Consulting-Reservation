@@ -22,6 +22,10 @@ namespace CR.DataAccess.Configurations
             builder.HasOne(p => p.TimeOfDay)
                 .WithOne(p => p.Appointment)
                 .HasForeignKey<Appointment>(p => p.TimeOfDayId);
+
+            builder.HasOne(a => a.Factor)
+                .WithMany(a => a.Appointments)
+                .HasForeignKey(a => a.FactorId);
         }
     }
 }

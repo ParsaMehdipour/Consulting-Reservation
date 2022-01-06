@@ -382,19 +382,19 @@
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label>مدرک</label>
-                                                    <input type="text" class="form-control" id="degreeOfEducation" name="degreeOfEducation">
+                                                    <input type="text" class="form-control item_degree" id="degreeOfEducation" name="degreeOfEducation">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label>دانشگاه/موسسه</label>
-                                                    <input type="text" class="form-control" id="university" name="university">
+                                                    <input type="text" class="form-control item_university" id="university" name="university">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="form-group">
                                                     <label>سال اتمام</label>
-                                                    <input type="text" class="form-control" id="endDate" name="endDate">
+                                                    <input type="text" class="form-control item_endDate" id="endDate" name="endDate">
                                                 </div>
                                             </div>
                                         </div>
@@ -538,11 +538,11 @@
 
     function Edit(id) {
 
-        var degreeOfEducationMatches = [];
-
         if ($("#expertProfileForm").valid()) {
 
-            GetStudies();
+            var expertStudies = GetStudies();
+
+            console.log(expertStudies);
 
             var expertProfileData = new FormData;
 
@@ -564,6 +564,10 @@
             expertProfileData.append("specialtyId", BigInt($("#specialtyId").val()));
             expertProfileData.append("tag", $("#services").val());
             expertProfileData.append("id", id);
+            for (let  i = 0; i < expertStudies.length; i++) {
+                console.log(expertStudies[i]);
+                expertProfileData.append("expertStudy", expertStudies[i]);
+            }
 
             if (document.getElementById('price_free').checked) {
                 expertProfileData.append("isFreeOfCharge", true);
@@ -606,22 +610,21 @@
         }
 
         function GetStudies() {
-            var degreeOfEducationInputs = document.getElementsByClassName( 'degreeOfEducation' );
-            var universityInputs = document.getElementsByClassName('university');
-            var endDateInputs = document.getElementsByClassName('endDate');
 
+            var details = $('.item_degree').map(function() {
+                return {
+                    degreeOfEducation: $(this).val(),
+                    university: $('.item_university').val(),
+                    endDate: $('.item_endDate').val()
+                };
+            }).get();
 
-            for (var i = 0; i < degreeOfEducationInputs.length; i++) {
+            console.log(details);
 
-                var degreeOfEducation = degreeOfEducationInputs.item(i).value;
+            return details;
 
-                alert(degreeOfEducation);
-
-                degreeOfEducationMatches.push(degreeOfEducation);
-            }
-
-            alert(degreeOfEducationMatches);
         }
+
     }
 </script>
 }

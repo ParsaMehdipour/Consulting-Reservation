@@ -206,29 +206,29 @@ namespace CR.Core.Services.Impl.Experts
                 }
 
                 //ویرایش تحصیلات پزشک
-                _context.ExpertStudies.RemoveRange(expertInformation.ExpertStudies);
+                //_context.ExpertStudies.RemoveRange(expertInformation.ExpertStudies);
 
-                if (request.ExpertStudyDtos != null)
-                {
-                    List<ExpertStudy> expertStudies = new List<ExpertStudy>();
+                //if (request.ExpertStudyDtos != null)
+                //{
+                //    List<ExpertStudy> expertStudies = new List<ExpertStudy>();
 
-                    foreach (var item in request.ExpertStudyDtos)
-                    {
-                        var expertStudy = new ExpertStudy()
-                        {
-                            DegreeOfEducation = item.DegreeOfEducation,
-                            EndDate = item.EndDate.ToGeorgianDateTime(),
-                            EndDate_String = item.EndDate,
-                            University = item.University,
-                            ExpertInformation = expertInformation,
-                            ExpertInformationId = expertInformation.Id
-                        };
+                //    foreach (var item in request.ExpertStudyDtos)
+                //    {
+                //        var expertStudy = new ExpertStudy()
+                //        {
+                //            DegreeOfEducation = item.DegreeOfEducation,
+                //            EndDate = item.EndDate.ToGeorgianDateTime(),
+                //            EndDate_String = item.EndDate,
+                //            University = item.University,
+                //            ExpertInformation = expertInformation,
+                //            ExpertInformationId = expertInformation.Id
+                //        };
 
-                        expertStudies.Add(expertStudy);
-                    }
+                //        expertStudies.Add(expertStudy);
+                //    }
 
-                    _context.ExpertStudies.AddRange(expertStudies);
-                }
+                //    _context.ExpertStudies.AddRange(expertStudies);
+                //}
 
                 //ویرایش ثبت نام های پزشک
                 _context.ExpertSubscriptions.RemoveRange(expertInformation.ExpertSubscriptions);

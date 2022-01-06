@@ -5,6 +5,6 @@ namespace CR.Core.Services.Interfaces.Appointment
 {
     public interface IAddAppointmentService
     {
-        ResultDto Execute(RequestAddAppointmentDto request);
+        ResultDto<string> Execute(RequestAddAppointmentDto request);
     }
 }

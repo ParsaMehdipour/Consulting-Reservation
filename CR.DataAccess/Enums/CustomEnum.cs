@@ -28,5 +28,15 @@ namespace CR.DataAccess.Enums
         [Display(Name = "انجام شد")]
         Completed = 2,
     }
+
+    public enum FactorStatus
+    {
+        [Display(Name = "ثبت اولیه")]
+        Waiting = 0,
+        [Display(Name="پرداخت موفق")]
+        SuccessfulPayment = 1,
+        [Display(Name = "پرداخت ناموفق")]
+        UnsuccessfulPayment = 2,
+    }
 }
 

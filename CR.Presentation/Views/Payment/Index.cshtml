@@ -1,0 +1,196 @@
+﻿	<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">پرداخت</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">پرداخت</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-7 col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+
+                        <!-- Checkout Form -->
+                        <div>
+                            <!-- Personal Information -->
+                            <div class="info-widget">
+                                <h4 class="card-title">اطلاعات شخصی</h4>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group card-label">
+                                            <label>نام</label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group card-label">
+                                            <label>نام خانوادگی</label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group card-label">
+                                            <label>ایمیل</label>
+                                            <input class="form-control" type="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group card-label">
+                                            <label>شماره</label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="exist-customer">اکانت دارید؟<a href="#">برای ثبت نام کلیک کنید</a></div>
+                            </div>
+                            <!-- /Personal Information -->
+
+                            <div class="payment-widget">
+                                <h4 class="card-title">روش پرداخت</h4>
+
+                                <!-- Credit Card Payment -->
+                                <div class="payment-list">
+                                    <label class="payment-radio credit-card-option">
+                                        <input type="radio" name="radio" checked>
+                                        <span class="checkmark"></span>
+                                        کارت اعتباری
+                                    </label>
+                                </div>
+                                <!-- /Credit Card Payment -->
+                                <!-- Paypal Payment -->
+                                <div class="payment-list">
+                                    <label class="payment-radio paypal-option">
+                                        <input type="radio" name="radio">
+                                        <span class="checkmark"></span>
+                                        پی‌پال
+                                    </label>
+                                </div>
+                                <!-- /Paypal Payment -->
+                                <!-- Terms Accept -->
+                                <div class="terms-accept">
+                                    <div class="custom-checkbox">
+                                        <input type="checkbox" id="terms_accept">
+                                        <label for="terms_accept">من با تمامی <a href="#">شرایط و مقررات موافقم</a></label>
+                                    </div>
+                                </div>
+                                <!-- /Terms Accept -->
+                                <!-- Submit Section -->
+                                <div class="submit-section mt-4">
+                                    <button onclick="RedirectToPayment()" class="btn btn-primary submit-btn">تایید پرداخت</button>
+                                </div>
+                                <!-- /Submit Section -->
+
+                            </div>
+                        </div>
+                        <!-- /Checkout Form -->
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-5 col-lg-4 theiaStickySidebar">
+
+                <!-- Booking Summary -->
+                <div class="card booking-card">
+                    <div class="card-header">
+                        <h4 class="card-title">خلاصه رزرو</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Booking Doctor Info -->
+                        <div class="booking-doc-info">
+                            <a href="doctor-profile.html" class="booking-doc-img">
+                                <img src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                            </a>
+                            <div class="booking-info">
+                                <h4><a href="doctor-profile.html">پزشک دارن الدر</a></h4>
+                                <div class="rating">
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="d-inline-block average-rating">35</span>
+                                </div>
+                                <div class="clinic-details">
+                                    <p class="doc-location"><i class="fas fa-map-marker-alt"></i>نیویورک، آمریکا</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Booking Doctor Info -->
+
+                        <div class="booking-summary">
+                            <div class="booking-item-wrap">
+                                <ul class="booking-date">
+                                    <li>تاریخ<span>16 بهمن 1399</span></li>
+                                    <li>زمان<span>10:00 قبل از ظهر</span></li>
+                                </ul>
+                                <ul class="booking-fee">
+                                    <li>نرخ مشاوره<span>100 تومان</span></li>
+                                    <li>نرخ رزرو<span>10 تومان</span></li>
+                                    <li>تماس تصویری<span>50 تومان</span></li>
+                                </ul>
+                                <div class="booking-total">
+                                    <ul class="booking-total-list">
+                                        <li>
+                                            <span>کل</span>
+                                            <span class="total-cost">160 تومان</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Booking Summary -->
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- /Page Content -->
+@section Scripts
+{
+<script>
+    function RedirectToPayment() {
+        alert();
+        $.ajax({
+            type: 'POST',
+            url: '/api/Payment/RedirectToPayment',
+            processData: false,
+            contentType: "application/json; charset=utf-8",
+            enctype: "application/json",
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+</script>
+}

@@ -89,12 +89,12 @@ namespace CR.Core.Services.Impl.Experts
                         PrizeName = e.PrizeName,
                         Year = e.Year
                     }).ToList(),
-                    ExpertStudyDtos = (expertInformation.ExpertStudies == null) ? new List<ExpertStudyDto>() : expertInformation.ExpertStudies.Select(e => new ExpertStudyDto
-                    {
-                        DegreeOfEducation = e.DegreeOfEducation,
-                        EndDate = e.EndDate_String,
-                        University = e.University
-                    }).ToList(),
+                    //ExpertStudyDtos = (expertInformation.ExpertStudies == null) ? new List<ExpertStudyDto>() : expertInformation.ExpertStudies.Select(e => new ExpertStudyDto
+                    //{
+                    //    DegreeOfEducation = e.DegreeOfEducation,
+                    //    EndDate = e.EndDate_String,
+                    //    University = e.University
+                    //}).ToList(),
                     ExpertSubscriptionDtos = (expertInformation.ExpertSubscriptions == null) ? new List<ExpertSubscriptionDto>() : expertInformation.ExpertSubscriptions.Select(e => new ExpertSubscriptionDto
                     {
                         SubscriptionName = e.SubscriptionName,

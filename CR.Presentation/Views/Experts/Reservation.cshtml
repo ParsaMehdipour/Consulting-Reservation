@@ -231,7 +231,7 @@
                     swal.fire('موفقیت!',
                         data.message,
                         'success').then(function(isConfirm) {
-                        window.location.href = "/checkout/successful";
+                        window.location.href = "/Payment?factorNumber=" + data.data;
                     });
                 } else {
                     swal.fire('هشدار!',

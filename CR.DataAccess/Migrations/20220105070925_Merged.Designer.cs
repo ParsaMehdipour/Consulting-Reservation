@@ -4,14 +4,16 @@ using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220105070925_Merged")]
+    partial class Merged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,9 +40,6 @@ namespace CR.DataAccess.Migrations
                     b.Property<long>("ExpertInformationId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("FactorId")
-                        .HasColumnType("bigint");
-
                     b.Property<long?>("Price")
                         .HasColumnType("bigint");
 
@@ -55,8 +54,6 @@ namespace CR.DataAccess.Migrations
                     b.HasIndex("ConsumerInformationId");
 
                     b.HasIndex("ExpertInformationId");
-
-                    b.HasIndex("FactorId");
 
                     b.ToTable("TBL_Appointments");
                 });
@@ -300,39 +297,6 @@ namespace CR.DataAccess.Migrations
                     b.HasIndex("ExpertInformationId");
 
                     b.ToTable("TBL_ExpertSubscriptions");
-                });
-
-            modelBuilder.Entity("CR.DataAccess.Entities.Factors.Factor", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CardHolderPAN")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FactorNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FactorStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RefId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("SaleReferenceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TotalPrice")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TBL_Factors");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ConsumerInfromation", b =>
@@ -715,15 +679,9 @@ namespace CR.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CR.DataAccess.Entities.Factors.Factor", "Factor")
-                        .WithMany("Appointments")
-                        .HasForeignKey("FactorId");
-
                     b.Navigation("ConsumerInformation");
 
                     b.Navigation("ExpertInformation");
-
-                    b.Navigation("Factor");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.Day", b =>
@@ -911,11 +869,6 @@ namespace CR.DataAccess.Migrations
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.Day", b =>
                 {
                     b.Navigation("TimeOfDays");
-                });
-
-            modelBuilder.Entity("CR.DataAccess.Entities.Factors.Factor", b =>
-                {
-                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ConsumerInfromation", b =>

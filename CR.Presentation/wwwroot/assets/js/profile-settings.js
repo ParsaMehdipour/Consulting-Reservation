@@ -35,19 +35,19 @@ Version      : 1.0
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
 							'<label>مدرک</label>' +
-							'<input type="text" class="form-control degreeOfEducation" id="degreeOfEducation" name="degreeOfEducation">' +
+							'<input type="text" class="form-control item_degree" id="degreeOfEducation" name="degreeOfEducation">' +
 						'</div>' +
 					'</div>' +
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
 							'<label>دانشگاه/موسسه</label>' +
-							'<input type="text" class="form-control university" id="university" name="university">' +
+							'<input type="text" class="form-control item_university" id="university" name="university">' +
 						'</div>' +
 					'</div>' +
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
 							'<label>سال اتمام</label>' +
-							'<input type="text" class="form-control endDate" id="endDate" name="endDate">' +
+							'<input type="text" class="form-control item_endDate" id="endDate" name="endDate">' +
 						'</div>' +
 					'</div>' +
 				'</div>' +

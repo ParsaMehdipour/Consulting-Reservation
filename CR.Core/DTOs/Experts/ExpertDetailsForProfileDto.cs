@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 // ReSharper disable All
 
@@ -31,7 +32,7 @@ namespace CR.Core.DTOs.Experts
         [Required(ErrorMessage = "تاریخ تولد خود را وارد کنید")]
         public string birthDate_String { get; set; }
 
-        public DateTime birthDate { get; set; }
+        public DateTime? birthDate { get; set; }
 
         [Required(ErrorMessage = "بیوگرافی خود را وارد کنید")]
         public string bio { get; set; }
@@ -69,7 +70,9 @@ namespace CR.Core.DTOs.Experts
         //[Required(ErrorMessage = "خدمات خود را وارد کنید")]
         public string tag { get; set; }
         public string instagram { get; set; }
-        public long specialtyId { get; set; }
+        public long? specialtyId { get; set; }
+        [FromForm(Name = "expertStudy")]
+        public List<ExpertStudyDto> expertStudies { get; set; }
 
 
         public List<string> Tags { get; set; }
