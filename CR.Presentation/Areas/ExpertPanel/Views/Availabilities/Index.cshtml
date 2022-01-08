@@ -27,91 +27,8 @@
         <div class="row">
             <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
 
-                <!-- Profile Sidebar -->
-                <div class="profile-sidebar">
-                    <div class="widget-profile pro-widget-content">
-                        <div class="profile-info-widget">
-                            <a href="#" class="booking-doc-img">
-                                <img src="~/assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
-                            </a>
-                            <div class="profile-det-info">
-                                <h3>پزشک دارن الدر</h3>
+                <partial name="ExpertPnelSideBarMenu"/>
 
-                                <div class="patient-details">
-                                    <h5 class="mb-0"> BDS ، MDS - جراحی دهان و فک و صورت </h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dashboard-widget">
-                        <nav class="dashboard-menu">
-                            <ul>
-                                <li class="active">
-                                    <a asp-controller="Home" asp-action="Index">
-                                        <i class="fas fa-columns"></i>
-                                        <span>داشبورد</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Appointments" asp-action="Index">
-                                        <i class="fas fa-calendar-check"></i>
-                                        <span>نوبت‌دهی</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Consumers" asp-action="Index" asp-area="ExpertPanel">
-                                        <i class="fas fa-user-injured"></i>
-                                        <span>مراجعه‌کنندگان من</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Availabilities" asp-action="Index" asp-area="ExpertPanel">
-                                        <i class="fas fa-hourglass-start"></i>
-                                        <span>زمان‌بندی</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <i class="fas fa-file-invoice"></i>
-                                        <span>صورت‌حساب</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="reviews.html">
-                                        <i class="fas fa-star"></i>
-                                        <span>نظرات</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="chat-doctor.html">
-                                        <i class="fas fa-comments"></i>
-                                        <span>پیام‌ها</span>
-                                        <small class="unread-msg">23</small>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Profile" asp-action="Index" asp-area="ExpertPanel">
-                                        <i class="fas fa-user-cog"></i>
-                                        <span>تنظیمات پروفایل</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Account" asp-action="Index">
-                                        <i class="fas fa-lock"></i>
-                                        <span>‌تغییر رمز عبور</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-area="" asp-controller="Account" asp-action="Logout">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                        <span>خروج</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <!-- /Profile Sidebar -->
             </div>
             <div class="col-md-7 col-lg-8 col-xl-9">
                 <div class="row">
@@ -212,6 +129,9 @@
 <!-- /Page Content -->
 @section Scripts
 {
+<script src="~/assets/js/ExpertPanel/Availabilities/Availabilities.js"></script>
+<script src="~/assets/js/ExpertPanel/layout.js"></script>
+
 <script>
 
     var dayId = 0;
@@ -445,126 +365,126 @@
 }
 
 @*@section ModalEdit{
-<!-- Edit Time Slot Modal -->
-<div class="modal fade custom-modal" id="edit_time_slot">
+    <!-- Edit Time Slot Modal -->
+    <div class="modal fade custom-modal" id="edit_time_slot">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">ویرایش زمان بندی</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="hours-info">
-                        <div class="row form-row hours-cont">
-                            <div class="col-12 col-md-10">
-                                <div class="row form-row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label>زمان شروع</label>
-                                            <select class="form-control">
-                                                <option>-</option>
-                                                <option selected>12.00 قبل از ظهر</option>
-                                                <option>12.30 قبل از ظهر</option>
-                                                <option>1.00 قبل از ظهر</option>
-                                                <option>1.30 قبل از ظهر</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label>زمان پایان</label>
-                                            <select class="form-control">
-                                                <option>-</option>
-                                                <option>12.00 قبل از ظهر</option>
-                                                <option selected>12.30 قبل از ظهر</option>
-                                                <option>1.00 قبل از ظهر</option>
-                                                <option>1.30 قبل از ظهر</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row form-row hours-cont">
-                            <div class="col-12 col-md-10">
-                                <div class="row form-row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label>زمان شروع</label>
-                                            <select class="form-control">
-                                                <option>-</option>
-                                                <option>12.00 قبل از ظهر</option>
-                                                <option selected>12.30 قبل از ظهر</option>
-                                                <option>1.00 قبل از ظهر</option>
-                                                <option>1.30 قبل از ظهر</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label>زمان پایان</label>
-                                            <select class="form-control">
-                                                <option>-</option>
-                                                <option>12.00 قبل از ظهر</option>
-                                                <option>12.30 قبل از ظهر</option>
-                                                <option selected>1.00 قبل از ظهر</option>
-                                                <option>1.30 قبل از ظهر</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
-                        </div>
-
-                        <div class="row form-row hours-cont">
-                            <div class="col-12 col-md-10">
-                                <div class="row form-row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label>زمان شروع</label>
-                                            <select class="form-control">
-                                                <option>-</option>
-                                                <option>12.00 قبل از ظهر</option>
-                                                <option>12.30 قبل از ظهر</option>
-                                                <option selected>1.00 قبل از ظهر</option>
-                                                <option>1.30 قبل از ظهر</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label>زمان پایان</label>
-                                            <select class="form-control">
-                                                <option>-</option>
-                                                <option>12.00 قبل از ظهر</option>
-                                                <option>12.30 قبل از ظهر</option>
-                                                <option>1.00 قبل از ظهر</option>
-                                                <option selected>1.30 قبل از ظهر</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
-                        </div>
-
-                    </div>
-
-                    <div class="add-more mb-3">
-                        <a href="javascript:void(0);" class="add-hours"><i class="fa fa-plus-circle"></i> افزودن</a>
-                    </div>
-                    <div class="submit-section text-center">
-                        <button type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title">ویرایش زمان بندی</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
     </div>
-</div>
-<!-- /Edit Time Slot Modal -->
-}*@
+    <div class="modal-body">
+    <form>
+    <div class="hours-info">
+    <div class="row form-row hours-cont">
+    <div class="col-12 col-md-10">
+    <div class="row form-row">
+    <div class="col-12 col-md-6">
+    <div class="form-group">
+    <label>زمان شروع</label>
+    <select class="form-control">
+    <option>-</option>
+    <option selected>12.00 قبل از ظهر</option>
+    <option>12.30 قبل از ظهر</option>
+    <option>1.00 قبل از ظهر</option>
+    <option>1.30 قبل از ظهر</option>
+    </select>
+    </div>
+    </div>
+    <div class="col-12 col-md-6">
+    <div class="form-group">
+    <label>زمان پایان</label>
+    <select class="form-control">
+    <option>-</option>
+    <option>12.00 قبل از ظهر</option>
+    <option selected>12.30 قبل از ظهر</option>
+    <option>1.00 قبل از ظهر</option>
+    <option>1.30 قبل از ظهر</option>
+    </select>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="row form-row hours-cont">
+    <div class="col-12 col-md-10">
+    <div class="row form-row">
+    <div class="col-12 col-md-6">
+    <div class="form-group">
+    <label>زمان شروع</label>
+    <select class="form-control">
+    <option>-</option>
+    <option>12.00 قبل از ظهر</option>
+    <option selected>12.30 قبل از ظهر</option>
+    <option>1.00 قبل از ظهر</option>
+    <option>1.30 قبل از ظهر</option>
+    </select>
+    </div>
+    </div>
+    <div class="col-12 col-md-6">
+    <div class="form-group">
+    <label>زمان پایان</label>
+    <select class="form-control">
+    <option>-</option>
+    <option>12.00 قبل از ظهر</option>
+    <option>12.30 قبل از ظهر</option>
+    <option selected>1.00 قبل از ظهر</option>
+    <option>1.30 قبل از ظهر</option>
+    </select>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
+    </div>
+
+    <div class="row form-row hours-cont">
+    <div class="col-12 col-md-10">
+    <div class="row form-row">
+    <div class="col-12 col-md-6">
+    <div class="form-group">
+    <label>زمان شروع</label>
+    <select class="form-control">
+    <option>-</option>
+    <option>12.00 قبل از ظهر</option>
+    <option>12.30 قبل از ظهر</option>
+    <option selected>1.00 قبل از ظهر</option>
+    <option>1.30 قبل از ظهر</option>
+    </select>
+    </div>
+    </div>
+    <div class="col-12 col-md-6">
+    <div class="form-group">
+    <label>زمان پایان</label>
+    <select class="form-control">
+    <option>-</option>
+    <option>12.00 قبل از ظهر</option>
+    <option>12.30 قبل از ظهر</option>
+    <option>1.00 قبل از ظهر</option>
+    <option selected>1.30 قبل از ظهر</option>
+    </select>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
+    </div>
+
+    </div>
+
+    <div class="add-more mb-3">
+    <a href="javascript:void(0);" class="add-hours"><i class="fa fa-plus-circle"></i> افزودن</a>
+    </div>
+    <div class="submit-section text-center">
+    <button type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- /Edit Time Slot Modal -->
+    }*@

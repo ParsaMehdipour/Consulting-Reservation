@@ -128,7 +128,7 @@
                                                 {
                                                     @foreach (var timeOfDay in day.TimeOfDayDtos)
                                                     {
-                                                        <a class="timing" onclick="SetId(@timeOfDay.id)">
+                                                        <a class="timing" onclick="SetId(@timeOfDay.id)" id="timeOfDay_@timeOfDay.id">
                                                             <span>@timeOfDay.start - @timeOfDay.finish</span>
                                                         </a>
                                                     }
@@ -170,6 +170,11 @@
 
     function SetId(id) {
         timeOfDayId = id;
+        if ($("#timeOfDay_" + id).hasClass("selected") === false) {
+            $("#timeOfDay_" + id).addClass("selected");
+        } else {
+            $("#timeOfDay_" + id).removeClass("selected");
+        }
     }
 
     //function GetThisDateAvailabilities() {

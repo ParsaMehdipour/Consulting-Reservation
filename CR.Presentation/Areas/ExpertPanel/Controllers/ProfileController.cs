@@ -68,7 +68,6 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         [HttpPost]
         public IActionResult EditProfile([FromForm]ExpertDetailsForProfileDto request)
         {
-            var degree = request.expertStudies[1];
 
             var result = _editExpertDetailsService.Execute(request);
 

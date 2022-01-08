@@ -29,66 +29,9 @@
 
             <!-- Profile Sidebar -->
             <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-                <div class="profile-sidebar">
-                    <div class="widget-profile pro-widget-content">
-                        <div class="profile-info-widget">
-                            <a href="#" class="booking-doc-img">
-                                <img src="~/assets/img/patients/patient.jpg" alt="User Image">
-                            </a>
-                            <div class="profile-det-info">
-                                <h3>ریچارد ویلسون</h3>
-                                <div class="patient-details">
-                                    <h5><i class="fas fa-birthday-cake"></i> 24 مهر 1362، 32 سال</h5>
-                                    <h5 class="mb-0"><i class="fas fa-map-marker-alt"></i>نیویورک، آمریکا</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dashboard-widget">
-                        <nav class="dashboard-menu">
-                            <ul>
-                                <li>
-                                    <a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Index">
-                                        <i class="fas fa-columns"></i>
-                                        <span>داشبورد</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="favourites.html">
-                                        <i class="fas fa-bookmark"></i>
-                                        <span>‌علاقه‌مندیها</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="chat.html">
-                                        <i class="fas fa-comments"></i>
-                                        <span>پیام‌ها</span>
-                                        <small class="unread-msg">23</small>
-                                    </a>
-                                </li>
-                                <li class="active">
-                                    <a asp-controller="Profile" asp-action="Index">
-                                        <i class="fas fa-user-cog"></i>
-                                        <span>تنظیمات پروفایل</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Account" asp-action="Index">
-                                        <i class="fas fa-lock"></i>
-                                        <span>‌تغییر رمز عبور</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-area="" asp-controller="Account" asp-action="Logout">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                        <span>خروج</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
 
-                </div>
+                <partial name="ConsumerPanelSideBarMenu" />
+
             </div>
             <!-- /Profile Sidebar -->
 
@@ -239,10 +182,10 @@
 </div>
 
 
-
-
-
 @section Scripts{
+
+<script src="~/assets/js/ConusmerPanel/Profile/Profile.js"></script>
+<script src="~/assets/js/ConusmerPanel/layout.js"></script>
 
 <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
 <script src="~/Sweetalert2/sweetalert2.min.js"></script>

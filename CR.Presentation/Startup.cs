@@ -111,6 +111,7 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertsForSiteService, GetExpertsForSiteService>();
             services.AddScoped<IGetExpertDetailsForSiteService, GetExpertDetailsForSiteService>();
             services.AddScoped<IGetExpertsForPresentationService, GetExpertsForPresentationService>();
+            services.AddScoped<IGetExpertDetailsForPartialService, GetExpertDetailsForPartialService>();
             //ExpertAvailabilities
             services.AddScoped<IAddDayService, AddDayService>();
             services.AddScoped<IGetDaysService, GetDaysService>();
@@ -130,6 +131,7 @@ namespace CR.Presentation
             services.AddScoped<IGetConsumersForExpertPanelService, GetConsumersForExpertPanelService>();
             services.AddScoped<IGetTodayConsumersForExpertDashboardService, GetTodayConsumersForExpertDashboardService>();
             services.AddScoped<IGetIncomingConsumersForExpertDashboardService, GetIncomingConsumersForExpertDashboardService>();
+            services.AddScoped<IGetConsumerDetailsForPartialService, GetConsumerDetailsForPartialService>();
             //Specialites
             services.AddScoped<IAddNewSpecialityService, AddNewSpecialityService>();
             services.AddScoped<IEditSpecialityService,EditSpecialityService>();
