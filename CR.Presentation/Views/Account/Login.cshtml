@@ -39,9 +39,9 @@
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
                                 <div class="form-group form-focus">
-                                    <input class="form-control floating" asp-for="RememberMe">
-                                    <label class="focus-label">مرا بخاطر داشته باش</label>
-                                    <span asp-validation-for="RememberMe" class="text-danger"></span>
+                                    <label>
+                                        <input type="checkbox" name="checkbox" asp-for="RememberMe"> مرا بخاطر داشته باش
+                                    </label>
                                 </div>
                                 <div class="text-right">
                                     <a class="forgot-link" href="forgot-password.html">فراموشی رمزعبور</a>

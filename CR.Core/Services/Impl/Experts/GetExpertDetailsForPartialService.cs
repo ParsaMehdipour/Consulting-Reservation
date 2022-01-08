@@ -37,9 +37,9 @@ namespace CR.Core.Services.Impl.Experts
 
             var expertForPartial = new ExpertForPartialDto()
             {
-                FullName = expert.ExpertInformation.FirstName + " " + expert.ExpertInformation.LastName,
-                IconSrc = expert.ExpertInformation.IconSrc,
-                Tag = expert.ExpertInformation.Tag
+                fullName = (string.IsNullOrWhiteSpace(expert.ExpertInformation.FirstName) || string.IsNullOrWhiteSpace(expert.ExpertInformation.LastName)) ? expert.PhoneNumber : expert.ExpertInformation.FirstName + " " + expert.ExpertInformation.LastName,
+                iconSrc = expert.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
+                tag = expert.ExpertInformation.Tag
             };
 
             return new ResultDto<ExpertForPartialDto>()

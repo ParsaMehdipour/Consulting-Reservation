@@ -9,8 +9,6 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
     public class AppointmentsController : Controller
     {
         private readonly IGetAllAppointmentsForAdminPanelService _getAllAppointmentsService;
-        private readonly IChangeAppointmentStatusServiceBool _changeAppointmentStatusService;
-
         public AppointmentsController(IGetAllAppointmentsForAdminPanelService getAllAppointmentsService)
         {
             _getAllAppointmentsService = getAllAppointmentsService;

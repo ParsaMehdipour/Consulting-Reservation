@@ -26,66 +26,9 @@
 
             <!-- Profile Sidebar -->
             <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-                <div class="profile-sidebar">
-                    <div class="widget-profile pro-widget-content">
-                        <div class="profile-info-widget">
-                            <a href="#" class="booking-doc-img">
-                                <img src="~/assets/img/patients/patient.jpg" alt="User Image">
-                            </a>
-                            <div class="profile-det-info">
-                                <h3>ریچارد ویلسون</h3>
-                                <div class="patient-details">
-                                    <h5><i class="fas fa-birthday-cake"></i> 24 مهر 1362، 32 سال</h5>
-                                    <h5 class="mb-0"><i class="fas fa-map-marker-alt"></i>نیویورک، آمریکا</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dashboard-widget">
-                        <nav class="dashboard-menu">
-                            <ul>
-                                <li class="active">
-                                    <a asp-area="ConsumerPanel" asp-controller="Home" asp-action="Index">
-                                        <i class="fas fa-columns"></i>
-                                        <span>داشبورد</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="favourites.html">
-                                        <i class="fas fa-bookmark"></i>
-                                        <span>‌علاقه‌مندیها</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="chat.html">
-                                        <i class="fas fa-comments"></i>
-                                        <span>پیام‌ها</span>
-                                        <small class="unread-msg">23</small>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Profile" asp-action="Index">
-                                        <i class="fas fa-user-cog"></i>
-                                        <span>تنظیمات پروفایل</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Account" asp-action="Index">
-                                        <i class="fas fa-lock"></i>
-                                        <span>‌تغییر رمز عبور</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-area="" asp-controller="Account" asp-action="Logout">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                        <span>خروج</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+               
+                <partial name="ConsumerPanelSideBarMenu"/>
 
-                </div>
             </div>
             <!-- /Profile Sidebar -->
 
@@ -156,7 +99,17 @@
                                                                     <td>@appointment.Price تومان</td>
                                                                 }
                                                                 <td>@appointment.ExpertTracking</td>
-                                                                <td><span class="badge badge-pill bg-success-light"> @appointment.Status </span></td>
+                                                                @if (@appointment.Status == "در انتظار")
+                                                                {
+                                                                    <td><span class="badge badge-pill bg-warning-light"> @appointment.Status </span></td>
+                                                                }else if (appointment.Status == "انجام شد")
+                                                                {
+                                                                    <td><span class="badge badge-pill bg-success-light"> @appointment.Status </span></td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td><span class="badge badge-pill bg-danger-light"> @appointment.Status </span></td>
+                                                                }
                                                                 <td class="text-right">
                                                                     <div class="table-action">
                                                                         <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
@@ -973,4 +926,8 @@
 
 </div>
 
-
+@section Scripts
+{
+    <script src="~/assets/js/ConusmerPanel/Home/Home.js"></script>
+    <script src="~/assets/js/ConusmerPanel/layout.js"></script>
+}

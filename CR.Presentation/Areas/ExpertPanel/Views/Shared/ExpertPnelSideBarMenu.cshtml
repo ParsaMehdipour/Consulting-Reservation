@@ -1,0 +1,85 @@
+﻿<!-- Profile Sidebar -->
+<div class="profile-sidebar">
+    <div class="widget-profile pro-widget-content">
+        <div class="profile-info-widget">
+            <a href="#" class="booking-doc-img">
+                <img alt="Expert">
+            </a>
+            <div class="profile-det-info">
+                <h3></h3>
+
+                <div class="patient-details">
+                    <h5 class="mb-0"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-widget">
+        <nav class="dashboard-menu" id="ExpertPanelMenu">
+            <ul>
+                <li id="Home">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-columns"></i>
+                        <span>داشبورد</span>
+                    </a>
+                </li>
+                <li id="Appointments">
+                    <a asp-controller="Appointments" asp-action="Index">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>نوبت‌دهی</span>
+                    </a>
+                </li>
+                <li id="Consumers">
+                    <a asp-controller="Consumers" asp-action="Index" asp-area="ExpertPanel">
+                        <i class="fas fa-user-injured"></i>
+                        <span>مراجعه‌کنندگان من</span>
+                    </a>
+                </li>
+                <li id="Availabilities">
+                    <a asp-controller="Availabilities" asp-action="Index" asp-area="ExpertPanel">
+                        <i class="fas fa-hourglass-start"></i>
+                        <span>زمان‌بندی</span>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <i class="fas fa-file-invoice"></i>
+                        <span>صورت‌حساب</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reviews.html">
+                        <i class="fas fa-star"></i>
+                        <span>نظرات</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chat-doctor.html">
+                        <i class="fas fa-comments"></i>
+                        <span>پیام‌ها</span>
+                        <small class="unread-msg">23</small>
+                    </a>
+                </li>
+                <li id="Profile">
+                    <a asp-controller="Profile" asp-action="Index" asp-area="ExpertPanel">
+                        <i class="fas fa-user-cog"></i>
+                        <span>تنظیمات پروفایل</span>
+                    </a>
+                </li>
+                <li id="ResetPassword">
+                    <a asp-controller="Account" asp-action="Index">
+                        <i class="fas fa-lock"></i>
+                        <span>‌تغییر رمز عبور</span>
+                    </a>
+                </li>
+                <li id="Logout">
+                    <a asp-area="" asp-controller="Account" asp-action="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>خروج</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- /Profile Sidebar -->

@@ -4,6 +4,13 @@ Template Name: Doccure - Bootstrap Template
 Version      : 1.0
 */
 
+$(document).ready(function () {
+
+	$("#ExpertPanelMenu .active").removeClass("active");
+	$("#ExpertPanelMenu #Profile").addClass("active");
+
+});
+
 (function($) {
     "use strict";
 	

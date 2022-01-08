@@ -39,7 +39,7 @@ namespace CR.Core.Services.Impl.Appointment
                     ExpertTracking = "HardCode",
                     Price = a.Price.ToString().GetPersianNumber(),
                     ReservationDate = a.CreateDate.ToShamsi(),
-                    Status = "HardCode",
+                    Status = a.AppointmentStatus.GetDisplayName(),
                     Speciality = a.ExpertInformation.Specialty.Name
                 }).AsEnumerable()?
                 .ToPaged(Page, PageSize, out rowCount).ToList();
