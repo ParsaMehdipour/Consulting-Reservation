@@ -71,16 +71,15 @@ namespace CR.Core.DTOs.Experts
         public string tag { get; set; }
         public string instagram { get; set; }
         public long? specialtyId { get; set; }
-        [FromForm(Name = "expertStudy")]
-        public List<ExpertStudyDto> expertStudies { get; set; }
 
 
         public List<string> Tags { get; set; }
-        public List<ExpertImageDto> Images { get; set; }
-        public List<ExpertExperienceDto> ExpertExperienceDtos { get; set; }
-        public List<ExpertMembershipDto> ExpertMembershipDtos { get; set; }
-        public List<ExpertPrizeDto> ExpertPrizeDtos { get; set; }
-        public List<ExpertStudyDto> ExpertStudyDtos { get; set; }
-        public List<ExpertSubscriptionDto> ExpertSubscriptionDtos { get; set; }
+        public List<IFormFile> imageFile { get; set; }
+        public List<string> imageName { get; set; }
+        public List<ExpertExperienceDto> experiences { get; set; }
+        public List<ExpertMembershipDto> memberships { get; set; }
+        public List<ExpertPrizeDto> prizes { get; set; }
+        public List<ExpertStudyDto> studies { get; set; }
+        public List<ExpertSubscriptionDto> subscriptions { get; set; }
     }
 }

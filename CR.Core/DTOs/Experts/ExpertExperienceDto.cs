@@ -2,9 +2,9 @@
 {
     public class ExpertExperienceDto
     {
-        public string HospitalName { get; set; }
-        public string StartDate { get; set; }
-        public string FinishDate { get; set; }
-        public string Role { get; set; }
+        public string clinicName { get; set; }
+        public string startYear { get; set; }
+        public string finishYear { get; set; }
+        public string role { get; set; }
     }
 }

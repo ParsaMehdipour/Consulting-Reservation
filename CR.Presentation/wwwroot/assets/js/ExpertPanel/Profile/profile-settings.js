@@ -6,12 +6,15 @@ Version      : 1.0
 
 $(document).ready(function () {
 
+	var options = {};
+	var uploader = $('.js-uploader__box').uploader(options);
+
 	$("#ExpertPanelMenu .active").removeClass("active");
 	$("#ExpertPanelMenu #Profile").addClass("active");
 
 });
 
-(function($) {
+(function ($) {
     "use strict";
 	
 	// Pricing Options Show
@@ -42,19 +45,19 @@ $(document).ready(function () {
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
 							'<label>مدرک</label>' +
-							'<input type="text" class="form-control item_degree" id="degreeOfEducation" name="degreeOfEducation">' +
+							'<input type="text" class="form-control" id="degreeOfEducation" name="degreeOfEducation">' +
 						'</div>' +
 					'</div>' +
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
 							'<label>دانشگاه/موسسه</label>' +
-							'<input type="text" class="form-control item_university" id="university" name="university">' +
+							'<input type="text" class="form-control" id="university" name="university">' +
 						'</div>' +
 					'</div>' +
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
 							'<label>سال اتمام</label>' +
-							'<input type="text" class="form-control item_endDate" id="endDate" name="endDate">' +
+							'<input type="number" class="form-control datetimepicker" id="endDate" name="endDate">' +
 						'</div>' +
 					'</div>' +
 				'</div>' +
@@ -80,26 +83,26 @@ $(document).ready(function () {
 				'<div class="row form-row">' +
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
-							'<label>نام بیمارستان</label>' +
-							'<input type="text" class="form-control">' +
+							'<label>نام کلینیک</label>' +
+							'<input type="text" class="form-control" id="pastClinicName" name="pastClinicName">' +
 						'</div>' +
 					'</div>' +
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
-							'<label>از</label>' +
-							'<input type="text" class="form-control">' +
+							'<label>از سال</label>' +
+							'<input type="text" class="form-control" id="startYear" name="startYear">' +
 						'</div>' +
 					'</div>' +
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
-							'<label>تا</label>' +
-							'<input type="text" class="form-control">' +
+							'<label>تا سال</label>' +
+							'<input type="text" class="form-control" id="finishYear" name="finishYear">' +
 						'</div>' +
 					'</div>' +
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
 							'<label> نقش</label>' +
-							'<input type="text" class="form-control">' +
+							'<input type="text" class="form-control" id="role" name="role">' +
 						'</div>' +
 					'</div>' +
 				'</div>' +
@@ -124,13 +127,13 @@ $(document).ready(function () {
 			'<div class="col-12 col-md-5">' +
 				'<div class="form-group">' +
 					'<label>جایزه ها</label>' +
-					'<input type="text" class="form-control">' +
+					'<input type="text" class="form-control" id="prizeName" name="prizeName">' +
 				'</div>' +
 			'</div>' +
 			'<div class="col-12 col-md-5">' +
 				'<div class="form-group">' +
 					'<label>سال</label>' +
-					'<input type="text" class="form-control">' +
+					'<input type="text" class="form-control" id="year" name="year">' +
 				'</div>' +
 			'</div>' +
 			'<div class="col-12 col-md-2">' +
@@ -156,7 +159,7 @@ $(document).ready(function () {
 			'<div class="col-12 col-md-10 col-lg-5">' +
 				'<div class="form-group">' +
 					'<label>عضویت ها</label>' +
-					'<input type="text" class="form-control">' +
+					'<input type="text" class="form-control" id="name" name="membershipName">' +
 				'</div>' +
 			'</div>' +
 			'<div class="col-12 col-md-2 col-lg-2">' +
@@ -182,13 +185,13 @@ $(document).ready(function () {
 			'<div class="col-12 col-md-5">' +
 				'<div class="form-group">' +
 					'<label> ثبت نام ها </label>' +
-					'<input type="text" class="form-control">' +
+					'<input type="text" class="form-control" id="subscriptionName" name="subscriptionName">' +
 				'</div>' +
 			'</div>' +
 			'<div class="col-12 col-md-5">' +
 				'<div class="form-group">' +
 					'<label>سال</label>' +
-					'<input type="text" class="form-control">' +
+					'<input type="text" class="form-control" id="subscriptionYear" name="subscriptionYear">' +
 				'</div>' +
 			'</div>' +
 			'<div class="col-12 col-md-2">' +
@@ -199,6 +202,21 @@ $(document).ready(function () {
 		
         $(".registrations-info").append(regcontent);
         return false;
-    });
+	});
 	
 })(jQuery);
+
+var imageFileList = [];
+
+function addFileToList(file) {
+	imageFileList.push(file);
+}
+
+function removeFileFromList(id) {
+	for (var i = 0; i < imageFileList.length; i++) {
+		if (i === parseInt(id)) {
+			imageFileList.splice(i, 1);
+			break;
+		}
+	}
+}

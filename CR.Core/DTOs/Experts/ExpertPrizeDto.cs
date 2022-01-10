@@ -2,7 +2,7 @@
 {
     public class ExpertPrizeDto
     {
-        public string PrizeName { get; set; }
-        public string Year { get; set; }
+        public string prizeName { get; set; }
+        public string year { get; set; }
     }
 }

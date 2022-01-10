@@ -2,6 +2,6 @@
 {
     public class ExpertMembershipDto
     {
-        public string Name { get; set; }
+        public string membershipName { get; set; }
     }
 }

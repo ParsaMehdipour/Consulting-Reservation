@@ -2,7 +2,7 @@
 {
     public class ExpertSubscriptionDto
     {
-        public string SubscriptionName { get; set; }
-        public string Year { get; set; }
+        public string subscriptionName { get; set; }
+        public string subscriptionYear { get; set; }
     }
 }

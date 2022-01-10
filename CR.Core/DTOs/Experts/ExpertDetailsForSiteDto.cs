@@ -20,6 +20,12 @@ namespace CR.Core.DTOs.Experts
         public string IconSrc { get; set; }
 
         public List<DayDto> DayDtos { get; set; }
+        public List<ExpertExperienceDto> experiences { get; set; }
+        public List<ExpertMembershipDto> memberships { get; set; }
+        public List<ExpertPrizeDto> prizes { get; set; }
+        public List<ExpertStudyDto> studies { get; set; }
+        public List<ExpertSubscriptionDto> subscriptions { get; set; }
         public string Tag { get; set; }
+        public List<string> Tags { get; set; }
     }
 }

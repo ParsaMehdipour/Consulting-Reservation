@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CR.Common.Convertor;
 using CR.Common.DTOs;
+using CR.Common.Utilities;
 using CR.Core.DTOs.Experts;
 using CR.Core.DTOs.Images;
 using CR.Core.Services.Interfaces.Experts;
@@ -102,7 +103,7 @@ namespace CR.Core.Services.Impl.Experts
                 expertInformation.SpecificAddress = request.specificAddress;
                 expertInformation.PostalCode = request.postalCode;
                 expertInformation.IsFreeOfCharge = request.isFreeOfCharge;
-                expertInformation.Price = (request.isFreeOfCharge == true) ? 0 : Convert.ToInt32(request.price.ToEnglishNumber());
+                expertInformation.Price = (request.isFreeOfCharge == true) ? 0 : Convert.ToInt32(DateConvertor.ToEnglishNumber(request.price));
                 expert.Email = request.email;
                 expert.PhoneNumber = request.phoneNumber;
 
@@ -138,20 +139,18 @@ namespace CR.Core.Services.Impl.Experts
                 //ویرایش تجربه های پزشک
                 _context.ExpertExperiences.RemoveRange(expertInformation.ExpertExperiences);
 
-                if (request.ExpertExperienceDtos != null)
+                if (request.experiences != null)
                 {
 
                     List<ExpertExperience> expertExperiences = new List<ExpertExperience>();
-                    foreach (var item in request.ExpertExperienceDtos)
+                    foreach (var item in request.experiences)
                     {
                         var expertExperience = new ExpertExperience()
                         {
-                            StartDate = item.StartDate.ToGeorgianDateTime(),
-                            StartDate_String = item.StartDate,
-                            FinishDate = item.FinishDate.ToGeorgianDateTime(),
-                            FinishDate_String = item.FinishDate,
-                            HospitalName = item.HospitalName,
-                            Role = item.Role,
+                            StartYear = item.startYear,
+                            FinishYear = item.finishYear,
+                            ClinicName = item.clinicName,
+                            Role = item.role,
                             ExpertInformation = expertInformation,
                             ExpertInformationId = expertInformation.Id
                         };
@@ -164,16 +163,16 @@ namespace CR.Core.Services.Impl.Experts
                 //ویرایش جوایز پزشک
                 _context.ExpertPrizes.RemoveRange(expertInformation.ExpertPrizes);
 
-                if (request.ExpertPrizeDtos != null)
+                if (request.prizes != null)
                 {
                     List<ExpertPrize> expertPrizes = new List<ExpertPrize>();
 
-                    foreach (var item in request.ExpertPrizeDtos)
+                    foreach (var item in request.prizes)
                     {
                         var expertPrize = new ExpertPrize()
                         {
-                            PrizeName = item.PrizeName,
-                            Year = item.Year,
+                            PrizeName = item.prizeName,
+                            Year = item.year,
                             ExpertInformation = expertInformation,
                             ExpertInformationId = expertInformation.Id
                         };
@@ -186,15 +185,15 @@ namespace CR.Core.Services.Impl.Experts
                 //ویرایش عضویت های پزشک
                 _context.ExpertMemberships.RemoveRange(expertInformation.ExpertMemberships);
 
-                if (request.ExpertMembershipDtos != null)
+                if (request.memberships != null)
                 {
                     List<ExpertMembership> expertMemberships = new List<ExpertMembership>();
 
-                    foreach (var item in request.ExpertMembershipDtos)
+                    foreach (var item in request.memberships)
                     {
                         var expertMembership = new ExpertMembership()
                         {
-                            Name = item.Name,
+                            Name = item.membershipName,
                             ExpertInformation = expertInformation,
                             ExpertInformationId = expertInformation.Id
                         };
@@ -206,43 +205,42 @@ namespace CR.Core.Services.Impl.Experts
                 }
 
                 //ویرایش تحصیلات پزشک
-                //_context.ExpertStudies.RemoveRange(expertInformation.ExpertStudies);
+                _context.ExpertStudies.RemoveRange(expertInformation.ExpertStudies);
 
-                //if (request.ExpertStudyDtos != null)
-                //{
-                //    List<ExpertStudy> expertStudies = new List<ExpertStudy>();
+                if (request.studies != null)
+                {
+                    List<ExpertStudy> expertStudies = new List<ExpertStudy>();
 
-                //    foreach (var item in request.ExpertStudyDtos)
-                //    {
-                //        var expertStudy = new ExpertStudy()
-                //        {
-                //            DegreeOfEducation = item.DegreeOfEducation,
-                //            EndDate = item.EndDate.ToGeorgianDateTime(),
-                //            EndDate_String = item.EndDate,
-                //            University = item.University,
-                //            ExpertInformation = expertInformation,
-                //            ExpertInformationId = expertInformation.Id
-                //        };
+                    foreach (var item in request.studies)
+                    {
+                        var expertStudy = new ExpertStudy()
+                        {
+                            DegreeOfEducation = item.degreeOfEducation,
+                            EndDate = item.endDate,
+                            University = item.university,
+                            ExpertInformation = expertInformation,
+                            ExpertInformationId = expertInformation.Id
+                        };
 
-                //        expertStudies.Add(expertStudy);
-                //    }
+                        expertStudies.Add(expertStudy);
+                    }
 
-                //    _context.ExpertStudies.AddRange(expertStudies);
-                //}
+                    _context.ExpertStudies.AddRange(expertStudies);
+                }
 
                 //ویرایش ثبت نام های پزشک
                 _context.ExpertSubscriptions.RemoveRange(expertInformation.ExpertSubscriptions);
 
-                if (request.ExpertSubscriptionDtos != null)
+                if (request.subscriptions != null)
                 {
                     List<ExpertSubscription> expertSubscriptions = new List<ExpertSubscription>();
 
-                    foreach (var item in request.ExpertSubscriptionDtos)
+                    foreach (var item in request.subscriptions)
                     {
                         var expertSubscription = new ExpertSubscription()
                         {
-                            SubscriptionName = item.SubscriptionName,
-                            Year = item.Year,
+                            SubscriptionName = item.subscriptionName,
+                            Year = item.subscriptionYear,
                             ExpertInformationId = expertInformation.Id,
                             ExpertInformation = expertInformation
                         };
