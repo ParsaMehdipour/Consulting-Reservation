@@ -8,8 +8,7 @@ namespace CR.DataAccess.Entities.ExpertInformations
     {
         public string University { get; set; }
         public string DegreeOfEducation { get; set; }
-        public DateTime EndDate { get; set; }
-        public string EndDate_String { get; set; }
+        public string EndDate { get; set; }
 
         #region ForeignKeys
 

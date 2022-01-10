@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
@@ -69,36 +70,36 @@ namespace CR.Core.Services.Impl.Experts
                     price = (expertInformation.IsFreeOfCharge == false) ? expertInformation.Price.ToString().GetPersianNumber() : 0.ToString().GetPersianNumber(),
                     tag = expertInformation.Tag,
                     Tags = (string.IsNullOrEmpty(expertInformation.Tag))?new List<string>(): expertInformation.Tag.Split(",").ToList(),
-                    Images = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages.Select(i => new ExpertImageDto
-                    {
-                        Src = i.Src
-                    }).ToList(),
-                    ExpertExperienceDtos = (expertInformation.ExpertExperiences == null) ? new List<ExpertExperienceDto>() : expertInformation.ExpertExperiences.Select(e => new ExpertExperienceDto
-                    {
-                        HospitalName = e.HospitalName,
-                        StartDate = e.StartDate_String,
-                        FinishDate = e.FinishDate_String,
-                        Role = e.Role
-                    }).ToList(),
-                    ExpertMembershipDtos = (expertInformation.ExpertMemberships == null) ? new List<ExpertMembershipDto>() : expertInformation.ExpertMemberships.Select(e => new ExpertMembershipDto
-                    {
-                        Name = e.Name
-                    }).ToList(),
-                    ExpertPrizeDtos = (expertInformation.ExpertPrizes == null) ? new List<ExpertPrizeDto>() : expertInformation.ExpertPrizes.Select(e => new ExpertPrizeDto
-                    {
-                        PrizeName = e.PrizeName,
-                        Year = e.Year
-                    }).ToList(),
-                    //ExpertStudyDtos = (expertInformation.ExpertStudies == null) ? new List<ExpertStudyDto>() : expertInformation.ExpertStudies.Select(e => new ExpertStudyDto
+                    //Images = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages.Select(i => new ExpertImageDto
                     //{
-                    //    DegreeOfEducation = e.DegreeOfEducation,
-                    //    EndDate = e.EndDate_String,
-                    //    University = e.University
+                    //    Src = i.Src
                     //}).ToList(),
-                    ExpertSubscriptionDtos = (expertInformation.ExpertSubscriptions == null) ? new List<ExpertSubscriptionDto>() : expertInformation.ExpertSubscriptions.Select(e => new ExpertSubscriptionDto
+                    experiences = (expertInformation.ExpertExperiences == null) ? new List<ExpertExperienceDto>() : expertInformation.ExpertExperiences.Select(e => new ExpertExperienceDto
                     {
-                        SubscriptionName = e.SubscriptionName,
-                        Year = e.Year
+                        clinicName = e.ClinicName,
+                        startYear = e.StartYear,
+                        finishYear = e.FinishYear,
+                        role = e.Role
+                    }).ToList(),
+                    memberships = (expertInformation.ExpertMemberships == null) ? new List<ExpertMembershipDto>() : expertInformation.ExpertMemberships.Select(e => new ExpertMembershipDto
+                    {
+                        membershipName = e.Name
+                    }).ToList(),
+                    prizes = (expertInformation.ExpertPrizes == null) ? new List<ExpertPrizeDto>() : expertInformation.ExpertPrizes.Select(e => new ExpertPrizeDto
+                    {
+                        prizeName = e.PrizeName,
+                        year = e.Year
+                    }).ToList(),
+                    studies = (expertInformation.ExpertStudies == null) ? new List<ExpertStudyDto>() : expertInformation.ExpertStudies.Select(e => new ExpertStudyDto
+                    {
+                        degreeOfEducation = e.DegreeOfEducation,
+                        endDate = e.EndDate,
+                        university = e.University
+                    }).ToList(),
+                    subscriptions = (expertInformation.ExpertSubscriptions == null) ? new List<ExpertSubscriptionDto>() : expertInformation.ExpertSubscriptions.Select(e => new ExpertSubscriptionDto
+                    {
+                        subscriptionName = e.SubscriptionName,
+                        subscriptionYear = e.Year
                     }).ToList(),
                 },
                 IsSuccess = true
