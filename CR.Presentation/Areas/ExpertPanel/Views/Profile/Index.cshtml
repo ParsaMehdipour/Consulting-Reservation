@@ -151,18 +151,17 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>تصویر کلینیک</label>
-                                        <form action="#" class="dropzone"></form>
-                                    </div>
-                                    <div class="upload-wrap">
-                                        <div class="upload-images">
-                                            <img src="~/assets/img/features/feature-01.jpg" alt="Upload Image">
-                                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-                                        </div>
-                                        <div class="upload-images">
-                                            <img src="~/assets/img/features/feature-02.jpg" alt="Upload Image">
-                                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-                                        </div>
+                                        <label>تصاویر کلینیک</label>
+                                        <span id="imageUploadContainer" style="width:100%">
+                                            <div class="col-lg-12 ">
+                                                <div class="uploader__box js-uploader__box l-center-box">
+                                                    <div class="uploader__contents">
+                                                        <label class="button button--secondary" for="fileinput">انتخاب تصویر</label>
+                                                        <input id="fileinput" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -293,30 +292,64 @@
                         <div class="card-body">
                             <h4 class="card-title"> تحصیلات </h4>
                             <div class="education-info">
-                                <div class="row form-row education-cont">
-                                    <div class="col-12 col-md-10 col-lg-11">
-                                        <div class="row form-row">
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label>مدرک</label>
-                                                    <input type="text" class="form-control item_degree" id="degreeOfEducation" name="degreeOfEducation">
+                                @if (Model.studies.Count > 0)
+                                {
+                                    @foreach (var study in Model.studies)
+                                    {
+                                        <div class="row form-row education-cont">
+                                            <div class="col-12 col-md-10 col-lg-11">
+                                                <div class="row form-row">
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label>مدرک</label>
+                                                            <input type="text" class="form-control" id="degreeOfEducation" name="degreeOfEducation" value="@study?.degreeOfEducation">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label>دانشگاه/موسسه</label>
+                                                            <input type="text" class="form-control" id="university" name="university" value="@study?.university">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label>سال اتمام</label>
+                                                            <input type="number" class="form-control" id="endDate" name="endDate" value="@study?.endDate">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label>دانشگاه/موسسه</label>
-                                                    <input type="text" class="form-control item_university" id="university" name="university">
+                                            <div class="col-12 col-md-2 col-lg-1"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="row form-row education-cont">
+                                        <div class="col-12 col-md-10 col-lg-11">
+                                            <div class="row form-row">
+                                                <div class="col-12 col-md-6 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>مدرک</label>
+                                                        <input type="text" class="form-control" id="degreeOfEducation" name="degreeOfEducation">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label>سال اتمام</label>
-                                                    <input type="text" class="form-control item_endDate" id="endDate" name="endDate">
+                                                <div class="col-12 col-md-6 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>دانشگاه/موسسه</label>
+                                                        <input type="text" class="form-control" id="university" name="university">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>سال اتمام</label>
+                                                        <input type="number" class="form-control" id="endDate" name="endDate">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                             <div class="add-more">
                                 <a href="javascript:void(0);" class="add-education"><i class="fa fa-plus-circle"></i> افزودن</a>
@@ -329,36 +362,76 @@
                         <div class="card-body">
                             <h4 class="card-title">تجربه</h4>
                             <div class="experience-info">
-                                <div class="row form-row experience-cont">
-                                    <div class="col-12 col-md-10 col-lg-11">
-                                        <div class="row form-row">
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label>نام بیمارستان</label>
-                                                    <input type="text" class="form-control">
+                                @if (Model.experiences.Count > 0)
+                                {
+                                    @foreach (var experience in Model.experiences)
+                                    {
+                                        <div class="row form-row experience-cont">
+                                            <div class="col-12 col-md-10 col-lg-11">
+                                                <div class="row form-row">
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label>نام کلینیک</label>
+                                                            <input type="text" class="form-control" id="pastClinicName" name="pastClinicName" value="@experience?.clinicName">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label>از سال</label>
+                                                            <input type="text" class="form-control" id="startYear" name="startYear" value="@experience?.startYear">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label>تا سال</label>
+                                                            <input type="text" class="form-control" id="finishYear" name="finishYear" value="@experience?.finishYear">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="form-group">
+                                                            <label> نقش</label>
+                                                            <input type="text" class="form-control" id="role" name="role" value="@experience?.role">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label>از</label>
-                                                    <input type="text" class="form-control">
+                                            <div class="col-12 col-md-2 col-lg-1"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="row form-row experience-cont">
+                                        <div class="col-12 col-md-10 col-lg-11">
+                                            <div class="row form-row">
+                                                <div class="col-12 col-md-6 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>نام کلینیک</label>
+                                                        <input type="text" class="form-control" id="pastClinicName" name="pastClinicName">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label>تا</label>
-                                                    <input type="text" class="form-control">
+                                                <div class="col-12 col-md-6 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>از سال</label>
+                                                        <input type="text" class="form-control" id="startYear" name="startYear">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-4">
-                                                <div class="form-group">
-                                                    <label> نقش</label>
-                                                    <input type="text" class="form-control">
+                                                <div class="col-12 col-md-6 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>تا سال</label>
+                                                        <input type="text" class="form-control" id="finishYear" name="finishYear">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label> نقش</label>
+                                                        <input type="text" class="form-control" id="role" name="role">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                             <div class="add-more">
                                 <a href="javascript:void(0);" class="add-experience"><i class="fa fa-plus-circle"></i> افزودن</a>
@@ -371,20 +444,47 @@
                         <div class="card-body">
                             <h4 class="card-title">جایزه ها</h4>
                             <div class="awards-info">
-                                <div class="row form-row awards-cont">
-                                    <div class="col-12 col-md-5">
-                                        <div class="form-group">
-                                            <label>جایزه ها</label>
-                                            <input type="text" class="form-control">
+                                @if (Model.prizes.Count > 0)
+                                {
+                                    @foreach (var prize in Model.prizes)
+                                    {
+                                        <div class="row form-row awards-cont">
+                                            <div class="col-12 col-md-5">
+                                                <div class="form-group">
+                                                    <label>جایزه ها</label>
+                                                    <input type="text" class="form-control" id="prizeName" name="prizeName" value="@prize?.prizeName">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-5">
+                                                <div class="form-group">
+                                                    <label>سال</label>
+                                                    <input type="text" class="form-control" id="year" name="year" value="@prize?.year">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-2">
+                                                <label class="d-md-block d-sm-none d-none">&nbsp;</label>
+                                                <a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="row form-row awards-cont">
+                                        <div class="col-12 col-md-5">
+                                            <div class="form-group">
+                                                <label>جوایز ها</label>
+                                                <input type="text" class="form-control" id="prizeName" name="prizeName">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-5">
+                                            <div class="form-group">
+                                                <label>سال</label>
+                                                <input type="text" class="form-control" id="year" name="year">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-5">
-                                        <div class="form-group">
-                                            <label>سال</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
+                                }
                             </div>
                             <div class="add-more">
                                 <a href="javascript:void(0);" class="add-award"><i class="fa fa-plus-circle"></i> افزودن</a>
@@ -397,14 +497,35 @@
                         <div class="card-body">
                             <h4 class="card-title">عضویت ها</h4>
                             <div class="membership-info">
-                                <div class="row form-row membership-cont">
-                                    <div class="col-12 col-md-10 col-lg-5">
-                                        <div class="form-group">
-                                            <label>عضویت ها</label>
-                                            <input type="text" class="form-control">
+                                @if (Model.memberships.Count > 0)
+                                {
+                                    @foreach (var membership in Model.memberships)
+                                    {
+                                        <div class="row form-row membership-cont">
+                                            <div class="col-12 col-md-10 col-lg-5">
+                                                <div class="form-group">
+                                                    <label>عضویت ها</label>
+                                                    <input type="text" class="form-control" id="membershipName" name="membershipName" value="@membership?.membershipName">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-2">
+                                                <label class="d-md-block d-sm-none d-none">&nbsp;</label>
+                                                <a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="row form-row membership-cont">
+                                        <div class="col-12 col-md-10 col-lg-5">
+                                            <div class="form-group">
+                                                <label>عضویت ها</label>
+                                                <input type="text" class="form-control" id="membershipName" name="membershipName">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                             <div class="add-more">
                                 <a href="javascript:void(0);" class="add-membership"><i class="fa fa-plus-circle"></i> افزودن</a>
@@ -417,20 +538,47 @@
                         <div class="card-body">
                             <h4 class="card-title"> ثبت نام ها </h4>
                             <div class="registrations-info">
-                                <div class="row form-row reg-cont">
-                                    <div class="col-12 col-md-5">
-                                        <div class="form-group">
-                                            <label> ثبت نام ها </label>
-                                            <input type="text" class="form-control">
+                                @if (Model.subscriptions.Count > 0)
+                                {
+                                    @foreach (var subscription in Model.subscriptions)
+                                    {
+                                        <div class="row form-row reg-cont">
+                                            <div class="col-12 col-md-5">
+                                                <div class="form-group">
+                                                    <label> ثبت نام ها </label>
+                                                    <input type="text" class="form-control" id="subscriptionName" name="subscriptionName" value="@subscription?.subscriptionName">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-5">
+                                                <div class="form-group">
+                                                    <label>سال</label>
+                                                    <input type="text" class="form-control" id="subscriptionYear" name="subscriptionYear" value="@subscription?.subscriptionYear">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-2">
+                                                <label class="d-md-block d-sm-none d-none">&nbsp;</label>
+                                                <a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="row form-row reg-cont">
+                                        <div class="col-12 col-md-5">
+                                            <div class="form-group">
+                                                <label> ثبت نام ها </label>
+                                                <input type="text" class="form-control" id="subscriptionName" name="subscriptionName">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-5">
+                                            <div class="form-group">
+                                                <label>سال</label>
+                                                <input type="text" class="form-control" id="subscriptionYear" name="subscriptionYear">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-5">
-                                        <div class="form-group">
-                                            <label>سال</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
+                                }
                             </div>
                             <div class="add-more">
                                 <a href="javascript:void(0);" class="add-reg"><i class="fa fa-plus-circle"></i> افزودن</a>
@@ -455,61 +603,96 @@
 
 <script>
 
-    function Edit(id) {
+    function Edit(Id) {
 
         if ($("#expertProfileForm").valid()) {
 
-            var expertStudies = GetStudies();
+            var image = [];
+            var isFreeOfCharge = null;
+            var gender = 0;
+            var price = '0';
+            var studies = GetStudies();
+            var experiences = GetExperiences();
+            var prizes = GetPrizes();
+            var memberships = GetMemberships();
+            var subscriptions = GetSubscriptions();
 
-            console.log(expertStudies);
+            var firstName = $("#expertProfileForm #firstName").val();
+            var lastName = $("#expertProfileForm #lastName").val();
+            var phoneNumber = $("#expertProfileForm #phoneNumber").val();
+            var email = $("#expertProfileForm #email").val();
+            var password = $("#expertProfileForm #password").val();
+            var specificAddress = $('input[name=specificAddress]').val();
+            var province = $('input[name=province]').val();
+            var city = $('input[name=city]').val();
+            var clinicName = $("#expertProfileForm #clinicName").val();
+            var clinicAddress = $("#expertProfileForm #clinicAddress").val();
+            var birthDate_String = $("#expertProfileForm #birthDate_String").val();
+            var postalCode = $('input[name=postalCode]').val();
+            var bio = $("#expertProfileForm #bio").val();
+            var instagram = $('input[name=instagram]').val();
+            var iconImage = $("#expertProfileForm #iconImage").get(0).files[0];
+            var specialtyId = BigInt($("#specialtyId").val());
+            var tag = $("#services").val();
+            var id = Id;
 
-            var expertProfileData = new FormData;
-
-            expertProfileData.append("firstName", $("#expertProfileForm #firstName").val());
-            expertProfileData.append("lastName", $("#expertProfileForm #lastName").val());
-            expertProfileData.append("phoneNumber", $("#expertProfileForm #phoneNumber").val());
-            expertProfileData.append("email", $("#expertProfileForm #email").val());
-            expertProfileData.append("password", $("#expertProfileForm #password").val());
-            expertProfileData.append("specificAddress", $('input[name=specificAddress]').val());
-            expertProfileData.append("province", $('input[name=province]').val());
-            expertProfileData.append("city", $('input[name=city]').val());
-            expertProfileData.append("clinicName", $("#expertProfileForm #clinicName").val());
-            expertProfileData.append("clinicAddress", $("#expertProfileForm #clinicAddress").val());
-            expertProfileData.append("birthDate_String", $("#expertProfileForm #birthDate_String").val());
-            expertProfileData.append("postalCode", $('input[name=postalCode]').val());
-            expertProfileData.append("bio", $("#expertProfileForm #bio").val());
-            expertProfileData.append("instagram", $('input[name=instagram]').val());
-            expertProfileData.append("iconImage", $("#expertProfileForm #iconImage").get(0).files[0]);
-            expertProfileData.append("specialtyId", BigInt($("#specialtyId").val()));
-            expertProfileData.append("tag", $("#services").val());
-            expertProfileData.append("id", id);
-            for (let  i = 0; i < expertStudies.length; i++) {
-                console.log(expertStudies[i]);
-                expertProfileData.append("expertStudy", expertStudies[i]);
+            for (var i = 0; i < imageFileList.length; i++) {
+                image.push(imageFileList[i].get(0).files[0]);
             }
 
+            console.log(image);
+
             if (document.getElementById('price_free').checked) {
-                expertProfileData.append("isFreeOfCharge", true);
+                isFreeOfCharge = true;
             } else {
-                expertProfileData.append("isFreeOfCharge", false);
-                expertProfileData.append("price", $('input[name=custom_rating_count]').val());
+                isFreeOfCharge = false;
+                price = $('input[name=custom_rating_count]').val();
             }
 
             if (document.getElementById("gender_male").checked === true) {
-                expertProfileData.append("gender",1);
+                gender = 1;
             }
             else if(document.getElementById("gender_female").checked === true) {
-                expertProfileData.append("gender",2);
+                gender = 2;
             }
 
+            var postData = {
+                'firstName': firstName,
+                'lastName': lastName,
+                'phoneNumber': phoneNumber,
+                'email': email,
+                'password': password,
+                'specificAddress': specificAddress,
+                'province': province,
+                'city': city,
+                'clinicName': clinicName,
+                'clinicAddress': clinicAddress,
+                'birthDate_String': birthDate_String,
+                'postalCode': postalCode,
+                'bio': bio,
+                'instagram': instagram,
+                'iconImage': iconImage,
+                'specialtyId': specialtyId,
+                'tag': tag,
+                'id': id,
+                'isFreeOfCharge': isFreeOfCharge,
+                'price': price,
+                'gender': gender,
+                'studies': studies,
+                'experiences': experiences,
+                'prizes': prizes,
+                'memberships': memberships,
+                'subscriptions': subscriptions,
+                'imageFile': image
+            };
+
+
             $.ajax({
-                type: 'POST',
-                url: '@Url.Action("EditProfile", "Profile")',
-                processData: false,
-                contentType: false,
+                contentType: 'application/x-www-form-urlencoded',
                 dataType: 'json',
-                cache: false,
-                data: expertProfileData,
+                type: 'POST',
+                url: '@Url.Action("EditProfile","Profile")',
+                data: postData,
                 success: function(data) {
                     if (data.isSuccess == true) {
                         swal.fire('موفق!',
@@ -527,23 +710,119 @@
                     alert(request.responseText);
                 }
             });
-        }
-
-        function GetStudies() {
-
-            var details = $('.item_degree').map(function() {
-                return {
-                    degreeOfEducation: $(this).val(),
-                    university: $('.item_university').val(),
-                    endDate: $('.item_endDate').val()
-                };
-            }).get();
-
-            console.log(details);
-
-            return details;
 
         }
+
+    }
+
+    function GetStudies() {
+
+
+        var degreesOfEducation = $('input[name^=degreeOfEducation]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var universities = $('input[name^=university]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var endDates = $('input[name^=endDate]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var studies = [];
+
+        for (let  i = 0; i < degreesOfEducation.length; i++) {
+
+            studies.push({ degreeOfEducation: degreesOfEducation[i], university: universities[i], endDate: endDates[i] });
+
+        }
+
+        return studies;
+    }
+
+    function GetExperiences() {
+        var clinicNames = $('input[name^=pastClinicName]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var startYears = $('input[name^=startYear]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var finishYears = $('input[name^=finishYear]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var roles = $('input[name^=role]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var experiences = [];
+
+        for (let  i = 0; i < clinicNames.length; i++) {
+
+            experiences.push({ clinicName: clinicNames[i], startYear: startYears[i], finishYear: finishYears[i], role: roles[i] });
+
+        }
+
+        return experiences;
+    }
+
+    function GetPrizes() {
+        var prizeNames = $('input[name^=prizeName]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var years = $('input[name^=year]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var prizes = [];
+
+        for (let  i = 0; i < prizeNames.length; i++) {
+
+            prizes.push({ prizeName: prizeNames[i], year: years[i] });
+
+        }
+
+        return prizes;
+    }
+
+    function GetMemberships() {
+        var membershipNames = $('input[name^=membershipName]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var memberships = [];
+
+        for (let  i = 0; i < membershipNames.length; i++) {
+
+            memberships.push({ membershipName: membershipNames[i] });
+
+        }
+
+        return memberships;
+    }
+
+    function GetSubscriptions() {
+        var subscriptionNames = $('input[name^=subscriptionName]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var subscriptionYears = $('input[name^=subscriptionYear]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var subscriptions = [];
+
+        for (let  i = 0; i < subscriptionNames.length; i++) {
+
+            subscriptions.push({ subscriptionName: subscriptionNames[i], subscriptionYear: subscriptionYears[i] });
+
+        }
+
+        return subscriptions;
 
     }
 </script>

@@ -32,6 +32,7 @@ namespace CR.Core.Services.Impl.Appointment
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
                 .Where(a => a.ConsumerInformation.ConsumerId == consumerId && a.ExpertInformation.ExpertId == expertId)
+                .OrderByDescending(a => a.TimeOfDay.Day.Date)
                 .Select(a => new ConsumerAppointmentsForExpertPanelDto
                 {
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
@@ -45,8 +46,7 @@ namespace CR.Core.Services.Impl.Appointment
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,
                     ExpertIconSrc = a.ExpertInformation.IconSrc,
                     ExpertSpeciality = a.ExpertInformation.Specialty.Name,
-                }).OrderBy(a => a.AppointmentDate)
-                .AsEnumerable()
+                }).AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)
                 .ToList();
 

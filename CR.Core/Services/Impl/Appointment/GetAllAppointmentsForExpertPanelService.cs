@@ -30,6 +30,7 @@ namespace CR.Core.Services.Impl.Appointment
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
                 .Where(a => a.ExpertInformation.ExpertId == expertId)
+                .OrderByDescending(a => a.TimeOfDay.Day.Date)
                 .Select(a => new AppointmentForExpertPanelDto
                 {
                     Id = a.Id,
@@ -47,8 +48,7 @@ namespace CR.Core.Services.Impl.Appointment
                     ConsumerId = a.ConsumerInformation.ConsumerId,
                     Email = a.ConsumerInformation.Consumer.Email,
                     PhoneNumber = a.ConsumerInformation.Consumer.PhoneNumber.ToString().GetPersianNumber()
-                }).OrderBy(a => a.AppointmentDate)
-                .AsEnumerable()
+                }).AsEnumerable()
                 .ToPaged(Page,PageSize,out rowCount)
                 .ToList();
 

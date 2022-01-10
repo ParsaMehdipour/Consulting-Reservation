@@ -29,6 +29,7 @@ namespace CR.Core.Services.Impl.Appointment
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
                 .Where(a=>a.ConsumerInformation.ConsumerId == consumerId)
+                .OrderByDescending(a => a.TimeOfDay.Day.Date)
                 .Select(a => new AppointmentForConsumerPanelDto
                 {
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
