@@ -66,7 +66,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
 
 
         [HttpPost]
-        public IActionResult EditProfile([FromForm]ExpertDetailsForProfileDto request)
+        public IActionResult EditProfile(ExpertDetailsForProfileDto request)
         {
 
             var result = _editExpertDetailsService.Execute(request);
@@ -74,11 +74,6 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             return new JsonResult(result);
         }
 
-        [HttpPost]
-        public void Test(List<ExpertStudyDto> expertStudies)
-        {
-            Console.WriteLine(expertStudies);
-        }
 
     }
 }

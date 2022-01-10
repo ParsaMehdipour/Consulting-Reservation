@@ -1,0 +1,244 @@
+﻿@charset "UTF-8";
+ 
+
+
+/**
+ * Add the correct background and color in IE 9-.
+ */
+mark {
+  background-color: #ff0;
+  color: #000; }
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sub {
+  bottom: -0.25em; }
+
+sup {
+  top: -0.5em; }
+
+
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+  box-sizing: content-box;
+  /* 1 */
+  height: 0;
+  /* 1 */
+  overflow: visible;
+  /* 2 */ }
+
+
+
+
+.button, .uploader__file-label, .uploader__submit-button {
+  background-color: white;
+  background-color: transparent;
+  border: 2px solid #ff8598;
+  border-radius: 5px;
+  color: #ff8598;
+  display: block;
+  font-size: 0.8em;
+  padding: 1em 2em;
+  max-width: 15em;
+  text-transform: uppercase;
+  transition: background-color 0.2s; }
+
+.button:hover, .uploader__file-label:hover, .uploader__submit-button:hover,
+.button:active,
+.uploader__file-label:active,
+.uploader__submit-button:active,
+.button:focus,
+.uploader__file-label:focus,
+.uploader__file-input:focus + .uploader__file-label,
+.uploader__submit-button:focus {
+  background-color: #ff8598;
+  color: white; }
+
+.button--secondary {
+  color: #ff8598;
+  border-color: #ff8598;
+  padding: 0.5em 1em;
+  max-width: 15em; }
+
+.button--secondary:hover,
+.button--secondary:active,
+.button--secondary:focus,
+.uploader__file-input:focus + .uploader__file-label {
+  background-color: #ff8598;
+  color: white; }
+
+.button--inline {
+  display: inline-block; }
+
+.button--big-bottom, .uploader__submit-button {
+  max-width: none;
+  width: 100%;
+  text-align: center;
+  border-radius: 0;
+  background-color: #ff8598;
+  color: white; }
+
+.button--big-bottom:hover, .uploader__submit-button:hover,
+.button--big-bottom:active,
+.uploader__submit-button:active,
+.button--big-bottom:focus,
+.uploader__submit-button:focus {
+  background-color: #ffb8c3; }
+
+.icon-button, .uploader__icon-button {
+  background: transparent;
+  border: 0;
+  color: #d2d2d2; }
+
+.icon-button:hover, .uploader__icon-button:hover {
+  color: #424242; }
+
+.uploader__file-input {
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0.1px;
+  z-index: -1; }
+
+.hide, .uploader__hide {
+  display: none; }
+
+.show {
+  display: block; }
+
+.error, .uploader__error {
+  color: #ff3264; }
+
+.file-list, .uploader__file-list {
+  list-style-type: none;
+  width: 100%;
+  padding: 0;
+  margin: 0; }
+
+.file-list__item, .uploader__file-list__item {
+  display: table;
+  padding: 0.5em;
+  width: 100%; }
+
+.file-list__item:nth-child(2n), .uploader__file-list__item:nth-child(2n) {
+  background-color: #fff5f7; }
+
+.file-list__thumbnail, .uploader__file-list__thumbnail,
+.file-list__text,
+.uploader__file-list__text,
+.file-list__size,
+.uploader__file-list__size,
+.file-list__button,
+.uploader__file-list__button {
+  display: table-cell;
+  vertical-align: middle; }
+
+.file-list__thumbnail, .uploader__file-list__thumbnail {
+  width: 10%; }
+
+.file-list__text, .uploader__file-list__text {
+  width: 60%;
+  word-break: break-word; }
+
+.file-list__size, .uploader__file-list__size {
+  width: 25%; }
+
+.file-list__button, .uploader__file-list__button {
+  width: 5%; }
+
+.icon, .uploader__icon {
+  font-size: 2em;
+  margin: 10px;
+  text-decoration: none; }
+
+.icon--close {
+  color: #d2d2d2; }
+
+.icon--spinner, .uploader__icon--spinner {
+  margin: 1em; }
+
+.thumbnail {
+  max-height: 50px;
+  max-width: 50px;
+  height: auto;
+  width: auto;
+  padding: 0.2em; }
+
+
+
+
+.text--important, .uploader__instructions {
+  font-size: 1.2em; }
+
+.l-main {
+  max-width: 64em;
+  margin-left: auto;
+  margin-right: auto; }
+  .l-main:after {
+    content: " ";
+    display: block;
+    clear: both; }
+
+.l-site-title {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+  margin-left: 8.47458%; }
+
+.l-center-box {
+  width: 66.10169%;
+  float: left;
+  margin-right: 1.69492%;
+  margin-left: 16.94915%; }
+
+.uploader__box {
+  animation: appear 1s;
+  background-color: white;
+  box-shadow: -2px 2px 20px #d2d2d2;
+  text-align: center;
+  transition: all 0.5s;
+  margin-bottom: 1em; }
+
+@keyframes appear {
+  from {
+    margin-top: 3em;
+    opacity: 0; }
+  to {
+    margin-top: 0;
+    opacity: 1; } }
+
+.uploader__contents {
+  padding: 3em;
+  margin-top: 0;
+  opacity: 1;
+  transition: all 0.4s; }
+
+.uploader__file-label,
+.uploader__box .button--secondary {
+  margin: 2em auto; }
+
+.uploader__file-label--secondary {
+  display: inline-block;
+  margin: 0 0.5em; }
+
+.uploader__further-instructions {
+  margin-left: 16.94915%;
+  clear: both;
+  color: #969696;
+  font-size: 0.9em;
+  padding: 0.5em; }
