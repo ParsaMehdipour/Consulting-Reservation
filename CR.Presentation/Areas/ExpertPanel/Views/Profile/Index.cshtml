@@ -636,11 +636,6 @@
             var tag = $("#services").val();
             var id = Id;
 
-            for (var i = 0; i < imageFileList.length; i++) {
-                image.push(imageFileList[i].get(0).files[0]);
-            }
-
-            console.log(image);
 
             if (document.getElementById('price_free').checked) {
                 isFreeOfCharge = true;
@@ -683,7 +678,6 @@
                 'prizes': prizes,
                 'memberships': memberships,
                 'subscriptions': subscriptions,
-                'imageFile': image
             };
 
 
@@ -823,7 +817,6 @@
         }
 
         return subscriptions;
-
     }
 </script>
 }
