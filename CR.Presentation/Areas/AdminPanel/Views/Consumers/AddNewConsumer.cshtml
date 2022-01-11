@@ -1,4 +1,5 @@
-﻿@model CR.Core.DTOs.Users.RegisterConsumerFromAdminDto
+﻿@using CR.DataAccess.Enums
+@model CR.Core.DTOs.Users.RegisterConsumerFromAdminDto
 @{
 }
 <div class="row">
@@ -9,7 +10,7 @@
             </div>
             <div class="card-body">
                 <h4 class="card-title">اطلاعات شخصی</h4>
-                <form id="registerExpertForm">
+                <form id="registerConsumerForm">
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group row">
@@ -29,32 +30,13 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">جنسیت</label>
                                 <div class="col-lg-9">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="gender_male">
-                                        <label class="form-check-label" for="gender_male">
-                                            مرد
-                                        </label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="gender_female" >
-                                        <label class="form-check-label" for="gender_female">
-                                            زن
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-@*                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label">گروه خونی</label>
-                                <div class="col-lg-9">
-                                    <select class="select">
+                                    <select class="form-control select" id="gender" asp-for="gender">
                                         <option>انتخاب</option>
-                                        <option value="1">A+</option>
-                                        <option value="2">O+</option>
-                                        <option value="3">B+</option>
-                                        <option value="4">AB+</option>
+                                        <option value="@GenderType.Male">مرد</option>
+                                        <option value="@GenderType.Female">زن</option>
                                     </select>
                                 </div>
-                            </div>*@
+                            </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group row">
@@ -124,7 +106,7 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <button onclick="RegisterExpert()" type="submit" class="btn btn-primary"> ارسال</button>
+                        <button onclick="RegisterConsumer()" type="submit" class="btn btn-primary"> ارسال</button>
                     </div>
                 </form>
             </div>
@@ -136,54 +118,52 @@
 @section Scripts
 {
     <script>
-        function RegisterExpert() {
-            if ($("#registerExpertForm").valid()) {
+        function RegisterConsumer() {
+            if ($("#registerConsumerForm").valid()) {
+                var genderSelect = document.getElementById('gender');
 
                 var formData = new FormData();
 
-                formData.append("firstName", $("#registerExpertForm #firstName").val());
-                formData.append("lastName", $("#registerExpertForm #lastName").val());
-                formData.append("phoneNumber", $("#registerExpertForm #phoneNumber").val());
-                formData.append("email", $("#registerExpertForm #email").val());
-                formData.append("password", $("#registerExpertForm #password").val());
-                formData.append("specificAddress", $("#registerExpertForm #specificAddress").val());
-                formData.append("province", $("#registerExpertForm #province").val());
-                formData.append("city", $("#registerExpertForm #city").val());
-                formData.append("postalCode", $("#registerExpertForm #postalCode").val());
+                formData.append("firstName", $("#registerConsumerForm #firstName").val());
+                formData.append("lastName", $("#registerConsumerForm #lastName").val());
+                formData.append("phoneNumber", $("#registerConsumerForm #phoneNumber").val());
+                formData.append("email", $("#registerConsumerForm #email").val());
+                formData.append("password", $("#registerConsumerForm #password").val());
+                formData.append("specificAddress", $("#registerConsumerForm #specificAddress").val());
+                formData.append("province", $("#registerConsumerForm #province").val());
+                formData.append("city", $("#registerConsumerForm #city").val());
+                formData.append("postalCode", $("#registerConsumerForm #postalCode").val());
+                formData.append("gender", genderSelect.options[genderSelect.selectedIndex].value);
 
+                $("#registerConsumerForm").submit(function(event) {
 
-                if (document.getElementById("gender_male").checked === true) {
-                    var result = formData.append("gender", 0);
-                }
-
-                if (document.getElementById("gender_female").checked === true) {
-                    formData.append("gender", 1);
-                }
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("AddNewConsumer", "Consumers")',
-                    processData: false,
-                    contentType: false,
-                    dataType: 'json',
-                    cache: false,
-                    data: formData,
-                    success: function(data) {
-                        if (data.isSuccess == true) {
-                            swal.fire('موفق!',
-                                data.message,
-                                'success').then(function(isConfirm) {
-                                location.reload();
-                            });
-                        } else {
-                            swal.fire('هشدار!',
-                                data.message,
-                                'warning');
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddNewConsumer", "Consumers")',
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        cache: false,
+                        data: formData,
+                        success: function(data) {
+                            if (data.isSuccess == true) {
+                                swal.fire('موفق!',
+                                    data.message,
+                                    'success').then(function(isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+                                swal.fire('هشدار!',
+                                    data.message,
+                                    'warning');
+                            }
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
                         }
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
-                    }
+                    });
+
+                    event.preventDefault();
                 });
             }
         }

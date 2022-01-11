@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CR.DataAccess.Enums;
 
 namespace CR.Core.DTOs.Users
 {
@@ -12,7 +13,7 @@ namespace CR.Core.DTOs.Users
         [Display(Name = "نام خانوادگی مراجعه کننده")]
         public string lastName { get; set; }
 
-        public int gender { get; set; }
+        public GenderType gender { get; set; }
 
         [Required(ErrorMessage = "شماره تماس مراجعه کننده را وارد کنید")]
         [Display(Name = "شماره تماس مراجعه کننده")]

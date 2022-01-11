@@ -26,12 +26,16 @@ namespace CR.Presentation.Controllers
         [HttpGet]
         public IActionResult Signup()
         {
+            if (_signInManager.IsSignedIn(User))
+                return RedirectToAction("Index", "Home");
             return View(); 
         }
 
         [HttpPost]
         public async Task<IActionResult> Signup(RegisterViewModel model)
         {
+            if (_signInManager.IsSignedIn(User))
+                return RedirectToAction("Index", "Home");
             if (ModelState.IsValid)
             {
                 var user = new User
@@ -60,12 +64,16 @@ namespace CR.Presentation.Controllers
         [HttpGet]
         public IActionResult ExpertSignup()
         {
+            if (_signInManager.IsSignedIn(User))
+                return RedirectToAction("Index", "Home");
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> ExpertSignup(RegisterExpertViewModel model)
         {
+            if (_signInManager.IsSignedIn(User))
+                return RedirectToAction("Index", "Home");
             if (ModelState.IsValid)
             {
                 var user = new User

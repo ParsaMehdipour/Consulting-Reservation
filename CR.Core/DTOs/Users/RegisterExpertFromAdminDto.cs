@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CR.DataAccess.Enums;
 
 // ReSharper disable All
 
@@ -14,7 +15,7 @@ namespace CR.Core.DTOs.Users
         [Display(Name = "نام خانوادگی متخصص")]
         public string lastName { get; set; }
 
-        public int gender { get; set; }
+        public GenderType gender { get; set; }
 
         [Required(ErrorMessage = "شماره تماس متخصص را وارد کنید")]
         [Display(Name = "شماره تماس متخصص")]
