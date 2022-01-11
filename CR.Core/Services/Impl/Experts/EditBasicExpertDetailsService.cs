@@ -92,7 +92,7 @@ namespace CR.Core.Services.Impl.Experts
                 expertInformation.SpecificAddress = request.specificAddress;
                 expertInformation.PostalCode = request.postalCode;
                 expertInformation.IsFreeOfCharge = request.isFreeOfCharge;
-                expertInformation.Price = (request.isFreeOfCharge == true) ? 0 : Convert.ToInt32(DateConvertor.ToEnglishNumber(request.price));
+                expertInformation.Price = (request.isFreeOfCharge == true) ? 0 : Convert.ToInt32(request.price.ToEnglishNumber());
                 expert.Email = request.email;
                 expert.PhoneNumber = request.phoneNumber;
 

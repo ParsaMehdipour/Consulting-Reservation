@@ -46,7 +46,7 @@
                                                     <img src="~/@consumer.IconSrc" alt="User Image">
                                                 </a>
                                                 <div class="profile-det-info">
-                                                    <h3><a href="patient-profile.html">@consumer.FullName</a></h3>
+                                                    <h3><a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-consumerId="@consumer.Id">@consumer.FullName</a></h3>
 
                                                     <div class="patient-details">
                                                         <h5><b>شناسه مراجعه‌کننده :</b> @consumer.Id</h5>

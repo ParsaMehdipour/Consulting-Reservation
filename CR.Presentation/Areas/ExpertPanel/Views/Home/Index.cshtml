@@ -140,8 +140,8 @@
                                                                 <tr>
                                                                     <td>
                                                                         <h2 class="table-avatar">
-                                                                            <a href="patient-profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.ConsumerIconSrc" alt="User Image"></a>
-                                                                            <a href="patient-profile.html">@consumer.FullName <span>@consumer.ConsumerId</span></a>
+                                                                            <a asp-area="ExpertPanel" asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-consumerId="@consumer.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.ConsumerIconSrc" alt="User Image"></a>
+                                                                            <a asp-area="ExpertPanel" asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-consumerId="@consumer.ConsumerId">@consumer.FullName <span>@consumer.ConsumerId</span></a>
                                                                         </h2>
                                                                     </td>
                                                                     <td>@consumer.AppointmentDate<span class="d-block text-info">@consumer.AppointmentTime</span></td>
@@ -222,8 +222,8 @@
                                                                 <tr>
                                                                     <td>
                                                                         <h2 class="table-avatar">
-                                                                            <a href="patient-profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.ConsumerIconSrc" alt="User Image"></a>
-                                                                            <a href="patient-profile.html">@consumer.FullName <span>@consumer.ConsumerId</span></a>
+                                                                            <a asp-area="ExpertPanel" asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-consumerId="@consumer.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.ConsumerIconSrc" alt="User Image"></a>
+                                                                            <a asp-area="ExpertPanel" asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-consumerId="@consumer.ConsumerId">@consumer.FullName <span>@consumer.ConsumerId</span></a>
                                                                         </h2>
                                                                     </td>
                                                                     <td>@consumer.AppointmentDate <span class="d-block text-info">@consumer.AppointmentTime</span></td>
