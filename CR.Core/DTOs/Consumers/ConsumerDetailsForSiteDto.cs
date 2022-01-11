@@ -9,6 +9,8 @@ namespace CR.Core.DTOs.Consumers
     {
         public long id { get; set; }
 
+        public string userName { get; set; }
+
         [Required(ErrorMessage = "نام را وارد کنید")]
         public string firstName { get; set; }
 

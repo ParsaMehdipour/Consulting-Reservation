@@ -36,6 +36,7 @@ namespace CR.Core.Services.Impl.Appointment
                     AppointmentTime = (a.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" + a.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()).ToString() +
                                       " - " + (a.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() + ":" + a.TimeOfDay.FinishDate.Minute.ToString().GetPersianNumber()),
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,
+                    ExpertInformationId = a.ExpertInformationId,
                     ExpertIconSrc = a.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ExpertTracking = "HardCode",
                     Price = a.Price.ToString().GetPersianNumber(),

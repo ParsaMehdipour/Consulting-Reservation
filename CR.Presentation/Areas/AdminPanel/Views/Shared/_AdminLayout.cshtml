@@ -49,10 +49,10 @@
 
             <!-- Logo -->
             <div class="header-left">
-                <a asp-controller="Home" asp-action="Index" class="logo">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="logo">
                     <img src="~/assets/img/لوگوی هدر چاله چوله.png" alt="Logo">
                 </a>
-                <a asp-controller="Home" asp-action="Index" class="logo logo-small">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="logo logo-small">
                     <img src="~/AdminTemplate/assets/img/logo-small.png" alt="Logo" width="30" height="30">
                 </a>
             </div>
@@ -77,7 +77,7 @@
             <!-- Header Right Menu -->
             <ul class="nav user-menu">
 
-                <!-- Notifications -->
+            @*    <!-- Notifications -->
                 <li class="nav-item dropdown noti-dropdown">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <i class="fe fe-bell"></i> <span class="badge badge-pill">3</span>
@@ -148,7 +148,7 @@
                         </div>
                     </div>
                 </li>
-                <!-- /Notifications -->
+                <!-- /Notifications -->*@
                 <!-- User Menu -->
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -194,7 +194,7 @@
                             <a asp-controller="Speciality" asp-action="Index"><i class="fe fe-users"></i> <span>تخصص ها</span></a>
                         </li>
                         <li>
-                            <a asp-controller="Experts" asp-action="Index"><i class="fe fe-user-plus"></i> <span>پزشکان</span></a>
+                            <a asp-controller="Experts" asp-action="Index"><i class="fe fe-user-plus"></i> <span>متخصصین</span></a>
                         </li>
                         <li>
                             <a asp-controller="Consumers" asp-action="Index"><i class="fe fe-user"></i> <span>مراجعان</span></a>

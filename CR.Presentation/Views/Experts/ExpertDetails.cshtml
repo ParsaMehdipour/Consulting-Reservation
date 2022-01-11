@@ -42,35 +42,15 @@
                                 <i class="fas fa-star"></i>
                                 <span class="d-inline-block average-rating">(35)</span>
                             </div>
-                            <div class="clinic-details">
-                                <p class="doc-location"><i class="fas fa-map-marker-alt"></i>  @Model.City، @Model.Province -  <a href="javascript:void(0);">مشاهده مسیر</a></p>
-                                <ul class="clinic-gallery">
-                                    <li>
-                                        <a href="~/assets/img/features/feature-01.jpg" data-fancybox="gallery">
-                                            <img src="~/assets/img/features/feature-01.jpg" alt="Feature">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="assets/img/features/feature-02.jpg" data-fancybox="gallery">
-                                            <img src="~/assets/img/features/feature-02.jpg" alt="Feature Image">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="assets/img/features/feature-03.jpg" data-fancybox="gallery">
-                                            <img src="~/assets/img/features/feature-03.jpg" alt="Feature">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="assets/img/features/feature-04.jpg" data-fancybox="gallery">
-                                            <img src="~/assets/img/features/feature-04.jpg" alt="Feature">
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="clinic-services">
-                                <span>پرکردن دندان</span>
-                                <span>سفید کردن دندان</span>
-                            </div>
+                            @if (Model.Tags.Count > 0)
+                            {
+                                <div class="clinic-services">
+                                    @foreach (var service in Model.Tags)
+                                    {
+                                        <span>@service</span>
+                                    }
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="doc-info-right">

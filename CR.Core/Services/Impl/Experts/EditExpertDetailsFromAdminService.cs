@@ -53,8 +53,8 @@ namespace CR.Core.Services.Impl.Experts
                 expertInformation.City = request.city;
                 expertInformation.PostalCode = request.postalCode;
                 expertInformation.SpecificAddress = request.specificAddress;
-                expertInformation.BirthDate_String = request.birthDate;
-                expertInformation.BirthDate = request.birthDate.ToGeorgianDateTime();
+                expertInformation.BirthDate_String = request.birthDate_String;
+                expertInformation.BirthDate = request.birthDate_String.ToGeorgianDateTime();
 
                 expert.PhoneNumber = request.phoneNumber;
                 expert.Email = request.email;

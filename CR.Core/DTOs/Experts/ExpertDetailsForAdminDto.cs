@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace CR.Core.DTOs.Experts
 {
@@ -24,7 +25,8 @@ namespace CR.Core.DTOs.Experts
         public string bio { get; set; }
 
         [Required(ErrorMessage = "تاریخ تولد متخصص را وارد کنید")]
-        public string birthDate { get; set; }
+        public DateTime birthDate { get; set; }
+        public string birthDate_String { get; set; }
 
         [Required(ErrorMessage = "پست الکترونیکی متخصص را وارد کنید")]
         public string email { get; set; }

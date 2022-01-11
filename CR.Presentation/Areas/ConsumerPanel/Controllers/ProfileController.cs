@@ -18,14 +18,14 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers
         private readonly IGetUserFlagService _getUserFlagService;
         private readonly IAddConsumerDetailsService _addConsumerDetailsService;
         private readonly IEditConsumerDetailsService _editConsumerDetailsService;
-        private readonly IGetConsumerDetailsForSiteService _getConsumerDetailsForSiteService;
+        private readonly IGetConsumerDetailsForProfileService _getConsumerDetailsForSiteService;
         private ResultCheckUserFlagService ResultCheckUserFlag;
 
         public ProfileController(IHttpContextAccessor contextAccessor
         ,IGetUserFlagService getUserFlagService
         ,IAddConsumerDetailsService addConsumerDetailsService
         ,IEditConsumerDetailsService editConsumerDetailsService
-        ,IGetConsumerDetailsForSiteService getConsumerDetailsForSiteService)
+        ,IGetConsumerDetailsForProfileService getConsumerDetailsForSiteService)
         {
             _getUserFlagService = getUserFlagService;
             _addConsumerDetailsService = addConsumerDetailsService;

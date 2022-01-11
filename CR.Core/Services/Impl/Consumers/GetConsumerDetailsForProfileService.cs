@@ -9,11 +9,11 @@ using CR.Common.Utilities;
 
 namespace CR.Core.Services.Impl.Consumers
 {
-    public class GetConsumerDetailsForSiteService : IGetConsumerDetailsForSiteService
+    public class GetConsumerDetailsForProfileService : IGetConsumerDetailsForProfileService
     {
         private readonly ApplicationContext _context;
 
-        public GetConsumerDetailsForSiteService(ApplicationContext context)
+        public GetConsumerDetailsForProfileService(ApplicationContext context)
         {
             _context = context;
         }
@@ -28,9 +28,19 @@ namespace CR.Core.Services.Impl.Consumers
             {
                 var consumerInformation = _context.ConsumerInfromations.FirstOrDefault(ci => ci.Id == consumerInformationId);
 
+                if (consumerInformation == null)
+                {
+                    return new ResultDto<ResultGetConsumerDetailsForSiteDto>()
+                    {
+                        IsSuccess = false,
+                        Message = "اطلاعات شما یافت نشد!!"
+                    };
+                }
+
                 var consumerDetails = new ConsumerDetailsForSiteDto
                 {
                     id = consumerInformation.Id,
+                    userName = consumer.UserName,
                     firstName = consumerInformation.FirstName,
                     lastName = consumerInformation.LastName,
                     iconSrc = consumerInformation.IconSrc ?? "assets/img/icon-256x256.png",

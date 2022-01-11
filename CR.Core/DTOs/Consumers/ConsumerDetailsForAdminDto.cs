@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace CR.Core.DTOs.Consumers
 {
@@ -20,8 +21,9 @@ namespace CR.Core.DTOs.Consumers
         [Required(ErrorMessage = "شهر مراجعه کننده را وارد کنید")]
         public string city { get; set; }
 
-        [Required(ErrorMessage = "تاریخ تولد مراجعه کننده را وارد کنید")]
-        public string birthDate { get; set; }
+        public DateTime birthDate { get; set; }
+
+        public string birthDate_String { get; set; }
 
         [Required(ErrorMessage = "پست الکترونیکی مراجعه کننده را وارد کنید")]
         [EmailAddress(ErrorMessage = "پست الکترونیکی معتبر نیست")]

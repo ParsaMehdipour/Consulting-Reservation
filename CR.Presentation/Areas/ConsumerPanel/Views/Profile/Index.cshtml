@@ -70,6 +70,12 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
+                                        <label>نام کاربری <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" readonly="readonly" asp-for="userName">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
                                         <label>نام</label>
                                         <input type="text" class="form-control" asp-for="firstName" id="firstName" name="firstName">
                                         <span asp-validation-for="firstName" class="text-danger"></span>
@@ -136,7 +142,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>شهر</label>

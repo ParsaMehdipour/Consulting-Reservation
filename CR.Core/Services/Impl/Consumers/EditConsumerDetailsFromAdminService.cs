@@ -53,8 +53,8 @@ namespace CR.Core.Services.Impl.Consumers
                 consumerInformation.City = request.city;
                 consumerInformation.PostalCode = request.postalCode;
                 consumerInformation.SpecificAddress = request.specificAddress;
-                consumerInformation.BirthDate_String = request.birthDate;
-                consumerInformation.BirthDate = request.birthDate.ToGeorgianDateTime();
+                consumerInformation.BirthDate_String = request.birthDate_String;
+                consumerInformation.BirthDate = request.birthDate_String.ToGeorgianDateTime();
 
 
                 consumer.PhoneNumber = request.phoneNumber;

@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="row">
                                     <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">تاریخ تولد</p>
-                                    <p class="col-sm-10">@Model?.birthDate</p>
+                                    <p class="col-sm-10">@Model?.birthDate_String</p>
                                 </div>
                                 <div class="row">
                                     <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">ایمیل</p>
@@ -143,8 +143,7 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label>تاریخ تولد</label>
-                                                        <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate" name="birthDate">
-                                                        <span asp-validation-for="birthDate" class="text-danger"></span>
+                                                        <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate_String">
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
@@ -248,53 +247,56 @@
 @section Scripts
 {
 <script>
-
-
     function Edit() {
-        if ($("#editConsumerDetailsFromAdminForm").valid()) {
+                if ($("#editConsumerDetailsFromAdminForm").valid()) {
 
-            var editData = new FormData();
+                    var editData = new FormData();
 
-            editData.append("firstName", $("#editConsumerDetailsFromAdminForm #firstName").val());
-            editData.append("lastName", $("#editConsumerDetailsFromAdminForm #lastName").val());
-            editData.append("birthDate", $("#editConsumerDetailsFromAdminForm #birthDate").val());
-            editData.append("email", $("#editConsumerDetailsFromAdminForm #email").val());
-            editData.append("phoneNumber", $("#editConsumerDetailsFromAdminForm #phoneNumber").val());
-            editData.append("specificAddress", $("#editConsumerDetailsFromAdminForm #specificAddress").val());
-            editData.append("province", $("#editConsumerDetailsFromAdminForm #province").val());
-            editData.append("city", $("#editConsumerDetailsFromAdminForm #city").val());
-            editData.append("postalCode", $("#editConsumerDetailsFromAdminForm #postalCode").val());
-            editData.append("consumerInformationId", $("#editConsumerDetailsFromAdminForm #consumerInformationId").val());
+                    editData.append("firstName", $("#editConsumerDetailsFromAdminForm #firstName").val());
+                    editData.append("lastName", $("#editConsumerDetailsFromAdminForm #lastName").val());
+                    editData.append("birthDate_String", $("#editConsumerDetailsFromAdminForm #birthDate_String").val());
+                    editData.append("email", $("#editConsumerDetailsFromAdminForm #email").val());
+                    editData.append("phoneNumber", $("#editConsumerDetailsFromAdminForm #phoneNumber").val());
+                    editData.append("specificAddress", $("#editConsumerDetailsFromAdminForm #specificAddress").val());
+                    editData.append("province", $("#editConsumerDetailsFromAdminForm #province").val());
+                    editData.append("city", $("#editConsumerDetailsFromAdminForm #city").val());
+                    editData.append("postalCode", $("#editConsumerDetailsFromAdminForm #postalCode").val());
+                    editData.append("consumerInformationId", $("#editConsumerDetailsFromAdminForm #consumerInformationId").val());
 
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("EditConsumerDetails", "Consumers")',
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                cache: false,
-                data: editData,
-                success: function(data) {
-                    if (data.isSuccess == true) {
-                        swal.fire('موفق!',
-                            data.message,
-                            'success').then(function(isConfirm) {
-                            location.reload();
+                    $("#editConsumerDetailsFromAdminForm").submit(function(event) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("EditConsumerDetails", "Consumers")',
+                            processData: false,
+                            contentType: false,
+                            dataType: 'json',
+                            cache: false,
+                            data: editData,
+                            beforeSend: function(x) {
+                                $('#cover-spin').show(0);
+                            },
+                            success: function(data) {
+                                if (data.isSuccess == true) {
+                                    swal.fire('موفق!',
+                                        data.message,
+                                        'success').then(function(isConfirm) {
+                                        location.reload();
+                                    });
+                                }
+                            },
+                            complete: function() {
+                                $('#cover-spin').hide(0);
+                            },
+                            fail: function() {
+                                $('#cover-spin').hide(0);
+                            },
+                            error: function(request, status, error) {
+                                alert(request.responseText);
+                            }
                         });
-                    } else {
-                        swal.fire('هشدار!',
-                            data.message,
-                            'warning');
-                    }
-                },
-                error: function(request, status, error) {
-                    alert(request.responseText);
+                        event.preventDefault();
+                    });
                 }
-            });
-
-        }
     }
-
-
 </script>
 }

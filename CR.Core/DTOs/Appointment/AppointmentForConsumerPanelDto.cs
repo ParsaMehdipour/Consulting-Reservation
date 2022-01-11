@@ -2,6 +2,7 @@
 {
     public class AppointmentForConsumerPanelDto
     {
+        public long ExpertInformationId { get; set; }
         public string ExpertIconSrc { get; set; }
         public string ExpertFullName { get; set; }
         public string AppointmentDate { get; set; }

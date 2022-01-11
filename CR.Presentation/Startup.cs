@@ -123,7 +123,7 @@ namespace CR.Presentation
             services.AddScoped<IGetThisDateExpertDetailsForReservationService, GetThisDateExpertDetailsForReservationService>();
             //Consumers
             services.AddScoped<IGetAllConsumersService, GetAllConsumersService>();
-            services.AddScoped<IGetConsumerDetailsForSiteService, GetConsumerDetailsForSiteService>();
+            services.AddScoped<IGetConsumerDetailsForProfileService, GetConsumerDetailsForProfileService>();
             services.AddScoped<IAddConsumerDetailsService, AddConsumerDetailsService>();
             services.AddScoped<IEditConsumerDetailsService, EditConsumerDetailsService>();
             services.AddScoped<IRegisterConsumerFromAdminService, RegisterConsumerFromAdminService>();
