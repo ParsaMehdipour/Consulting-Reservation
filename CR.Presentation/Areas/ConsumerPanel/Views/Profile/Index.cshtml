@@ -184,116 +184,130 @@
 
 @section Scripts{
 
-<script src="~/assets/js/ConusmerPanel/Profile/Profile.js"></script>
-<script src="~/assets/js/ConusmerPanel/layout.js"></script>
+    <script src="~/assets/js/ConusmerPanel/Profile/Profile.js"></script>
+    <script src="~/assets/js/ConusmerPanel/layout.js"></script>
 
-<link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
-<script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet"/>
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
 
-<script>
+    <script>
 
-    function Add() {
-        if ($("#consumerProfileForm").valid()) {
+        function Add() {
+            if ($("#consumerProfileForm").valid()) {
 
-        var select = document.getElementById('bloodType');
-        var genderSelect = document.getElementById('gender')
+                var select = document.getElementById('bloodType');
+                var genderSelect = document.getElementById('gender')
 
-        var addConsumerProfileForm = new FormData();
+                var addConsumerProfileForm = new FormData();
 
-        addConsumerProfileForm.append("firstName",$("#consumerProfileForm #firstName").val());
-        addConsumerProfileForm.append("lastName",$("#consumerProfileForm #lastName").val());
-        addConsumerProfileForm.append("birthDate_String",$("#consumerProfileForm #birthDate_String").val());
-        addConsumerProfileForm.append("bloodType",select.options[select.selectedIndex].value);
-        addConsumerProfileForm.append("email",$("#consumerProfileForm #email").val());
-        addConsumerProfileForm.append("phoneNumber",$("#consumerProfileForm #phoneNumber").val());
-        addConsumerProfileForm.append("specificAddress",$("#consumerProfileForm #specificAddress").val());
-        addConsumerProfileForm.append("city",$("#consumerProfileForm #city").val());
-        addConsumerProfileForm.append("province",$("#consumerProfileForm #province").val());
-        addConsumerProfileForm.append("postalCode",$("#consumerProfileForm #postalCode").val());
-        addConsumerProfileForm.append("iconImage",$("#consumerProfileForm #iconImage").get(0).files[0]);
-        addConsumerProfileForm.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
+                addConsumerProfileForm.append("firstName", $("#consumerProfileForm #firstName").val());
+                addConsumerProfileForm.append("lastName", $("#consumerProfileForm #lastName").val());
+                addConsumerProfileForm.append("birthDate_String", $("#consumerProfileForm #birthDate_String").val());
+                addConsumerProfileForm.append("bloodType", select.options[select.selectedIndex].value);
+                addConsumerProfileForm.append("email", $("#consumerProfileForm #email").val());
+                addConsumerProfileForm.append("phoneNumber", $("#consumerProfileForm #phoneNumber").val());
+                addConsumerProfileForm.append("specificAddress", $("#consumerProfileForm #specificAddress").val());
+                addConsumerProfileForm.append("city", $("#consumerProfileForm #city").val());
+                addConsumerProfileForm.append("province", $("#consumerProfileForm #province").val());
+                addConsumerProfileForm.append("postalCode", $("#consumerProfileForm #postalCode").val());
+                addConsumerProfileForm.append("iconImage", $("#consumerProfileForm #iconImage").get(0).files[0]);
+                addConsumerProfileForm.append("gender", genderSelect.options[genderSelect.selectedIndex].value);
 
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("AddProfileDetails", "Profile")',
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            cache: false,
-            data: addConsumerProfileForm,
-            success: function(data) {
-                if (data.isSuccess == true) {
-                    swal.fire('موفق!',
-                        data.message,
-                        'success').then(function(isConfirm) {
-                        location.reload();
+                $("#consumerProfileForm").submit(function(event) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddProfileDetails", "Profile")',
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        cache: false,
+                        data: addConsumerProfileForm,
+                        beforeSend: function(x) {
+                            $('#cover-spin').show(0);
+                        },
+                        success: function(data) {
+                            if (data.isSuccess == true) {
+                                swal.fire('موفق!',
+                                    data.message,
+                                    'success').then(function(isConfirm) {
+                                    location.reload();
+                                });
+                            }
+                        },
+                        complete: function() {
+                            $('#cover-spin').hide(0);
+                        },
+                        fail: function() {
+                            $('#cover-spin').hide(0);
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
+                        }
                     });
-                } else {
-                    swal.fire('هشدار!',
-                        data.message,
-                        'warning');
-                }
-            },
-            error: function(request, status, error) {
-                alert(request.responseText);
+                    event.preventDefault();
+                });
             }
-        });
-
         }
-    }
 
-    function Edit(id){
-        if ($("#consumerProfileForm").valid()) {
+        function Edit(id) {
+            if ($("#consumerProfileForm").valid()) {
 
-        var select = document.getElementById('bloodType');
-        var genderSelect = document.getElementById('gender');
+                var select = document.getElementById('bloodType');
+                var genderSelect = document.getElementById('gender');
 
-        var editConsumerProfileForm = new FormData();
+                var editConsumerProfileForm = new FormData();
 
-        editConsumerProfileForm.append("firstName",$("#consumerProfileForm #firstName").val());
-        editConsumerProfileForm.append("lastName",$("#consumerProfileForm #lastName").val());
-        editConsumerProfileForm.append("birthDate_String",$("#consumerProfileForm #birthDate_String").val());
-        editConsumerProfileForm.append("bloodType",select.options[select.selectedIndex].value);
-        editConsumerProfileForm.append("email",$("#consumerProfileForm #email").val());
-        editConsumerProfileForm.append("phoneNumber",$("#consumerProfileForm #phoneNumber").val());
-        editConsumerProfileForm.append("specificAddress",$("#consumerProfileForm #specificAddress").val());
-        editConsumerProfileForm.append("city",$("#consumerProfileForm #city").val());
-        editConsumerProfileForm.append("province",$("#consumerProfileForm #province").val());
-        editConsumerProfileForm.append("postalCode",$("#consumerProfileForm #postalCode").val());
-        editConsumerProfileForm.append("consumerInformationId",id);
-        editConsumerProfileForm.append("iconImage",$("#consumerProfileForm #iconImage").get(0).files[0]);
-        editConsumerProfileForm.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
-
+                editConsumerProfileForm.append("firstName", $("#consumerProfileForm #firstName").val());
+                editConsumerProfileForm.append("lastName", $("#consumerProfileForm #lastName").val());
+                editConsumerProfileForm.append("birthDate_String", $("#consumerProfileForm #birthDate_String").val());
+                editConsumerProfileForm.append("bloodType", select.options[select.selectedIndex].value);
+                editConsumerProfileForm.append("email", $("#consumerProfileForm #email").val());
+                editConsumerProfileForm.append("phoneNumber", $("#consumerProfileForm #phoneNumber").val());
+                editConsumerProfileForm.append("specificAddress", $("#consumerProfileForm #specificAddress").val());
+                editConsumerProfileForm.append("city", $("#consumerProfileForm #city").val());
+                editConsumerProfileForm.append("province", $("#consumerProfileForm #province").val());
+                editConsumerProfileForm.append("postalCode", $("#consumerProfileForm #postalCode").val());
+                editConsumerProfileForm.append("consumerInformationId", id);
+                editConsumerProfileForm.append("iconImage", $("#consumerProfileForm #iconImage").get(0).files[0]);
+                editConsumerProfileForm.append("gender", genderSelect.options[genderSelect.selectedIndex].value);
 
 
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("EditProfileDetails", "Profile")',
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            cache: false,
-            data: editConsumerProfileForm,
-            success: function(data) {
-                if (data.isSuccess == true) {
-                    swal.fire('موفق!',
-                        data.message,
-                        'success').then(function(isConfirm) {
-                        location.reload();
+                $("#consumerProfileForm").submit(function(event) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("EditProfileDetails", "Profile")',
+                        processData: false,
+                        contentType: false,
+                        dataType: 'json',
+                        cache: false,
+                        data: editConsumerProfileForm,
+                        beforeSend: function(x) {
+                            $('#cover-spin').show(0);
+                        },
+                        success: function(data) {
+                            if (data.isSuccess == true) {
+                                swal.fire('موفق!',
+                                    data.message,
+                                    'success').then(function(isConfirm) {
+                                    location.reload();
+                                });
+                            }
+                        },
+                        complete: function() {
+                            $('#cover-spin').hide(0);
+                        },
+                        fail: function() {
+                            $('#cover-spin').hide(0);
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
+                        }
                     });
-                } else {
-                    swal.fire('هشدار!',
-                        data.message,
-                        'warning');
-                }
-            },
-            error: function(request, status, error) {
-                alert(request.responseText);
+                    event.preventDefault();
+                });
             }
-        });
-
         }
-    }
-</script>
+    </script>
 
 }

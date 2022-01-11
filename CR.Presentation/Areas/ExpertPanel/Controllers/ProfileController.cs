@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CR.Common.Utilities;
-using CR.Core.DTOs.Account;
+﻿using CR.Common.Utilities;
 using CR.Core.DTOs.Experts;
+using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Specialites;
@@ -27,6 +24,8 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         private readonly IEditExpertDetailsService _editExpertDetailsService;
         private readonly UserManager<User> _userManager;
         private readonly IGetSpecialtiesForExpertProfileDropDownService _getSpecialtiesForExpertProfileDropDownService;
+        private readonly IEditBasicExpertDetailsService _editBasicExpertDetailsService;
+        private readonly IEditAdvancedExpertDetailsService _editAdvancedExpertDetailsService;
         private ResultCheckUserFlagService ResultCheckUserFlag;
 
         public ProfileController(IHttpContextAccessor contextAccessor
@@ -34,12 +33,16 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             ,IGetExpertDetailsForProfileService getExpertDetailsForSiteService
             ,IEditExpertDetailsService editExpertDetailsService
             ,UserManager<User> userManager
-            ,IGetSpecialtiesForExpertProfileDropDownService getSpecialtiesForExpertProfileDropDownService)
+            ,IGetSpecialtiesForExpertProfileDropDownService getSpecialtiesForExpertProfileDropDownService
+            ,IEditBasicExpertDetailsService editBasicExpertDetailsService
+            ,IEditAdvancedExpertDetailsService editAdvancedExpertDetailsService)
         {
             _getExpertDetailsForSiteService = getExpertDetailsForSiteService;
             _editExpertDetailsService = editExpertDetailsService;
             _userManager = userManager;
             _getSpecialtiesForExpertProfileDropDownService = getSpecialtiesForExpertProfileDropDownService;
+            _editBasicExpertDetailsService = editBasicExpertDetailsService;
+            _editAdvancedExpertDetailsService = editAdvancedExpertDetailsService;
 
             _getUserFlagService = getUserFlagService;
 
@@ -48,6 +51,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             ResultCheckUserFlag = _getUserFlagService.Execute(userId);
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             if (ResultCheckUserFlag.UserFlag != UserFlag.Expert)
@@ -64,16 +68,21 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             return View(model);
         }
 
-
         [HttpPost]
-        public IActionResult EditProfile(ExpertDetailsForProfileDto request)
+        public IActionResult EditBasicInformation(RequestEditBasicExpertDetailsDto request)
         {
-
-            var result = _editExpertDetailsService.Execute(request);
+            var result = _editBasicExpertDetailsService.Execute(request);
 
             return new JsonResult(result);
         }
 
+        [HttpPost]
+        public IActionResult EditAdvancedInformation(RequestEditAdvancedExpertDetailsDto request)
+        {
+            var result = _editAdvancedExpertDetailsService.Execute(request);
+
+            return new JsonResult(result);
+        }
 
     }
 }

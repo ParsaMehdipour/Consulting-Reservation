@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Http;
 
-// ReSharper disable All
-
-namespace CR.Core.DTOs.Experts
+namespace CR.Core.DTOs.RequestDTOs
 {
-    public class ExpertDetailsForProfileDto
+    public class RequestEditBasicExpertDetailsDto
     {
-        public long? id { get; set; }
-
-        public string userName { get; set; }
-
+        public long id { get; set; }
         [Required(ErrorMessage = "پست الکترونیکی خود را وارد کنید")]
         public string email { get; set; }
 
@@ -31,23 +25,17 @@ namespace CR.Core.DTOs.Experts
         [Required(ErrorMessage = "تاریخ تولد خود را وارد کنید")]
         public string birthDate_String { get; set; }
 
-        public DateTime? birthDate { get; set; }
-
         [Required(ErrorMessage = "بیوگرافی خود را وارد کنید")]
         public string bio { get; set; }
 
         //[Required(ErrorMessage = "تصویر خود را وارد کنید")]
         public IFormFile iconImage { get; set; }
 
-        public string iconSrc { get; set; }
-
         [Required(ErrorMessage = "نام کلینیک خود را وارد کنید")]
         public string clinicName { get; set; }
 
         [Required(ErrorMessage = "آدرس کلینیک خود را وارد کنید")]
         public string clinicAddress { get; set; }
-
-        public List<IFormFile> ClininImages { get; set; }
 
         [Required(ErrorMessage = "استان خود را وارد کنید")]
         public string province { get; set; }
@@ -66,17 +54,10 @@ namespace CR.Core.DTOs.Experts
 
         public bool isFreeOfCharge { get; set; }
 
-        //[Required(ErrorMessage = "خدمات خود را وارد کنید")]
         public string tag { get; set; }
+
         public string instagram { get; set; }
+
         public long? specialtyId { get; set; }
-
-
-        public List<string> Tags { get; set; }
-        public List<ExpertExperienceDto> experiences { get; set; }
-        public List<ExpertMembershipDto> memberships { get; set; }
-        public List<ExpertPrizeDto> prizes { get; set; }
-        public List<ExpertStudyDto> studies { get; set; }
-        public List<ExpertSubscriptionDto> subscriptions { get; set; }
     }
 }

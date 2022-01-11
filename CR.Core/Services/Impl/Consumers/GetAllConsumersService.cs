@@ -25,25 +25,25 @@ namespace CR.Core.Services.Impl.Consumers
             int rowCount = 0;
             var consumers = _context.Users
                 .Include(u => u.ConsumerInfromation)
-                .Where(u => u.ConsumerInfromation != null)
+                //.Where(u => u.ConsumerInfromation != null)
                 .Where(u => u.UserFlag == UserFlag.Consumer).AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)
                 .Select(u => new ConsumerForAdminDto
                 {
                     Id = u.Id,
-                    IconSrc = u.ConsumerInfromation.IconSrc ?? "assets/img/icon-256x256.png",
-                    FullName = u.ConsumerInfromation.FirstName + " " + u.ConsumerInfromation.LastName,
-                    Age = u.ConsumerInfromation.BirthDate.GetAge().ToString().GetPersianNumber(),
-                    Address = u.ConsumerInfromation.SpecificAddress,
+                    IconSrc = u.ConsumerInfromation?.IconSrc ?? "assets/img/icon-256x256.png",
+                    FullName = u.ConsumerInfromation?.FirstName + " " + u.ConsumerInfromation?.LastName,
+                    Age = u.ConsumerInfromation?.BirthDate.GetAge().ToString().GetPersianNumber(),
+                    Address = u.ConsumerInfromation?.SpecificAddress,
                     PhoneNumber = u.PhoneNumber.GetPersianNumber(),
-                    LastAppointment = _context.Appointments
-                        .Include(a=>a.ConsumerInformation)
-                        .Include(a=>a.TimeOfDay)
-                        .ThenInclude(a=>a.Day)
-                        .OrderBy(a=>a.TimeOfDay.Day.Date)
-                        .LastOrDefault(a=>a.ConsumerInformation.ConsumerId == u.Id)
-                        ?.TimeOfDay.Day.Date_String,
-                    PaidAmount = "HardCode",
+                    LastAppointment = (u.ConsumerInfromation != null) ? _context.Appointments
+                        .Include(a => a.ConsumerInformation)
+                        .Include(a => a.TimeOfDay)
+                        .ThenInclude(a => a.Day)
+                        .OrderBy(a => a.TimeOfDay.Day.Date)
+                        .LastOrDefault(a => a.ConsumerInformation.ConsumerId == u.Id)
+                        ?.TimeOfDay.Day.Date_String : "",
+                    PaidAmount = "0",
                 }).ToList();
 
 

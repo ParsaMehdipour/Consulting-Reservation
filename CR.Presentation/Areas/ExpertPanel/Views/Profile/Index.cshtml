@@ -1,4 +1,5 @@
-﻿@model CR.Core.DTOs.Experts.ExpertDetailsForProfileDto
+﻿@using CR.DataAccess.Enums
+@model CR.Core.DTOs.Experts.ExpertDetailsForProfileDto
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -31,11 +32,11 @@
 
             </div>
             <div class="col-md-7 col-lg-8 col-xl-9">
-                <form id="expertProfileForm">
+                <form id="expertBasicProfileForm">
                     <!-- Basic Information -->
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">اطلاعات پایه</h4>
+                            <h2 class="card-title">اطلاعات پایه</h2>
                             <div class="row form-row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -89,21 +90,12 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="col-lg-3 col-form-label">جنسیت</label>
-                                        <div class="col-lg-9">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="gender_male">
-                                                <label class="form-check-label" for="gender_male">
-                                                    مرد
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="gender_female">
-                                                <label class="form-check-label" for="gender_female">
-                                                    زن
-                                                </label>
-                                            </div>
-                                        </div>
+                                        <label>جنسیت</label>
+                                        <select class="form-control select" id="gender" asp-for="gender">
+                                            <option>انتخاب</option>
+                                            <option value="@GenderType.Male">مرد</option>
+                                            <option value="@GenderType.Female">زن</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -115,25 +107,15 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- /Basic Information -->
-                    <!-- About Me -->
-                    <div class="card">
-                        <div class="card-body">
+                            <hr />
                             <h4 class="card-title"> درباره من </h4>
                             <div class="form-group mb-0">
                                 <label>بیوگرافی</label>
                                 <textarea class="form-control" rows="5" asp-for="bio" id="bio" name="bio"></textarea>
                                 <span asp-validation-for="bio" class="text-danger"></span>
                             </div>
-                        </div>
-                    </div>
-                    <!-- /About Me -->
-                    <!-- Clinic Info -->
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">اطلاعات کلینیک</h4>
+                            <hr />
+                            <h4 class="card-title"> اطلاعات کلینیک </h4>
                             <div class="row form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -165,12 +147,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- /Clinic Info -->
-                    <!-- Contact Details -->
-                    <div class="card contact-card">
-                        <div class="card-body">
+                            <hr />
                             <h4 class="card-title">جزییات تماس</h4>
                             <div class="row form-row">
                                 <div class="col-md-6">
@@ -187,7 +164,6 @@
                                         <span asp-validation-for="city" class="text-danger"></span>
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">استان</label>
@@ -211,14 +187,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- /Contact Details -->
-                    <!-- Pricing -->
-                    <div class="card">
-                        <div class="card-body">
+                            <hr />
                             <h4 class="card-title">هزینه ها</h4>
-
                             <div class="form-group mb-0">
                                 <div id="pricing_select">
                                     @if (Model.isFreeOfCharge == true)
@@ -244,9 +214,7 @@
                                         </div>
                                     }
                                 </div>
-
                             </div>
-
                             @if (@Model.isFreeOfCharge == true)
                             {
                                 <div class="row custom_price_cont" id="custom_price_cont" style="display: none;">
@@ -265,13 +233,7 @@
                                     </div>
                                 </div>
                             }
-
-                        </div>
-                    </div>
-                    <!-- /Pricing -->
-                    <!-- Services and Specialization -->
-                    <div class="card services-card">
-                        <div class="card-body">
+                            <hr />
                             <h4 class="card-title">خدمات و تخصص</h4>
                             <div class="form-group">
                                 <label>تخصص</label>
@@ -286,10 +248,16 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /Services and Specialization -->
-                    <!-- Education -->
+                    <div class="submit-section submit-btn-bottom">
+                        <button onclick="EditBasicInformation(@Model.id)" class="btn btn-primary submit-btn">ذخیره اطلاعات پایه</button>
+                    </div>
+                    <!-- /Basic Information -->
+                </form>
+                <form id="expertAdvancedProfileForm">
+                    <!-- Advanced Information -->
                     <div class="card">
                         <div class="card-body">
+                            <h2 class="card-title">سایر اطلاعات </h2>
                             <h4 class="card-title"> تحصیلات </h4>
                             <div class="education-info">
                                 @if (Model.studies.Count > 0)
@@ -355,10 +323,7 @@
                                 <a href="javascript:void(0);" class="add-education"><i class="fa fa-plus-circle"></i> افزودن</a>
                             </div>
                         </div>
-                    </div>
-                    <!-- /Education -->
-                    <!-- Experience -->
-                    <div class="card">
+                        <hr />
                         <div class="card-body">
                             <h4 class="card-title">تجربه</h4>
                             <div class="experience-info">
@@ -437,10 +402,7 @@
                                 <a href="javascript:void(0);" class="add-experience"><i class="fa fa-plus-circle"></i> افزودن</a>
                             </div>
                         </div>
-                    </div>
-                    <!-- /Experience -->
-                    <!-- Awards -->
-                    <div class="card">
+                        <hr />
                         <div class="card-body">
                             <h4 class="card-title">جایزه ها</h4>
                             <div class="awards-info">
@@ -490,10 +452,7 @@
                                 <a href="javascript:void(0);" class="add-award"><i class="fa fa-plus-circle"></i> افزودن</a>
                             </div>
                         </div>
-                    </div>
-                    <!-- /Awards -->
-                    <!-- Memberships -->
-                    <div class="card">
+                        <hr />
                         <div class="card-body">
                             <h4 class="card-title">عضویت ها</h4>
                             <div class="membership-info">
@@ -531,10 +490,7 @@
                                 <a href="javascript:void(0);" class="add-membership"><i class="fa fa-plus-circle"></i> افزودن</a>
                             </div>
                         </div>
-                    </div>
-                    <!-- /Memberships -->
-                    <!-- Registrations -->
-                    <div class="card">
+                        <hr />
                         <div class="card-body">
                             <h4 class="card-title"> ثبت نام ها </h4>
                             <div class="registrations-info">
@@ -585,11 +541,10 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /Registrations -->
-
                     <div class="submit-section submit-btn-bottom">
-                        <button onclick="Edit(@Model.id)" type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                        <button onclick="EditAdvancedInformation(@Model.id)" type="submit" class="btn btn-primary submit-btn">ذخیره سایر اطلاعات</button>
                     </div>
+                    <!-- /Advanced Information -->
                 </form>
             </div>
         </div>
@@ -603,76 +558,89 @@
 
 <script>
 
-    function Edit(Id) {
+    function EditBasicInformation(id) {
 
-        if ($("#expertProfileForm").valid()) {
+        if ($("#expertBasicProfileForm").valid()) {
 
-            var image = [];
-            var isFreeOfCharge = null;
-            var gender = 0;
-            var price = '0';
+            var genderSelect = document.getElementById('gender');
+
+            var expertProfileData = new FormData();
+
+            expertProfileData.append("firstName", $("#expertBasicProfileForm #firstName").val());
+            expertProfileData.append("lastName", $("#expertBasicProfileForm #lastName").val());
+            expertProfileData.append("phoneNumber", $("#expertBasicProfileForm #phoneNumber").val());
+            expertProfileData.append("email", $("#expertBasicProfileForm #email").val());
+            expertProfileData.append("specificAddress", $('input[name=specificAddress]').val());
+            expertProfileData.append("province", $('input[name=province]').val());
+            expertProfileData.append("city", $('input[name=city]').val());
+            expertProfileData.append("clinicName", $("#expertBasicProfileForm #clinicName").val());
+            expertProfileData.append("clinicAddress", $("#expertBasicProfileForm #clinicAddress").val());
+            expertProfileData.append("birthDate_String", $("#expertBasicProfileForm #birthDate_String").val());
+            expertProfileData.append("postalCode", $('input[name=postalCode]').val());
+            expertProfileData.append("bio", $("#expertBasicProfileForm #bio").val());
+            expertProfileData.append("instagram", $('input[name=instagram]').val());
+            expertProfileData.append("iconImage", $("#expertBasicProfileForm #iconImage").get(0).files[0]);
+            expertProfileData.append("specialtyId", BigInt($("#expertBasicProfileForm #specialtyId").val()));
+            expertProfileData.append("tag", $("#expertBasicProfileForm #services").val());
+            expertProfileData.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
+            expertProfileData.append("id", id);
+
+            if (document.getElementById('price_free').checked) {
+                expertProfileData.append("isFreeOfCharge", true);
+            } else {
+                expertProfileData.append("isFreeOfCharge", false);
+                expertProfileData.append("price", $('input[name=custom_rating_count]').val());
+            }
+
+            $( "#expertBasicProfileForm" ).submit(function( event ) {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("EditBasicInformation", "Profile")',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    cache: false,
+                    data: expertProfileData,
+                    beforeSend: function(x) {
+                        $('#cover-spin').show(0);
+                    },
+                    success: function(data) {
+                        if (data.isSuccess == true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#cover-spin').hide(0);
+                    },
+                    fail: function() {
+                        $('#cover-spin').hide(0);
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                event.preventDefault();
+            });
+        }
+    }
+
+    function EditAdvancedInformation(Id) {
+
+        if ($("#expertAdvancedProfileForm").valid()) {
+
             var studies = GetStudies();
             var experiences = GetExperiences();
             var prizes = GetPrizes();
             var memberships = GetMemberships();
             var subscriptions = GetSubscriptions();
-
-            var firstName = $("#expertProfileForm #firstName").val();
-            var lastName = $("#expertProfileForm #lastName").val();
-            var phoneNumber = $("#expertProfileForm #phoneNumber").val();
-            var email = $("#expertProfileForm #email").val();
-            var password = $("#expertProfileForm #password").val();
-            var specificAddress = $('input[name=specificAddress]').val();
-            var province = $('input[name=province]').val();
-            var city = $('input[name=city]').val();
-            var clinicName = $("#expertProfileForm #clinicName").val();
-            var clinicAddress = $("#expertProfileForm #clinicAddress").val();
-            var birthDate_String = $("#expertProfileForm #birthDate_String").val();
-            var postalCode = $('input[name=postalCode]').val();
-            var bio = $("#expertProfileForm #bio").val();
-            var instagram = $('input[name=instagram]').val();
-            var iconImage = $("#expertProfileForm #iconImage").get(0).files[0];
-            var specialtyId = BigInt($("#specialtyId").val());
-            var tag = $("#services").val();
             var id = Id;
 
-
-            if (document.getElementById('price_free').checked) {
-                isFreeOfCharge = true;
-            } else {
-                isFreeOfCharge = false;
-                price = $('input[name=custom_rating_count]').val();
-            }
-
-            if (document.getElementById("gender_male").checked === true) {
-                gender = 1;
-            }
-            else if(document.getElementById("gender_female").checked === true) {
-                gender = 2;
-            }
-
-            var postData = {
-                'firstName': firstName,
-                'lastName': lastName,
-                'phoneNumber': phoneNumber,
-                'email': email,
-                'password': password,
-                'specificAddress': specificAddress,
-                'province': province,
-                'city': city,
-                'clinicName': clinicName,
-                'clinicAddress': clinicAddress,
-                'birthDate_String': birthDate_String,
-                'postalCode': postalCode,
-                'bio': bio,
-                'instagram': instagram,
-                'iconImage': iconImage,
-                'specialtyId': specialtyId,
-                'tag': tag,
+            var expertPostData = {
                 'id': id,
-                'isFreeOfCharge': isFreeOfCharge,
-                'price': price,
-                'gender': gender,
                 'studies': studies,
                 'experiences': experiences,
                 'prizes': prizes,
@@ -680,33 +648,43 @@
                 'subscriptions': subscriptions,
             };
 
-
-            $.ajax({
-                contentType: 'application/x-www-form-urlencoded',
-                dataType: 'json',
-                type: 'POST',
-                url: '@Url.Action("EditProfile","Profile")',
-                data: postData,
-                success: function(data) {
-                    if (data.isSuccess == true) {
-                        swal.fire('موفق!',
-                            data.message,
-                            'success').then(function(isConfirm) {
-                            location.reload();
-                        });
-                    } else {
-                        swal.fire('هشدار!',
-                            data.message,
-                            'warning');
+            $( "#expertAdvancedProfileForm" ).submit(function( event ) {
+                $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '@Url.Action("EditAdvancedInformation","Profile")',
+                    data: expertPostData,
+                    beforeSend: function(x) {
+                        $('#cover-spin').show(0);
+                    },
+                    success: function(data) {
+                        if (data.isSuccess == true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        } else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning');
+                        }
+                    },
+                    complete: function() {
+                        $('#cover-spin').hide(0);
+                    },
+                    fail: function() {
+                        $('#cover-spin').hide(0);
+                    },
+                    error: function(request, status, error) {
+                        $('#cover-spin').hide(0);
+                        alert(request.responseText);
                     }
-                },
-                error: function(request, status, error) {
-                    alert(request.responseText);
-                }
+                });
+                event.preventDefault();
             });
-
         }
-
     }
 
     function GetStudies() {

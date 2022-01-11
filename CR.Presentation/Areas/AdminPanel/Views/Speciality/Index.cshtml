@@ -46,7 +46,7 @@
                                                 <a href="profile.html" class="avatar avatar-sm mr-2">
                                                     <img class="avatar-img" src="~/@speciality.ImageSrc" alt="Speciality">
                                                 </a>
-                                                <a href="profile.html">@speciality.Name</a>
+                                                <a id="speciality_@speciality.Id">@speciality.Name</a>
                                             </h2>
                                         </td>
 
@@ -117,7 +117,7 @@
                     </div>
 
                 </div>
-                <button onclick="Add()" type="submit" class="btn btn-primary btn-block">ذخیره تغییرات</button>
+                <button onclick="Add()" class="btn btn-primary btn-block">ذخیره تغییرات</button>
             </div>
         </div>
     </div>
@@ -150,7 +150,7 @@
                     </div>
 
                 </div>
-                <button onclick="Edit()" type="submit" class="btn btn-primary btn-block">ذخیره تغییرات</button>
+                <button onclick="Edit()" class="btn btn-primary btn-block">ذخیره تغییرات</button>
             </div>
         </div>
     </div>
@@ -162,168 +162,181 @@
 <script src="~/Sweetalert2/sweetalert2.min.js"></script>
 
 <script>
-     var EditId = 0;
+    var EditId = 0;
 
-     function Add(){
+    function Add() {
 
-         var Name = $("#name").val();
+        var name = $("#name").val();
+        var data = new FormData();
+        data.append("Name",name);
 
-         var data = new FormData();
-         data.append("Name",Name);
+        var Image = document.getElementById("File");
 
-         var Image = document.getElementById("File");
+        if (Image.files.length > 0) {
+            data.append("File", Image.files[0]);
+        } else {
+            swal.fire(
+                'هشدار!',
+                "یک فایل برای تصویر انتخاب کنید",
+                'warning'
+            );
+            return;
+        }
 
-          if (Image.files.length > 0) {
-             data.append("File", Image.files[0]);
-          }
-          else {
-              swal.fire(
-             'هشدار!',
-             "یک فایل برای تصویر انتخاب کنید",
-             'warning'
-              );
-              return;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddSpeciality", "Speciality")",
+            contentType: false,
+            processData: false,
+            data: data,
+            beforeSend: function(x) {
+                $('#cover-spin').show(0);
+            },
+            success: function (data) {
+                if (data.isSuccess == true) {
+                    swal.fire(
+                        'موفق!',
+                        data.message,
+                        'success'
+                    ).then(function (isConfirm) {
+                        location.reload();
+                    });
+                }
+                else {
+
+                    swal.fire(
+                        'هشدار!',
+                        data.message,
+                        'warning'
+                    );
+
+                }
+            },
+            complete: function() {
+                $('#cover-spin').hide(0);
+            },
+            fail: function() {
+                $('#cover-spin').hide(0);
+            },
+            error: function (request, status, error) {
+                alert(request.responseText);
             }
 
-            $('#loading').show();
-                 $.ajax({
-                     type: "POST",
-                     url: "@Url.Action("AddSpeciality", "Speciality")",
-                     contentType: false,
-                     processData: false,
-                     data: data,
-                     success: function (data) {
-                         if (data.isSuccess == true) {
-                             swal.fire(
-                                 'موفق!',
-                                 data.message,
-                                 'success'
-                             ).then(function (isConfirm) {
-                                 location.reload();
-                             });
+        });
+    }
 
+    function GetId(id) {
 
-                         }
-                         else {
+        EditId = id;
 
-                             swal.fire(
-                                 'هشدار!',
-                                 data.message,
-                                 'warning'
-                             );
+        var text = document.getElementById("speciality_" + id).text;
 
-                         }
-                     },
-                     error: function (request, status, error) {
-                         alert(request.responseText);
-                     },
-                     complete: function () {
-                         $('#loading').hide();
-                     }
+        document.getElementById("nameEdit").value = text;
+    }
 
-                 });
+    function Edit() {
+        var Id = EditId;
+        var Name = $("#nameEdit").val();
 
-     }
+        var data = new FormData();
+        data.append("Name",Name);
+        data.append("Id",Id);
 
-     function GetId(id)
-     {
-         EditId = id;
-     }
+        var Image = document.getElementById("fileEdit");
 
-     function Edit(){
+        if (Image.files.length > 0) {
+            data.append("File", Image.files[0]);
+        }
 
-         var Id = EditId;
-         var Name = $("#nameEdit").val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("EditSpeciality", "Speciality")",
+            contentType: false,
+            processData: false,
+            data: data,
+            beforeSend: function(x) {
+                $('#cover-spin').show(0);
+            },
+            success: function (data) {
+                if (data.isSuccess == true) {
+                    swal.fire(
+                        'موفق!',
+                        data.message,
+                        'success'
+                    ).then(function (isConfirm) {
+                        location.reload();
+                    });
+                }
+                else {
 
-         var data = new FormData();
-         data.append("Name",Name);
-         data.append("Id",Id);
+                    swal.fire(
+                        'هشدار!',
+                        data.message,
+                        'warning'
+                    );
 
-         var Image = document.getElementById("fileEdit");
+                }
+            },
+            complete: function() {
+                $('#cover-spin').hide(0);
+            },
+            fail: function() {
+                $('#cover-spin').hide(0);
+            },
+            error: function (request, status, error) {
+                alert(request.responseText);
+            }
 
-          if (Image.files.length > 0) {
-             data.append("File", Image.files[0]);
-          }
-
-         $.ajax({
-             type: "POST",
-             url: "@Url.Action("EditSpeciality", "Speciality")",
-             contentType: false,
-             processData: false,
-             data: data,
-             success: function (data) {
-                 if (data.isSuccess == true) {
-                     swal.fire(
-                         'موفق!',
-                         data.message,
-                         'success'
-                     ).then(function (isConfirm) {
-                         location.reload();
-                     });
-                 }
-                 else {
-
-                     swal.fire(
-                         'هشدار!',
-                         data.message,
-                         'warning'
-                     );
-                 }
-             },
-             error: function (request, status, error) {
-                 alert(request.responseText);
-             },
-         });
-     }
+        });
+    }
 
     function Remove(Id) {
 
-        swal.fire({
-            title: 'حذف تخصص',
-            text: "کاربر گرامی از حذف تخصص مطمئن هستید؟",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#7cacbe',
-            confirmButtonText: 'بله ، حذف شود',
-            cancelButtonText: 'خیر'
-        }).then((result) => {
-            if (result.value) {
-                var postData = {
-                    'Id': Id,
-                };
-                $.ajax({
-                    contentType: 'application/x-www-form-urlencoded',
-                    dataType: 'json',
-                    type: "POST",
-                    url: "@Url.Action("Remove", "Speciality")",
-                    data: postData,
-                    success: function(data) {
-                        if (data.isSuccess == true) {
-                            swal.fire(
-                                'موفق!',
-                                data.message,
-                                'success'
-                            ).then(function(isConfirm) {
-                                location.replace("@Url.Action("Index", "Speciality")");
-                            });
-                        } else {
-                            swal.fire(
-                                'هشدار!',
-                                data.message,
-                                'warning'
-                            );
+       swal.fire({
+           title: 'حذف تخصص',
+           text: "کاربر گرامی از حذف تخصص مطمئن هستید؟",
+           icon: 'warning',
+           showCancelButton: true,
+           confirmButtonColor: '#d33',
+           cancelButtonColor: '#7cacbe',
+           confirmButtonText: 'بله ، حذف شود',
+           cancelButtonText: 'خیر'
+       }).then((result) => {
+           if (result.value) {
+               var postData = {
+                   'Id': Id,
+               };
+               $.ajax({
+                   contentType: 'application/x-www-form-urlencoded',
+                   dataType: 'json',
+                   type: "POST",
+                   url: "@Url.Action("Remove", "Speciality")",
+                   data: postData,
+                   success: function(data) {
+                       if (data.isSuccess == true) {
+                           swal.fire(
+                               'موفق!',
+                               data.message,
+                               'success'
+                           ).then(function(isConfirm) {
+                               location.replace("@Url.Action("Index", "Speciality")");
+                           });
+                       } else {
+                           swal.fire(
+                               'هشدار!',
+                               data.message,
+                               'warning'
+                           );
 
-                        }
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
-                    }
+                       }
+                   },
+                   error: function(request, status, error) {
+                       alert(request.responseText);
+                   }
 
-                });
-            }
-        });
-
+               });
+           }
+       });
     }
 </script>
 

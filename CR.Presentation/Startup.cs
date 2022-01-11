@@ -112,6 +112,8 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertDetailsForSiteService, GetExpertDetailsForSiteService>();
             services.AddScoped<IGetExpertsForPresentationService, GetExpertsForPresentationService>();
             services.AddScoped<IGetExpertDetailsForPartialService, GetExpertDetailsForPartialService>();
+            services.AddScoped<IEditBasicExpertDetailsService, EditBasicExpertDetailsService>();
+            services.AddScoped<IEditAdvancedExpertDetailsService, EditAdvancedExpertDetailsService>();
             //ExpertAvailabilities
             services.AddScoped<IAddDayService, AddDayService>();
             services.AddScoped<IGetDaysService, GetDaysService>();
