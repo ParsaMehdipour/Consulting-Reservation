@@ -45,7 +45,7 @@ namespace CR.Core.Services.Impl.Users
 
                 var consumerInformation = new ConsumerInfromation()
                 {
-                    Gender = (request.gender == 0) ? GenderType.Male : GenderType.Female,
+                    Gender = request.gender,
                     FirstName = request.firstName,
                     LastName = request.lastName,
                     Province = request.province,
@@ -70,7 +70,7 @@ namespace CR.Core.Services.Impl.Users
                 return new ResultDto()
                 {
                     IsSuccess = true,
-                    Message = "متخصص با موفقیت افزوده شد"
+                    Message = "مراجعه کننده با موفقیت افزوده شد"
                 };
 
             }
