@@ -45,7 +45,7 @@ namespace CR.Core.Services.Impl.Users
 
                 var expertInformation = new ExpertInformation()
                 {
-                    Gender = (request.gender == 0) ? GenderType.Male : GenderType.Female,
+                    Gender = request.gender,
                     FirstName = request.firstName,
                     LastName = request.lastName,
                     Province = request.province,
