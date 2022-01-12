@@ -8,7 +8,7 @@
             <div class="col-md-12 col-12">
                 <nav aria-label="breadcrumb" class="page-breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">خانه</a></li>
                         <li class="breadcrumb-item active" aria-current="page">پروفایل پزشک</li>
                     </ol>
                 </nav>
@@ -58,7 +58,6 @@
                             <ul>
                                 <li><i class="far fa-thumbs-up"></i> 99%</li>
                                 <li><i class="far fa-comment"></i> @Model.RateCount فیدبک </li>
-                                <li><i class="fas fa-map-marker-alt"></i>@Model.City , @Model.Province</li>
                                 @if (@Model.Price != 0)
                                 {
                                     <li><i class="far fa-money-bill-alt"></i> @Model.Price?.ToString("n0") تومان ساعتی </li>

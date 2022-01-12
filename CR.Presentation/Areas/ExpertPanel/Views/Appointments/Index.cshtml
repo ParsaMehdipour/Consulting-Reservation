@@ -113,7 +113,7 @@
     function ShowDetails(id) {
         $.ajax({
             type: "POST",
-            url: '@Url.Action("GetDetails", "Appointments")',
+            url: '@Url.Action("GetDetails", "Appointments",new { area = "ExpertPanel" })',
             data: {id : id},
             dataType: "json",
             success: function(response) {
@@ -311,7 +311,7 @@
 <!-- /Appointment Details Modal -->
 }
 
-@section NotDoneAppointmentModal{
+@section Modal{
 <!-- NotDoneAppointmentModal -->
 <div class="modal fade" id="NotDoneModal" tabindex="-1" role="dialog" aria-labelledby="NotDoneModal" aria-hidden="true">
     <div class="modal-dialog" role="document">

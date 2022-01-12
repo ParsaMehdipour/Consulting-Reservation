@@ -110,7 +110,7 @@
                                                                         <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
                                                                             <i class="fas fa-print"></i> چاپ
                                                                         </a>
-                                                                        <a href="javascript:void(0);" class="btn btn-sm bg-info-light">
+                                                                        <a onclick="ShowDetails(@appointment.Id)" class="btn btn-sm bg-info-light">
                                                                             <i class="far fa-eye"></i> مشاهده
                                                                         </a>
                                                                     </div>
@@ -412,11 +412,87 @@
             </div>
         </div>
     </div>
-
 </div>
+
 
 @section Scripts
 {
 <script src="~/assets/js/ConusmerPanel/Home/Home.js"></script>
 <script src="~/assets/js/ConusmerPanel/layout.js"></script>
+
+<script>
+     function ShowDetails(id) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetDetails", "Appointments",new { area = "ConsumerPanel" })',
+            data: {id : id},
+            dataType: "json",
+            success: function(response) {
+                var data = response;
+
+                var body = '';
+
+                body += '<ul class="info-details">';
+                body += '<li>';
+                body += '<div class="details-header">';
+                body += '<div class="row">';
+                body +='<div class="col-md-6">';
+                body += '<span class="title">تاریخ و زمان نوبت:</span>';
+                body += '<span class="text">' + data.appointmentDate + " , " + data.appointmentTime + '</span>';
+                body += '</div>';
+                body += '<div class="col-md-6">';
+                body += '<div class="text-right">';
+                if (data.appointmentStatus === "در انتظار") {
+                    body += '<button type="button" class="btn bg-warning-light btn-sm">' + data.appointmentStatus + '</button>';
+                }
+                else if (data.appointmentStatus === "انجام نشد") {
+                    body += '<button type="button" class="btn bg-danger-light btn-sm">' + data.appointmentStatus + '</button>';
+                }
+                else {
+                    body += '<button type="button" class="btn bg-success-light btn-sm">' + data.appointmentStatus + '</button>';
+                }
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</li>';
+                body += '<li>';
+                body += '<span class="title">وضعیت:</span>';
+                body += '<span class="text">' + data.appointmentStatus + '</span>';
+                body += '</li>';
+                body += '<li>';
+                body += '<span class="title">مقدار پرداختی</span>';
+                body += '<span class="text">' + data.appointmentPrice + "تومان" + '</span>';
+                body += '</li>';
+                body += '</ul>';
+
+                $("#appt_details #detailsBody").html(body);
+                $("#appt_details").modal("show");
+
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+</script>
+}
+
+@section Modal{
+    <!-- Appointment Details Modal -->
+    <div class="modal fade custom-modal" id="appt_details">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">جزییات نوبت</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="detailsBody">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Appointment Details Modal -->
 }

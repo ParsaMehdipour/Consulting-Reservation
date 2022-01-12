@@ -32,6 +32,7 @@ namespace CR.Core.Services.Impl.Appointment
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
                 .Select(a => new AppointmentForConsumerPanelDto
                 {
+                    Id = a.Id,
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentTime = (a.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" + a.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()).ToString() +
                                       " - " + (a.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() + ":" + a.TimeOfDay.FinishDate.Minute.ToString().GetPersianNumber()),

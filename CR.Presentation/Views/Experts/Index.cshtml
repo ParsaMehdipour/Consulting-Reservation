@@ -1,5 +1,4 @@
 ﻿@addTagHelper *, LazZiya.TagHelpers
-@using CR.DataAccess.Enums
 @model CR.Presentation.Models.ViewModels.SearchViewModel
 @{
 }
@@ -11,7 +10,7 @@
             <div class="col-md-8 col-12">
                 <nav aria-label="breadcrumb" class="page-breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">خانه</a></li>
                         <li class="breadcrumb-item active" aria-current="page">جستجو</li>
                     </ol>
                 </nav>
@@ -99,12 +98,12 @@
                             <div class="doctor-widget">
                                 <div class="doc-info-left">
                                     <div class="doctor-img">
-                                        <a href="doctor-profile.html">
+                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">
                                             <img src="~/@expert.IconSrc" class="img-fluid" alt="User Image">
                                         </a>
                                     </div>
                                     <div class="doc-info-cont">
-                                        <h4 class="doc-name"><a href="doctor-profile.html">متخصص @expert.FullName</a></h4>
+                                        <h4 class="doc-name"><a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">متخصص @expert.FullName</a></h4>
                                         <p class="doc-speciality"> @expert.Bio </p>
                                         <h5 class="doc-department">
 
