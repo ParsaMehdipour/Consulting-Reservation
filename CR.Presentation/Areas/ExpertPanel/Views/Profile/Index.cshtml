@@ -106,6 +106,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">لینک اینستاگرام</label>
+                                        <input type="text" class="form-control" asp-for="instagram" id="instagram" name="instagram" dir="ltr">
+                                        <span asp-validation-for="instagram" class="text-danger"></span>
+
+                                    </div>
+                                </div>
                             </div>
                             <hr />
                             <h4 class="card-title"> درباره من </h4>
@@ -115,25 +123,25 @@
                                 <span asp-validation-for="bio" class="text-danger"></span>
                             </div>
                             <hr />
-                            <h4 class="card-title"> اطلاعات کلینیک </h4>
+                            <h4 class="card-title"> اطلاعات محل کار </h4>
                             <div class="row form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>نام کلینیک</label>
+                                        <label>نام محل کار</label>
                                         <input type="text" class="form-control" asp-for="clinicName" id="clinicName" name="clinicName">
                                         <span asp-validation-for="clinicName" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>آدرس کلینیک</label>
+                                        <label>آدرس محل کار</label>
                                         <input type="text" class="form-control" asp-for="clinicAddress" id="clinicAddress" name="clinicAddress">
                                         <span asp-validation-for="clinicAddress" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>تصاویر کلینیک</label>
+                                        <label>تصاویر محل کار</label>
                                         <span id="imageUploadContainer" style="width:100%">
                                             <div class="col-lg-12 ">
                                                 <div class="uploader__box js-uploader__box l-center-box">
@@ -152,9 +160,9 @@
                             <div class="row form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>آدرس خط یک</label>
-                                        <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
-                                        <span asp-validation-for="specificAddress" class="text-danger"></span>
+                                        <label class="control-label">استان</label>
+                                        <input type="text" class="form-control" asp-for="province" id="province" name="province">
+                                        <span asp-validation-for="province" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -166,9 +174,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">استان</label>
-                                        <input type="text" class="form-control" asp-for="province" id="province" name="province">
-                                        <span asp-validation-for="province" class="text-danger"></span>
+                                        <label>آدرس</label>
+                                        <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
+                                        <span asp-validation-for="specificAddress" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -176,14 +184,6 @@
                                         <label class="control-label">کدپستی</label>
                                         <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
                                         <span asp-validation-for="postalCode" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">لینک اینستاگرام</label>
-                                        <input type="text" class="form-control" asp-for="instagram" id="instagram" name="instagram">
-                                        <span asp-validation-for="instagram" class="text-danger"></span>
-
                                     </div>
                                 </div>
                             </div>
