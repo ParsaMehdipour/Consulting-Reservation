@@ -27,7 +27,10 @@ namespace CR.Core.Services.Impl.Experts
             var experts = _context.Users
                 .Include(u => u.ExpertInformation)
                 .ThenInclude(u => u.Specialty)
-                .Where(u => u.UserFlag == UserFlag.Expert).AsEnumerable()
+                .Where(u => u.UserFlag == UserFlag.Expert)
+                .OrderByDescending(e=>e.Id)
+                .AsNoTracking()
+                .AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)
                 .Select(u => new ExpertForAdminDto
                 {

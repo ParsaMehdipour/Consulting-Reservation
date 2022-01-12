@@ -6,11 +6,11 @@
 <div class="page-header">
     <div class="row">
         <div class="col-sm-7 col-auto">
-            <h3 class="page-title"> لیست پزشکان </h3>
+            <h3 class="page-title"> لیست متخصصین </h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">دشبرد</a></li>
+                <li class="breadcrumb-item"><a href="index.html">داشبورد</a></li>
                 <li class="breadcrumb-item"><a href="javascript:(0);">کاربران</a></li>
-                <li class="breadcrumb-item active">پزشک</li>
+                <li class="breadcrumb-item active">متخصص</li>
             </ul>
         </div>
         <div class="col-sm-5 col">
@@ -28,7 +28,7 @@
                     <table class="datatable table table-hover table-center mb-0">
                         <thead>
                         <tr>
-                            <th>نام پزشک</th>
+                            <th>نام متخصص</th>
                             <th>شماره</th>
                             <th>تخصص</th>
                             <th>عضویت از</th>
@@ -44,7 +44,7 @@
                                 <td>
                                     <h2 class="table-avatar">
                                         <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@expert.IconSrc" alt="User Image"></a>
-                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@expert.Id">پزشک @expert.FullName</a>
+                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@expert.Id">@expert.FullName</a>
                                     </h2>
                                 </td>
                                 <td>@expert.PhoneNumber</td>

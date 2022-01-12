@@ -26,7 +26,10 @@ namespace CR.Core.Services.Impl.Consumers
             var consumers = _context.Users
                 .Include(u => u.ConsumerInfromation)
                 //.Where(u => u.ConsumerInfromation != null)
-                .Where(u => u.UserFlag == UserFlag.Consumer).AsEnumerable()
+                .Where(u => u.UserFlag == UserFlag.Consumer)
+                .OrderByDescending(c=>c.Id)
+                .AsNoTracking()
+                .AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)
                 .Select(u => new ConsumerForAdminDto
                 {
