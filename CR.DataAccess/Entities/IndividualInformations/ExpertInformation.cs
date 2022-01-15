@@ -26,8 +26,13 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public string ClinicName { get; set; }
         public string ClinicAddress { get; set; }
         public string Tag { get; set; }
-        public bool IsFreeOfCharge { get; set; }
-        public long? Price { get; set; } = 0;
+        //public bool IsFreeOfCharge { get; set; }
+        public bool UsePhoneCall { get; set; }
+        public long PhoneCallPrice { get; set; } = 0;
+        public bool UseVoiceCall { get; set; }
+        public long VoiceCallPrice { get; set; } = 0;
+        public bool UseTextCall { get; set; }
+        public long TextCallPrice { get; set; } = 0;
         public string Instagram { get; set; }
 
 

@@ -17,7 +17,7 @@ namespace CR.Core.Services.Impl.Experts
         private readonly IImageUploaderService _imageUploaderService;
 
         public EditBasicExpertDetailsService(ApplicationContext context
-        ,IImageUploaderService imageUploaderService)
+        , IImageUploaderService imageUploaderService)
         {
             _context = context;
             _imageUploaderService = imageUploaderService;
@@ -34,6 +34,15 @@ namespace CR.Core.Services.Impl.Experts
                     .FirstOrDefault(e => e.Id == request.id);
 
                 var expert = _context.Users.FirstOrDefault(u => u.Id == expertInformation.ExpertId);
+
+                if (expert == null)
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "اطلاعات شما یافت نشد!"
+                    };
+                }
 
                 if (expertInformation == null)
                 {
@@ -91,8 +100,12 @@ namespace CR.Core.Services.Impl.Experts
                 expertInformation.Province = request.province;
                 expertInformation.SpecificAddress = request.specificAddress;
                 expertInformation.PostalCode = request.postalCode;
-                expertInformation.IsFreeOfCharge = request.isFreeOfCharge;
-                expertInformation.Price = (request.isFreeOfCharge == true) ? 0 : Convert.ToInt32(request.price.ToEnglishNumber());
+                expertInformation.UsePhoneCall = request.usePhoneCall;
+                expertInformation.UseTextCall = request.useTextCall;
+                expertInformation.UseVoiceCall = request.useVoiceCall;
+                expertInformation.PhoneCallPrice = request.usePhoneCall ? Convert.ToInt32(request.phoneCallPrice.ToEnglishNumber()) : 0;
+                expertInformation.VoiceCallPrice = request.useVoiceCall ? Convert.ToInt32(request.voiceCallPrice.ToEnglishNumber()) : 0;
+                expertInformation.TextCallPrice = request.useTextCall ? Convert.ToInt32(request.textCallPrice.ToEnglishNumber()) : 0;
                 expert.Email = request.email;
                 expert.PhoneNumber = request.phoneNumber;
 

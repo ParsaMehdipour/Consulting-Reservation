@@ -19,12 +19,34 @@ $(document).ready(function () {
 	
 	// Pricing Options Show
 	
-	$('#pricing_select input[name="rating_option"]').on('click', function() {
-		if ($(this).val() == 'price_free') {
-			$('#custom_price_cont').hide();
+	$('#pricing_select_phoneCallPrice input[name="rating_option_phoneCallPrice"]').on('click', function() {
+		if ($(this).val() == 'price_free_phoneCallPrice') {
+			$('#custom_price_cont_phoneCallPrice').show();
 		}
-		if ($(this).val() == 'custom_price') {
-			$('#custom_price_cont').show();
+		if ($(this).val() == 'custom_price_phoneCallPrice') {
+			$('#custom_price_cont_phoneCallPrice').hide();
+		}
+		else {
+		}
+	});
+
+	$('#pricing_select_voiceCallPrice input[name="rating_option_voiceCallPrice"]').on('click', function () {
+		if ($(this).val() == 'price_free_voiceCallPrice') {
+			$('#voiceCallPrice_Custom').show();
+		}
+		if ($(this).val() == 'custom_price_voiceCallPrice') {
+			$('#voiceCallPrice_Custom').hide();
+		}
+		else {
+		}
+	});
+
+	$('#pricing_select_textCallPrice input[name="rating_option_textCallPrice"]').on('click', function () {
+		if ($(this).val() == 'price_free_textCallPrice') {
+			$('#textCallPrice_Custom').show();
+		}
+		if ($(this).val() == 'custom_price_textCallPrice') {
+			$('#textCallPrice_Custom').hide();
 		}
 		else {
 		}

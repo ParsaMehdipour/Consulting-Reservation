@@ -42,7 +42,7 @@ namespace CR.Core.Services.Impl.Experts
             {
                 ExpertInformationId = expertInformation.Id,
                 IconSrc = (string.IsNullOrWhiteSpace(expertInformation.IconSrc)) ? "assets/img/icon-256x256.png" : expertInformation.IconSrc,
-                Price = (expertInformation.IsFreeOfCharge == true) ? 0 : expertInformation.Price,
+                //Price = (expertInformation.IsFreeOfCharge == true) ? 0 : expertInformation.Price,
                 FullName = expertInformation.FirstName + " " + expertInformation.LastName,
                 Rate = 4,
                 RateCount = 10,

@@ -51,7 +51,7 @@ namespace CR.Core.Services.Impl.Experts
                 Bio = expertInformation.Bio,
                 City = expertInformation.City,
                 Province = expertInformation.Province,
-                Price = (expertInformation.IsFreeOfCharge == true) ? 0 : expertInformation.Price,
+                //Price = (expertInformation.IsFreeOfCharge == true) ? 0 : expertInformation.Price,
                 FullName = expertInformation.FirstName + " " + expertInformation.LastName,
                 Rate = 4,
                 ClinicAddress = expertInformation.ClinicAddress,

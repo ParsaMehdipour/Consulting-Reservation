@@ -82,7 +82,7 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
                     timeOfDay.FinishDate = timeOfDay.FinishDate.AddHours(Convert.ToInt32(finishHours[i].Split(":")[0]));
                     timeOfDay.StartDate = timeOfDay.StartDate.AddMinutes(Convert.ToInt32(startHours[i].Split(":")[1]));
                     timeOfDay.FinishDate = timeOfDay.FinishDate.AddMinutes(Convert.ToInt32(finishHours[i].Split(":")[1]));
-                    timeOfDay.Price = (expertInformation.IsFreeOfCharge == true) ? 0 : expertInformation.Price;
+                    //timeOfDay.Price = (expertInformation.IsFreeOfCharge == true) ? 0 : expertInformation.Price;
 
                     timeOfDaysList.Add(timeOfDay);
 

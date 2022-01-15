@@ -102,8 +102,8 @@ namespace CR.Core.Services.Impl.Experts
                 expertInformation.Province = request.province;
                 expertInformation.SpecificAddress = request.specificAddress;
                 expertInformation.PostalCode = request.postalCode;
-                expertInformation.IsFreeOfCharge = request.isFreeOfCharge;
-                expertInformation.Price = (request.isFreeOfCharge == true) ? 0 : Convert.ToInt32(DateConvertor.ToEnglishNumber(request.price));
+                //expertInformation.IsFreeOfCharge = request.isFreeOfCharge;
+                //expertInformation.Price = (request.isFreeOfCharge == true) ? 0 : Convert.ToInt32(DateConvertor.ToEnglishNumber(request.price));
                 expert.Email = request.email;
                 expert.PhoneNumber = request.phoneNumber;
 

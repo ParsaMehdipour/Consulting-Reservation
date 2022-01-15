@@ -98,21 +98,6 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                        <label>گروه خونی</label>
-                                        <select class="form-control select" asp-for="bloodType" id="bloodType" name="bloodType">
-                                            <option>A-</option>
-                                            <option>A+</option>
-                                            <option>B-</option>
-                                            <option>B+</option>
-                                            <option>AB-</option>
-                                            <option>AB+</option>
-                                            <option>O-</option>
-                                            <option>O+</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
                                         <label>ایمیل</label>
                                         <input type="email" class="form-control" asp-for="email" id="email" name="email">
                                         <span asp-validation-for="email" class="text-danger"></span>
@@ -120,7 +105,7 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                        <label>موبایل</label>
+                                        <label>شماره تماس دوم</label>
                                         <input type="text" class="form-control" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
                                         <span asp-validation-for="phoneNumber" class="text-danger"></span>
                                     </div>
@@ -200,7 +185,6 @@
         function Add() {
             if ($("#consumerProfileForm").valid()) {
 
-                var select = document.getElementById('bloodType');
                 var genderSelect = document.getElementById('gender');
 
                 var addConsumerProfileForm = new FormData();
@@ -208,7 +192,6 @@
                 addConsumerProfileForm.append("firstName", $("#consumerProfileForm #firstName").val());
                 addConsumerProfileForm.append("lastName", $("#consumerProfileForm #lastName").val());
                 addConsumerProfileForm.append("birthDate_String", $("#consumerProfileForm #birthDate_String").val());
-                addConsumerProfileForm.append("bloodType", select.options[select.selectedIndex].value);
                 addConsumerProfileForm.append("email", $("#consumerProfileForm #email").val());
                 addConsumerProfileForm.append("phoneNumber", $("#consumerProfileForm #phoneNumber").val());
                 addConsumerProfileForm.append("specificAddress", $("#consumerProfileForm #specificAddress").val());
@@ -229,7 +212,7 @@
                         cache: false,
                         data: addConsumerProfileForm,
                         beforeSend: function(x) {
-                            $('#cover-spin').show(0);
+                            $('#loading').show(0);
                         },
                         success: function(data) {
                             if (data.isSuccess == true) {
@@ -241,10 +224,10 @@
                             }
                         },
                         complete: function() {
-                            $('#cover-spin').hide(0);
+                            $('#loading').hide(0);
                         },
                         fail: function() {
-                            $('#cover-spin').hide(0);
+                            $('#loading').hide(0);
                         },
                         error: function(request, status, error) {
                             alert(request.responseText);
@@ -258,7 +241,6 @@
         function Edit(id) {
             if ($("#consumerProfileForm").valid()) {
 
-                var select = document.getElementById('bloodType');
                 var genderSelect = document.getElementById('gender');
 
                 var editConsumerProfileForm = new FormData();
@@ -266,7 +248,6 @@
                 editConsumerProfileForm.append("firstName", $("#consumerProfileForm #firstName").val());
                 editConsumerProfileForm.append("lastName", $("#consumerProfileForm #lastName").val());
                 editConsumerProfileForm.append("birthDate_String", $("#consumerProfileForm #birthDate_String").val());
-                editConsumerProfileForm.append("bloodType", select.options[select.selectedIndex].value);
                 editConsumerProfileForm.append("email", $("#consumerProfileForm #email").val());
                 editConsumerProfileForm.append("phoneNumber", $("#consumerProfileForm #phoneNumber").val());
                 editConsumerProfileForm.append("specificAddress", $("#consumerProfileForm #specificAddress").val());
@@ -288,7 +269,7 @@
                         cache: false,
                         data: editConsumerProfileForm,
                         beforeSend: function(x) {
-                            $('#cover-spin').show(0);
+                            $('#loading').show(0);
                         },
                         success: function(data) {
                             if (data.isSuccess == true) {
@@ -300,10 +281,10 @@
                             }
                         },
                         complete: function() {
-                            $('#cover-spin').hide(0);
+                            $('#loading').hide(0);
                         },
                         fail: function() {
-                            $('#cover-spin').hide(0);
+                            $('#loading').hide(0);
                         },
                         error: function(request, status, error) {
                             alert(request.responseText);

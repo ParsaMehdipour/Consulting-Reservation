@@ -34,7 +34,6 @@ namespace CR.Core.Services.Impl.Consumers
                 .Select(a => new ConsumerForExpertPanelDto
                 {
                     Age = a.ConsumerInformation.BirthDate.GetAge().ToString().GetPersianNumber(),
-                    BloodType = a.ConsumerInformation.BloodType,
                     City = a.ConsumerInformation.City,
                     Province = a.ConsumerInformation.Province,
                     FullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,

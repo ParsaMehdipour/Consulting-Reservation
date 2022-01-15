@@ -80,7 +80,7 @@ namespace CR.Core.Services.Impl.Appointment
                     ExpertInformationId = expertInformation.Id,
                     TimeOfDay = timeOfDay,
                     TimeOfDayId = timeOfDay.Id,
-                    Price = timeOfDay.Price ?? 0,
+                    //Price = timeOfDay.Price ?? 0,
                     FactorId = factor.Id,
                     Factor = factor
                     //IsActive = false

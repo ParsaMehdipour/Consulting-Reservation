@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>شبکه یکپارجه چاله چوله</title>
-    
+
     <link rel="stylesheet" href="~/lib/imageUploader/styles.imageuploader.css" />
 
     <!-- Favicons -->
@@ -47,7 +47,6 @@
 
     <!-- Main Wrapper -->
     <div class="main-wrapper">
-
         <!-- Header -->
         <header class="header">
             <nav class="navbar navbar-expand-lg header-nav">
@@ -157,326 +156,358 @@
         <!-- /Header -->
         @RenderBody()
 
-        <!-- Footer -->
-        <footer class="footer">
 
-            <!-- Footer Top -->
-            <div class="footer-top">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6">
-
-                            <!-- Footer Widget -->
-                            <div class="footer-widget footer-about">
-                                <div class="footer-logo">
-                                    <img src="~/assets/img/footer-logo.png" alt="logo">
-                                </div>
-                                <div class="footer-about-content">
-                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
-                                    <div class="social-icon">
-                                        <ul>
-                                            <li>
-                                                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /Footer Widget -->
-
-                        </div>
-
-                        <div class="col-lg-3 col-md-6">
-
-                            <!-- Footer Widget -->
-                            <div class="footer-widget footer-menu">
-                                <ul>
-                                    <li><a asp-area="" asp-controller="Experts" asp-action="Index">جستجو پزشکان</a></li>
-                                    <li><a asp-area="" asp-controller="Experts" asp-action="Index">رزرو نوبت</a></li>
-                                </ul>
-                            </div>
-                            <!-- /Footer Widget -->
-
-                        </div>
-
-                        <div class="col-lg-3 col-md-6">
-
-                            <!-- Footer Widget -->
-                            <div class="footer-widget footer-menu">
-                                <ul>
-                                    <li><a asp-area="" asp-action="Login" asp-controller="Account">‌ورود</a></li>
-                                    <li><a asp-area="" asp-action="Signup" asp-controller="Account">‌ثبت‌نام</a></li>
-                                </ul>
-                            </div>
-                            <!-- /Footer Widget -->
-
-                        </div>
-
-                        <div class="col-lg-3 col-md-6">
-
-                            <!-- Footer Widget -->
-                            <div class="footer-widget footer-contact">
-                                <h2 class="footer-title">ارتباط با ما</h2>
-                                <div class="footer-contact-info">
-                                    <div class="footer-address">
-                                        <span><i class="fas fa-map-marker-alt"></i></span>
-                                        <p> خیابان مطهری، برج مینا<br> طبقه 5 واحد 54 </p>
-                                    </div>
-                                    <p>
-                                        <i class="fas fa-phone-alt"></i>
-                                        09119007106
-                                    </p>
-                                    <p class="mb-0">
-                                        <i class="fas fa-envelope"></i>
-                                        info@chalechoole.com
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- /Footer Widget -->
-
-                        </div>
-
+        <div id="loading" style="background-color: #ffffff; background-color: rgba(255,255,255,0.5);">
+            <div class="loadingio-spinner-double-ring-815lhh4qwva">
+                <div class="ldio-mtp01htibno">
+                    <div></div>
+                    <div></div>
+                    <div>
+                        <div></div>
+                    </div>
+                    <div>
+                        <div></div>
                     </div>
                 </div>
             </div>
-            <!-- /Footer Top -->
-            <!-- Footer Bottom -->
-            <div class="footer-bottom">
-                <div class="container-fluid">
 
-                    <!-- Copyright -->
-                    <div class="copyright">
+            <!-- Footer -->
+            <footer class="footer">
+
+                <!-- Footer Top -->
+                <div class="footer-top">
+                    <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-6 col-lg-6">
-                                <div class="copyright-text">
-                                    <p class="mb-0">&copy; تمامی حقوق این وبسایت متعلق به شبکه یکپارچه مشاوره چاله چوله میباشد.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6">
+                            <div class="col-lg-3 col-md-6">
 
-                                <!-- Copyright Menu -->
-                                <div class="copyright-menu">
-                                    <ul class="policy-menu">
-                                        <li><a href="term-condition.html">شرایط و مقررات</a></li>
-                                        <li><a href="privacy-policy.html">حریم شخصی</a></li>
+                                <!-- Footer Widget -->
+                                <div class="footer-widget footer-about">
+                                    <div class="footer-logo">
+                                        <img src="~/assets/img/footer-logo.png" alt="logo">
+                                    </div>
+                                    <div class="footer-about-content">
+                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                                        <div class="social-icon">
+                                            <ul>
+                                                <li>
+                                                    <a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Footer Widget -->
+
+                            </div>
+
+                            <div class="col-lg-3 col-md-6">
+
+                                <!-- Footer Widget -->
+                                <div class="footer-widget footer-menu">
+                                    <ul>
+                                        <li><a asp-area="" asp-controller="Experts" asp-action="Index">جستجو پزشکان</a></li>
+                                        <li><a asp-area="" asp-controller="Experts" asp-action="Index">رزرو نوبت</a></li>
                                     </ul>
                                 </div>
-                                <!-- /Copyright Menu -->
+                                <!-- /Footer Widget -->
 
                             </div>
+
+                            <div class="col-lg-3 col-md-6">
+
+                                <!-- Footer Widget -->
+                                <div class="footer-widget footer-menu">
+                                    <ul>
+                                        <li><a asp-area="" asp-action="Login" asp-controller="Account">‌ورود</a></li>
+                                        <li><a asp-area="" asp-action="Signup" asp-controller="Account">‌ثبت‌نام</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /Footer Widget -->
+
+                            </div>
+
+                            <div class="col-lg-3 col-md-6">
+
+                                <!-- Footer Widget -->
+                                <div class="footer-widget footer-contact">
+                                    <h2 class="footer-title">ارتباط با ما</h2>
+                                    <div class="footer-contact-info">
+                                        <div class="footer-address">
+                                            <span><i class="fas fa-map-marker-alt"></i></span>
+                                            <p> خیابان مطهری، برج مینا<br> طبقه 5 واحد 54 </p>
+                                        </div>
+                                        <p>
+                                            <i class="fas fa-phone-alt"></i>
+                                            09119007106
+                                        </p>
+                                        <p class="mb-0">
+                                            <i class="fas fa-envelope"></i>
+                                            info@chalechoole.com
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- /Footer Widget -->
+
+                            </div>
+
                         </div>
                     </div>
-                    <!-- /Copyright -->
-
                 </div>
-            </div>
-            <!-- /Footer Bottom -->
+                <!-- /Footer Top -->
+                <!-- Footer Bottom -->
+                <div class="footer-bottom">
+                    <div class="container-fluid">
 
-        </footer>
-        <!-- /Footer -->
+                        <!-- Copyright -->
+                        <div class="copyright">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="copyright-text">
+                                        <p class="mb-0">&copy; تمامی حقوق این وبسایت متعلق به شبکه یکپارچه مشاوره چاله چوله میباشد.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
 
-    </div>
+                                    <!-- Copyright Menu -->
+                                    <div class="copyright-menu">
+                                        <ul class="policy-menu">
+                                            <li><a href="term-condition.html">شرایط و مقررات</a></li>
+                                            <li><a href="privacy-policy.html">حریم شخصی</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- /Copyright Menu -->
 
-    @RenderSection("Modal",required: false)
-    @RenderSection("ModalAppointmentInformation",required: false)
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Copyright -->
 
-    <!-- /Main Wrapper -->
-    <!-- jQuery -->
-    <script src="~/assets/js/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+                    </div>
+                </div>
+                <!-- /Footer Bottom -->
 
-    <!-- Bootstrap Core JS -->
-    <script src="~/assets/js/popper.min.js"></script>
-    <script src="~/assets/plugins/bootstrap-rtl/js/bootstrap.min.js"></script>
+            </footer>
+            <!-- /Footer -->
+        </div>
 
-    <!-- Select2 JS -->
-    <script src="~/assets/plugins/select2/js/select2.min.js"></script>
+        @RenderSection("Modal", required: false)
+        @RenderSection("ModalAppointmentInformation", required: false)
 
-    <!-- Persian DatePicker JS -->
-    <script src="~/Jcal/persian-date.js"></script>
-    <script src="~/Jcal/persian-datepicker.js"></script>
+        <!-- /Main Wrapper -->
+        <!-- jQuery -->
+        <script src="~/assets/js/jquery.min.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-    <!-- Sticky Sidebar JS -->
-    <script src="~/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
-    <script src="~/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
+        <!-- Bootstrap Core JS -->
+        <script src="~/assets/js/popper.min.js"></script>
+        <script src="~/assets/plugins/bootstrap-rtl/js/bootstrap.min.js"></script>
 
-    <!-- Slick JS -->
-    <script src="~/assets/js/slick.js"></script>
+        <!-- Select2 JS -->
+        <script src="~/assets/plugins/select2/js/select2.min.js"></script>
 
-    <!-- Custom JS -->
-    <script src="~/assets/js/script.js"></script>
+        <!-- Persian DatePicker JS -->
+        <script src="~/Jcal/persian-date.js"></script>
+        <script src="~/Jcal/persian-datepicker.js"></script>
 
-    <!-- Sweet Alert JS -->
-    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
-    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+        <!-- Sticky Sidebar JS -->
+        <script src="~/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+        <script src="~/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
 
-    <!-- Bootstrap Tagsinput JS -->
-    <script src="~/assets/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+        <!-- Slick JS -->
+        <script src="~/assets/js/slick.js"></script>
 
-    <!-- Profile Settings JS -->
-    <script src="~/assets/js/ExpertPanel/Profile/profile-settings.js"></script>
+        <!-- Custom JS -->
+        <script src="~/assets/js/script.js"></script>
 
-    <!-- Circle Progress JS -->
-    <script src="~/assets/js/circle-progress.min.js"></script>
+        <!-- Sweet Alert JS -->
+        <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+        <script src="~/Sweetalert2/sweetalert2.min.js"></script>
 
-    <!-- Mask JS -->
-    <script src="~/assets/js/jquery.maskedinput.min.js"></script>
-    <script src="~/assets/js/mask.js"></script>
+        <!-- Bootstrap Tagsinput JS -->
+        <script src="~/assets/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
 
-    <script src="~/lib/imageUploader/jquery.imageuploader.js"></script>
+        <!-- Profile Settings JS -->
+        <script src="~/assets/js/ExpertPanel/Profile/profile-settings.js"></script>
 
-    @RenderSection("Scripts", required: false)
+        <!-- Circle Progress JS -->
+        <script src="~/assets/js/circle-progress.min.js"></script>
 
-    <script type="text/javascript">
+        <!-- Mask JS -->
+        <script src="~/assets/js/jquery.maskedinput.min.js"></script>
+        <script src="~/assets/js/mask.js"></script>
 
-        $(document).ready(function () {
+        <script src="~/lib/imageUploader/jquery.imageuploader.js"></script>
 
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: '/api/Shared/GetUserFlag',
-                cache: false,
-                contentType: "application/json; charset=utf-8",
-                enctype: 'application/json',
-                success: function(response) {
+        @RenderSection("Scripts", required: false)
 
-                    var  userFlag = response;
+        <script type="text/javascript">
 
-                    if (userFlag === 1) {
-                        GetExpertDetails();
-                    } else {
-                        GetConsumerDetails();
+            $(document).ready(function() {
+
+                $("#loading").hide();
+
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url: '/api/Shared/GetUserFlag',
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    enctype: 'application/json',
+                    success: function(response) {
+
+                        var userFlag = response;
+
+                        if (userFlag === 1) {
+                            GetExpertDetails();
+                        } else {
+                            GetConsumerDetails();
+                        }
+
                     }
+                });
 
-                }
             });
 
-        });
+            function GetExpertDetails() {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url: '/api/ExpertDetails/GetDetails',
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    enctype: 'application/json',
+                    success: function(response) {
 
-        function GetExpertDetails() {
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: '/api/ExpertDetails/GetDetails',
-                cache: false,
-                contentType: "application/json; charset=utf-8",
-                enctype: 'application/json',
-                success: function(response) {
+                        var model = response.data;
 
-                    var model = response.data;
-
-                    var body =
-                        '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
-                            '<span class="user-img">' +
-                                '<img class="rounded-circle" src="/' + model.iconSrc +'" width="31" alt="' + model.fullName +'">' +
-                            '</span>' +
-                        '</a>' +
-                        '<div class="dropdown-menu dropdown-menu-right">' +
-                            '<div class="user-header">' +
-                                '<div class="avatar avatar-sm">' +
-                                    '<img id="Image" src="/' + model.iconSrc +'" alt="User Image" class="avatar-img rounded-circle">' +
-                                '</div>' +
-                                '<div class="user-text">' +
-                                    '<h6 id="FullName">' + model.fullName + '</h6>' +
-                                    '<p class="text-muted mb-0">متخصص</p>' +
-                                '</div>' +
-                            '</div>' +
-                            '<a class="dropdown-item" href="/ExpertPanel/Home/">داشبورد</a>' +
-                            '<a class="dropdown-item" href="/ExpertPanel/Profile/">تنظیمات پروفایل</a>' +
-                            '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
-                        '</div>';
-
-                    $("#userInfo").html(body);
-
-                }
-            });
-        }
-
-        function GetConsumerDetails() {
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: '/api/ConsumerDetails/GetDetails',
-                cache: false,
-                contentType: "application/json; charset=utf-8",
-                enctype: 'application/json',
-                success: function(response) {
-
-                    var model = response.data;
-
-                    var body =
+                        var body =
                             '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
                                 '<span class="user-img">' +
-                                '<img class="rounded-circle" src="/' + model.iconSrc +'" width="31" alt="' + model.fullName +'">' +
+                                '<img class="rounded-circle" src="/' +
+                                model.iconSrc +
+                                '" width="31" alt="' +
+                                model.fullName +
+                                '">' +
                                 '</span>' +
-                            '</a>' +
-                            '<div class="dropdown-menu dropdown-menu-right">' +
+                                '</a>' +
+                                '<div class="dropdown-menu dropdown-menu-right">' +
                                 '<div class="user-header">' +
-                                    '<div class="avatar avatar-sm">' +
-                                        '<img id="Image" src="/' + model.iconSrc +'" alt="User Image" class="avatar-img rounded-circle">' +
-                                    '</div>' +
-                                    '<div class="user-text">' +
-                                        '<h6 id="FullName">' + model.fullName + '</h6>' +
-                                        '<p class="text-muted mb-0">مراجعه کننده</p>' +
-                                    '</div>' +
+                                '<div class="avatar avatar-sm">' +
+                                '<img id="Image" src="/' +
+                                model.iconSrc +
+                                '" alt="User Image" class="avatar-img rounded-circle">' +
+                                '</div>' +
+                                '<div class="user-text">' +
+                                '<h6 id="FullName">' +
+                                model.fullName +
+                                '</h6>' +
+                                '<p class="text-muted mb-0">متخصص</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<a class="dropdown-item" href="/ExpertPanel/Home/">داشبورد</a>' +
+                                '<a class="dropdown-item" href="/ExpertPanel/Profile/">تنظیمات پروفایل</a>' +
+                                '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
+                                '</div>';
+
+                        $("#userInfo").html(body);
+
+                    }
+                });
+            }
+
+            function GetConsumerDetails() {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url: '/api/ConsumerDetails/GetDetails',
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    enctype: 'application/json',
+                    success: function(response) {
+
+                        var model = response.data;
+
+                        var body =
+                            '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
+                                '<span class="user-img">' +
+                                '<img class="rounded-circle" src="/' +
+                                model.iconSrc +
+                                '" width="31" alt="' +
+                                model.fullName +
+                                '">' +
+                                '</span>' +
+                                '</a>' +
+                                '<div class="dropdown-menu dropdown-menu-right">' +
+                                '<div class="user-header">' +
+                                '<div class="avatar avatar-sm">' +
+                                '<img id="Image" src="/' +
+                                model.iconSrc +
+                                '" alt="User Image" class="avatar-img rounded-circle">' +
+                                '</div>' +
+                                '<div class="user-text">' +
+                                '<h6 id="FullName">' +
+                                model.fullName +
+                                '</h6>' +
+                                '<p class="text-muted mb-0">مراجعه کننده</p>' +
+                                '</div>' +
                                 '</div>' +
                                 '<a class="dropdown-item" href="/ConsumerPanel/Home/">داشبورد</a>' +
                                 '<a class="dropdown-item" href="/ConsumerPanel/Profile/">تنظیمات پروفایل</a>' +
                                 '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
-                            '</div>';
+                                '</div>';
 
-                    $("#userInfo").html(body);
+                        $("#userInfo").html(body);
 
-                }
+                    }
+                });
+            }
+
+            $(".datetimepicker").persianDatepicker({
+                months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+                dowTitle: ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"],
+                shortDowTitle: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
+                showGregorianDate: !1,
+                persianNumbers: !0,
+                formatDate: "YYYY/MM/DD",
+                selectedBefore: !1,
+                selectedDate: null,
+                startDate: null,
+                endDate: null,
+                prevArrow: '\u25c4',
+                nextArrow: '\u25ba',
+                theme: 'default',
+                alwaysShow: !1,
+                selectableYears: null,
+                selectableMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                cellWidth: 25, // by px
+                cellHeight: 20, // by px
+                fontSize: 13, // by px
+                isRTL: !1,
+                format: 'YYYY/MM/DD',
+
+
+                calendarPosition: {
+                    x: 0,
+                    y: 0,
+                },
+                onShow: function() {},
+                onHide: function() {},
+                onSelect: function() {},
+                onRender: function() {}
             });
-        }
-
-        $(".datetimepicker").persianDatepicker({
-            months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
-            dowTitle: ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"],
-            shortDowTitle: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
-            showGregorianDate: !1,
-            persianNumbers: !0,
-            formatDate: "YYYY/MM/DD",
-            selectedBefore: !1,
-            selectedDate: null,
-            startDate: null,
-            endDate: null,
-            prevArrow: '\u25c4',
-            nextArrow: '\u25ba',
-            theme: 'default',
-            alwaysShow: !1,
-            selectableYears: null,
-            selectableMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-            cellWidth: 25, // by px
-            cellHeight: 20, // by px
-            fontSize: 13, // by px
-            isRTL: !1,
-            format: 'YYYY/MM/DD',
-
-
-            calendarPosition: {
-                x: 0,
-                y: 0,
-            },
-            onShow: function () { },
-            onHide: function () { },
-            onSelect: function () { },
-            onRender: function () { }
-        });
-    </script>
+        </script>
 </body>
 </html>

@@ -54,7 +54,7 @@ namespace CR.Core.Services.Impl.Users
                     PostalCode = request.postalCode,
                     ExpertId = addedUser.Id,
                     Expert = addedUser,
-                    IsFreeOfCharge = true
+                    //IsFreeOfCharge = true
                 };
 
 

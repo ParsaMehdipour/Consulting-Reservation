@@ -47,7 +47,6 @@ namespace CR.Core.Services.Impl.Consumers
                     LastName = request.lastName,
                     BirthDate = request.birthDate_String.ToGeorgianDateTime(),
                     BirthDate_String = request.birthDate_String,
-                    BloodType = request.bloodType,
                     Province = request.province,
                     City = request.city,
                     SpecificAddress = request.specificAddress,

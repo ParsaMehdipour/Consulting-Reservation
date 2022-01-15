@@ -1,5 +1,4 @@
-﻿using CR.Common.Convertor;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.Consumers;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Consumers;
@@ -44,7 +43,6 @@ namespace CR.Core.Services.Impl.Consumers
                     firstName = consumerInformation.FirstName,
                     lastName = consumerInformation.LastName,
                     iconSrc = consumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
-                    bloodType = consumerInformation.BloodType,
                     province = consumerInformation.Province,
                     city = consumerInformation.City,
                     specificAddress = consumerInformation.SpecificAddress,
@@ -73,7 +71,7 @@ namespace CR.Core.Services.Impl.Consumers
                     ConsumerDetailsForSiteDto = null
                 },
                 IsSuccess = false,
-                Message = "لطفااطلاعات خود را وارد کنید"
+                Message = "لطفا اطلاعات خود را وارد کنید"
             };
         }
     }

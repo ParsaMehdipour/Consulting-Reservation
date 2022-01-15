@@ -36,7 +36,7 @@ namespace CR.Core.Services.Impl.Appointment
                 .Select(a => new ConsumerAppointmentsForExpertPanelDto
                 {
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
-                    AppointmentPrice = a.TimeOfDay.Price.ToString().GetPersianNumber(),
+                    //AppointmentPrice = a.TimeOfDay.Price.ToString().GetPersianNumber(),
                     AppointmentReservationDate = a.CreateDate.ToShamsi(),
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     AppointmentTime = (a.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" +
@@ -67,7 +67,6 @@ namespace CR.Core.Services.Impl.Appointment
                     City = consumer.ConsumerInformation.City,
                     Gender = consumer.ConsumerInformation.Gender.GetDisplayName(),
                     PhoneNumber = consumer.ConsumerInformation.Consumer.PhoneNumber.GetPersianNumber(),
-                    BloodType = consumer.ConsumerInformation.BloodType,
                     CurrentPage = Page,
                     PageSize = PageSize,
                     RowCount = rowCount,

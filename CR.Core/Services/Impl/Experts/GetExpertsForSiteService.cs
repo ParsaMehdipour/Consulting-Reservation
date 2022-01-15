@@ -59,7 +59,7 @@ namespace CR.Core.Services.Impl.Experts
                 Province = e.ExpertInformation.Province,
                 ClinicImages = new List<string>(),
                 FullName = e.ExpertInformation.FirstName + " " + e.ExpertInformation.LastName,
-                Price = (e.ExpertInformation.IsFreeOfCharge == true) ? 0 : e.ExpertInformation.Price,
+                //Price = (e.ExpertInformation.IsFreeOfCharge == true) ? 0 : e.ExpertInformation.Price,
                 Rate = 5,
                 RateCount = 10,
                 Speciality = e.ExpertInformation.Specialty.Name,

@@ -9,7 +9,9 @@ namespace CR.DataAccess.Entities.ExpertAvailabilities
     {
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }
-        public long? Price { get; set; } = 0;
+        public long PhoneCallPrice { get; set; } = 0;
+        public long VoiceCallPrice { get; set; } = 0;
+        public long TextCall { get; set; } = 0;
         public bool IsReserved { get; set; }
 
         #region ForeignKeys

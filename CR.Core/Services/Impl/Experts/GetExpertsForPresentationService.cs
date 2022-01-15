@@ -31,9 +31,9 @@ namespace CR.Core.Services.Impl.Experts
                     FullName = e.ExpertInformation.FirstName + " " + e.ExpertInformation.LastName,
                     IconSrc = e.ExpertInformation.IconSrc,
                     Id = e.Id,
-                    Price = (e.ExpertInformation.IsFreeOfCharge == true)
-                        ? "0"
-                        : e.ExpertInformation.Price.ToString().GetPersianNumber(),
+                    //Price = (e.ExpertInformation.IsFreeOfCharge == true)
+                    //    ? "0"
+                    //    : e.ExpertInformation.Price.ToString().GetPersianNumber(),
                     Speciality = e.ExpertInformation.Specialty.Name,
                     SpecialitySrc = e.ExpertInformation.Specialty.ImageSrc,
                     Tags = e.ExpertInformation.Tag,

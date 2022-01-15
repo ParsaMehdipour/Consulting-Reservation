@@ -61,10 +61,20 @@ namespace CR.Core.DTOs.Experts
         [Required(ErrorMessage = "کد پستی خود را وارد کنید")]
         public string postalCode { get; set; }
 
-        [Required(ErrorMessage = "هزینه را وارد کنید")]
-        public string price { get; set; }
+        public bool usePhoneCall { get; set; }
 
-        public bool isFreeOfCharge { get; set; }
+        [Required(ErrorMessage = "هزینه تماس تلفنی را وارد کنید را وارد کنید")]
+        public string phoneCallPrice { get; set; }
+
+        public bool useVoiceCall { get; set; }
+
+        [Required(ErrorMessage = "هزینه تماس صوتی را وارد کنید را وارد کنید")]
+        public string voiceCallPrice { get; set; }
+
+        public bool useTextCall { get; set; }
+
+        [Required(ErrorMessage = "هزینه تماس متنی را وارد کنید را وارد کنید")]
+        public string textCallPrice { get; set; }
 
         //[Required(ErrorMessage = "خدمات خود را وارد کنید")]
         public string tag { get; set; }

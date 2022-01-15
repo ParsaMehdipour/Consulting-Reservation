@@ -33,7 +33,7 @@ namespace CR.Core.Services.Impl.Appointment
                                        a.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()) +
                                       " - " + (a.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() + ":" +
                                                a.TimeOfDay.FinishDate.Minute.ToString().GetPersianNumber()),
-                    AppointmentPrice = a.TimeOfDay.Price.ToString().GetPersianNumber(),
+                    //AppointmentPrice = a.TimeOfDay.Price.ToString().GetPersianNumber(),
                     Speciality = a.ExpertInformation.Specialty.Name,
                     ConsumerFullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,

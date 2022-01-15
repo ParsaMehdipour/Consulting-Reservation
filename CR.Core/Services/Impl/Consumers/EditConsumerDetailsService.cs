@@ -56,7 +56,6 @@ namespace CR.Core.Services.Impl.Consumers
                 consumerInformation.LastName = request.LastName;
                 consumerInformation.BirthDate = request.BirthDate_String.ToGeorgianDateTime();
                 consumerInformation.BirthDate_String = request.BirthDate_String;
-                consumerInformation.BloodType = request.BloodType;
                 consumerInformation.Province = request.Province;
                 consumerInformation.City = request.City;
                 consumerInformation.SpecificAddress = request.SpecificAddress;

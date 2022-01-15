@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>شماره تماس</label>
+                                        <label>شماره تماس دوم</label>
                                         <input type="text" class="form-control" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
                                         <span asp-validation-for="phoneNumber" class="text-danger"></span>
                                     </div>
@@ -188,48 +188,140 @@
                                 </div>
                             </div>
                             <hr />
-                            <h4 class="card-title">هزینه ها</h4>
+                            <h4 class="card-title">هزینه مشاوره تلفنی</h4>
                             <div class="form-group mb-0">
-                                <div id="pricing_select">
-                                    @if (Model.isFreeOfCharge == true)
+                                <div id="pricing_select_phoneCallPrice">
+                                    @if (Model.usePhoneCall)
                                     {
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="price_free" name="rating_option" class="custom-control-input" value="price_free" checked>
-                                            <label class="custom-control-label" for="price_free">رایگان</label>
+                                            <input type="radio" id="price_free_phoneCallPrice" name="rating_option_phoneCallPrice" value="price_free_phoneCallPrice" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="price_free_phoneCallPrice">مشاوره تلفنی فعال باشد</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="price_custom" name="rating_option" value="custom_price" class="custom-control-input">
-                                            <label class="custom-control-label" for="price_custom">سفارشی (ساعتی )</label>
+                                            <input type="radio" id="price_custom_phoneCallPrice" name="rating_option_phoneCallPrice" value="custom_price_phoneCallPrice" class="custom-control-input">
+                                            <label class="custom-control-label" for="price_custom_phoneCallPrice">مشاوره تلفنی غیر فعال باشد</label>
                                         </div>
                                     }
                                     else
                                     {
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="price_free" name="rating_option" class="custom-control-input" value="price_free">
-                                            <label class="custom-control-label" for="price_free">رایگان</label>
+                                            <input type="radio" id="price_free_phoneCallPrice" name="rating_option_phoneCallPrice" value="price_free_phoneCallPrice" class="custom-control-input">
+                                            <label class="custom-control-label" for="price_free_phoneCallPrice">مشاوره تلفنی فعال باشد</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="price_custom" name="rating_option" value="custom_price" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="price_custom">سفارشی (ساعتی )</label>
+                                            <input type="radio" id="price_custom_phoneCallPrice" name="rating_option_phoneCallPrice" value="custom_price_phoneCallPrice" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="price_custom_phoneCallPrice">مشاوره تلفنی غیر فعال باشد</label>
                                         </div>
                                     }
                                 </div>
                             </div>
-                            @if (@Model.isFreeOfCharge == true)
+                            @if (@Model.usePhoneCall)
                             {
-                                <div class="row custom_price_cont" id="custom_price_cont" style="display: none;">
+                                <div class="row custom_price_cont" id="custom_price_cont_phoneCallPrice">
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control" id="custom_rating_input" name="custom_rating_count" value="@Model.price">
-                                        <small class="form-text text-muted">مبلغ موردنظر شما</small>
+                                        <input type="text" class="form-control" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
+                                        <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
                                     </div>
                                 </div>
                             }
                             else
                             {
-                                <div class="row custom_price_cont" id="custom_price_cont">
+                                <div class="row custom_price_cont" id="custom_price_cont_phoneCallPrice" style="display: none;">
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control" id="custom_rating_input" name="custom_rating_count" value="@Model.price">
-                                        <small class="form-text text-muted">مبلغ موردنظر شما</small>
+                                        <input type="text" class="form-control" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
+                                        <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                                    </div>
+                                </div>
+                            }
+                            <hr />
+                            <h4 class="card-title">هزینه مشاوره صوتی</h4>
+                            <div class="form-group mb-0">
+                                <div id="pricing_select_voiceCallPrice">
+                                    @if (Model.useVoiceCall)
+                                    {
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_free_voiceCallPrice" name="rating_option_voiceCallPrice" value="price_free_voiceCallPrice" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="price_free_voiceCallPrice">مشاوره تلفنی فعال باشد</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_custom_voiceCallPrice" name="rating_option_voiceCallPrice" value="custom_price_voiceCallPrice" class="custom-control-input">
+                                            <label class="custom-control-label" for="price_custom_voiceCallPrice">مشاوره تلفنی غیر فعال باشد</label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_free_voiceCallPrice" name="rating_option_voiceCallPrice" value="price_free_voiceCallPrice" class="custom-control-input">
+                                            <label class="custom-control-label" for="price_free_voiceCallPrice">مشاوره صوتی فعال باشد</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_custom_voiceCallPrice" name="rating_option_voiceCallPrice" value="custom_price_voiceCallPrice" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="price_custom_voiceCallPrice">مشاوره صوتی غیر فعال باشد</label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            @if (@Model.useVoiceCall)
+                            {
+                                <div class="row custom_price_cont" id="voiceCallPrice_Custom">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
+                                        <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row custom_price_cont" id="voiceCallPrice_Custom" style="display: none;">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
+                                        <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                                    </div>
+                                </div>
+                            }
+                            <hr />
+                            <h4 class="card-title">هزینه مشاوره متنی</h4>
+                            <div class="form-group mb-0">
+                                <div id="pricing_select_textCallPrice">
+                                    @if (Model.useTextCall)
+                                    {
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_free_textCallPrice" name="rating_option_textCallPrice" value="price_free_textCallPrice" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="price_free_textCallPrice">مشاوره تلفنی فعال باشد</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_custom_textCallPrice" name="rating_option_textCallPrice" value="custom_price_textCallPrice" class="custom-control-input">
+                                            <label class="custom-control-label" for="price_custom_textCallPrice">مشاوره تلفنی غیر فعال باشد</label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_free_textCallPrice" name="rating_option_textCallPrice" value="price_free_textCallPrice" class="custom-control-input">
+                                            <label class="custom-control-label" for="price_free_textCallPrice">مشاوره صوتی فعال باشد</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="price_custom_textCallPrice" name="rating_option_textCallPrice" value="custom_price_textCallPrice" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="price_custom_textCallPrice">مشاوره صوتی غیر فعال باشد</label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            @if (@Model.useTextCall)
+                            {
+                                <div class="row custom_price_cont" id="textCallPrice_Custom">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="custom_rating_input_textCallPrice" name="custom_rating_count_textCallPrice" value="@Model.textCallPrice">
+                                        <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row custom_price_cont" id="textCallPrice_Custom" style="display: none;">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="custom_rating_input_textCallPrice" name="custom_rating_count_textCallPrice" value="@Model.textCallPrice">
+                                        <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
                                     </div>
                                 </div>
                             }
@@ -585,11 +677,30 @@
             expertProfileData.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
             expertProfileData.append("id", id);
 
-            if (document.getElementById('price_free').checked) {
-                expertProfileData.append("isFreeOfCharge", true);
-            } else {
-                expertProfileData.append("isFreeOfCharge", false);
-                expertProfileData.append("price", $('input[name=custom_rating_count]').val());
+            if (document.getElementById('price_free_phoneCallPrice').checked) {
+                expertProfileData.append("usePhoneCall", true);
+                expertProfileData.append("phoneCallPrice", $('input[name=custom_rating_count_phoneCallPrice]').val());
+
+            }
+            else {
+                expertProfileData.append("usePhoneCall", false);
+            }
+
+            if (document.getElementById('price_free_voiceCallPrice').checked) {
+                expertProfileData.append("useVoiceCall", true);
+                expertProfileData.append("voiceCallPrice", $('input[name=custom_rating_count_voiceCallPrice]').val());
+
+            }
+            else {
+                expertProfileData.append("useVoiceCall", false);
+            }
+
+            if (document.getElementById('price_free_textCallPrice').checked) {
+                expertProfileData.append("useTextCall", true);
+                expertProfileData.append("textCallPrice", $('input[name=custom_rating_count_textCallPrice]').val());
+            }
+            else {
+                expertProfileData.append("useTextCall", false);
             }
 
             $( "#expertBasicProfileForm" ).submit(function( event ) {
@@ -602,7 +713,7 @@
                     cache: false,
                     data: expertProfileData,
                     beforeSend: function(x) {
-                        $('#cover-spin').show(0);
+                        $('#loading').show();
                     },
                     success: function(data) {
                         if (data.isSuccess == true) {
@@ -614,10 +725,10 @@
                         }
                     },
                     complete: function() {
-                        $('#cover-spin').hide(0);
+                        $('#loading').hide();
                     },
                     fail: function() {
-                        $('#cover-spin').hide(0);
+                        $('#loading').hide();
                     },
                     error: function(request, status, error) {
                         alert(request.responseText);
@@ -656,7 +767,7 @@
                     url: '@Url.Action("EditAdvancedInformation","Profile")',
                     data: expertPostData,
                     beforeSend: function(x) {
-                        $('#cover-spin').show(0);
+                        $('#loading').show(0);
                     },
                     success: function(data) {
                         if (data.isSuccess == true) {
@@ -672,13 +783,13 @@
                         }
                     },
                     complete: function() {
-                        $('#cover-spin').hide(0);
+                        $('#loading').hide(0);
                     },
                     fail: function() {
-                        $('#cover-spin').hide(0);
+                        $('#loading').hide(0);
                     },
                     error: function(request, status, error) {
-                        $('#cover-spin').hide(0);
+                        $('#loading').hide(0);
                         alert(request.responseText);
                     }
                 });

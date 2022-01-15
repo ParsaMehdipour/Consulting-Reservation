@@ -190,7 +190,7 @@
             processData: false,
             data: data,
             beforeSend: function(x) {
-                $('#cover-spin').show(0);
+                $('#loading').show(0);
             },
             success: function (data) {
                 if (data.isSuccess == true) {
@@ -213,10 +213,10 @@
                 }
             },
             complete: function() {
-                $('#cover-spin').hide(0);
+                $('#loading').hide(0);
             },
             fail: function() {
-                $('#cover-spin').hide(0);
+                $('#loading').hide(0);
             },
             error: function (request, status, error) {
                 alert(request.responseText);
@@ -255,7 +255,7 @@
             processData: false,
             data: data,
             beforeSend: function(x) {
-                $('#cover-spin').show(0);
+                $('#loading').show(0);
             },
             success: function (data) {
                 if (data.isSuccess == true) {
@@ -278,10 +278,10 @@
                 }
             },
             complete: function() {
-                $('#cover-spin').hide(0);
+                $('#loading').hide(0);
             },
             fail: function() {
-                $('#cover-spin').hide(0);
+                $('#loading').hide(0);
             },
             error: function (request, status, error) {
                 alert(request.responseText);

@@ -14,7 +14,6 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public DateTime BirthDate { get; set; }
         public GenderType Gender { get; set; }
         public string BirthDate_String { get; set; }
-        public string BloodType { get; set; }
         public string SpecificAddress { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
