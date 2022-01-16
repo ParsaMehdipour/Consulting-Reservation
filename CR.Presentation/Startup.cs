@@ -20,10 +20,12 @@ using Microsoft.Extensions.Hosting;
 using PersianTranslation.Identity;
 using System;
 using CR.Core.Services.Impl.Appointment;
+using CR.Core.Services.Impl.CommissionAndDiscounts;
 using CR.Core.Services.Impl.ExpertAvailabilities;
 using CR.Core.Services.Impl.Experts;
 using CR.Core.Services.Impl.Statistics;
 using CR.Core.Services.Interfaces.Appointment;
+using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Statistics;
@@ -66,7 +68,7 @@ namespace CR.Presentation
                  options.Password.RequireDigit = false;
 
 
-                 //Lokout Setting
+                 //Lockout Setting
                  options.Lockout.MaxFailedAccessAttempts = 3;
                  options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMilliseconds(10);
 
@@ -157,6 +159,12 @@ namespace CR.Presentation
             //Statistics
             services.AddScoped<IGetStatisticsForAdminPanelService, GetStatisticsForAdminPanelService>();
             services.AddScoped<IGetStatisticsForExpertPanelService, GetStatisticsForExpertPanelService>();
+            //CommissionAndDiscounts
+            services.AddScoped<IGetAllCommissionAndDiscountsForAdminService, GetAllCommissionAndDiscountsForAdminService>();
+            services.AddScoped<IAddNewCommissionAndDiscountService, AddNewCommissionAndDiscountService>();
+            services.AddScoped<IGetCommissionAndDiscountDetailsForAdminService, GetCommissionAndDiscountDetailsForAdminService>();
+            services.AddScoped<IEditCommissionAndDiscountService, EditCommissionAndDiscountService>();
+
             #endregion
 
         }
