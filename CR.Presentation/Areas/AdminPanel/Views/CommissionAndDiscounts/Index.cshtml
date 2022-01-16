@@ -1,0 +1,356 @@
+﻿@model CR.Core.DTOs.ResultDTOs.ResultGetALLCommissionAndDiscountsForAdminDto
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-7 col-auto">
+            <h3 class="page-title"> لیست کارمزد و تخفیف ها </h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">داشبورد</a></li>
+                <li class="breadcrumb-item"><a href="javascript:(0);">کاربران</a></li>
+                <li class="breadcrumb-item active">کارمزد و تخفیف</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="datatable table table-hover table-center mb-0">
+                        <thead>
+                            <tr>
+                                <th>نام متخصص</th>
+                                <th>تخصص</th>
+                                <th>کارمزد تلفنی</th>
+                                <th>کارمزد صوتی</th>
+                                <th>کارمزد متنی</th>
+                                <th>تخفیف تلفنی</th>
+                                <th>تخفیف صوتی</th>
+                                <th>تخفیف متنی</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.CommissionAndDiscountForAdminDtos)
+                            {
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@item.expertId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@item.expertIconSrc" alt="User Image"></a>
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@item.expertId">@item.expertFullName</a>
+                                        </h2>
+                                    </td>
+
+                                    <td>@item.expertSpeciality%</td>
+
+                                    <td>@item.phoneCallCommission%</td>
+
+                                    <td>@item.voiceCallCommission%</td>
+
+                                    <td>@item.textCallCommission%</td>
+
+                                    <td>@item.phoneCallDiscount%</td>
+
+                                    <td>@item.voiceCallDiscount%</td>
+
+                                    <td>@item.textCallDiscount%</td>
+
+                                    <td>
+                                        @if (item.hasValue)
+                                        {
+                                            <a onclick="GetDetails(@item.id)" class="btn btn-sm bg-warning-light" data-toggle="modal" href="#Edit_Commission_Discount">
+                                                <i class="fe fe-pencil"></i> ویرایش
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a onclick="SetExpertInformationId(@item.expertInformationId)" class="btn btn-sm bg-success-light" data-toggle="modal" href="#Add_Commission_Discount">
+                                                <i class="fe fe-pencil"></i> افزودن
+                                            </a>
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="Add_Commission_Discount" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">افزودن کارمزد و تخفیف(به درصد)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-row">
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>کارمزد مشاوره تلفنی</label>
+                            <input type="text" class="form-control percent" id="phoneCallCommission">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>تخفیف مشاوره تلفنی</label>
+                            <input type="text" class="form-control percent" id="phoneCallDiscount">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>کارمزد مشاوره صوتی</label>
+                            <input type="text" class="form-control percent" id="voiceCallCommission">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>تخفیف مشاوره صوتی</label>
+                            <input type="text" class="form-control percent" id="voiceCallDiscount">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>کارمزد مشاوره متنی</label>
+                            <input type="text" class="form-control percent" id="textCallCommission">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>تخفیف مشاوره متنی</label>
+                            <input type="text" class="form-control percent" id="textCallDiscount">
+                        </div>
+                    </div>
+                </div>
+                <button onclick="Add()" class="btn btn-primary btn-block">ذخیره تغییرات</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="Edit_Commission_Discount" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">افزودن کارمزد و تخفیف(به درصد)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-row">
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>کارمزد مشاوره تلفنی</label>
+                            <input type="text" class="form-control percent" id="phoneCallCommissionEdit">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>تخفیف مشاوره تلفنی</label>
+                            <input type="text" class="form-control percent" id="phoneCallDiscountEdit">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>کارمزد مشاوره صوتی</label>
+                            <input type="text" class="form-control percent" id="voiceCallCommissionEdit">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>تخفیف مشاوره صوتی</label>
+                            <input type="text" class="form-control percent" id="voiceCallDiscountEdit">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>کارمزد مشاوره متنی</label>
+                            <input type="text" class="form-control percent" id="textCallCommissionEdit">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>تخفیف مشاوره متنی</label>
+                            <input type="text" class="form-control percent" id="textCallDiscountEdit">
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="commissionAndDiscountId"/>
+                <button onclick="Edit()" class="btn btn-primary btn-block">ذخیره تغییرات</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script>
+    let ExpertInformationId = 0;
+
+    function SetExpertInformationId(Id) {
+        ExpertInformationId = Id;
+    }
+
+    function Add() {
+        var phoneCallCommission = $("#phoneCallCommission").cleanVal();
+        var phoneCallDiscount = $("#phoneCallDiscount").cleanVal();
+        var voiceCallCommission = $("#voiceCallCommission").cleanVal();
+        var voiceCallDiscount = $("#voiceCallDiscount").cleanVal();
+        var textCallCommission = $("#textCallCommission").cleanVal();
+        var textCallDiscount = $("#textCallDiscount").cleanVal();
+        var expertInformationId = ExpertInformationId;
+
+        var formData = new FormData();
+
+        formData.append("phoneCallCommission",phoneCallCommission);
+        formData.append("phoneCallDiscount",phoneCallDiscount);
+        formData.append("voiceCallCommission",voiceCallCommission);
+        formData.append("voiceCallDiscount",voiceCallDiscount);
+        formData.append("textCallCommission",textCallCommission);
+        formData.append("textCallDiscount",textCallDiscount);
+        formData.append("expertInformationId",expertInformationId);
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Add", "CommissionAndDiscounts")",
+            contentType: false,
+            processData: false,
+            data: formData,
+            beforeSend: function(x) {
+                $('#loading').show(0);
+            },
+            success: function (data) {
+                if (data.isSuccess == true) {
+                    swal.fire(
+                        'موفق!',
+                        data.message,
+                        'success'
+                    ).then(function (isConfirm) {
+                        location.reload();
+                    });
+                }
+                else {
+
+                    swal.fire(
+                        'هشدار!',
+                        data.message,
+                        'warning'
+                    );
+
+                }
+            },
+            complete: function() {
+                $('#loading').hide(0);
+            },
+            fail: function() {
+                $('#loading').hide(0);
+            },
+            error: function (request, status, error) {
+                alert(request.responseText);
+            }
+
+        });
+    }
+
+    function GetDetails(id) {
+
+        $.ajax({
+        type: "POST",
+        url: '@Url.Action("GetDetails", "CommissionAndDiscounts")',
+        data: {id : id},
+        dataType: "json",
+        success: function(response) {
+
+            var data = response;
+
+            document.getElementById("phoneCallCommissionEdit").value = data.phoneCallCommission;
+            document.getElementById("voiceCallCommissionEdit").value = data.voiceCallCommission;
+            document.getElementById("textCallCommissionEdit").value = data.textCallCommission;
+            document.getElementById("phoneCallDiscountEdit").value = data.phoneCallDiscount;
+            document.getElementById("voiceCallDiscountEdit").value = data.voiceCallDiscount;
+            document.getElementById("textCallDiscountEdit").value = data.textCallDiscount;
+            document.getElementById("commissionAndDiscountId").value = data.id;
+
+        },
+        error: function(request, status, error) {
+            alert(request.responseText);
+        }
+    });
+
+    }
+
+    function Edit() {
+        var phoneCallCommission = $("#phoneCallCommissionEdit").cleanVal();
+        var phoneCallDiscount = $("#phoneCallDiscountEdit").cleanVal();
+        var voiceCallCommission = $("#voiceCallCommissionEdit").cleanVal();
+        var voiceCallDiscount = $("#voiceCallDiscountEdit").cleanVal();
+        var textCallCommission = $("#textCallCommissionEdit").cleanVal();
+        var textCallDiscount = $("#textCallDiscountEdit").cleanVal();
+        var commissionAndDiscountId = $("#commissionAndDiscountId").val();
+
+        var formData = new FormData();
+
+        formData.append("phoneCallCommission",phoneCallCommission);
+        formData.append("phoneCallDiscount",phoneCallDiscount);
+        formData.append("voiceCallCommission",voiceCallCommission);
+        formData.append("voiceCallDiscount",voiceCallDiscount);
+        formData.append("textCallCommission",textCallCommission);
+        formData.append("textCallDiscount",textCallDiscount);
+        formData.append("id",commissionAndDiscountId);
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Edit", "CommissionAndDiscounts")",
+            contentType: false,
+            processData: false,
+            data: formData,
+            beforeSend: function(x) {
+                $('#loading').show(0);
+            },
+            success: function (data) {
+                if (data.isSuccess == true) {
+                    swal.fire(
+                        'موفق!',
+                        data.message,
+                        'success'
+                    ).then(function (isConfirm) {
+                        location.reload();
+                    });
+                }
+                else {
+
+                    swal.fire(
+                        'هشدار!',
+                        data.message,
+                        'warning'
+                    );
+
+                }
+            },
+            complete: function() {
+                $('#loading').hide(0);
+            },
+            fail: function() {
+                $('#loading').hide(0);
+            },
+            error: function (request, status, error) {
+                alert(request.responseText);
+            }
+
+        });
+    }
+
+</script>
+}
