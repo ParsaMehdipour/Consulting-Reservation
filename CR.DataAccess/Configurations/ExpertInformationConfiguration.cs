@@ -1,4 +1,5 @@
 ﻿using CR.DataAccess.Entities.IndividualInformations;
+using CR.DataAccess.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,6 +14,10 @@ namespace CR.DataAccess.Configurations
             builder.HasOne(p => p.Expert)
                 .WithOne(p => p.ExpertInformation)
                 .HasForeignKey<ExpertInformation>(p => p.ExpertId);
+
+            builder.HasOne(p => p.CommissionAndDiscount)
+                .WithOne(p => p.ExpertInformation)
+                .HasForeignKey<ExpertInformation>(p => p.CommissionAndDiscountId);
 
             builder.HasOne(p => p.Specialty)
                 .WithMany(p => p.ExpertInformations)

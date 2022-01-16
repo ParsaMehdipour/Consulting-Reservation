@@ -6,6 +6,7 @@ using CR.DataAccess.Entities.Users;
 using CR.DataAccess.Enums;
 using System;
 using System.Collections.Generic;
+using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertInformations;
 
 namespace CR.DataAccess.Entities.IndividualInformations
@@ -40,6 +41,7 @@ namespace CR.DataAccess.Entities.IndividualInformations
 
         public long ExpertId { get; set; }
         public long? SpecialtyId { get; set; }
+        public long? CommissionAndDiscountId { get; set; }
 
         #endregion
 
@@ -48,6 +50,7 @@ namespace CR.DataAccess.Entities.IndividualInformations
 
         public User Expert { get; set; }
         public virtual Specialty Specialty { get; set; }
+        public virtual CommissionAndDiscount CommissionAndDiscount { get; set; }
         public List<Appointment> ExpertAppointments { get; set; }
         public List<Day> Days { get; set; }
         public List<TimeOfDay> TimeOfDays { get; set; }

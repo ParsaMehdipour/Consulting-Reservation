@@ -7,6 +7,7 @@ using CR.DataAccess.Entities.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertInformations;
 using CR.DataAccess.Entities.Factors;
 
@@ -32,6 +33,7 @@ namespace CR.DataAccess.Context
         public DbSet<ExpertStudy> ExpertStudies { get; set; }
         public DbSet<ExpertSubscription> ExpertSubscriptions { get; set; }
         public DbSet<Factor> Factors { get; set; }
+        public DbSet<CommissionAndDiscount> CommissionAndDiscounts { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
