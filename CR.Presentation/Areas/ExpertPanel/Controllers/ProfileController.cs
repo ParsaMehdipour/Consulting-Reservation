@@ -2,6 +2,7 @@
 using CR.Core.DTOs.Experts;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
+using CR.Core.Services.Interfaces.ExpertImages;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Specialites;
 using CR.Core.Services.Interfaces.Users;
@@ -26,6 +27,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         private readonly IGetSpecialtiesForExpertProfileDropDownService _getSpecialtiesForExpertProfileDropDownService;
         private readonly IEditBasicExpertDetailsService _editBasicExpertDetailsService;
         private readonly IEditAdvancedExpertDetailsService _editAdvancedExpertDetailsService;
+        private readonly IRemoveExpertImagesService _removeExpertImagesService;
         private ResultCheckUserFlagService ResultCheckUserFlag;
 
         public ProfileController(IHttpContextAccessor contextAccessor
@@ -35,7 +37,8 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             ,UserManager<User> userManager
             ,IGetSpecialtiesForExpertProfileDropDownService getSpecialtiesForExpertProfileDropDownService
             ,IEditBasicExpertDetailsService editBasicExpertDetailsService
-            ,IEditAdvancedExpertDetailsService editAdvancedExpertDetailsService)
+            ,IEditAdvancedExpertDetailsService editAdvancedExpertDetailsService
+            ,IRemoveExpertImagesService removeExpertImagesService)
         {
             _getExpertDetailsForSiteService = getExpertDetailsForSiteService;
             _editExpertDetailsService = editExpertDetailsService;
@@ -43,6 +46,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             _getSpecialtiesForExpertProfileDropDownService = getSpecialtiesForExpertProfileDropDownService;
             _editBasicExpertDetailsService = editBasicExpertDetailsService;
             _editAdvancedExpertDetailsService = editAdvancedExpertDetailsService;
+            _removeExpertImagesService = removeExpertImagesService;
 
             _getUserFlagService = getUserFlagService;
 
@@ -80,6 +84,14 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         public IActionResult EditAdvancedInformation(RequestEditAdvancedExpertDetailsDto request)
         {
             var result = _editAdvancedExpertDetailsService.Execute(request);
+
+            return new JsonResult(result);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveExpertImage(long id)
+        {
+            var result = _removeExpertImagesService.Execute(id);
 
             return new JsonResult(result);
         }

@@ -313,7 +313,7 @@
                    url: "@Url.Action("Remove", "Speciality")",
                    data: postData,
                    success: function(data) {
-                       if (data.isSuccess == true) {
+                       if (data.isSuccess === true) {
                            swal.fire(
                                'موفق!',
                                data.message,
