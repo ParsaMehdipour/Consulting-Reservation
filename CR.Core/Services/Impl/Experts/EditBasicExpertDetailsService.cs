@@ -7,6 +7,7 @@ using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
+using CR.DataAccess.Entities.ExpertInformations;
 using Microsoft.EntityFrameworkCore;
 
 namespace CR.Core.Services.Impl.Experts
@@ -72,6 +73,25 @@ namespace CR.Core.Services.Impl.Experts
                         IsSuccess = false,
                         Message = "لطفا تخصص خود را انتخاب کنید"
                     };
+                }
+
+                if (request.image.Count > 0)
+                {
+                    foreach (var file in request.image)
+                    {
+                        var expertImage = new ExpertImage()
+                        {
+                            ExpertInformationId = expertInformation.Id,
+                            ExpertInformation = expertInformation,
+                            Src = _imageUploaderService.Execute(new UploadImageDto()
+                            {
+                                File = file,
+                                Folder = "ExpertImages"
+                            })
+                        };
+
+                        _context.ExpertImages.Add(expertImage);
+                    }
                 }
 
                 var speciality = _context.Specialties.FirstOrDefault(s => s.Id == request.specialtyId);

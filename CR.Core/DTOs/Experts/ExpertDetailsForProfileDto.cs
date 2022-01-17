@@ -88,5 +88,6 @@ namespace CR.Core.DTOs.Experts
         public List<ExpertPrizeDto> prizes { get; set; }
         public List<ExpertStudyDto> studies { get; set; }
         public List<ExpertSubscriptionDto> subscriptions { get; set; }
+        public List<ExpertImageDto> images { get; set; }
     }
 }

@@ -74,10 +74,12 @@ namespace CR.Core.Services.Impl.Experts
                     textCallPrice = expertInformation.UseTextCall ? expertInformation.TextCallPrice.ToString().GetPersianNumber() : 0.ToString().GetPersianNumber(),
                     tag = expertInformation.Tag,
                     Tags = (string.IsNullOrEmpty(expertInformation.Tag))?new List<string>(): expertInformation.Tag.Split(",").ToList(),
-                    //Images = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages.Select(i => new ExpertImageDto
-                    //{
-                    //    Src = i.Src
-                    //}).ToList(),
+                    images = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages.Select(i => new ExpertImageDto
+                        {
+                            Id = i.Id,
+                            Src = i.Src
+                        }
+                    ).ToList(),
                     experiences = (expertInformation.ExpertExperiences == null) ? new List<ExpertExperienceDto>() : expertInformation.ExpertExperiences.Select(e => new ExpertExperienceDto
                     {
                         clinicName = e.ClinicName,

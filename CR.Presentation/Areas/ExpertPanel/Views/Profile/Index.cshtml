@@ -140,9 +140,25 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    @if (Model.images.Count > 0)
+                                    {
                                         <label>تصاویر محل کار</label>
-                                        <span id="imageUploadContainer" style="width:100%">
+                                        <div class="upload-wrap">
+                                            @foreach (var image in Model.images)
+                                            {
+                                                <div class="upload-images">
+                                                    <a href="~/@image.Src" data-fancybox="gallery">
+                                                        <img src="~/@image.Src" alt="Upload Image">
+                                                    </a>
+                                                    <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                                                </div>
+                                            }
+                                        </div>
+                                        <br />
+                                    }
+                                    <div class="form-group">
+                                        <label>بارگذاری تصویر</label>
+                                        <span id="imageUploadContainer" style="width: 100%">
                                             <div class="col-lg-12 ">
                                                 <div class="uploader__box js-uploader__box l-center-box">
                                                     <div class="uploader__contents">
@@ -649,6 +665,20 @@
 <script src="~/assets/js/ExpertPanel/layout.js"></script>
 
 <script>
+    var imageFileList = [];
+
+    function addFileToList(file) {
+        imageFileList.push(file);
+    }
+
+    function removeFileFromList(id) {
+        for (var i = 0; i < imageFileList.length; i++) {
+            if (i === parseInt(id)) {
+                imageFileList.splice(i, 1);
+                break;
+            }
+        }
+    }
 
     function EditBasicInformation(id) {
 
@@ -676,6 +706,10 @@
             expertProfileData.append("tag", $("#expertBasicProfileForm #services").val());
             expertProfileData.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
             expertProfileData.append("id", id);
+
+            for (var i = 0; i < imageFileList.length; i++) {
+                expertProfileData.append("image",imageFileList[i]);
+            }
 
             if (document.getElementById('price_free_phoneCallPrice').checked) {
                 expertProfileData.append("usePhoneCall", true);
@@ -906,6 +940,54 @@
         }
 
         return subscriptions;
+    }
+
+    function DeleteExpertImage(Id) {
+        swal.fire({
+            title: 'حذف تصویر',
+            text: "متخصص گرامی از حذف تصویر مطمئن هستید؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'تایید',
+            cancelButtonText: 'انصراف'
+        }).then((result) => {
+            if (result.value) {
+                var postData = {
+                    'id': Id
+                };
+                $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: "POST",
+                    url: "@Url.Action("RemoveExpertImage", "Profile")",
+                    data: postData,
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire(
+                                'موفق!',
+                                data.message,
+                                'success'
+                            ).then(function(isConfirm) {
+                                location.replace("@Url.Action("Index", "Profile")");
+                            });
+                        } else {
+                            swal.fire(
+                                'هشدار!',
+                                data.message,
+                                'warning'
+                            );
+
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+
+                });
+            }
+        });
     }
 </script>
 }

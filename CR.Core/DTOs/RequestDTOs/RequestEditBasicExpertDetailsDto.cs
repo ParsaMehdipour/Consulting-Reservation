@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Http;
@@ -69,5 +70,7 @@ namespace CR.Core.DTOs.RequestDTOs
         public string instagram { get; set; }
 
         public long? specialtyId { get; set; }
+        [DisplayName("image")]
+        public List<IFormFile> image { get; set; }
     }
 }
