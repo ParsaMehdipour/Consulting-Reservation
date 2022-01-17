@@ -75,7 +75,7 @@ namespace CR.Core.Services.Impl.Experts
                     };
                 }
 
-                if (request.image.Count > 0)
+                if (request.image != null)
                 {
                     foreach (var file in request.image)
                     {
@@ -140,11 +140,15 @@ namespace CR.Core.Services.Impl.Experts
                     Message = "اطلاعات با موفقیت ذخیره شد"
                 };
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 transaction.Rollback();
-                var error = e.Message;
-                throw;
+
+                return new ResultDto()
+                {
+                    IsSuccess = false,
+                    Message = "مشکل از سمت سرور!!"
+                };
             }
             finally
             {
