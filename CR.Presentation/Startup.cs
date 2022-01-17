@@ -22,11 +22,13 @@ using System;
 using CR.Core.Services.Impl.Appointment;
 using CR.Core.Services.Impl.CommissionAndDiscounts;
 using CR.Core.Services.Impl.ExpertAvailabilities;
+using CR.Core.Services.Impl.ExpertImages;
 using CR.Core.Services.Impl.Experts;
 using CR.Core.Services.Impl.Statistics;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
+using CR.Core.Services.Interfaces.ExpertImages;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Statistics;
 
@@ -156,6 +158,8 @@ namespace CR.Presentation
             services.AddScoped<IChangeAppointmentStatusService, ChangeAppointmentStatusService>();
             //Images
             services.AddScoped<IImageUploaderService, ImageUploaderService>();
+            //ExpertImages
+            services.AddScoped<IRemoveExpertImagesService, RemoveExpertImagesService>();
             //Statistics
             services.AddScoped<IGetStatisticsForAdminPanelService, GetStatisticsForAdminPanelService>();
             services.AddScoped<IGetStatisticsForExpertPanelService, GetStatisticsForExpertPanelService>();
