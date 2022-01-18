@@ -38,5 +38,15 @@ namespace CR.DataAccess.Enums
         [Display(Name = "پرداخت ناموفق")]
         UnsuccessfulPayment = 2,
     }
+
+    public enum TimingType
+    {
+        [Display(Name = "کوتاه مدت")]
+        ShortSpan = 0,
+        [Display(Name = "میان مدت")]
+        MediumSpan = 1,
+        [Display(Name = "بلند مدت")]
+        LongSpan = 2,
+    }
 }
 

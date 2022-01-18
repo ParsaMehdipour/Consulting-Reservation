@@ -1,7 +1,10 @@
-﻿using CR.Common.Utilities;
+﻿using System.Collections.Generic;
+using CR.Common.Utilities;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
+using CR.Core.DTOs.Timings;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
+using CR.Core.Services.Interfaces.Timings;
 using CR.Core.Services.Interfaces.Users;
 using CR.DataAccess.Enums;
 using CR.Presentation.Areas.ExpertPanel.Models.ViewModels;
@@ -20,6 +23,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         private readonly IGetDaysService _getDaysService;
         private readonly IAddTimeOfDayService _addTimeOfDayService;
         private readonly IRemoveTimeOfDayService _removeTimeOfDayService;
+        private readonly IGetTimingsForDropDownService _getTimingsForDropDownService;
         private ResultCheckUserFlagService ResultCheckUserFlag;
 
 
@@ -28,13 +32,15 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             ,IAddDayService addDayService
             ,IGetDaysService getDaysService
             ,IAddTimeOfDayService addTimeOfDayService
-            ,IRemoveTimeOfDayService removeTimeOfDayService)
+            ,IRemoveTimeOfDayService removeTimeOfDayService
+            ,IGetTimingsForDropDownService getTimingsForDropDownService)
         {
             _getUserFlagService = getUserFlagService;
             _addDayService = addDayService;
             _getDaysService = getDaysService;
             _addTimeOfDayService = addTimeOfDayService;
             _removeTimeOfDayService = removeTimeOfDayService;
+            _getTimingsForDropDownService = getTimingsForDropDownService;
 
             var userId = ClaimUtility.GetUserId(contextAccessor.HttpContext?.User);
 
@@ -64,6 +70,14 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public List<TimingDto> GetTimings(TimingType timingType)
+        {
+            var dropDownModel = _getTimingsForDropDownService.Execute(timingType).Data;
+
+            return dropDownModel;
         }
 
         [HttpPost]

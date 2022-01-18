@@ -37,8 +37,6 @@ namespace CR.Core.Services.Impl.Consumers
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentPrice = a.Price.ToString().GetPersianNumber(),
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
-                    AppointmentTime = (a.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" + a.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()).ToString() +
-                                      " - " + (a.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() + ":" + a.TimeOfDay.FinishDate.Minute.ToString().GetPersianNumber()),
                     ConsumerIconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ConsumerId = a.ConsumerInformation.ConsumerId,
                     ConsumerType = (_context.Appointments.Any(c=>c.ConsumerInformationId == a.ConsumerInformationId && a.TimeOfDay.Day.Date.Date < DateTime.Now.Date)) ? "مراجع قدیمی" : "مراجع جدید"

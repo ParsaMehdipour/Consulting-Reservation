@@ -1,4 +1,4 @@
-﻿using CR.Core.DTOs.Appointment;
+﻿using CR.Core.DTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

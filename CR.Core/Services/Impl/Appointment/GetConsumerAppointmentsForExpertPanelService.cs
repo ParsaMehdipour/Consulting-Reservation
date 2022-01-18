@@ -2,7 +2,7 @@
 using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
-using CR.Core.DTOs.Appointment;
+using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
@@ -39,10 +39,6 @@ namespace CR.Core.Services.Impl.Appointment
                     //AppointmentPrice = a.TimeOfDay.Price.ToString().GetPersianNumber(),
                     AppointmentReservationDate = a.CreateDate.ToShamsi(),
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
-                    AppointmentTime = (a.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" +
-                                       a.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()) +
-                                      " - " + (a.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() + ":" +
-                                               a.TimeOfDay.FinishDate.Minute.ToString().GetPersianNumber()),
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,
                     ExpertIconSrc = a.ExpertInformation.IconSrc,
                     ExpertSpeciality = a.ExpertInformation.Specialty.Name,

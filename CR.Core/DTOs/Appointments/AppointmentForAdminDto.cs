@@ -1,4 +1,4 @@
-﻿namespace CR.Core.DTOs.Appointment
+﻿namespace CR.Core.DTOs.Appointments
 {
     public class AppointmentForAdminDto
     {

@@ -261,7 +261,6 @@
                 alert(request.responseText);
             }
         });
-
     }
 
     function RemoveTimeOfDay(id) {
@@ -313,9 +312,35 @@
                     }
                 })
     }
+
+    function GetTimings(timingType) {
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetTimings", "Availabilities")',
+            data: {timingType : timingType},
+            dataType: "json",
+            success: function(response) {
+                $("#timingSelect").empty();
+
+                var data = response;
+
+                var select = document.getElementById('timingSelect');
+
+                for (var i in data) {
+                    $(select).append('<option value=' + data[i].id + '>' + data[i].start + "-" + data[i].end + '</option>');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+
+    }
+
 </script>
 }
-@section Modal{
+@section AddModal{
 <!-- Add Time Slot Modal -->
 <div class="modal fade custom-modal" id="add_time_slot">
     <div class="modal-dialog modal-dialog-centered">
@@ -326,25 +351,29 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
+                <button onclick="GetTimings(0)" type="button" class="btn btn-block btn-outline-info active">کوتاه مدت</button>
+            </div>
+            <br/>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
+                <button onclick="GetTimings(1)" type="button" class="btn btn-block btn-outline-primary active">میان مدت</button>
+            </div>
+            <br/>
+            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
+                <button onclick="GetTimings(2)" type="button" class="btn btn-block btn-outline-success active">بلند مدت</button>
+            </div>
+            <br/>
             <div class="modal-body">
                 <div class="hours-info">
                     <div class="row form-row hours-cont">
                         <div class="col-12 col-md-10">
                             <div class="row form-row">
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-6 text-center">
                                     <div class="form-group">
-                                        <label>زمان شروع</label>
-                                        <div class="form-group">
-                                            <input type="time" class="form-control startHourInput">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label>زمان پایان</label>
-                                        <div class="form-group">
-                                            <input type="time" class="form-control finishHourInput">
-                                        </div>
+                                        <label>زمانبندی</label>
+                                        <select class="form-control" id="timingSelect" name="timingSelect">
+                                            <option>انتخاب نمایید</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

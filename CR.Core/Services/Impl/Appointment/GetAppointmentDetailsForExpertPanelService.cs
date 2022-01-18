@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
-using CR.Core.DTOs.Appointment;
+using CR.Core.DTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
@@ -39,11 +39,6 @@ namespace CR.Core.Services.Impl.Appointment
                 {
                     appointmentDate = appointment.TimeOfDay.Day.Date_String,
                     appointmentStatus = appointment.AppointmentStatus.GetDisplayName(),
-                    appointmentTime = (appointment.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" +
-                                       appointment.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()) +
-                                      " - " + (appointment.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() +
-                                               ":" +
-                                               appointment.TimeOfDay.FinishDate.Minute.ToString().GetPersianNumber()),
                     appointmentPrice = appointment.Price.ToString().GetPersianNumber(),
                     id = appointment.Id
                 },

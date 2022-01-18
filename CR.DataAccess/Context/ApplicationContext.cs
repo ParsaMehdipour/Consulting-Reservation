@@ -10,6 +10,7 @@ using System.Reflection;
 using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertInformations;
 using CR.DataAccess.Entities.Factors;
+using CR.DataAccess.Entities.Timings;
 
 namespace CR.DataAccess.Context
 {
@@ -34,6 +35,7 @@ namespace CR.DataAccess.Context
         public DbSet<ExpertSubscription> ExpertSubscriptions { get; set; }
         public DbSet<Factor> Factors { get; set; }
         public DbSet<CommissionAndDiscount> CommissionAndDiscounts { get; set; }
+        public DbSet<Timing> Timings { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

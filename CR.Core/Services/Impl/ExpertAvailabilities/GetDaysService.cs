@@ -47,8 +47,6 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
                     id = d.Id,
                     TimeOfDayDtos = d.TimeOfDays.Where(t=>t.IsReserved == false).Select(f => new TimeOfDayDto()
                     {
-                        start = (f.StartDate.Hour.ToString().GetPersianNumber() + ":" + f.StartDate.Minute.ToString().GetPersianNumber()),
-                        finish = (f.FinishDate.Hour.ToString().GetPersianNumber() + ":" + f.FinishDate.Minute.ToString().GetPersianNumber()),
                         id = f.Id,
                         expertInformationId = f.ExpertInformationId,
                         dayId = f.DayId

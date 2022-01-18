@@ -41,10 +41,10 @@ namespace CR.Core.DTOs.Experts
 
         public string iconSrc { get; set; }
 
-        [Required(ErrorMessage = "نام کلینیک خود را وارد کنید")]
+        [Required(ErrorMessage = "نام محل کار خود را وارد کنید")]
         public string clinicName { get; set; }
 
-        [Required(ErrorMessage = "آدرس کلینیک خود را وارد کنید")]
+        [Required(ErrorMessage = "آدرس محل کار خود را وارد کنید")]
         public string clinicAddress { get; set; }
 
         public List<IFormFile> ClininImages { get; set; }

@@ -25,12 +25,14 @@ using CR.Core.Services.Impl.ExpertAvailabilities;
 using CR.Core.Services.Impl.ExpertImages;
 using CR.Core.Services.Impl.Experts;
 using CR.Core.Services.Impl.Statistics;
+using CR.Core.Services.Impl.Timings;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.ExpertImages;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Statistics;
+using CR.Core.Services.Interfaces.Timings;
 
 namespace CR.Presentation
 {
@@ -118,6 +120,8 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertDetailsForPartialService, GetExpertDetailsForPartialService>();
             services.AddScoped<IEditBasicExpertDetailsService, EditBasicExpertDetailsService>();
             services.AddScoped<IEditAdvancedExpertDetailsService, EditAdvancedExpertDetailsService>();
+            //Timings
+            services.AddScoped<IGetTimingsForDropDownService, GetTimingsForDropDownService>();
             //ExpertAvailabilities
             services.AddScoped<IAddDayService, AddDayService>();
             services.AddScoped<IGetDaysService, GetDaysService>();

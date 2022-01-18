@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CR.Core.DTOs.Appointment;
+using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.Consumers;
 using CR.Core.DTOs.Experts;
 using CR.Core.DTOs.Statistics;

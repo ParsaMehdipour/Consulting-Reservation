@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CR.Core.DTOs.Appointment;
+using CR.Core.DTOs.Appointments;
 
 namespace CR.Core.DTOs.ResultDTOs
 {

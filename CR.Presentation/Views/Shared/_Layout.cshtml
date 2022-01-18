@@ -25,7 +25,7 @@
     <!--persian Datepicker -->
     <link rel="stylesheet" href="~/Jcal/daterangepicker.css" type="text/css">
     <link rel="stylesheet" href="~/Jcal/persian-datepicker.css">
-    
+
     <!-- Fancybox CSS -->
     <link rel="stylesheet" href="~/assets/plugins/fancybox/jquery.fancybox.min.css">
 
@@ -383,15 +383,15 @@
                                 <div class="footer-contact-info">
                                     <div class="footer-address">
                                         <span><i class="fas fa-map-marker-alt"></i></span>
-                                        <p> خیابان مطهری، برج مینا<br> طبقه 5 واحد 54 </p>
+                                        <p> مازندران جویبار استان: مازندران، شهرستان :<br> جویبار، بخش : مرکزی، شهر: جویبار، محله: <br> امام، بلوار امام خمینی، بن بست (ایثارگران)، <br /> پلاک: 0.0، طبقه: اول، </p>
                                     </div>
-                                    <p>
+                                    @*<p>
                                         <i class="fas fa-phone-alt"></i>
                                         09119007106
-                                    </p>
+                                        </p>*@
                                     <p class="mb-0">
                                         <i class="fas fa-envelope"></i>
-                                        chalechoole@example.com
+                                        ahmad.hashemi46@Gmail.com
                                     </p>
                                 </div>
                             </div>
@@ -434,218 +434,220 @@
                 </div>
             </div>
             <!-- /Footer Bottom -->
-
         </footer>
         <!-- /Footer -->
-        @RenderSection("Modal", required: false)
-        @RenderSection("ModalAppointmentInformation", required: false)
+    </div>
 
-        <!-- /Main Wrapper -->
-        <!-- jQuery -->
-        <script src="~/assets/js/jquery.min.js"></script>
-        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <!-- /Main Wrapper -->
+    <!-- jQuery -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-        <!-- Bootstrap Core JS -->
-        <script src="~/assets/js/popper.min.js"></script>
-        <script src="~/assets/plugins/bootstrap-rtl/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Core JS -->
+    <script src="~/assets/js/popper.min.js"></script>
+    <script src="~/assets/plugins/bootstrap-rtl/js/bootstrap.min.js"></script>
 
-        <!-- Select2 JS -->
-        <script src="~/assets/plugins/select2/js/select2.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="~/assets/plugins/select2/js/select2.min.js"></script>
 
-        <!-- Persian DatePicker JS -->
-        <script src="~/Jcal/persian-date.js"></script>
-        <script src="~/Jcal/persian-datepicker.js"></script>
+    <!-- Persian DatePicker JS -->
+    <script src="~/Jcal/persian-date.js"></script>
+    <script src="~/Jcal/persian-datepicker.js"></script>
 
-        <!-- Sticky Sidebar JS -->
-        <script src="~/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
-        <script src="~/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
+    <!-- Sticky Sidebar JS -->
+    <script src="~/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+    <script src="~/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
 
-        <!-- Slick JS -->
-        <script src="~/assets/js/slick.js"></script>
+    <!-- Slick JS -->
+    <script src="~/assets/js/slick.js"></script>
 
-        <!-- Custom JS -->
-        <script src="~/assets/js/script.js"></script>
+    <!-- Custom JS -->
+    <script src="~/assets/js/script.js"></script>
 
-        <!-- Sweet Alert JS -->
-        <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
-        <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <!-- Sweet Alert JS -->
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
 
-        <!-- Bootstrap Tagsinput JS -->
-        <script src="~/assets/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+    <!-- Bootstrap Tagsinput JS -->
+    <script src="~/assets/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
 
-        <!-- Profile Settings JS -->
-        <script src="~/assets/js/ExpertPanel/Profile/profile-settings.js"></script>
+    <!-- Profile Settings JS -->
+    <script src="~/assets/js/ExpertPanel/Profile/profile-settings.js"></script>
 
-        <!-- Circle Progress JS -->
-        <script src="~/assets/js/circle-progress.min.js"></script>
+    <!-- Circle Progress JS -->
+    <script src="~/assets/js/circle-progress.min.js"></script>
 
-        <!-- Mask JS -->
-        <script src="~/assets/js/jquery.maskedinput.min.js"></script>
-        <script src="~/assets/js/jquery.mask.js"></script>
+    <!-- Mask JS -->
+    <script src="~/assets/js/jquery.maskedinput.min.js"></script>
+    <script src="~/assets/js/jquery.mask.js"></script>
 
-        <script src="~/lib/imageUploader/jquery.imageuploader.js"></script>
+    <script src="~/lib/imageUploader/jquery.imageuploader.js"></script>
 
-        <!-- Fancybox JS -->
-        <script src="~/assets/plugins/fancybox/jquery.fancybox.min.js"></script>
+    <!-- Fancybox JS -->
+    <script src="~/assets/plugins/fancybox/jquery.fancybox.min.js"></script>
 
-        @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-            $(document).ready(function() {
+        $(document).ready(function() {
 
-                $("#loading").hide();
+            $("#loading").hide();
 
-                $.ajax({
-                    type: 'GET',
-                    dataType: 'json',
-                    url: '/api/Shared/GetUserFlag',
-                    cache: false,
-                    contentType: "application/json; charset=utf-8",
-                    enctype: 'application/json',
-                    success: function(response) {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/api/Shared/GetUserFlag',
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                enctype: 'application/json',
+                success: function(response) {
 
-                        var userFlag = response;
+                    var userFlag = response;
 
-                        if (userFlag === 1) {
-                            GetExpertDetails();
-                        } else {
-                            GetConsumerDetails();
-                        }
-
+                    if (userFlag === 1) {
+                        GetExpertDetails();
+                    } else {
+                        GetConsumerDetails();
                     }
-                });
 
+                }
             });
 
-            function GetExpertDetails() {
-                $.ajax({
-                    type: 'GET',
-                    dataType: 'json',
-                    url: '/api/ExpertDetails/GetDetails',
-                    cache: false,
-                    contentType: "application/json; charset=utf-8",
-                    enctype: 'application/json',
-                    success: function(response) {
+        });
 
-                        var model = response.data;
+        function GetExpertDetails() {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/api/ExpertDetails/GetDetails',
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                enctype: 'application/json',
+                success: function(response) {
 
-                        var body =
-                            '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
-                                '<span class="user-img">' +
-                                '<img class="rounded-circle" src="/' +
-                                model.iconSrc +
-                                '" width="31" alt="' +
-                                model.fullName +
-                                '">' +
-                                '</span>' +
-                                '</a>' +
-                                '<div class="dropdown-menu dropdown-menu-right">' +
-                                '<div class="user-header">' +
-                                '<div class="avatar avatar-sm">' +
-                                '<img id="Image" src="/' +
-                                model.iconSrc +
-                                '" alt="User Image" class="avatar-img rounded-circle">' +
-                                '</div>' +
-                                '<div class="user-text">' +
-                                '<h6 id="FullName">' +
-                                model.fullName +
-                                '</h6>' +
-                                '<p class="text-muted mb-0">متخصص</p>' +
-                                '</div>' +
-                                '</div>' +
-                                '<a class="dropdown-item" href="/ExpertPanel/Home/">داشبورد</a>' +
-                                '<a class="dropdown-item" href="/ExpertPanel/Profile/">تنظیمات پروفایل</a>' +
-                                '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
-                                '</div>';
+                    var model = response.data;
 
-                        $("#userInfo").html(body);
+                    var body =
+                        '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
+                            '<span class="user-img">' +
+                            '<img class="rounded-circle" src="/' +
+                            model.iconSrc +
+                            '" width="31" alt="' +
+                            model.fullName +
+                            '">' +
+                            '</span>' +
+                            '</a>' +
+                            '<div class="dropdown-menu dropdown-menu-right">' +
+                            '<div class="user-header">' +
+                            '<div class="avatar avatar-sm">' +
+                            '<img id="Image" src="/' +
+                            model.iconSrc +
+                            '" alt="User Image" class="avatar-img rounded-circle">' +
+                            '</div>' +
+                            '<div class="user-text">' +
+                            '<h6 id="FullName">' +
+                            model.fullName +
+                            '</h6>' +
+                            '<p class="text-muted mb-0">متخصص</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '<a class="dropdown-item" href="/ExpertPanel/Home/">داشبورد</a>' +
+                            '<a class="dropdown-item" href="/ExpertPanel/Profile/">تنظیمات پروفایل</a>' +
+                            '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
+                            '</div>';
 
-                    }
-                });
-            }
+                    $("#userInfo").html(body);
 
-            function GetConsumerDetails() {
-                $.ajax({
-                    type: 'GET',
-                    dataType: 'json',
-                    url: '/api/ConsumerDetails/GetDetails',
-                    cache: false,
-                    contentType: "application/json; charset=utf-8",
-                    enctype: 'application/json',
-                    success: function(response) {
-
-                        var model = response.data;
-
-                        var body =
-                            '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
-                                '<span class="user-img">' +
-                                '<img class="rounded-circle" src="/' +
-                                model.iconSrc +
-                                '" width="31" alt="' +
-                                model.fullName +
-                                '">' +
-                                '</span>' +
-                                '</a>' +
-                                '<div class="dropdown-menu dropdown-menu-right">' +
-                                '<div class="user-header">' +
-                                '<div class="avatar avatar-sm">' +
-                                '<img id="Image" src="/' +
-                                model.iconSrc +
-                                '" alt="User Image" class="avatar-img rounded-circle">' +
-                                '</div>' +
-                                '<div class="user-text">' +
-                                '<h6 id="FullName">' +
-                                model.fullName +
-                                '</h6>' +
-                                '<p class="text-muted mb-0">مراجعه کننده</p>' +
-                                '</div>' +
-                                '</div>' +
-                                '<a class="dropdown-item" href="/ConsumerPanel/Home/">داشبورد</a>' +
-                                '<a class="dropdown-item" href="/ConsumerPanel/Profile/">تنظیمات پروفایل</a>' +
-                                '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
-                                '</div>';
-
-                        $("#userInfo").html(body);
-
-                    }
-                });
-            }
-
-            $(".datetimepicker").persianDatepicker({
-                months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
-                dowTitle: ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"],
-                shortDowTitle: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
-                showGregorianDate: !1,
-                persianNumbers: !0,
-                formatDate: "YYYY/MM/DD",
-                selectedBefore: !1,
-                selectedDate: null,
-                startDate: null,
-                endDate: null,
-                prevArrow: '\u25c4',
-                nextArrow: '\u25ba',
-                theme: 'default',
-                alwaysShow: !1,
-                selectableYears: null,
-                selectableMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                cellWidth: 25, // by px
-                cellHeight: 20, // by px
-                fontSize: 13, // by px
-                isRTL: !1,
-                format: 'YYYY/MM/DD',
-
-
-                calendarPosition: {
-                    x: 0,
-                    y: 0,
-                },
-                onShow: function() {},
-                onHide: function() {},
-                onSelect: function() {},
-                onRender: function() {}
+                }
             });
-        </script>
+        }
+
+        function GetConsumerDetails() {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/api/ConsumerDetails/GetDetails',
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                enctype: 'application/json',
+                success: function(response) {
+
+                    var model = response.data;
+
+                    var body =
+                        '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
+                            '<span class="user-img">' +
+                            '<img class="rounded-circle" src="/' +
+                            model.iconSrc +
+                            '" width="31" alt="' +
+                            model.fullName +
+                            '">' +
+                            '</span>' +
+                            '</a>' +
+                            '<div class="dropdown-menu dropdown-menu-right">' +
+                            '<div class="user-header">' +
+                            '<div class="avatar avatar-sm">' +
+                            '<img id="Image" src="/' +
+                            model.iconSrc +
+                            '" alt="User Image" class="avatar-img rounded-circle">' +
+                            '</div>' +
+                            '<div class="user-text">' +
+                            '<h6 id="FullName">' +
+                            model.fullName +
+                            '</h6>' +
+                            '<p class="text-muted mb-0">مراجعه کننده</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '<a class="dropdown-item" href="/ConsumerPanel/Home/">داشبورد</a>' +
+                            '<a class="dropdown-item" href="/ConsumerPanel/Profile/">تنظیمات پروفایل</a>' +
+                            '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
+                            '</div>';
+
+                    $("#userInfo").html(body);
+
+                }
+            });
+        }
+
+        $(".datetimepicker").persianDatepicker({
+            months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+            dowTitle: ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"],
+            shortDowTitle: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
+            showGregorianDate: !1,
+            persianNumbers: !0,
+            formatDate: "YYYY/MM/DD",
+            selectedBefore: !1,
+            selectedDate: null,
+            startDate: null,
+            endDate: null,
+            prevArrow: '\u25c4',
+            nextArrow: '\u25ba',
+            theme: 'default',
+            alwaysShow: !1,
+            selectableYears: null,
+            selectableMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            cellWidth: 25, // by px
+            cellHeight: 20, // by px
+            fontSize: 13, // by px
+            isRTL: !1,
+            format: 'YYYY/MM/DD',
+
+
+            calendarPosition: {
+                x: 0,
+                y: 0,
+            },
+            onShow: function() {},
+            onHide: function() {},
+            onSelect: function() {},
+            onRender: function() {}
+        });
+    </script>
+
+    @RenderSection("Modal", required: false)
+    @RenderSection("AddModal", required: false)
+    @RenderSection("ModalAppointmentInformation", required: false)
 </body>
 </html>

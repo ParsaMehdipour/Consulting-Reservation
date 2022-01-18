@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
-using CR.Core.DTOs.Appointment;
+using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
@@ -36,11 +36,6 @@ namespace CR.Core.Services.Impl.Appointment
                     Id = a.Id,
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
-                    AppointmentTime =
-                        (a.TimeOfDay.StartDate.Hour.ToString().GetPersianNumber() + ":" +
-                         a.TimeOfDay.StartDate.Minute.ToString().GetPersianNumber()).ToString() +
-                        " - " + (a.TimeOfDay.FinishDate.Hour.ToString().GetPersianNumber() + ":" +
-                                 a.TimeOfDay.FinishDate.Minute.ToString().GetPersianNumber()),
                     City = a.ConsumerInformation.City,
                     Province = a.ConsumerInformation.Province,
                     ConsumerFullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
