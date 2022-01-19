@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
 
-                <partial name="ExpertPnelSideBarMenu"/>
+                <partial name="ExpertPnelSideBarMenu" />
 
             </div>
             <div class="col-md-7 col-lg-8 col-xl-9">
@@ -85,7 +85,7 @@
                                                             <span>زمان بندی</span>
                                                             @if (day.TimeOfDayDtos.Count > 0)
                                                             {
-                                                                <a class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-plus-circle"></i> ویرایش  </a>
+                                                                <a onclick="ShowDetails(@day.id)" class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-plus-circle"></i> ویرایش  </a>
                                                             }
                                                             else
                                                             {
@@ -176,32 +176,45 @@
     });
 
     $(".add-newHours").on('click', function () {
+        var value = document.querySelector('input[name="timing"]:checked').value;
+        var body2 = "";
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetTimings", "Availabilities")',
+            data: {timingType : value},
+            dataType: "json",
+            success: function(response) {
+                var data = response;
 
-        var hourscontent = '<div class="row form-row hours-cont">' +
-            '<div class="col-12 col-md-10">' +
-            '<div class="row form-row">' +
-            '<div class="col-12 col-md-6">' +
-            '<div class="form-group">' +
-            '<label>زمان شروع</label>' +
-            '<div class="form-group">'+
-            '<input type="time" class="form-control startHourInput" id="endTime">'+
-            '</div>'+
-            '</div>' +
-            '</div>' +
-            '<div class="col-12 col-md-6">' +
-            '<div class="form-group">' +
-            '<label>زمان پایان</label>' +
-            '<div class="form-group">'+
-            '<input type="time" class="form-control finishHourInput" id="endTime">'+
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '<div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
-            '</div>';
+                for (var i in data) {
+                    if (Object.prototype.hasOwnProperty.call(data, i)) {
+                        body2 += '<option value=' + data[i].id + '>' + data[i].start + "-" + data[i].end + '</option>';
+                    }
+                }
+                var hourscontent = '<div class="row form-row hours-cont">' +
+                    '<div class="col-12 col-md-10">' +
+                    '<div class="row form-row">' +
+                    '<div class="col-12 col-md-11">' +
+                    '<div class="form-group">' +
+                    '<label>زمانبندی</label>' +
+                    '<select class="form-control timingSelect" id="timingSelect" name="timingSelect">'+
+                    '<option>انتخاب نمایید</option>'+
+                    body2 +
+                    '</select>'+
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
+                    '</div>';
 
-        $(".hours-info").append(hourscontent);
+                $(".hours-info").append(hourscontent);
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+
         return false;
     });
 
@@ -211,39 +224,33 @@
 
     function AddHours() {
 
-        var startInputs = document.getElementsByClassName( 'startHourInput' );
-        var finishInputs = document.getElementsByClassName('finishHourInput');
+        var timings = $('#add_time_slot select').map(function() {
+            return $(this).val();
+        }).get();
 
-
-        var xForm = new FormData();
-
-        for (var i = 0; i < startInputs.length; i++) {
-
-             var startValue = startInputs.item(i).value;
-
-             startMatches.push(startValue);
+        if (timings[0] === "انتخاب نمایید") {
+            swal.fire(
+                'هشدار!',
+                "لطفا یک زمان را انتخاب کنید",
+                'warning'
+            );
+            return;
         }
 
+        var postDataTimeOFDay = {
+            'dayId': dayId,
+            'expertInformationId': $("#expId").val(),
+            'timings': timings
+        };
 
-        for (var i = 0; i < finishInputs.length; i++) {
-
-            var finishValue =  finishInputs.item(i).value;
-
-            finishMatches.push(finishValue);
-        }
-        xForm.append("dayId",dayId);
-        xForm.append("expertInformationId",$("#expId").val());
-        xForm.append("start",startMatches);
-        xForm.append("finish",finishMatches);
 
         $.ajax({
             type: 'POST',
             url: '@Url.Action("AddTimeOfDay", "Availabilities")',
-            processData: false,
-            contentType: false,
+            contentType: 'application/x-www-form-urlencoded',
             dataType: 'json',
             cache: false,
-            data: xForm,
+            data: postDataTimeOFDay,
             success: function(data) {
                 if (data.isSuccess == true) {
                     swal.fire('موفق!',
@@ -321,11 +328,12 @@
             data: {timingType : timingType},
             dataType: "json",
             success: function(response) {
-                $("#timingSelect").empty();
 
                 var data = response;
 
-                var select = document.getElementById('timingSelect');
+                var select = document.getElementsByClassName("timingSelect");
+
+                $(select).empty();
 
                 for (var i in data) {
                     $(select).append('<option value=' + data[i].id + '>' + data[i].start + "-" + data[i].end + '</option>');
@@ -335,7 +343,10 @@
                 alert(request.responseText);
             }
         });
+    }
 
+    function ShowDetails(id) {
+        
     }
 
 </script>
@@ -351,27 +362,26 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
-                <button onclick="GetTimings(0)" type="button" class="btn btn-block btn-outline-info active">کوتاه مدت</button>
-            </div>
-            <br/>
-            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
-                <button onclick="GetTimings(1)" type="button" class="btn btn-block btn-outline-primary active">میان مدت</button>
-            </div>
-            <br/>
-            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
-                <button onclick="GetTimings(2)" type="button" class="btn btn-block btn-outline-success active">بلند مدت</button>
-            </div>
-            <br/>
+            <br />
+            <label>
+                <input type="radio" name="timing" onclick="GetTimings(0)" value="0">کوتاه مدت
+            </label>
+            <label>
+                <input type="radio" name="timing" onclick="GetTimings(1)" value="1">میان مدت
+            </label>
+            <label>
+                <input type="radio" name="timing" onclick="GetTimings(2)" value="2">بلند مدت
+            </label>
+            <br />
             <div class="modal-body">
                 <div class="hours-info">
                     <div class="row form-row hours-cont">
                         <div class="col-12 col-md-10">
                             <div class="row form-row">
-                                <div class="col-12 col-md-6 text-center">
+                                <div class="col-12 col-md-11">
                                     <div class="form-group">
                                         <label>زمانبندی</label>
-                                        <select class="form-control" id="timingSelect" name="timingSelect">
+                                        <select class="form-control timingSelect" id="timingSelect" name="timingSelect">
                                             <option>انتخاب نمایید</option>
                                         </select>
                                     </div>
@@ -393,127 +403,43 @@
 <!-- /Add Time Slot Modal -->
 }
 
-@*@section Modal{
-    <!-- Edit Time Slot Modal -->
-    <div class="modal fade custom-modal" id="edit_time_slot">
+@section Modal{
+<!-- Edit Time Slot Modal -->
+<div class="modal fade custom-modal" id="edit_time_slot">
     <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-    <div class="modal-header">
-    <h5 class="modal-title">ویرایش زمان بندی</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-    </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ویرایش زمان بندی</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="hours-info">
+                        <div class="row form-row hours-cont">
+                            <div class="col-12 col-md-10">
+                                <div class="row form-row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label>زمان شروع</label>
+                                            <select class="form-control">
+                                                <option>انتخاب کنید</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-more mb-3">
+                        <a href="javascript:void(0);" class="add-hours"><i class="fa fa-plus-circle"></i> افزودن</a>
+                    </div>
+                    <div class="submit-section text-center">
+                        <button type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                    </div>
+            </div>
+        </div>
     </div>
-    <div class="modal-body">
-    <form>
-    <div class="hours-info">
-    <div class="row form-row hours-cont">
-    <div class="col-12 col-md-10">
-    <div class="row form-row">
-    <div class="col-12 col-md-6">
-    <div class="form-group">
-    <label>زمان شروع</label>
-    <select class="form-control">
-    <option>-</option>
-    <option selected>12.00 قبل از ظهر</option>
-    <option>12.30 قبل از ظهر</option>
-    <option>1.00 قبل از ظهر</option>
-    <option>1.30 قبل از ظهر</option>
-    </select>
-    </div>
-    </div>
-    <div class="col-12 col-md-6">
-    <div class="form-group">
-    <label>زمان پایان</label>
-    <select class="form-control">
-    <option>-</option>
-    <option>12.00 قبل از ظهر</option>
-    <option selected>12.30 قبل از ظهر</option>
-    <option>1.00 قبل از ظهر</option>
-    <option>1.30 قبل از ظهر</option>
-    </select>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
-    <div class="row form-row hours-cont">
-    <div class="col-12 col-md-10">
-    <div class="row form-row">
-    <div class="col-12 col-md-6">
-    <div class="form-group">
-    <label>زمان شروع</label>
-    <select class="form-control">
-    <option>-</option>
-    <option>12.00 قبل از ظهر</option>
-    <option selected>12.30 قبل از ظهر</option>
-    <option>1.00 قبل از ظهر</option>
-    <option>1.30 قبل از ظهر</option>
-    </select>
-    </div>
-    </div>
-    <div class="col-12 col-md-6">
-    <div class="form-group">
-    <label>زمان پایان</label>
-    <select class="form-control">
-    <option>-</option>
-    <option>12.00 قبل از ظهر</option>
-    <option>12.30 قبل از ظهر</option>
-    <option selected>1.00 قبل از ظهر</option>
-    <option>1.30 قبل از ظهر</option>
-    </select>
-    </div>
-    </div>
-    </div>
-    </div>
-    <div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
-    </div>
-
-    <div class="row form-row hours-cont">
-    <div class="col-12 col-md-10">
-    <div class="row form-row">
-    <div class="col-12 col-md-6">
-    <div class="form-group">
-    <label>زمان شروع</label>
-    <select class="form-control">
-    <option>-</option>
-    <option>12.00 قبل از ظهر</option>
-    <option>12.30 قبل از ظهر</option>
-    <option selected>1.00 قبل از ظهر</option>
-    <option>1.30 قبل از ظهر</option>
-    </select>
-    </div>
-    </div>
-    <div class="col-12 col-md-6">
-    <div class="form-group">
-    <label>زمان پایان</label>
-    <select class="form-control">
-    <option>-</option>
-    <option>12.00 قبل از ظهر</option>
-    <option>12.30 قبل از ظهر</option>
-    <option>1.00 قبل از ظهر</option>
-    <option selected>1.30 قبل از ظهر</option>
-    </select>
-    </div>
-    </div>
-    </div>
-    </div>
-    <div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
-    </div>
-
-    </div>
-
-    <div class="add-more mb-3">
-    <a href="javascript:void(0);" class="add-hours"><i class="fa fa-plus-circle"></i> افزودن</a>
-    </div>
-    <div class="submit-section text-center">
-    <button type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
-    </div>
-    </form>
-    </div>
-    </div>
-    </div>
-    </div>
-    <!-- /Edit Time Slot Modal -->
-    }*@
+</div>
+<!-- /Edit Time Slot Modal -->
+}

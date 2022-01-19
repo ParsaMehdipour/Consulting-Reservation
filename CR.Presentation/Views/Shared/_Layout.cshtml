@@ -486,7 +486,9 @@
 
     <!-- Fancybox JS -->
     <script src="~/assets/plugins/fancybox/jquery.fancybox.min.js"></script>
-
+    @RenderSection("Modal", required: false)
+    @RenderSection("AddModal", required: false)
+    @RenderSection("ModalAppointmentInformation", required: false)
     @RenderSection("Scripts", required: false)
 
     <script type="text/javascript">
@@ -645,9 +647,5 @@
             onRender: function() {}
         });
     </script>
-
-    @RenderSection("Modal", required: false)
-    @RenderSection("AddModal", required: false)
-    @RenderSection("ModalAppointmentInformation", required: false)
 </body>
 </html>
