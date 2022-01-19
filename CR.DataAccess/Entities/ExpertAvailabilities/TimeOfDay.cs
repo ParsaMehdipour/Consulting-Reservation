@@ -10,7 +10,7 @@ namespace CR.DataAccess.Entities.ExpertAvailabilities
     {
         public long PhoneCallPrice { get; set; } = 0;
         public long VoiceCallPrice { get; set; } = 0;
-        public long TextCall { get; set; } = 0;
+        public long TextCallPrice { get; set; } = 0;
         public bool IsReserved { get; set; }
 
         #region ForeignKeys

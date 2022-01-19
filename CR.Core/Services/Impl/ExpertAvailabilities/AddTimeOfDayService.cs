@@ -25,8 +25,7 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
             try
             {
                 var day = _context.Days.FirstOrDefault(d => d.Id == request.dayId);
-                List<string> startHours = request.start[0].Split(',').ToList();
-                List<string> finishHours = request.finish[0].Split(',').ToList();
+
                 if (day == null)
                 {
                     return new ResultDto()
@@ -67,22 +66,20 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
                 //}
 
 
-                for (int i = 0; i < startHours.Count; i++)
+                foreach (var timingId in request.timings)
                 {
+
                     var timeOfDay = new TimeOfDay
                     {
                         DayId = request.dayId,
                         Day = day,
                         ExpertInformation = expertInformation,
-                        ExpertInformationId = request.expertInformationId
+                        ExpertInformationId = request.expertInformationId,
+                        TimingId = timingId,
+                        PhoneCallPrice = expertInformation.PhoneCallPrice,
+                        VoiceCallPrice = expertInformation.VoiceCallPrice,
+                        TextCallPrice = expertInformation.TextCallPrice
                     };
-                    //timeOfDay.StartDate = day.Date;
-                    //timeOfDay.FinishDate = day.Date;
-                    //timeOfDay.StartDate = timeOfDay.StartDate.AddHours(Convert.ToInt32(startHours[i].Split(":")[0]));
-                    //timeOfDay.FinishDate = timeOfDay.FinishDate.AddHours(Convert.ToInt32(finishHours[i].Split(":")[0]));
-                    //timeOfDay.StartDate = timeOfDay.StartDate.AddMinutes(Convert.ToInt32(startHours[i].Split(":")[1]));
-                    //timeOfDay.FinishDate = timeOfDay.FinishDate.AddMinutes(Convert.ToInt32(finishHours[i].Split(":")[1]));
-                    //timeOfDay.Price = (expertInformation.IsFreeOfCharge == true) ? 0 : expertInformation.Price;
 
                     timeOfDaysList.Add(timeOfDay);
 

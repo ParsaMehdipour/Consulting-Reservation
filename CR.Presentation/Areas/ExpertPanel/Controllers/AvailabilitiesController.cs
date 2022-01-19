@@ -94,7 +94,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         public IActionResult AddTimeOfDay(RequestAddNewTimeOfDayDto request)
         {
             var result = _addTimeOfDayService.Execute(request);
-
+        
             return new JsonResult(result);
         }
 

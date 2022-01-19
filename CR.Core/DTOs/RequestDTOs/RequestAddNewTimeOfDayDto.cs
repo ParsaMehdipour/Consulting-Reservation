@@ -9,7 +9,6 @@ namespace CR.Core.DTOs.RequestDTOs
         public long dayId { get; set; }
         public long expertInformationId { get; set; }
         //public List<TimeOfDayDto> TimeOfDays { get; set; }
-        public string[] start { get; set; }
-        public string[] finish { get; set; }
+        public List<int> timings { get; set; }
     }
 }
