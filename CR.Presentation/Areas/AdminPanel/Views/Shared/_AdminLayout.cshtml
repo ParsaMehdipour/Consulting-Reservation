@@ -8,11 +8,19 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="~/assets/img/favicon-32x32.png">
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS Admin -->
     <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/bootstrap-rtl/css/bootstrap.min.css">
+
+    <!-- Bootstrap CSS Site -->
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap-rtl/css/bootstrap.min.css">
 
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="~/AdminTemplate/assets/css/font-awesome.min.css">
+
+    <!-- Fontawesome CSS Site -->
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/all.min.css">
+
 
     <!-- Feathericon CSS -->
     <link rel="stylesheet" href="~/AdminTemplate/assets/css/feathericon.min.css">
@@ -24,16 +32,24 @@
     <link rel="stylesheet" href="~/Jcal/daterangepicker.css" type="text/css">
     <link rel="stylesheet" href="~/Jcal/persian-datepicker.css">
 
+    <!--Morris Css -->
     <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/morris/morris.css">
+
+    <!-- Fancybox CSS -->
+    <link rel="stylesheet" href="~/assets/plugins/fancybox/jquery.fancybox.min.css">
 
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="~/AdminTemplate/assets/css/select2.min.css">
 
+    <!-- Select2 CSS Site -->
+    <link rel="stylesheet" href="~/assets/plugins/select2/css/select2.min.css">
+
     <!-- Main CSS -->
     <link rel="stylesheet" href="~/AdminTemplate/assets/css/style.css">
 
+    <!-- SweetAlert Css -->
     <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
-    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
         <script src="assets/js/respond.min.js"></script>
@@ -185,7 +201,7 @@
                             <a asp-area="" asp-controller="Home" asp-action="Index"><i class="fe fe-home"></i> <span>صفحه اصلی سایت</span></a>
                         </li>
                         <li class="active">
-                            <a asp-controller="Home" asp-action="Index"><i class="fe fe-home"></i> <span>دشبرد</span></a>
+                            <a asp-controller="Home" asp-action="Index"><i class="fe fe-home"></i> <span>داشبورد</span></a>
                         </li>
                         <li>
                             <a asp-controller="Appointments" asp-action="Index"><i class="fe fe-layout"></i> <span>نوبت‌دهی</span></a>
@@ -195,6 +211,9 @@
                         </li>
                         <li>
                             <a asp-controller="Speciality" asp-action="Index"><i class="fe fe-users"></i> <span>تخصص ها</span></a>
+                        </li>
+                        <li>
+                            <a asp-controller="Timings" asp-action="Index"><i class="fe fe-users"></i> <span>زمانبندی ها</span></a>
                         </li>
                         <li>
                             <a asp-controller="Experts" asp-action="Index"><i class="fe fe-user-plus"></i> <span>متخصصین</span></a>
@@ -254,25 +273,52 @@
     <script src="~/AdminTemplate/assets/js/popper.min.js"></script>
     <script src="~/AdminTemplate/assets/plugins/bootstrap-rtl/js/bootstrap.min.js"></script>
 
-    <!-- Slimscroll JS -->
+    <!-- Bootstrap Core JS Site -->
+    <script src="~/assets/js/popper.min.js"></script>
+    <script src="~/assets/plugins/bootstrap-rtl/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap Tagsinput JS Site -->
+    <script src="~/assets/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+
+    <!-- SlimScroll JS -->
     <script src="~/AdminTemplate/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- Mask JS -->
     <script src="~/assets/js/jquery.mask.js"></script>
 
+    <!-- Profile Settings JS -->
+    <script src="~/assets/js/ExpertPanel/Profile/profile-settings.js"></script>
+
     <!-- Persian DatePicker JS -->
     <script src="~/Jcal/persian-date.js"></script>
     <script src="~/Jcal/persian-datepicker.js"></script>
 
+    <!-- Morris JS -->
     <script src="~/AdminTemplate/assets/plugins/raphael/raphael.min.js"></script>
     <script src="~/AdminTemplate/assets/plugins/morris/morris.min.js"></script>
     <script src="~/AdminTemplate/assets/js/chart.morris.js"></script>
 
+    <!-- Fancybox JS -->
+    <script src="~/assets/plugins/fancybox/jquery.fancybox.min.js"></script>
+
     <!-- Select2 JS -->
     <script src="~/AdminTemplate/assets/js/select2.min.js"></script>
 
+    <!-- Select2 JS Site -->
+    <script src="~/assets/plugins/select2/js/select2.min.js"></script>
+
     <!-- Custom JS -->
     <script src="~/AdminTemplate/assets/js/script.js"></script>
+
+    <!-- Custom JS Site -->
+    <script src="~/assets/js/script.js"></script>
+
+    <!-- Uploader Js -->
+    <script src="~/lib/imageUploader/jquery.imageuploader.js"></script>
+
+    <!-- Sweet Alert JS -->
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
 
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
@@ -349,6 +395,40 @@
             onHide: function () { },
             onSelect: function () { },
             onRender: function () { }
+        });
+
+        $(".datetimepicker").persianDatepicker({
+            months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+            dowTitle: ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"],
+            shortDowTitle: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
+            showGregorianDate: !1,
+            persianNumbers: !0,
+            formatDate: "YYYY/MM/DD",
+            selectedBefore: !1,
+            selectedDate: null,
+            startDate: null,
+            endDate: null,
+            prevArrow: '\u25c4',
+            nextArrow: '\u25ba',
+            theme: 'default',
+            alwaysShow: !1,
+            selectableYears: null,
+            selectableMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            cellWidth: 25, // by px
+            cellHeight: 20, // by px
+            fontSize: 13, // by px
+            isRTL: !1,
+            format: 'YYYY/MM/DD',
+
+
+            calendarPosition: {
+                x: 0,
+                y: 0,
+            },
+            onShow: function() {},
+            onHide: function() {},
+            onSelect: function() {},
+            onRender: function() {}
         });
     </script>
 
