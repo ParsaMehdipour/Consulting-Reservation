@@ -25,11 +25,13 @@ namespace CR.Core.Services.Impl.Appointment
                 .ThenInclude(e => e.Specialty)
                 .Include(a => a.ConsumerInformation)
                 .Include(a => a.TimeOfDay)
+                .ThenInclude(t=>t.Timing)
+                .Include(t=> t.TimeOfDay)
                 .ThenInclude(d => d.Day)
                 .Select(a => new AppointmentForAdminDto
                 {
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
-                    //AppointmentPrice = a.TimeOfDay.Price.ToString().GetPersianNumber(),
+                    AppointmentTime = a.TimeOfDay.Timing.StartTime_String + " - " + a.TimeOfDay.Timing.EndTime_String,
                     Speciality = a.ExpertInformation.Specialty.Name,
                     ConsumerFullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,

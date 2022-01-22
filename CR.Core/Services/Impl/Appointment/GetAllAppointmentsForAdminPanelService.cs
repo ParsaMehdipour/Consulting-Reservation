@@ -27,6 +27,8 @@ namespace CR.Core.Services.Impl.Appointment
                 .ThenInclude(e => e.Specialty)
                 .Include(a => a.ConsumerInformation)
                 .Include(a => a.TimeOfDay)
+                .ThenInclude(t=>t.Timing)
+                .Include(t=>t.TimeOfDay)
                 .ThenInclude(d => d.Day)
                 .OrderByDescending(a=>a.TimeOfDay.Day.Date)
                 .Select(a => new AppointmentForAdminDto
@@ -38,7 +40,8 @@ namespace CR.Core.Services.Impl.Appointment
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,
                     ConsumerIconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ExpertIconSrc = a.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
-                    Id = a.Id
+                    Id = a.Id,
+                    AppointmentTime = a.TimeOfDay.Timing.StartTime_String + "-" + a.TimeOfDay.Timing.EndTime_String
                 }).AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount).ToList();
 

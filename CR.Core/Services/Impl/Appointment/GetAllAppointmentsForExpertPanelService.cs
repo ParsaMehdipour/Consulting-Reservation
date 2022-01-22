@@ -28,6 +28,8 @@ namespace CR.Core.Services.Impl.Appointment
                 .Include(a => a.ConsumerInformation)
                 .ThenInclude(a => a.Consumer)
                 .Include(a => a.TimeOfDay)
+                .ThenInclude(t=>t.Timing)
+                .Include(a=>a.TimeOfDay)
                 .ThenInclude(a => a.Day)
                 .Where(a => a.ExpertInformation.ExpertId == expertId)
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
@@ -36,6 +38,7 @@ namespace CR.Core.Services.Impl.Appointment
                     Id = a.Id,
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
+                    AppointmentTime = a.TimeOfDay.Timing.StartTime_String + " - " + a.TimeOfDay.Timing.EndTime_String,
                     City = a.ConsumerInformation.City,
                     Province = a.ConsumerInformation.Province,
                     ConsumerFullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
