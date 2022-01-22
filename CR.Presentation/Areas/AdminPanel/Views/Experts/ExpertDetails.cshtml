@@ -1,6 +1,12 @@
-﻿@model CR.Core.DTOs.Experts.ExpertDetailsForAdminDto
+﻿@using CR.DataAccess.Enums
+@model CR.Core.DTOs.Experts.ExpertDetailsForProfileDto
 @{
 }
+
+<!-- Main CSS Site -->
+<link rel="stylesheet" href="~/assets/css/style.css">
+
+<link rel="stylesheet" href="~/lib/imageUploader/styles.imageuploader.css" />
 
 <!-- Page Header -->
 <div class="page-header">
@@ -9,7 +15,7 @@
             <h3 class="page-title">پروفایل</h3>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
-                <li class="breadcrumb-item active">پروفایل</li>
+                <li class="breadcrumb-item active">پروفایل متخصص</li>
             </ul>
         </div>
     </div>
@@ -17,267 +23,720 @@
 <!-- /Page Header -->
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="profile-header">
-            <div class="row align-items-center">
-                <div class="col-auto profile-image">
-                    <a href="#">
-                        <img class="rounded-circle" alt="User Image" src="~/@Model.iconSrc">
-                    </a>
-                </div>
-                <div class="col ml-md-n2 profile-user-info">
-                    <h4 class="user-name mb-0">@Model?.firstName @Model?.lastName</h4>
-                    <h6 class="text-muted">@Model?.email</h6>
-                    <div class="user-Location"><i class="fa fa-map-marker"></i> @Model?.province ، @Model?.city</div>
-                    <div class="about-text">@Model?.bio</div>
-                </div>
-                <div class="col-auto profile-btn">
-
-                    <a href="#" class="btn btn-primary">
-                        ویرایش
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="profile-menu">
-            <ul class="nav nav-tabs nav-tabs-solid">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#per_details_tab">درباره ما</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#password_tab">رمزعبور</a>
-                </li>
-            </ul>
-        </div>
-        <div class="tab-content profile-tab-cont">
-
-            <!-- Personal Details Tab -->
-            <div class="tab-pane fade show active" id="per_details_tab">
-
-                <!-- Personal Details -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title d-flex justify-content-between">
-                                    <span> مشخصات شخصی</span>
-                                    <a class="edit-link" data-toggle="modal" href="#edit_personal_details"><i class="fa fa-edit mr-1"></i> ویرایش </a>
-                                </h5>
-                                <div class="row">
-                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">نقش</p>
-                                    <p class="col-sm-10">متخصص</p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">نام</p>
-                                    <p class="col-sm-10">@Model?.firstName</p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">نام خانوادگی</p>
-                                    <p class="col-sm-10">@Model?.lastName</p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">تاریخ تولد</p>
-                                    <p class="col-sm-10">@Model?.birthDate_String</p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">ایمیل</p>
-                                    <p class="col-sm-10">@Model?.email</p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">موبایل</p>
-                                    <p class="col-sm-10">@Model?.phoneNumber</p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-sm-2 text-muted text-sm-right mb-0">استان</p>
-                                    <p class="col-sm-10">
-                                        @Model?.province
-                                    </p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-sm-2 text-muted text-sm-right mb-0">شهر</p>
-                                    <p class="col-sm-10">
-                                        @Model?.city
-                                    </p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-sm-2 text-muted text-sm-right mb-0">آدرس</p>
-                                    <p class="col-sm-10">
-                                        @Model?.specificAddress
-                                    </p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-sm-2 text-muted text-sm-right mb-0">کد پستی</p>
-                                    <p class="col-sm-10">
-                                        @Model?.postalCode
-                                    </p>
+    <div class="col-md-7 col-lg-8 col-xl-9">
+        <form id="expertBasicProfileForm">
+            <!-- Basic Information -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">اطلاعات پایه</h2>
+                    <div class="row form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="change-avatar">
+                                    <div class="profile-img">
+                                        <img src="~/@Model.iconSrc" alt="User Image">
+                                    </div>
+                                    <div class="upload-img">
+                                        <div class="change-photo-btn">
+                                            <span><i class="fa fa-upload"></i> بارگذاری تصویر </span>
+                                            <input type="file" class="upload" id="iconImage">
+                                        </div>
+                                        <small class="form-text text-muted">JPG ، GIF یا PNG مجاز است. حداکثر اندازه 2 مگابایت</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>نام کاربری <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" readonly="readonly" asp-for="userName">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>ایمیل<span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" asp-for="email" id="email" name="email">
+                                <span asp-validation-for="email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>نام<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" asp-for="firstName" id="firstName" name="firstName">
+                                <span asp-validation-for="firstName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label> نام خانوادگی <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" asp-for="lastName" id="lastName" name="firstName">
+                                <span asp-validation-for="lastName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>شماره تماس دوم</label>
+                                <input type="text" class="form-control" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
+                                <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>جنسیت</label>
+                                <select class="form-control select" id="gender" asp-for="gender">
+                                    <option>انتخاب</option>
+                                    <option value="@GenderType.Male">مرد</option>
+                                    <option value="@GenderType.Female">زن</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>تاریخ تولد</label>
+                                <div class="cal-icon">
+                                    <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate_String">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">لینک اینستاگرام</label>
+                                <input type="text" class="form-control" asp-for="instagram" id="instagram" name="instagram" dir="ltr">
+                                <span asp-validation-for="instagram" class="text-danger"></span>
 
-                        <!-- Edit Details Modal -->
-                        <div class="modal fade" id="edit_personal_details" aria-hidden="true" role="dialog">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"> مشخصات شخصی</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <h4 class="card-title"> درباره من </h4>
+                    <div class="form-group mb-0">
+                        <label>بیوگرافی</label>
+                        <textarea class="form-control" rows="5" asp-for="bio" id="bio" name="bio"></textarea>
+                        <span asp-validation-for="bio" class="text-danger"></span>
+                    </div>
+                    <hr />
+                    <h4 class="card-title"> اطلاعات محل کار </h4>
+                    <div class="row form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>نام محل کار</label>
+                                <input type="text" class="form-control" asp-for="clinicName" id="clinicName" name="clinicName">
+                                <span asp-validation-for="clinicName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>آدرس محل کار</label>
+                                <input type="text" class="form-control" asp-for="clinicAddress" id="clinicAddress" name="clinicAddress">
+                                <span asp-validation-for="clinicAddress" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            @if (Model.images.Count > 0)
+                            {
+                                <label>تصاویر محل کار</label>
+                                <div class="upload-wrap">
+                                    @foreach (var image in Model.images)
+                                    {
+                                        <div class="upload-images">
+                                            <a href="~/@image.Src" data-fancybox="gallery">
+                                                <img src="~/@image.Src" alt="Upload Image">
+                                            </a>
+                                            <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                                        </div>
+                                    }
+                                </div>
+                                <br />
+                            }
+                            <div class="form-group">
+                                <label>بارگذاری تصویر</label>
+                                <span id="imageUploadContainer" style="width: 100%">
+                                    <div class="col-lg-12 ">
+                                        <div class="uploader__box js-uploader__box l-center-box">
+                                            <div class="uploader__contents">
+                                                <label class="button button--secondary" for="fileinput">انتخاب تصویر</label>
+                                                <input id="fileinput" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
-                                        <form id="editExpertDetailsFromAdminForm">
-                                            <div class="row form-row">
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>نام</label>
-                                                        <input type="text" class="form-control" asp-for="firstName" id="firstName" name="firstName">
-                                                        <span asp-validation-for="firstName" class="text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>نام خانوادگی</label>
-                                                        <input type="text" class="form-control" asp-for="lastName" id="lastName" name="lastName">
-                                                        <span asp-validation-for="lastName" class="text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label>تاریخ تولد</label>
-                                                        <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate_String" name="birthDate_String">
-                                                        <span asp-validation-for="birthDate" class="text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>ایمیل</label>
-                                                        <input type="email" class="form-control" asp-for="email" id="email" name="email">
-                                                        <span asp-validation-for="email" class="text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>موبایل</label>
-                                                        <input type="text" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber" class="form-control">
-                                                        <span asp-validation-for="phoneNumber" class="text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <h5 class="form-title"><span>آدرس</span></h5>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label>آدرس</label>
-                                                        <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
-                                                        <span asp-validation-for="specificAddress" class="text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>شهر</label>
-                                                        <input type="text" class="form-control" asp-for="city" id="city" name="city">
-                                                        <span asp-validation-for="city" class="text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>استان</label>
-                                                        <input type="text" class="form-control" asp-for="province" id="province" name="province">
-                                                        <span asp-validation-for="province" class="text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="form-group">
-                                                        <label>کد پستی</label>
-                                                        <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
-                                                        <span asp-validation-for="postalCode" class="text-danger"></span>
-                                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <h4 class="card-title">جزییات تماس</h4>
+                    <div class="row form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">استان</label>
+                                <input type="text" class="form-control" asp-for="province" id="province" name="province">
+                                <span asp-validation-for="province" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">شهر</label>
+                                <input type="text" class="form-control" asp-for="city" id="city" name="city">
+                                <span asp-validation-for="city" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>آدرس</label>
+                                <input type="text" class="form-control" asp-for="specificAddress" id="specificAddress" name="specificAddress">
+                                <span asp-validation-for="specificAddress" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">کدپستی</label>
+                                <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
+                                <span asp-validation-for="postalCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <h4 class="card-title">هزینه مشاوره تلفنی</h4>
+                    <div class="form-group mb-0">
+                        <div id="pricing_select_phoneCallPrice">
+                            @if (Model.usePhoneCall)
+                            {
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_free_phoneCallPrice" name="rating_option_phoneCallPrice" value="price_free_phoneCallPrice" class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="price_free_phoneCallPrice">مشاوره تلفنی فعال باشد</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_custom_phoneCallPrice" name="rating_option_phoneCallPrice" value="custom_price_phoneCallPrice" class="custom-control-input">
+                                    <label class="custom-control-label" for="price_custom_phoneCallPrice">مشاوره تلفنی غیر فعال باشد</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_free_phoneCallPrice" name="rating_option_phoneCallPrice" value="price_free_phoneCallPrice" class="custom-control-input">
+                                    <label class="custom-control-label" for="price_free_phoneCallPrice">مشاوره تلفنی فعال باشد</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_custom_phoneCallPrice" name="rating_option_phoneCallPrice" value="custom_price_phoneCallPrice" class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="price_custom_phoneCallPrice">مشاوره تلفنی غیر فعال باشد</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @if (@Model.usePhoneCall)
+                    {
+                        <div class="row custom_price_cont" id="custom_price_cont_phoneCallPrice">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row custom_price_cont" id="custom_price_cont_phoneCallPrice" style="display: none;">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                            </div>
+                        </div>
+                    }
+                    <hr />
+                    <h4 class="card-title">هزینه مشاوره صوتی</h4>
+                    <div class="form-group mb-0">
+                        <div id="pricing_select_voiceCallPrice">
+                            @if (Model.useVoiceCall)
+                            {
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_free_voiceCallPrice" name="rating_option_voiceCallPrice" value="price_free_voiceCallPrice" class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="price_free_voiceCallPrice">مشاوره تلفنی فعال باشد</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_custom_voiceCallPrice" name="rating_option_voiceCallPrice" value="custom_price_voiceCallPrice" class="custom-control-input">
+                                    <label class="custom-control-label" for="price_custom_voiceCallPrice">مشاوره تلفنی غیر فعال باشد</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_free_voiceCallPrice" name="rating_option_voiceCallPrice" value="price_free_voiceCallPrice" class="custom-control-input">
+                                    <label class="custom-control-label" for="price_free_voiceCallPrice">مشاوره صوتی فعال باشد</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_custom_voiceCallPrice" name="rating_option_voiceCallPrice" value="custom_price_voiceCallPrice" class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="price_custom_voiceCallPrice">مشاوره صوتی غیر فعال باشد</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @if (@Model.useVoiceCall)
+                    {
+                        <div class="row custom_price_cont" id="voiceCallPrice_Custom">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row custom_price_cont" id="voiceCallPrice_Custom" style="display: none;">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                            </div>
+                        </div>
+                    }
+                    <hr />
+                    <h4 class="card-title">هزینه مشاوره متنی</h4>
+                    <div class="form-group mb-0">
+                        <div id="pricing_select_textCallPrice">
+                            @if (Model.useTextCall)
+                            {
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_free_textCallPrice" name="rating_option_textCallPrice" value="price_free_textCallPrice" class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="price_free_textCallPrice">مشاوره تلفنی فعال باشد</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_custom_textCallPrice" name="rating_option_textCallPrice" value="custom_price_textCallPrice" class="custom-control-input">
+                                    <label class="custom-control-label" for="price_custom_textCallPrice">مشاوره تلفنی غیر فعال باشد</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_free_textCallPrice" name="rating_option_textCallPrice" value="price_free_textCallPrice" class="custom-control-input">
+                                    <label class="custom-control-label" for="price_free_textCallPrice">مشاوره صوتی فعال باشد</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="price_custom_textCallPrice" name="rating_option_textCallPrice" value="custom_price_textCallPrice" class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="price_custom_textCallPrice">مشاوره صوتی غیر فعال باشد</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    @if (@Model.useTextCall)
+                    {
+                        <div class="row custom_price_cont" id="textCallPrice_Custom">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="custom_rating_input_textCallPrice" name="custom_rating_count_textCallPrice" value="@Model.textCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row custom_price_cont" id="textCallPrice_Custom" style="display: none;">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="custom_rating_input_textCallPrice" name="custom_rating_count_textCallPrice" value="@Model.textCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                            </div>
+                        </div>
+                    }
+                    <hr />
+                    <h4 class="card-title">خدمات و تخصص</h4>
+                    <div class="form-group">
+                        <label>تخصص</label>
+                        <select class="form-control" asp-items="ViewBag.Specialties" asp-for="specialtyId" id="specialtyId">
+                            <option value="0">تخصص ...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>خدمات</label>
+                        <input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="وارد کردن خدمت" name="services" asp-for="tag" id="services">
+                        <small class="form-text text-muted">توجه: برای افزودن سرویس های جدید ، اینتر را فشار داده و وارد کنید</small>
+                    </div>
+                </div>
+            </div>
+            <div class="submit-section submit-btn-bottom">
+                <button onclick="EditBasicInformation(@Model.id)" class="btn btn-primary submit-btn">ذخیره اطلاعات پایه</button>
+            </div>
+            <!-- /Basic Information -->
+        </form>
+        <form id="expertAdvancedProfileForm">
+            <!-- Advanced Information -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">سایر اطلاعات </h2>
+                    <h4 class="card-title"> تحصیلات </h4>
+                    <div class="education-info">
+                        @if (Model.studies.Count > 0)
+                        {
+                            @foreach (var study in Model.studies)
+                            {
+                                <div class="row form-row education-cont">
+                                    <div class="col-12 col-md-10 col-lg-11">
+                                        <div class="row form-row">
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>مدرک</label>
+                                                    <input type="text" class="form-control" id="degreeOfEducation" name="degreeOfEducation" value="@study?.degreeOfEducation">
                                                 </div>
                                             </div>
-                                            <input type="hidden" value="@Model.expertInformationId" id="expertInformationId" />
-                                            <button onclick="Edit()" type="submit" class="btn btn-primary btn-block">ذخیره تغییرات</button>
-                                        </form>
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>دانشگاه/موسسه</label>
+                                                    <input type="text" class="form-control" id="university" name="university" value="@study?.university">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>سال اتمام</label>
+                                                    <input type="number" class="form-control" id="endDate" name="endDate" value="@study?.endDate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-2 col-lg-1"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row form-row education-cont">
+                                <div class="col-12 col-md-10 col-lg-11">
+                                    <div class="row form-row">
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label>مدرک</label>
+                                                <input type="text" class="form-control" id="degreeOfEducation" name="degreeOfEducation">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label>دانشگاه/موسسه</label>
+                                                <input type="text" class="form-control" id="university" name="university">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label>سال اتمام</label>
+                                                <input type="number" class="form-control" id="endDate" name="endDate">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- /Edit Details Modal -->
-
+                        }
                     </div>
-
-
+                    <div class="add-more">
+                        <a href="javascript:void(0);" class="add-education"><i class="fa fa-plus-circle"></i> افزودن</a>
+                    </div>
                 </div>
-                <!-- /Personal Details -->
-
-            </div>
-            <!-- /Personal Details Tab -->
-            <!-- Change Password Tab -->
-            <div id="password_tab" class="tab-pane fade">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">‌تغییر رمز عبور</h5>
-                        <div class="row">
-                            <div class="col-md-10 col-lg-6">
-                                <form>
-                                    <div class="form-group">
-                                        <label>رمزعبور قبل</label>
-                                        <input type="password" class="form-control">
+                <hr />
+                <div class="card-body">
+                    <h4 class="card-title">تجربه</h4>
+                    <div class="experience-info">
+                        @if (Model.experiences.Count > 0)
+                        {
+                            @foreach (var experience in Model.experiences)
+                            {
+                                <div class="row form-row experience-cont">
+                                    <div class="col-12 col-md-10 col-lg-11">
+                                        <div class="row form-row">
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>نام کلینیک</label>
+                                                    <input type="text" class="form-control" id="pastClinicName" name="pastClinicName" value="@experience?.clinicName">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>از سال</label>
+                                                    <input type="text" class="form-control" id="startYear" name="startYear" value="@experience?.startYear">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label>تا سال</label>
+                                                    <input type="text" class="form-control" id="finishYear" name="finishYear" value="@experience?.finishYear">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="form-group">
+                                                    <label> نقش</label>
+                                                    <input type="text" class="form-control" id="role" name="role" value="@experience?.role">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>رمزعبور جدید</label>
-                                        <input type="password" class="form-control">
+                                    <div class="col-12 col-md-2 col-lg-1"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row form-row experience-cont">
+                                <div class="col-12 col-md-10 col-lg-11">
+                                    <div class="row form-row">
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label>نام کلینیک</label>
+                                                <input type="text" class="form-control" id="pastClinicName" name="pastClinicName">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label>از سال</label>
+                                                <input type="text" class="form-control" id="startYear" name="startYear">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label>تا سال</label>
+                                                <input type="text" class="form-control" id="finishYear" name="finishYear">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label> نقش</label>
+                                                <input type="text" class="form-control" id="role" name="role">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>تایید رمزعبور</label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                    <button onclick="Edit()" class="btn btn-primary" type="submit">ذخیره تغییرات</button>
-                                </form>
+                                </div>
                             </div>
-                        </div>
+                        }
+                    </div>
+                    <div class="add-more">
+                        <a href="javascript:void(0);" class="add-experience"><i class="fa fa-plus-circle"></i> افزودن</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="card-body">
+                    <h4 class="card-title">جایزه ها</h4>
+                    <div class="awards-info">
+                        @if (Model.prizes.Count > 0)
+                        {
+                            @foreach (var prize in Model.prizes)
+                            {
+                                <div class="row form-row awards-cont">
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <label>جایزه ها</label>
+                                            <input type="text" class="form-control" id="prizeName" name="prizeName" value="@prize?.prizeName">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <label>سال</label>
+                                            <input type="text" class="form-control" id="year" name="year" value="@prize?.year">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-2">
+                                        <label class="d-md-block d-sm-none d-none">&nbsp;</label>
+                                        <a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row form-row awards-cont">
+                                <div class="col-12 col-md-5">
+                                    <div class="form-group">
+                                        <label>جوایز ها</label>
+                                        <input type="text" class="form-control" id="prizeName" name="prizeName">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-5">
+                                    <div class="form-group">
+                                        <label>سال</label>
+                                        <input type="text" class="form-control" id="year" name="year">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="add-more">
+                        <a href="javascript:void(0);" class="add-award"><i class="fa fa-plus-circle"></i> افزودن</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="card-body">
+                    <h4 class="card-title">عضویت ها</h4>
+                    <div class="membership-info">
+                        @if (Model.memberships.Count > 0)
+                        {
+                            @foreach (var membership in Model.memberships)
+                            {
+                                <div class="row form-row membership-cont">
+                                    <div class="col-12 col-md-10 col-lg-5">
+                                        <div class="form-group">
+                                            <label>عضویت ها</label>
+                                            <input type="text" class="form-control" id="membershipName" name="membershipName" value="@membership?.membershipName">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-2">
+                                        <label class="d-md-block d-sm-none d-none">&nbsp;</label>
+                                        <a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row form-row membership-cont">
+                                <div class="col-12 col-md-10 col-lg-5">
+                                    <div class="form-group">
+                                        <label>عضویت ها</label>
+                                        <input type="text" class="form-control" id="membershipName" name="membershipName">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="add-more">
+                        <a href="javascript:void(0);" class="add-membership"><i class="fa fa-plus-circle"></i> افزودن</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="card-body">
+                    <h4 class="card-title"> ثبت نام ها </h4>
+                    <div class="registrations-info">
+                        @if (Model.subscriptions.Count > 0)
+                        {
+                            @foreach (var subscription in Model.subscriptions)
+                            {
+                                <div class="row form-row reg-cont">
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <label> ثبت نام ها </label>
+                                            <input type="text" class="form-control" id="subscriptionName" name="subscriptionName" value="@subscription?.subscriptionName">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-group">
+                                            <label>سال</label>
+                                            <input type="text" class="form-control" id="subscriptionYear" name="subscriptionYear" value="@subscription?.subscriptionYear">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-2">
+                                        <label class="d-md-block d-sm-none d-none">&nbsp;</label>
+                                        <a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row form-row reg-cont">
+                                <div class="col-12 col-md-5">
+                                    <div class="form-group">
+                                        <label> ثبت نام ها </label>
+                                        <input type="text" class="form-control" id="subscriptionName" name="subscriptionName">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-5">
+                                    <div class="form-group">
+                                        <label>سال</label>
+                                        <input type="text" class="form-control" id="subscriptionYear" name="subscriptionYear">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="add-more">
+                        <a href="javascript:void(0);" class="add-reg"><i class="fa fa-plus-circle"></i> افزودن</a>
                     </div>
                 </div>
             </div>
-            <!-- /Change Password Tab -->
-
-        </div>
+            <div class="submit-section submit-btn-bottom">
+                <button onclick="EditAdvancedInformation(@Model.id)" type="submit" class="btn btn-primary submit-btn">ذخیره سایر اطلاعات</button>
+            </div>
+            <!-- /Advanced Information -->
+        </form>
     </div>
 </div>
-
-
 @section Scripts
 {
+
+<script src="~/assets/js/ExpertPanel/layout.js"></script>
+
 <script>
+    var imageFileList = [];
 
+    function addFileToList(file) {
+        imageFileList.push(file);
+    }
 
-    function Edit() {
-        if ($("#editExpertDetailsFromAdminForm").valid()) {
+    function removeFileFromList(id) {
+        for (var i = 0; i < imageFileList.length; i++) {
+            if (i === parseInt(id)) {
+                imageFileList.splice(i, 1);
+                break;
+            }
+        }
+    }
 
-            var editData = new FormData();
+    function EditBasicInformation(id) {
 
-            editData.append("firstName", $("#editExpertDetailsFromAdminForm #firstName").val());
-            editData.append("lastName", $("#editExpertDetailsFromAdminForm #lastName").val());
-            editData.append("birthDate_String", $("#editExpertDetailsFromAdminForm #birthDate_String").val());
-            editData.append("email", $("#editExpertDetailsFromAdminForm #email").val());
-            editData.append("phoneNumber", $("#editExpertDetailsFromAdminForm #phoneNumber").val());
-            editData.append("specificAddress", $("#editExpertDetailsFromAdminForm #specificAddress").val());
-            editData.append("province", $("#editExpertDetailsFromAdminForm #province").val());
-            editData.append("city", $("#editExpertDetailsFromAdminForm #city").val());
-            editData.append("postalCode", $("#editExpertDetailsFromAdminForm #postalCode").val());
-            editData.append("expertInformationId", $("#editExpertDetailsFromAdminForm #expertInformationId").val());
+        if ($("#expertBasicProfileForm").valid()) {
 
-            $("#editExpertDetailsFromAdminForm").submit(function(event) {
+            var genderSelect = document.getElementById('gender');
+
+            var expertProfileData = new FormData();
+
+            expertProfileData.append("firstName", $("#expertBasicProfileForm #firstName").val());
+            expertProfileData.append("lastName", $("#expertBasicProfileForm #lastName").val());
+            expertProfileData.append("phoneNumber", $("#expertBasicProfileForm #phoneNumber").val());
+            expertProfileData.append("email", $("#expertBasicProfileForm #email").val());
+            expertProfileData.append("specificAddress", $('input[name=specificAddress]').val());
+            expertProfileData.append("province", $('input[name=province]').val());
+            expertProfileData.append("city", $('input[name=city]').val());
+            expertProfileData.append("clinicName", $("#expertBasicProfileForm #clinicName").val());
+            expertProfileData.append("clinicAddress", $("#expertBasicProfileForm #clinicAddress").val());
+            expertProfileData.append("birthDate_String", $("#expertBasicProfileForm #birthDate_String").val());
+            expertProfileData.append("postalCode", $('input[name=postalCode]').val());
+            expertProfileData.append("bio", $("#expertBasicProfileForm #bio").val());
+            expertProfileData.append("instagram", $('input[name=instagram]').val());
+            expertProfileData.append("iconImage", $("#expertBasicProfileForm #iconImage").get(0).files[0]);
+            expertProfileData.append("specialtyId", BigInt($("#expertBasicProfileForm #specialtyId").val()));
+            expertProfileData.append("tag", $("#expertBasicProfileForm #services").val());
+            expertProfileData.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
+            expertProfileData.append("id", id);
+
+            for (var i = 0; i < imageFileList.length; i++) {
+                expertProfileData.append("image",imageFileList[i]);
+            }
+
+            if (document.getElementById('price_free_phoneCallPrice').checked) {
+                expertProfileData.append("usePhoneCall", true);
+                expertProfileData.append("phoneCallPrice", $('input[name=custom_rating_count_phoneCallPrice]').val());
+
+            }
+            else {
+                expertProfileData.append("usePhoneCall", false);
+            }
+
+            if (document.getElementById('price_free_voiceCallPrice').checked) {
+                expertProfileData.append("useVoiceCall", true);
+                expertProfileData.append("voiceCallPrice", $('input[name=custom_rating_count_voiceCallPrice]').val());
+
+            }
+            else {
+                expertProfileData.append("useVoiceCall", false);
+            }
+
+            if (document.getElementById('price_free_textCallPrice').checked) {
+                expertProfileData.append("useTextCall", true);
+                expertProfileData.append("textCallPrice", $('input[name=custom_rating_count_textCallPrice]').val());
+            }
+            else {
+                expertProfileData.append("useTextCall", false);
+            }
+
+            $( "#expertBasicProfileForm" ).submit(function( event ) {
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("EditExpertDetails", "Experts")',
+                    url: '@Url.Action("EditBasicInformation", "Experts")',
                     processData: false,
                     contentType: false,
                     dataType: 'json',
                     cache: false,
-                    data: editData,
+                    data: expertProfileData,
                     beforeSend: function(x) {
-                        $('#loading').show(0);
+                        $('#loading').show();
                     },
                     success: function(data) {
                         if (data.isSuccess == true) {
@@ -289,10 +748,10 @@
                         }
                     },
                     complete: function() {
-                        $('#loading').hide(0);
+                        $('#loading').hide();
                     },
                     fail: function() {
-                        $('#loading').hide(0);
+                        $('#loading').hide();
                     },
                     error: function(request, status, error) {
                         alert(request.responseText);
@@ -303,6 +762,221 @@
         }
     }
 
+    function EditAdvancedInformation(Id) {
 
+        if ($("#expertAdvancedProfileForm").valid()) {
+
+            var studies = GetStudies();
+            var experiences = GetExperiences();
+            var prizes = GetPrizes();
+            var memberships = GetMemberships();
+            var subscriptions = GetSubscriptions();
+            var id = Id;
+
+            var expertPostData = {
+                'id': id,
+                'studies': studies,
+                'experiences': experiences,
+                'prizes': prizes,
+                'memberships': memberships,
+                'subscriptions': subscriptions,
+            };
+
+            $( "#expertAdvancedProfileForm" ).submit(function( event ) {
+                $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '@Url.Action("EditAdvancedInformation","Experts")',
+                    data: expertPostData,
+                    beforeSend: function(x) {
+                        $('#loading').show(0);
+                    },
+                    success: function(data) {
+                        if (data.isSuccess == true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        } else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning');
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide(0);
+                    },
+                    fail: function() {
+                        $('#loading').hide(0);
+                    },
+                    error: function(request, status, error) {
+                        $('#loading').hide(0);
+                        alert(request.responseText);
+                    }
+                });
+                event.preventDefault();
+            });
+        }
+    }
+
+    function GetStudies() {
+
+
+        var degreesOfEducation = $('input[name^=degreeOfEducation]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var universities = $('input[name^=university]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var endDates = $('input[name^=endDate]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var studies = [];
+
+        for (let  i = 0; i < degreesOfEducation.length; i++) {
+
+            studies.push({ degreeOfEducation: degreesOfEducation[i], university: universities[i], endDate: endDates[i] });
+
+        }
+
+        return studies;
+    }
+
+    function GetExperiences() {
+        var clinicNames = $('input[name^=pastClinicName]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var startYears = $('input[name^=startYear]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var finishYears = $('input[name^=finishYear]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var roles = $('input[name^=role]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var experiences = [];
+
+        for (let  i = 0; i < clinicNames.length; i++) {
+
+            experiences.push({ clinicName: clinicNames[i], startYear: startYears[i], finishYear: finishYears[i], role: roles[i] });
+
+        }
+
+        return experiences;
+    }
+
+    function GetPrizes() {
+        var prizeNames = $('input[name^=prizeName]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var years = $('input[name^=year]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var prizes = [];
+
+        for (let  i = 0; i < prizeNames.length; i++) {
+
+            prizes.push({ prizeName: prizeNames[i], year: years[i] });
+
+        }
+
+        return prizes;
+    }
+
+    function GetMemberships() {
+        var membershipNames = $('input[name^=membershipName]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var memberships = [];
+
+        for (let  i = 0; i < membershipNames.length; i++) {
+
+            memberships.push({ membershipName: membershipNames[i] });
+
+        }
+
+        return memberships;
+    }
+
+    function GetSubscriptions() {
+        var subscriptionNames = $('input[name^=subscriptionName]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var subscriptionYears = $('input[name^=subscriptionYear]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var subscriptions = [];
+
+        for (let  i = 0; i < subscriptionNames.length; i++) {
+
+            subscriptions.push({ subscriptionName: subscriptionNames[i], subscriptionYear: subscriptionYears[i] });
+
+        }
+
+        return subscriptions;
+    }
+
+    function DeleteExpertImage(Id) {
+        swal.fire({
+            title: 'حذف تصویر',
+            text: "متخصص گرامی از حذف تصویر مطمئن هستید؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'تایید',
+            cancelButtonText: 'انصراف'
+        }).then((result) => {
+            if (result.value) {
+                var postData = {
+                    'id': Id
+                };
+                $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: "POST",
+                    url: "@Url.Action("RemoveExpertImage", "Experts")",
+                    data: postData,
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire(
+                                'موفق!',
+                                data.message,
+                                'success'
+                            ).then(function(isConfirm) {
+                                location.reload();
+                            });
+                        } else {
+                            swal.fire(
+                                'هشدار!',
+                                data.message,
+                                'warning'
+                            );
+
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+
+                });
+            }
+        });
+    }
 </script>
 }

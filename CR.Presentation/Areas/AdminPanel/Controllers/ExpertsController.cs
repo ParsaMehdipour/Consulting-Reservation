@@ -3,10 +3,13 @@ using CR.Core.DTOs.Experts;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.Users;
 using CR.Core.Services.Impl.Experts;
+using CR.Core.Services.Interfaces.ExpertImages;
 using CR.Core.Services.Interfaces.Experts;
+using CR.Core.Services.Interfaces.Specialites;
 using CR.Core.Services.Interfaces.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CR.Presentation.Areas.AdminPanel.Controllers
 {
@@ -19,18 +22,33 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         private readonly IRegisterExpertFromAdminService _registerExpertFromAdminService;
         private readonly IGetExpertDetailsForAdminService _getExpertDetailsForAdminService;
         private readonly IEditExpertDetailsFromAdminService _editExpertDetailsFromAdminService;
+        private readonly IGetExpertDetailsForProfileService _getExpertDetailsForProfileService;
+        private readonly IGetSpecialtiesForExpertProfileDropDownService _getSpecialtiesForExpertProfileDropDownService;
+        private readonly IEditBasicExpertDetailsService _editBasicExpertDetailsService;
+        private readonly IEditAdvancedExpertDetailsService _editAdvancedExpertDetailsService;
+        private readonly IRemoveExpertImagesService _removeExpertImagesService;
 
         public ExpertsController(IGetAllExpertsService getAllExpertsService
         , IChangeExpertStatusService changeExpertStatusService
         ,IRegisterExpertFromAdminService registerExpertFromAdminService
         ,IGetExpertDetailsForAdminService getExpertDetailsForAdminService
-        ,IEditExpertDetailsFromAdminService editExpertDetailsFromAdminService)
+        ,IEditExpertDetailsFromAdminService editExpertDetailsFromAdminService
+        ,IGetExpertDetailsForProfileService getExpertDetailsForProfileService
+        ,IGetSpecialtiesForExpertProfileDropDownService getSpecialtiesForExpertProfileDropDownService
+        ,IEditBasicExpertDetailsService editBasicExpertDetailsService
+        ,IEditAdvancedExpertDetailsService editAdvancedExpertDetailsService
+        ,IRemoveExpertImagesService removeExpertImagesService)
         {
             _getAllExpertsService = getAllExpertsService;
             _changeExpertStatusService = changeExpertStatusService;
             _registerExpertFromAdminService = registerExpertFromAdminService;
             _getExpertDetailsForAdminService = getExpertDetailsForAdminService;
             _editExpertDetailsFromAdminService = editExpertDetailsFromAdminService;
+            _getExpertDetailsForProfileService = getExpertDetailsForProfileService;
+            _getSpecialtiesForExpertProfileDropDownService = getSpecialtiesForExpertProfileDropDownService;
+            _editBasicExpertDetailsService = editBasicExpertDetailsService;
+            _editAdvancedExpertDetailsService = editAdvancedExpertDetailsService;
+            _removeExpertImagesService = removeExpertImagesService;
         }
 
         public IActionResult Index(int page = 1, int pageSize = 20)
@@ -65,15 +83,33 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         [HttpGet]
         public IActionResult ExpertDetails(long id)
         {
-            var model = _getExpertDetailsForAdminService.Execute(id).Data;
+            ViewBag.Specialties = new SelectList(_getSpecialtiesForExpertProfileDropDownService.Execute().Data, "Id", "Name");
+
+            var model = _getExpertDetailsForProfileService.Execute(id).Data;
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult EditExpertDetails(ExpertDetailsForAdminDto request)
+        public IActionResult EditBasicInformation(RequestEditBasicExpertDetailsDto request)
         {
-            var result = _editExpertDetailsFromAdminService.Execute(request);
+            var result = _editBasicExpertDetailsService.Execute(request);
+
+            return new JsonResult(result);
+        }
+
+        [HttpPost]
+        public IActionResult EditAdvancedInformation(RequestEditAdvancedExpertDetailsDto request)
+        {
+            var result = _editAdvancedExpertDetailsService.Execute(request);
+
+            return new JsonResult(result);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveExpertImage(long id)
+        {
+            var result = _removeExpertImagesService.Execute(id);
 
             return new JsonResult(result);
         }
