@@ -21,7 +21,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
     public class ProfileController : Controller
     {
         private readonly IGetUserFlagService _getUserFlagService;
-        private readonly IGetExpertDetailsForProfileService _getExpertDetailsForSiteService;
+        private readonly IGetExpertDetailsForProfileService _getExpertDetailsForProfileService;
         private readonly IEditExpertDetailsService _editExpertDetailsService;
         private readonly UserManager<User> _userManager;
         private readonly IGetSpecialtiesForExpertProfileDropDownService _getSpecialtiesForExpertProfileDropDownService;
@@ -32,15 +32,15 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
 
         public ProfileController(IHttpContextAccessor contextAccessor
             , IGetUserFlagService getUserFlagService
-            ,IGetExpertDetailsForProfileService getExpertDetailsForSiteService
-            ,IEditExpertDetailsService editExpertDetailsService
+            ,IGetExpertDetailsForProfileService getExpertDetailsForProfileService
+            , IEditExpertDetailsService editExpertDetailsService
             ,UserManager<User> userManager
             ,IGetSpecialtiesForExpertProfileDropDownService getSpecialtiesForExpertProfileDropDownService
             ,IEditBasicExpertDetailsService editBasicExpertDetailsService
             ,IEditAdvancedExpertDetailsService editAdvancedExpertDetailsService
             ,IRemoveExpertImagesService removeExpertImagesService)
         {
-            _getExpertDetailsForSiteService = getExpertDetailsForSiteService;
+            _getExpertDetailsForProfileService = getExpertDetailsForProfileService;
             _editExpertDetailsService = editExpertDetailsService;
             _userManager = userManager;
             _getSpecialtiesForExpertProfileDropDownService = getSpecialtiesForExpertProfileDropDownService;
@@ -67,7 +67,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
 
             var userId = ClaimUtility.GetUserId(User).Value;
 
-            var model = _getExpertDetailsForSiteService.Execute(userId).Data;
+            var model = _getExpertDetailsForProfileService.Execute(userId).Data;
 
             return View(model);
         }
