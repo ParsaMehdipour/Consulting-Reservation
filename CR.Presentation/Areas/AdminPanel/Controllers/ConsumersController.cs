@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CR.Core.DTOs.Consumers;
+using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.Users;
 using CR.Core.Services.Impl.Users;
 using CR.Core.Services.Interfaces.Consumers;
@@ -15,18 +16,21 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
     {
         private readonly IGetAllConsumersService _getAllConsumersService;
         private readonly IRegisterConsumerFromAdminService _registerConsumerFromAdminService;
-        private readonly IGetConsumerDetailsForAdminService _getConsumerDetailsForAdminService;
-        private readonly IEditConsumerDetailsFromAdminService _editConsumerDetailsFromAdminService;
+        private readonly IGetConsumerDetailsForProfileService _getConsumerDetailsForProfileService;
+        private readonly IEditConsumerDetailsService _editConsumerDetailsService;
+        private readonly IAddConsumerDetailsService _addConsumerDetailsService;
 
         public ConsumersController(IGetAllConsumersService getAllConsumersService
         ,IRegisterConsumerFromAdminService registerConsumerFromAdminService
-        ,IGetConsumerDetailsForAdminService getConsumerDetailsForAdminService
-        ,IEditConsumerDetailsFromAdminService editConsumerDetailsFromAdminService)
+        ,IGetConsumerDetailsForProfileService getConsumerDetailsForProfileService
+        ,IEditConsumerDetailsService editConsumerDetailsService
+        ,IAddConsumerDetailsService addConsumerDetailsService)
         {
             _getAllConsumersService = getAllConsumersService;
             _registerConsumerFromAdminService = registerConsumerFromAdminService;
-            _getConsumerDetailsForAdminService = getConsumerDetailsForAdminService;
-            _editConsumerDetailsFromAdminService = editConsumerDetailsFromAdminService;
+            _getConsumerDetailsForProfileService = getConsumerDetailsForProfileService;
+            _editConsumerDetailsService = editConsumerDetailsService;
+            _addConsumerDetailsService = addConsumerDetailsService;
         }
 
         public IActionResult Index(int page = 1, int pageSize = 20)
@@ -53,15 +57,25 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         [HttpGet]
         public IActionResult ConsumerDetails(long id)
         {
-            var model = _getConsumerDetailsForAdminService.Execute(id).Data;
+            ViewData["id"] = id;
+
+            var model = _getConsumerDetailsForProfileService.Execute(id).Data.ConsumerDetailsForSiteDto;
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult EditConsumerDetails(ConsumerDetailsForAdminDto request)
+        public IActionResult EditConsumerDetails(RequestEditConsumerDetailsDto request)
         {
-            var result = _editConsumerDetailsFromAdminService.Execute(request);
+            var result = _editConsumerDetailsService.Execute(request);
+
+            return new JsonResult(result);
+        }
+
+        [HttpPost]
+        public IActionResult AddProfileDetails(RequestAddConsumerDetailsDto request)
+        {
+            var result = _addConsumerDetailsService.Execute(request);
 
             return new JsonResult(result);
         }
