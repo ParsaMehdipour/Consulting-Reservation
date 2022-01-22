@@ -1,0 +1,94 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using CR.DataAccess.Enums
+@model CR.Core.DTOs.ResultDTOs.ResultGetAllTimingsForAdminPanelDto
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">زمانبندی ها</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item active">زمانبندی ها</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                @if (Model.TimingDtos != null)
+                {
+                    <div class="table-responsive">
+                        <table class="datatable table table-hover table-center mb-0">
+                            <thead>
+                            <tr>
+                                <th class="text-center">شروع </th>
+                                <th class="text-center">پایان</th>
+                                <th class="text-center">نوع</th>
+                                <th class="text-right"> اقدامات </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var timing in Model.TimingDtos)
+                            {
+                                <tr>
+                                    <td class="text-center">@timing.Start</td>
+                                    <td class="text-center">@timing.End</td>
+                                    @if (timing.TimingType == TimingType.ShortSpan)
+                                    {
+                                        <td class="text-center">
+                                            <span class="badge badge-pill bg-warning inv-badge">کوتاه مدت</span>
+                                        </td>
+                                    }
+                                    else if (timing.TimingType == TimingType.MediumSpan)
+                                    {
+                                        <td class="text-center">
+                                            <span class="badge badge-pill bg-info inv-badge">میان مدت</span>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center">
+                                            <span class="badge badge-pill bg-success inv-badge">بلند مدت</span>
+                                        </td>
+                                    }
+                                    <td class="text-right">
+                                        <div class="actions">
+                                            <a class="btn btn-sm bg-danger-light" data-toggle="modal" href="#delete_modal">
+                                                <i class="fe fe-trash"></i> حذف
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <h3>اطلاعاتی جهت نمایش یافت نشد</h3>
+                }
+            </div>
+        </div>
+        <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    show-first-numbered-page="true"
+                    show-last-numbered-page="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize"
+                    gap-size="2">
+            </paging>
+        </div>
+    </div>
+</div>
