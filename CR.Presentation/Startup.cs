@@ -122,9 +122,12 @@ namespace CR.Presentation
             services.AddScoped<IEditAdvancedExpertDetailsService, EditAdvancedExpertDetailsService>();
             //Timings
             services.AddScoped<IGetTimingsForDropDownService, GetTimingsForDropDownService>();
+            services.AddScoped<IAddNewTimingService, AddNewTimingService>();
+            services.AddScoped<IGetAllTimingsForAdminService, GetAllTimingsForAdminService>();
             //ExpertAvailabilities
             services.AddScoped<IAddDayService, AddDayService>();
             services.AddScoped<IGetDaysService, GetDaysService>();
+            services.AddScoped<IGetDayDetailsService, GetDayDetailsService>();
             services.AddScoped<IAddTimeOfDayService, AddTimeOfDayService>();
             services.AddScoped<IRemoveTimeOfDayService, RemoveTimeOfDayService>();
             services.AddScoped<IGetExpertDetailsForReservationService, GetExpertDetailsForReservationService>();
