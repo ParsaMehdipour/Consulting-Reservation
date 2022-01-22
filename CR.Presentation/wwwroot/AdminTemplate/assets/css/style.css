@@ -4677,3 +4677,9 @@ table.table-inbox tbody tr.checked {
 	overflow-y: auto;
 	text-align: right;
 }
+.header .user-menu {
+    float: left;
+    margin: 0;
+    position: relative;
+    z-index: 99;
+}
