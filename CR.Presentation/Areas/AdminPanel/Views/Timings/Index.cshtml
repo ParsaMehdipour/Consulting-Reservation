@@ -5,17 +5,19 @@
 <!-- Page Header -->
 <div class="page-header">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-7 col-auto">
             <h3 class="page-title">زمانبندی ها</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
-                <li class="breadcrumb-item active">زمانبندی ها</li>
+                <li class="breadcrumb-item"><a href="index.html">داشبورد</a></li>
+                <li class="breadcrumb-item active">زمانبندی</li>
             </ul>
+        </div>
+        <div class="col-sm-5 col">
+            <a href="#add_time_slot" data-toggle="modal" class="btn btn-primary float-right mt-2">افزودن</a>
         </div>
     </div>
 </div>
 <!-- /Page Header -->
-
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
@@ -25,46 +27,46 @@
                     <div class="table-responsive">
                         <table class="datatable table table-hover table-center mb-0">
                             <thead>
-                            <tr>
-                                <th class="text-center">شروع </th>
-                                <th class="text-center">پایان</th>
-                                <th class="text-center">نوع</th>
-                                <th class="text-right"> اقدامات </th>
-                            </tr>
+                                <tr>
+                                    <th class="text-center">شروع </th>
+                                    <th class="text-center">پایان</th>
+                                    <th class="text-center">نوع</th>
+                                    <th class="text-right"> اقدامات </th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach (var timing in Model.TimingDtos)
-                            {
-                                <tr>
-                                    <td class="text-center">@timing.Start</td>
-                                    <td class="text-center">@timing.End</td>
-                                    @if (timing.TimingType == TimingType.ShortSpan)
-                                    {
-                                        <td class="text-center">
-                                            <span class="badge badge-pill bg-warning inv-badge">کوتاه مدت</span>
+                                @foreach (var timing in Model.TimingDtos)
+                                {
+                                    <tr>
+                                        <td class="text-center">@timing.startTime</td>
+                                        <td class="text-center">@timing.endTime</td>
+                                        @if (timing.timingType == TimingType.ShortSpan)
+                                        {
+                                            <td class="text-center">
+                                                <span class="badge badge-pill bg-warning inv-badge">کوتاه مدت</span>
+                                            </td>
+                                        }
+                                        else if (timing.timingType == TimingType.MediumSpan)
+                                        {
+                                            <td class="text-center">
+                                                <span class="badge badge-pill bg-info inv-badge">میان مدت</span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">
+                                                <span class="badge badge-pill bg-success inv-badge">بلند مدت</span>
+                                            </td>
+                                        }
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a onclick="Remove(@timing.id)" class="btn btn-sm bg-danger-light">
+                                                    <i class="fe fe-trash"></i> حذف
+                                                </a>
+                                            </div>
                                         </td>
-                                    }
-                                    else if (timing.TimingType == TimingType.MediumSpan)
-                                    {
-                                        <td class="text-center">
-                                            <span class="badge badge-pill bg-info inv-badge">میان مدت</span>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td class="text-center">
-                                            <span class="badge badge-pill bg-success inv-badge">بلند مدت</span>
-                                        </td>
-                                    }
-                                    <td class="text-right">
-                                        <div class="actions">
-                                            <a class="btn btn-sm bg-danger-light" data-toggle="modal" href="#delete_modal">
-                                                <i class="fe fe-trash"></i> حذف
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -92,3 +94,235 @@
         </div>
     </div>
 </div>
+
+<!-- Add Time Slot Modal -->
+<div class="modal fade custom-modal" id="add_time_slot">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">افزودن زمانبندی</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="hours-info">
+                    <div class="row form-row hours-cont">
+                        <div class="col-12 col-md-10">
+                            <div class="row form-row">
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group">
+                                        <label>زمان شروع</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control time" id="startTime" name="startTime">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group">
+                                        <label>زمان پایان</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control time" id="endTime" name="endTime">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group">
+                                        <label>نوع زمانبندی</label>
+                                        <div class="form-group">
+                                            <select class="form-control" name="timingType">
+                                                <option value="0">کوتاه مدت</option>
+                                                <option value="1">میان مدت</option>
+                                                <option value="2">بلند مدت</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-more mb-3">
+                    <a href="javascript:void(0);" class="add-hours-New"><i class="fa fa-plus-circle"></i> افزودن</a>
+                </div>
+                <div class="submit-section text-center">
+                    <button onclick="AddTimings()" type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add Time Slot Modal -->
+@section Scripts
+{
+<script src="~/assets/js/ExpertPanel/Availabilities/Availabilities.js"></script>
+
+<script>
+
+    $(".hours-info").on('click', '.trash', function () {
+        $(this).closest('.hours-cont').remove();
+        return false;
+    });
+
+    $(".add-hours-New").on('click', function () {
+        var hourscontent =
+            '<div class="row form-row hours-cont">' +
+                '<div class="col-12 col-md-10">' +
+                    '<div class="row form-row">' +
+                        '<div class="col-12 col-md-4">' +
+                            '<div class="form-group">' +
+                            '<label>زمان شروع</label>' +
+                            '<div class="form-group">'+
+                                '<input type="text" class="form-control time" id="startTime" name="startTime">'+
+                            '</div>'+
+                        '</div>' +
+                    '</div>' +
+                    '<div class="col-12 col-md-4">' +
+                        '<div class="form-group">' +
+                            '<label>زمان پایان</label>' +
+                            '<div class="form-group">'+
+                                '<input type="text" class="form-control time" id="endTime" name="endTime">'+
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="col-12 col-md-4">' +
+                        '<div class="form-group">' +
+                             '<label>نوع زمانبندی</label>' +
+                                '<select class="form-control" name="timingType">' +
+                                    '<option value="0">کوتاه مدت</option>' +
+                                    '<option value="1">میان مدت</option>' +
+                                    '<option value="2">بلند مدت</option>' +
+                                '</select>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
+            '</div>';
+
+        $(".hours-info").append(hourscontent);
+
+        $('.time').mask('00:00:00');
+
+        return false;
+    });
+
+    function AddTimings() {
+
+        var startHours = $('input[name^=startTime]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var endHours = $('input[name^=endTime]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var timingTypes = $('select[name^=timingType]').map(function(idx, elem) {
+            return $(elem).val();
+        }).get();
+
+        var timings = [];
+
+        for (let  i = 0; i < startHours.length; i++) {
+
+            timings.push({ startTime: startHours[i], endTime: endHours[i], timingType: timingTypes[i] });
+
+        }
+
+        var postData = {
+            'timings': timings
+        };
+
+        $.ajax({
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            type: 'POST',
+            url: '@Url.Action("AddTimings","Timings")',
+            data: postData,
+            beforeSend: function(x) {
+                $('#loading').show(0);
+            },
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            complete: function() {
+                $('#loading').hide(0);
+            },
+            fail: function() {
+                $('#loading').hide(0);
+            },
+            error: function(request, status, error) {
+                $('#loading').hide(0);
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function Remove(id) {
+        swal.fire({
+            title: 'حذف زمانبندی',
+            text: "مدیر گرامی از حذف زمانبندی مطمئن هستید؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'تایید',
+            cancelButtonText: 'انصراف'
+        }).then((result) => {
+            if (result.value) {
+                var postData = {
+                    'id': id,
+                };
+                $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: "POST",
+                    url: "@Url.Action("Remove", "Timings")",
+                    data: postData,
+                    beforeSend: function(x) {
+                        $('#loading').show(0);
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire(
+                                'موفق!',
+                                data.message,
+                                'success'
+                            ).then(function(isConfirm) {
+                                location.reload();
+                            });
+                        } else {
+                            swal.fire(
+                                'هشدار!',
+                                data.message,
+                                'warning'
+                            );
+
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide(0);
+                    },
+                    fail: function() {
+                        $('#loading').hide(0);
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+
+                });
+            }
+        });
+    }
+</script>
+}

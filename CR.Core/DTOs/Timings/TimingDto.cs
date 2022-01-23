@@ -4,9 +4,9 @@ namespace CR.Core.DTOs.Timings
 {
     public class TimingDto
     {
-        public long Id { get; set; }
-        public string Start { get; set; }
-        public string End { get; set; }
-        public TimingType TimingType { get; set; }
+        public long id { get; set; }
+        public string startTime { get; set; }
+        public string endTime { get; set; }
+        public TimingType timingType { get; set; }
     }
 }
