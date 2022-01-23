@@ -173,7 +173,7 @@ namespace CR.Core.Services.Impl.Experts
                     Message = "اطلاعات با موفقیت ذخیره شد"
                 };
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 transaction.Rollback();
 

@@ -22,12 +22,13 @@ namespace CR.Core.Services.Impl.Timings
         {
             var timings = _context.Timings
                 .OrderByDescending(t=>t.TimingType)
+                .ThenBy(t=>t.EndTime)
                 .Select(t => new TimingDto()
                 {
-                    Start = t.StartTime_String,
-                    End = t.EndTime_String,
-                    TimingType = t.TimingType,
-                    Id = t.Id
+                    startTime = t.StartTime_String,
+                    endTime = t.EndTime_String,
+                    timingType = t.TimingType,
+                    id = t.Id
                 })
                 .AsEnumerable()
                 .ToPaged(Page, PageSize, out var rowCount)
