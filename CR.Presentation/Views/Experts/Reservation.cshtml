@@ -2,6 +2,9 @@
 @model CR.Core.DTOs.Experts.ExpertDetailsForReservationDto
 @{
 }
+
+<link rel="stylesheet" href="~/assets/css/Reservation.css" />
+
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
     <div class="container-fluid">
@@ -22,10 +25,8 @@
 <!-- Page Content -->
 <div class="content">
     <div class="container">
-
         <div class="row">
             <div class="col-12">
-
                 <div class="card">
                     <div class="card-body">
                         <div class="booking-doc-info">
@@ -50,7 +51,7 @@
                                         <label>تاریخ نوبت</label>
                                         <div class="cal-icon">
                                             <input type="text" class="form-control datetimepicker" id="passedDate" name="passedDate">
-                                            <input type="hidden" value="@Model.ExpertInformationId" id="expertInformationId" name="expertInformationId"/>
+                                            <input type="hidden" value="@Model.ExpertInformationId" id="expertInformationId" name="expertInformationId" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -63,6 +64,25 @@
                         </div>
                     </div>
                 </div>
+                <hr/>
+                <div class="wrapper" style="margin-right:31%">
+                    <input type="radio" name="select" id="option-1" value="0" checked>
+                    <input type="radio" name="select" id="option-2" value="1">
+                    <input type="radio" name="select" id="option-3" value="2">
+                    <label for="option-1" class="option option-1">
+                        <div class="dot"></div>
+                        <span>کوتاه مدت</span>
+                    </label>
+                    <label for="option-2" class="option option-2">
+                        <div class="dot"></div>
+                        <span>میان مدت</span>
+                    </label>
+                    <label for="option-3" class="option option-3">
+                        <div class="dot"></div>
+                        <span>بلند مدت</span>
+                    </label>
+                </div>
+                <hr/>
                 <div class="row">
                     @if (Model.ThisDate == null)
                     {
@@ -81,7 +101,6 @@
                 </div>
                 <!-- Schedule Widget -->
                 <div class="card booking-schedule schedule-widget">
-
                     <!-- Schedule Header -->
                     <div class="schedule-header">
                         <div class="row">
