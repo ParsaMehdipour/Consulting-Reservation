@@ -101,7 +101,7 @@ namespace CR.Core.Services.Impl.Experts
                 expertInformation.LastName = request.lastName;
                 expertInformation.Bio = request.bio;
                 expertInformation.Specialty = speciality;
-                expertInformation.SpecialtyId = speciality.Id;
+                expertInformation.SpecialtyId = speciality?.Id;
                 expertInformation.BirthDate = request.birthDate_String.ToGeorgianDateTime();
                 expertInformation.BirthDate_String = request.birthDate_String;
                 expertInformation.City = request.city;
