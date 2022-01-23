@@ -23,35 +23,35 @@ namespace CR.Core.Services.Impl.Timings
 
             if (timingType == TimingType.ShortSpan)
             {
-                data = _context.Timings.Where(t => t.TimingType == TimingType.ShortSpan)
+                data = _context.Timings.Where(t => t.TimingType == TimingType.ShortSpan).OrderBy(t=>t.EndTime)
                     .Select(t => new TimingDto
                     {
-                        Id = t.Id,
-                        Start = t.StartTime_String,
-                        End = t.EndTime_String,
-                        TimingType = t.TimingType
+                        id = t.Id,
+                        startTime = t.StartTime_String,
+                        endTime = t.EndTime_String,
+                        timingType = t.TimingType
                     }).ToList();
             }
             else if (timingType == TimingType.MediumSpan)
             {
-                data = _context.Timings.Where(t => t.TimingType == TimingType.MediumSpan)
+                data = _context.Timings.Where(t => t.TimingType == TimingType.MediumSpan).OrderBy(t => t.EndTime)
                     .Select(t => new TimingDto
                     {
-                        Id = t.Id,
-                        Start = t.StartTime_String,
-                        End = t.EndTime_String,
-                        TimingType = t.TimingType
+                        id = t.Id,
+                        startTime = t.StartTime_String,
+                        endTime = t.EndTime_String,
+                        timingType = t.TimingType
                     }).ToList();
             }
             else
             {
-                data = _context.Timings.Where(t => t.TimingType == TimingType.LongSpan)
+                data = _context.Timings.Where(t => t.TimingType == TimingType.LongSpan).OrderBy(t => t.EndTime)
                     .Select(t => new TimingDto
                     {
-                        Id = t.Id,
-                        Start = t.StartTime_String,
-                        End = t.EndTime_String,
-                        TimingType = t.TimingType
+                        id = t.Id,
+                        startTime = t.StartTime_String,
+                        endTime = t.EndTime_String,
+                        timingType = t.TimingType
                     }).ToList();
             }
 

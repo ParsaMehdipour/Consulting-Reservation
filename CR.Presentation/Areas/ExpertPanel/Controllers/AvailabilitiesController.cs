@@ -24,6 +24,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         private readonly IAddTimeOfDayService _addTimeOfDayService;
         private readonly IRemoveTimeOfDayService _removeTimeOfDayService;
         private readonly IGetTimingsForDropDownService _getTimingsForDropDownService;
+        private readonly IGetDayDetailsService _getDayDetailsService;
         private ResultCheckUserFlagService ResultCheckUserFlag;
 
 
@@ -33,7 +34,8 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             ,IGetDaysService getDaysService
             ,IAddTimeOfDayService addTimeOfDayService
             ,IRemoveTimeOfDayService removeTimeOfDayService
-            ,IGetTimingsForDropDownService getTimingsForDropDownService)
+            ,IGetTimingsForDropDownService getTimingsForDropDownService
+            ,IGetDayDetailsService getDayDetailsService)
         {
             _getUserFlagService = getUserFlagService;
             _addDayService = addDayService;
@@ -41,6 +43,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             _addTimeOfDayService = addTimeOfDayService;
             _removeTimeOfDayService = removeTimeOfDayService;
             _getTimingsForDropDownService = getTimingsForDropDownService;
+            _getDayDetailsService = getDayDetailsService;
 
             var userId = ClaimUtility.GetUserId(contextAccessor.HttpContext?.User);
 

@@ -188,7 +188,7 @@
 
                 for (var i in data) {
                     if (Object.prototype.hasOwnProperty.call(data, i)) {
-                        body2 += '<option value=' + data[i].id + '>' + data[i].start + "-" + data[i].end + '</option>';
+                        body2 += '<option value=' + data[i].id + '>' + data[i].startTime + "-" + data[i].endTime + '</option>';
                     }
                 }
                 var hourscontent = '<div class="row form-row hours-cont">' +
@@ -336,7 +336,7 @@
                 $(select).empty();
 
                 for (var i in data) {
-                    $(select).append('<option value=' + data[i].id + '>' + data[i].start + "-" + data[i].end + '</option>');
+                    $(select).append('<option value=' + data[i].id + '>' + data[i].startTime + "-" + data[i].endTime + '</option>');
                 }
             },
             error: function(request, status, error) {
@@ -346,7 +346,51 @@
     }
 
     function ShowDetails(id) {
-        
+         $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetDayDetails", "Availabilities")',
+            data: {id : id},
+            dataType: "json",
+            success: function(response) {
+
+                var body2 = '';
+                var body = '';
+
+                var data = response;
+
+
+                for (var i in data) {
+                    if (Object.prototype.hasOwnProperty.call(data, i)) {
+                        body2 += '<option value=' + data[i].id + '>' + data[i].startTime + "-" + data[i].endTime + '</option>';
+                    }
+                }
+
+                body += '<div class="hours-info">';
+                body += '<div class="row form-row hours-cont">';
+                body += '<div class="col-12 col-md-10">';
+                body += '<div class="row form-row">';
+                body += '<div class="col-12 col-md-6">';
+                body += '<div class="form-group">';
+                body += '<label>زمانبندی</label>';
+                body += '<select class="form-control">';
+                body += '<option>انتخاب کنید</option>';
+                body += body2
+                body += '</select>';
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+
+                $("#edit_time_slot #dayDetails").html(body);
+                $("#edit_time_slot").modal("show");
+
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
     }
 
 </script>
@@ -414,29 +458,29 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <br />
+            <label>
+                <input type="radio" name="timing" onclick="GetTimings(0)" value="0">کوتاه مدت
+            </label>
+            <label>
+                <input type="radio" name="timing" onclick="GetTimings(1)" value="1">میان مدت
+            </label>
+            <label>
+                <input type="radio" name="timing" onclick="GetTimings(2)" value="2">بلند مدت
+            </label>
+            <br />
             <div class="modal-body">
-                <div class="hours-info">
-                        <div class="row form-row hours-cont">
-                            <div class="col-12 col-md-10">
-                                <div class="row form-row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label>زمان شروع</label>
-                                            <select class="form-control">
-                                                <option>انتخاب کنید</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="add-more mb-3">
-                        <a href="javascript:void(0);" class="add-hours"><i class="fa fa-plus-circle"></i> افزودن</a>
-                    </div>
-                    <div class="submit-section text-center">
-                        <button type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
-                    </div>
+                
+                <div id="dayDetails">
+
+                </div>
+
+                <div class="add-more mb-3">
+                    <a href="javascript:void(0);" class="add-hours"><i class="fa fa-plus-circle"></i> افزودن</a>
+                </div>
+                <div class="submit-section text-center">
+                    <button type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                </div>
             </div>
         </div>
     </div>
