@@ -23,9 +23,6 @@ namespace CR.DataAccess.Configurations
                 .WithMany(p => p.TimeOfDays)
                 .HasForeignKey(p => p.ExpertInformationId);
 
-            builder.HasOne(p => p.Timing)
-                .WithMany(p => p.TimeOfDays)
-                .HasForeignKey(p => p.TimingId);
         }
     }
 }

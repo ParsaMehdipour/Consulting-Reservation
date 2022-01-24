@@ -10,9 +10,6 @@ namespace CR.DataAccess.Configurations
         {
             builder.ToTable("TBL_Timings");
 
-            builder.HasMany(p => p.TimeOfDays)
-                .WithOne(p => p.Timing)
-                .HasForeignKey(p => p.TimingId);
 
         }
     }

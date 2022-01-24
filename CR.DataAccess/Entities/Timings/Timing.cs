@@ -14,11 +14,5 @@ namespace CR.DataAccess.Entities.Timings
         public string EndTime_String { get; set; }
         public TimingType TimingType { get; set; }
 
-
-        #region NavigationProperties
-
-        public List<TimeOfDay> TimeOfDays { get; set; }
-
-        #endregion
     }
 }
