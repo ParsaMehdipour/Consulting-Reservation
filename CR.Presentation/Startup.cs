@@ -110,7 +110,6 @@ namespace CR.Presentation
             services.AddScoped<IGetAllExpertsService, GetAllExpertsService>();
             services.AddScoped<IChangeExpertStatusService, ChangeExpertStatusService>();
             services.AddScoped<IGetExpertDetailsForProfileService, GetExpertDetailsForProfileService>();
-            services.AddScoped<IEditExpertDetailsService,EditExpertDetailsService>();
             services.AddScoped<IGetExpertDetailsForAdminService, GetExpertDetailsForAdminService>();
             services.AddScoped<IEditExpertDetailsFromAdminService, EditExpertDetailsFromAdminService>();
             services.AddScoped<IGetLatestExpertsForAdminService, GetLatestExpertsForAdminService>();
