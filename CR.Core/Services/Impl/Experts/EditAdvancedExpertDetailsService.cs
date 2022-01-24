@@ -35,9 +35,21 @@ namespace CR.Core.Services.Impl.Experts
                     .Include(e => e.ExpertPrizes)
                     .Include(e => e.ExpertStudies)
                     .Include(e => e.ExpertSubscriptions)
+                    .Include(e => e.ExpertAppointments)
+                    .ThenInclude(a => a.TimeOfDay)
+                    .ThenInclude(t => t.Day)
                     .FirstOrDefault(e => e.Id == request.id);
 
                 var expert = _context.Users.FirstOrDefault(u => u.Id == expertInformation.ExpertId);
+
+                if (expert == null)
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "اطلاعات شما یافت نشد!"
+                    };
+                }
 
                 if (expertInformation == null)
                 {
@@ -45,6 +57,16 @@ namespace CR.Core.Services.Impl.Experts
                     {
                         IsSuccess = false,
                         Message = "اطلاعات شما پیدا نشد!!"
+                    };
+                }
+
+                if (expert.ExpertInformation.ExpertAppointments.Any(e =>
+                        e.TimeOfDay.Day.Date.Date > DateTime.Now && e.TimeOfDay.IsReserved == true))
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "به دلیل داشتن نوبت های گرفته شده امکان ویرایش برای شما وجود ندارد"
                     };
                 }
 
@@ -163,6 +185,8 @@ namespace CR.Core.Services.Impl.Experts
                     _context.ExpertSubscriptions.AddRange(expertSubscriptions);
                 }
 
+                expert.IsActive = false;
+
                 _context.SaveChanges();
 
                 transaction.Commit();
@@ -170,7 +194,7 @@ namespace CR.Core.Services.Impl.Experts
                 return new ResultDto()
                 {
                     IsSuccess = true,
-                    Message = "اطلاعات با موفقیت ذخیره شد"
+                    Message = "ویرایش با موفقیت انجام شد پس از تایید مدیریت اکانت شما فعال می شود"
                 };
             }
             catch (Exception)

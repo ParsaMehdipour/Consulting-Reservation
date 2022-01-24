@@ -32,6 +32,9 @@ namespace CR.Core.Services.Impl.Experts
             {
                 var expertInformation = _context.ExpertInformations
                     .Include(e => e.Specialty)
+                    .Include(e => e.ExpertAppointments)
+                    .ThenInclude(a => a.TimeOfDay)
+                    .ThenInclude(t => t.Day)
                     .FirstOrDefault(e => e.Id == request.id);
 
                 var expert = _context.Users.FirstOrDefault(u => u.Id == expertInformation.ExpertId);
@@ -72,6 +75,16 @@ namespace CR.Core.Services.Impl.Experts
                     {
                         IsSuccess = false,
                         Message = "لطفا تخصص خود را انتخاب کنید"
+                    };
+                }
+
+                if (expert.ExpertInformation.ExpertAppointments.Any(e =>
+                        e.TimeOfDay.Day.Date.Date > DateTime.Now && e.TimeOfDay.IsReserved == true))
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "به دلیل داشتن نوبت های گرفته شده امکان ویرایش برای شما وجود ندارد"
                     };
                 }
 
@@ -126,9 +139,9 @@ namespace CR.Core.Services.Impl.Experts
                 expertInformation.PhoneCallPrice = request.usePhoneCall ? Convert.ToInt32(request.phoneCallPrice.ToEnglishNumber()) : 0;
                 expertInformation.VoiceCallPrice = request.useVoiceCall ? Convert.ToInt32(request.voiceCallPrice.ToEnglishNumber()) : 0;
                 expertInformation.TextCallPrice = request.useTextCall ? Convert.ToInt32(request.textCallPrice.ToEnglishNumber()) : 0;
+                expert.IsActive = false;
                 expert.Email = request.email;
                 expert.PhoneNumber = request.phoneNumber;
-
 
                 _context.SaveChanges();
 
@@ -137,7 +150,7 @@ namespace CR.Core.Services.Impl.Experts
                 return new ResultDto()
                 {
                     IsSuccess = true,
-                    Message = "اطلاعات با موفقیت ذخیره شد"
+                    Message = "ویرایش با موفقیت انجام شد پس از تایید مدیریت اکانت شما فعال می شود"
                 };
             }
             catch (Exception)
