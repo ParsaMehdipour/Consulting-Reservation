@@ -3,6 +3,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Style {
+<link rel="stylesheet" href="~/assets/css/RadioButton.css">
+<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+}
+
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
     <div class="container-fluid">
@@ -407,15 +412,20 @@
                 </button>
             </div>
             <br />
-            <label>
-                <input type="radio" name="timing" onclick="GetTimings(0)" value="0">کوتاه مدت
-            </label>
-            <label>
-                <input type="radio" name="timing" onclick="GetTimings(1)" value="1">میان مدت
-            </label>
-            <label>
-                <input type="radio" name="timing" onclick="GetTimings(2)" value="2">بلند مدت
-            </label>
+            <div class="wrapper" style="margin-right: 17px">
+                <input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0">
+                <input onclick="GetTimings(1)" type="radio" name="timing" id="option-2" value="1">
+                <input onclick="GetTimings(2)" type="radio" name="timing" id="option-3" value="2">
+                <label for="option-1" class="option option-1">
+                    <span>کوتاه مدت</span>
+                </label>
+                <label for="option-2" class="option option-2">
+                    <span>میان مدت</span>
+                </label>
+                <label for="option-3" class="option option-3">
+                    <span>بلند مدت</span>
+                </label>
+            </div>
             <br />
             <div class="modal-body">
                 <div class="hours-info">
@@ -470,9 +480,8 @@
             </label>
             <br />
             <div class="modal-body">
-                
-                <div id="dayDetails">
 
+                <div id="dayDetails">
                 </div>
 
                 <div class="add-more mb-3">
