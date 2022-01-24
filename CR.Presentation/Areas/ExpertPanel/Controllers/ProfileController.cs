@@ -22,7 +22,6 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
     {
         private readonly IGetUserFlagService _getUserFlagService;
         private readonly IGetExpertDetailsForProfileService _getExpertDetailsForProfileService;
-        private readonly IEditExpertDetailsService _editExpertDetailsService;
         private readonly UserManager<User> _userManager;
         private readonly IGetSpecialtiesForExpertProfileDropDownService _getSpecialtiesForExpertProfileDropDownService;
         private readonly IEditBasicExpertDetailsService _editBasicExpertDetailsService;
@@ -33,7 +32,6 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         public ProfileController(IHttpContextAccessor contextAccessor
             , IGetUserFlagService getUserFlagService
             ,IGetExpertDetailsForProfileService getExpertDetailsForProfileService
-            , IEditExpertDetailsService editExpertDetailsService
             ,UserManager<User> userManager
             ,IGetSpecialtiesForExpertProfileDropDownService getSpecialtiesForExpertProfileDropDownService
             ,IEditBasicExpertDetailsService editBasicExpertDetailsService
@@ -41,7 +39,6 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             ,IRemoveExpertImagesService removeExpertImagesService)
         {
             _getExpertDetailsForProfileService = getExpertDetailsForProfileService;
-            _editExpertDetailsService = editExpertDetailsService;
             _userManager = userManager;
             _getSpecialtiesForExpertProfileDropDownService = getSpecialtiesForExpertProfileDropDownService;
             _editBasicExpertDetailsService = editBasicExpertDetailsService;
