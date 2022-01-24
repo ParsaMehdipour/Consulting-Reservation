@@ -4,14 +4,16 @@ using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220124075812_ChnagedRelationBetweenTimeOfDayAndTiming")]
+    partial class ChnagedRelationBetweenTimeOfDayAndTiming
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,9 +150,6 @@ namespace CR.DataAccess.Migrations
                     b.Property<string>("FinishHour")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FinishTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsReserved")
                         .HasColumnType("bit");
 
@@ -159,9 +158,6 @@ namespace CR.DataAccess.Migrations
 
                     b.Property<string>("StartHour")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<long>("TextCallPrice")
                         .HasColumnType("bigint");
