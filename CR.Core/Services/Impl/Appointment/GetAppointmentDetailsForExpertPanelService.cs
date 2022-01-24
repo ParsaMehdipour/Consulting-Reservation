@@ -21,8 +21,6 @@ namespace CR.Core.Services.Impl.Appointment
         {
             var appointment = _context.Appointments
                 .Include(a=>a.TimeOfDay)
-                .ThenInclude(t=>t.Timing)
-                .Include(t=>t.TimeOfDay)
                 .ThenInclude(t=>t.Day)
                 .FirstOrDefault(a => a.Id == id);
 
@@ -40,7 +38,7 @@ namespace CR.Core.Services.Impl.Appointment
                 Data = new AppointmentDetailsForExpertPanel()
                 {
                     appointmentDate = appointment.TimeOfDay.Day.Date_String,
-                    appointmentTime = appointment.TimeOfDay.Timing.StartTime_String + " - " + appointment.TimeOfDay.Timing.EndTime_String, 
+                    appointmentTime = appointment.TimeOfDay.StartHour + " - " + appointment.TimeOfDay.FinishHour, 
                     appointmentStatus = appointment.AppointmentStatus.GetDisplayName(),
                     appointmentPrice = appointment.Price.ToString().GetPersianNumber(),
                     id = appointment.Id

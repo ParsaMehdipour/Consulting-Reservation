@@ -30,8 +30,6 @@ namespace CR.Core.Services.Impl.Appointment
                 .Include(a => a.ConsumerInformation)
                 .ThenInclude(a=>a.Consumer)
                 .Include(a => a.TimeOfDay)
-                .ThenInclude(t=>t.Timing)
-                .Include(t=>t.TimeOfDay)
                 .ThenInclude(a => a.Day)
                 .Where(a => a.ConsumerInformation.ConsumerId == consumerId && a.ExpertInformation.ExpertId == expertId)
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
@@ -39,7 +37,7 @@ namespace CR.Core.Services.Impl.Appointment
                 {
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     //AppointmentPrice = a.TimeOfDay.Price.ToString().GetPersianNumber(),
-                    AppointmentTime = a.TimeOfDay.Timing.StartTime_String + " - " +a.TimeOfDay.Timing.EndTime_String,
+                    AppointmentTime = a.TimeOfDay.StartHour + " - " +a.TimeOfDay.FinishHour,
                     AppointmentReservationDate = a.CreateDate.ToShamsi(),
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,

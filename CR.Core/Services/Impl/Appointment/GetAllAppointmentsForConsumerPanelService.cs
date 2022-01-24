@@ -27,8 +27,6 @@ namespace CR.Core.Services.Impl.Appointment
                 .ThenInclude(e=>e.Specialty)
                 .Include(a => a.ConsumerInformation)
                 .Include(a => a.TimeOfDay)
-                .ThenInclude(t=>t.Timing)
-                .Include(t=>t.TimeOfDay)
                 .ThenInclude(a => a.Day)
                 .Where(a=>a.ConsumerInformation.ConsumerId == consumerId)
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
@@ -36,7 +34,7 @@ namespace CR.Core.Services.Impl.Appointment
                 {
                     Id = a.Id,
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
-                    AppointmentTime = a.TimeOfDay.Timing.StartTime_String + " - " + a.TimeOfDay.Timing.EndTime_String,
+                    AppointmentTime = a.TimeOfDay.StartHour + " - " + a.TimeOfDay.FinishHour,
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,
                     ExpertInformationId = a.ExpertInformationId,
                     ExpertIconSrc = a.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
