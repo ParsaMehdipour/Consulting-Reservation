@@ -26,7 +26,6 @@ namespace CR.Core.Services.Impl.Experts
                 .Include(e => e.Specialty)
                 .Include(e => e.Days)
                 .ThenInclude(e => e.TimeOfDays)
-                .ThenInclude(t=>t.Timing)
                 .FirstOrDefault(e => e.Id == expertInformationId);
 
             if (expertInformation == null)
@@ -67,8 +66,8 @@ namespace CR.Core.Services.Impl.Experts
                             id = f.Id,
                             expertInformationId = f.ExpertInformationId,
                             dayId = f.DayId,
-                            start = f.Timing.StartTime_String,
-                            finish = f.Timing.EndTime_String
+                            start = f.StartHour,
+                            finish = f.FinishHour
                         }).OrderBy(t => t.start).ToList(),
                     }).OrderBy(d => d.date_String.ToGeorgianDateTime()).ToList()
             };

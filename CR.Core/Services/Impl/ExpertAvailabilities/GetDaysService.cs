@@ -36,10 +36,9 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
 
             var days = _context.Days
                 .Include(d=>d.TimeOfDays)
-                .ThenInclude(t=>t.Timing)
                 .Where(d => d.ExpertInformationId == expertInformation.Id
-                       && d.Date.Date >= DateTime.Now.Date
-                       && d.Date.Date < DateTime.Now.AddDays(31).Date)
+                            && d.Date.Date >= DateTime.Now.Date
+                            && d.Date.Date < DateTime.Now.AddDays(31).Date)
                 .OrderBy(d=>d.Date)
                 .Select(d => new DayDto
                 {
@@ -51,8 +50,8 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
                         id = f.Id,
                         expertInformationId = f.ExpertInformationId,
                         dayId = f.DayId,
-                        start = f.Timing.StartTime_String,
-                        finish = f.Timing.EndTime_String
+                        start = f.StartHour,
+                        finish = f.FinishHour
                     }).ToList(),
                 }).ToList();
 

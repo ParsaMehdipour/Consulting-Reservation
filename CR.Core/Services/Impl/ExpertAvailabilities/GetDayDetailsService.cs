@@ -21,7 +21,6 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
         {
             var day = _context.Days
                 .Include(d => d.TimeOfDays)
-                .ThenInclude(t => t.Timing)
                 .FirstOrDefault(d=>d.Id == dayId);
 
             if (day == null)
@@ -40,10 +39,10 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
             {
                 var timing = new TimingDto()
                 {
-                    startTime = timeOfDay.Timing.StartTime_String,
-                    endTime = timeOfDay.Timing.EndTime_String,
-                    id = timeOfDay.TimingId,
-                    timingType = timeOfDay.Timing.TimingType
+                    startTime = timeOfDay.StartHour,
+                    endTime = timeOfDay.FinishHour,
+                    id = timeOfDay.Id,
+                    timingType = timeOfDay.TimingType
                 };
 
                 timings.Add(timing);

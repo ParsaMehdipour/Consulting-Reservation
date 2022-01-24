@@ -69,13 +69,28 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
                 foreach (var timingId in request.timings)
                 {
 
+                    var timing = _context.Timings.FirstOrDefault(t => t.Id == timingId);
+
+                    if (timing == null)
+                    {
+                        return new ResultDto()
+                        {
+                            IsSuccess = false,
+                            Message = "زمانبندی یافت نشد!!"
+                        };
+                    }
+
                     var timeOfDay = new TimeOfDay
                     {
                         DayId = request.dayId,
                         Day = day,
                         ExpertInformation = expertInformation,
                         ExpertInformationId = request.expertInformationId,
-                        TimingId = timingId,
+                        StartHour = timing.StartTime_String,
+                        FinishHour = timing.EndTime_String,
+                        StartTime = timing.StartTime,
+                        FinishTime = timing.EndTime,
+                        TimingType = timing.TimingType,
                         PhoneCallPrice = expertInformation.PhoneCallPrice,
                         VoiceCallPrice = expertInformation.VoiceCallPrice,
                         TextCallPrice = expertInformation.TextCallPrice
