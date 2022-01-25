@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
-using CR.Common.Utilities;
 using CR.Core.DTOs.ExpertAvailabilities;
 using CR.Core.DTOs.Experts;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.Experts
 {
@@ -61,15 +60,15 @@ namespace CR.Core.Services.Impl.Experts
                         date_String = d.Date_String,
                         dayOfWeek = DateConvertor.GetDayOfWeek(d.Date),
                         id = d.Id,
-                        TimeOfDayDtos = d.TimeOfDays.Where(t=>t.IsReserved == false).Select(f => new TimeOfDayDto()
+                        timeOfDayDtos = d.TimeOfDays.Where(t => t.IsReserved == false && t.TimingType == TimingType.ShortSpan).Select(f => new TimeOfDayDto()
                         {
                             id = f.Id,
                             expertInformationId = f.ExpertInformationId,
                             dayId = f.DayId,
                             start = f.StartHour,
                             finish = f.FinishHour
-                        }).OrderBy(t=>t.start).ToList(),
-                    }).OrderBy(d=>d.date_String.ToGeorgianDateTime()).ToList()
+                        }).OrderBy(t => t.start).ToList(),
+                    }).OrderBy(d => d.date_String.ToGeorgianDateTime()).ToList()
             };
 
             return new ResultDto<ExpertDetailsForReservationDto>()

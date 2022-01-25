@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
-using CR.Common.Utilities;
 using CR.Core.DTOs.ExpertAvailabilities;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.ExpertAvailabilities
 {
@@ -35,17 +33,17 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
             }
 
             var days = _context.Days
-                .Include(d=>d.TimeOfDays)
+                .Include(d => d.TimeOfDays)
                 .Where(d => d.ExpertInformationId == expertInformation.Id
                             && d.Date.Date >= DateTime.Now.Date
                             && d.Date.Date < DateTime.Now.AddDays(31).Date)
-                .OrderBy(d=>d.Date)
+                .OrderBy(d => d.Date)
                 .Select(d => new DayDto
                 {
                     dayOfWeek = DateConvertor.GetDayOfWeek(d.Date),
                     date_String = d.Date_String,
                     id = d.Id,
-                    TimeOfDayDtos = d.TimeOfDays.Where(t=>t.IsReserved == false).Select(f => new TimeOfDayDto()
+                    timeOfDayDtos = d.TimeOfDays.Where(t => t.IsReserved == false).Select(f => new TimeOfDayDto()
                     {
                         id = f.Id,
                         expertInformationId = f.ExpertInformationId,

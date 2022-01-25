@@ -443,7 +443,7 @@
                                                 <div class="listing-day current">
                                                     <div class="day">امروز<span>@Model.DayDtos.FirstOrDefault()?.date_String</span></div>
                                                     <div class="time-items">
-                                                        @if (@Model.DayDtos.FirstOrDefault()?.TimeOfDayDtos.Count > 0)
+                                                        @if (@Model.DayDtos.FirstOrDefault()?.timeOfDayDtos.Count > 0)
                                                         {
                                                             <span class="open-status"><span class="badge bg-success-light">باز</span></span>
                                                         }
@@ -451,7 +451,7 @@
                                                         {
                                                             <span class="open-status"><span class="badge bg-danger-light">بسته</span></span>
                                                         }
-                                                        @foreach (var timeOfDay in Model.DayDtos.FirstOrDefault()?.TimeOfDayDtos!)
+                                                        @foreach (var timeOfDay in Model.DayDtos.FirstOrDefault()?.timeOfDayDtos!)
                                                         {
                                                             <span class="time">@timeOfDay.start - @timeOfDay.finish</span>
                                                         }
@@ -459,12 +459,12 @@
                                                 </div>
                                                 @foreach (var day in Model.DayDtos.Skip(1))
                                                 {
-                                                    @if (day.TimeOfDayDtos.Count > 0)
+                                                    @if (day.timeOfDayDtos.Count > 0)
                                                     {
                                                         <div class="listing-day">
                                                             <div class="day">@day.dayOfWeek<br /><span>@day.date_String</span></div>
                                                             <div class="time-items">
-                                                                @foreach (var timeOfDay in day.TimeOfDayDtos)
+                                                                @foreach (var timeOfDay in day.timeOfDayDtos)
                                                                 {
                                                                     <span class="time">@timeOfDay.start - @timeOfDay.finish</span>
                                                                 }

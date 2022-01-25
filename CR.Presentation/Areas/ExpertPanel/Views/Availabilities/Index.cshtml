@@ -88,7 +88,7 @@
                                                     <div id="slot_@day.id" class="tab-pane fade">
                                                         <h4 class="card-title d-flex justify-content-between">
                                                             <span>زمان بندی</span>
-                                                            @if (day.TimeOfDayDtos.Count > 0)
+                                                            @if (day.timeOfDayDtos.Count > 0)
                                                             {
                                                                 <a onclick="ShowDetails(@day.id)" class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-plus-circle"></i> ویرایش  </a>
                                                             }
@@ -97,14 +97,14 @@
                                                                 <a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> افزودن  </a>
                                                             }
                                                         </h4>
-                                                        @if (day.TimeOfDayDtos.Count < 0)
+                                                        @if (day.timeOfDayDtos.Count < 0)
                                                         {
                                                             <p class="text-muted mb-0"> موجود نیست </p>
                                                         }
                                                         else
                                                         {
                                                             <div class="doc-times">
-                                                                @foreach (var time in day.TimeOfDayDtos)
+                                                                @foreach (var time in day.timeOfDayDtos)
                                                                 {
                                                                     <div class="doc-slot-list">
                                                                         ساعت @time.start - ساعت @time.finish

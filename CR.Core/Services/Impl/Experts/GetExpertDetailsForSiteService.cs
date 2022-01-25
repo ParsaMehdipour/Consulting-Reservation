@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
-using CR.Common.Utilities;
 using CR.Core.DTOs.ExpertAvailabilities;
 using CR.Core.DTOs.Experts;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.Experts
 {
@@ -24,11 +23,11 @@ namespace CR.Core.Services.Impl.Experts
         public ResultDto<ExpertDetailsForSiteDto> Execute(long expertInformationId)
         {
             var expertInformation = _context.ExpertInformations
-                .Include(e=>e.ExpertExperiences)
-                .Include(e=>e.ExpertMemberships)
-                .Include(e=>e.ExpertPrizes)
-                .Include(e=>e.ExpertStudies)
-                .Include(e=>e.ExpertSubscriptions)
+                .Include(e => e.ExpertExperiences)
+                .Include(e => e.ExpertMemberships)
+                .Include(e => e.ExpertPrizes)
+                .Include(e => e.ExpertStudies)
+                .Include(e => e.ExpertSubscriptions)
                 .Include(e => e.Specialty)
                 .Include(e => e.Days)
                 .ThenInclude(e => e.TimeOfDays)
@@ -68,7 +67,7 @@ namespace CR.Core.Services.Impl.Experts
                         date_String = d.Date_String,
                         dayOfWeek = DateConvertor.GetDayOfWeek(d.Date),
                         id = d.Id,
-                        TimeOfDayDtos = d.TimeOfDays.Select(f => new TimeOfDayDto()
+                        timeOfDayDtos = d.TimeOfDays.Select(f => new TimeOfDayDto()
                         {
                             id = f.Id,
                             expertInformationId = f.ExpertInformationId,
