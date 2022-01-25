@@ -132,6 +132,7 @@ namespace CR.Presentation
             services.AddScoped<IRemoveTimeOfDayService, RemoveTimeOfDayService>();
             services.AddScoped<IGetExpertDetailsForReservationService, GetExpertDetailsForReservationService>();
             services.AddScoped<IGetThisDateExpertDetailsForReservationService, GetThisDateExpertDetailsForReservationService>();
+            services.AddScoped<IGetExpertAvailabilitiesForReservationService, GetExpertAvailabilitiesForReservationService>();
             //Consumers
             services.AddScoped<IGetAllConsumersService, GetAllConsumersService>();
             services.AddScoped<IGetConsumerDetailsForProfileService, GetConsumerDetailsForProfileService>();
