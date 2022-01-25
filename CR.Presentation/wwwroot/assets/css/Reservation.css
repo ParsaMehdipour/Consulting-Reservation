@@ -57,6 +57,9 @@ input[type="radio"] {
     display: none;
 }
 
+#phone:checked:checked ~ .phone,
+#voice:checked:checked ~ .voice,
+#text:checked:checked ~ .text,
 #option-1:checked:checked ~ .option-1,
 #option-2:checked:checked ~ .option-2,
 #option-3:checked:checked ~ .option-3 {
@@ -82,6 +85,9 @@ input[type="radio"] {
     color: #808080;
 }
 
+#phone:checked:checked ~ .phone span,
+#voice:checked:checked ~ .voice span,
+#text:checked:checked ~ .text span,
 #option-1:checked:checked ~ .option-1 span,
 #option-2:checked:checked ~ .option-2 span,
 #option-3:checked:checked ~ .option-3 span {

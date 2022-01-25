@@ -87,6 +87,20 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="wrapper" style="margin-right:31%">
+                                    <input type="radio" name="call" id="phone" value="0" checked>
+                                    <input type="radio" name="call" id="voice" value="1">
+                                    <input type="radio" name="call" id="text" value="2">
+                                    <label for="phone" class="option phone">
+                                        <span>تلفتی</span>
+                                    </label>
+                                    <label for="voice" class="option voice">
+                                        <span>صوتی</span>
+                                    </label>
+                                    <label for="text" class="option text">
+                                        <span>متنی</span>
+                                    </label>
+                                </div><hr />
+                                <div class="wrapper" style="margin-right: 31%">
                                     <input onclick="GetSpecificTimings(0)" type="radio" name="select" id="option-1" value="0" checked>
                                     <input onclick="GetSpecificTimings(1)" type="radio" name="select" id="option-2" value="1">
                                     <input onclick="GetSpecificTimings(2)" type="radio" name="select" id="option-3" value="2">
@@ -227,18 +241,19 @@
                     body1 += '<span>' + data[i].dayOfWeek + '</span>';
                     body1 += '<span class="slot-date">' + data[i].date_String + '</span>';
                     body1 += '</li>';
+                }
+                for (let i = 0; i < data.length; i++) {
+                    body2 += '<li>';
                     if (data[i].timeOfDayDtos.length > 0) {
-                        body2 += '<li>';
                         for (let j = 0; j < data[i].timeOfDayDtos.length; j++) {
                             body2 += '<a class="timing" onclick="SetId(' + data[i].timeOfDayDtos[j].id + ')" id="timeOfDay_' + data[i].timeOfDayDtos[j].id +'">';
-                            body2 += '<span>' + data[i].timeOfDayDtos[j].start + ' - ' +data[i].timeOfDayDtos[j].finish +'</span>'; 
+                            body2 += '<span>' + data[i].timeOfDayDtos[j].start + ' - ' +data[i].timeOfDayDtos[j].finish +'</span>';
                             body2 += '</a>';
-                        } 
+                        }
                     }else {
                         body2 += '<button type="button" class="btn btn-block btn-outline-danger active">نوبتی وجود ندارد</button>';
                     }
                     body2 += '</li>';
-                    
                 }
 
                 $("#Days").html(body1);
