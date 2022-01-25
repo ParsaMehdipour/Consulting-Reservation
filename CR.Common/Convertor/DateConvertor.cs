@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using CR.Common.Utilities;
 
 namespace CR.Common.Convertor
 {
@@ -69,11 +67,18 @@ namespace CR.Common.Convertor
 
         public static DateTime ToGeorgianDateTime(this string persianDate)
         {
-            persianDate = persianDate.ToEnglishNumber();
-            var year = Convert.ToInt32(persianDate.Substring(0, 4));
-            var month = Convert.ToInt32(persianDate.Substring(5, 2));
-            var day = Convert.ToInt32(persianDate.Substring(8, 2));
-            return new DateTime(year, month, day, new PersianCalendar());
+            try
+            {
+                persianDate = persianDate.ToEnglishNumber();
+                var year = Convert.ToInt32(persianDate.Substring(0, 4));
+                var month = Convert.ToInt32(persianDate.Substring(5, 2));
+                var day = Convert.ToInt32(persianDate.Substring(8, 2));
+                return new DateTime(year, month, day, new PersianCalendar());
+            }
+            catch (Exception)
+            {
+                return DateTime.Now;
+            }
         }
 
 
