@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Appointments;
@@ -7,6 +6,7 @@ using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.Appointment
 {
@@ -19,7 +19,7 @@ namespace CR.Core.Services.Impl.Appointment
             _context = context;
         }
 
-        public ResultDto<ResultGetConsumerAppointmentsForExpertPanel> Execute(long expertId,long consumerId,int Page = 1, int PageSize = 20)
+        public ResultDto<ResultGetConsumerAppointmentsForExpertPanel> Execute(long expertId, long consumerId, int Page = 1, int PageSize = 20)
         {
 
             int rowCount = 0;
@@ -28,7 +28,7 @@ namespace CR.Core.Services.Impl.Appointment
                 .Include(a => a.ExpertInformation)
                 .ThenInclude(e => e.Specialty)
                 .Include(a => a.ConsumerInformation)
-                .ThenInclude(a=>a.Consumer)
+                .ThenInclude(a => a.Consumer)
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
                 .Where(a => a.ConsumerInformation.ConsumerId == consumerId && a.ExpertInformation.ExpertId == expertId)
@@ -36,8 +36,8 @@ namespace CR.Core.Services.Impl.Appointment
                 .Select(a => new ConsumerAppointmentsForExpertPanelDto
                 {
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
-                    //AppointmentPrice = a.TimeOfDay.Price.ToString().GetPersianNumber(),
-                    AppointmentTime = a.TimeOfDay.StartHour + " - " +a.TimeOfDay.FinishHour,
+                    AppointmentPrice = a.Price.ToString().GetPersianNumber(),
+                    AppointmentTime = a.TimeOfDay.StartHour + " - " + a.TimeOfDay.FinishHour,
                     AppointmentReservationDate = a.CreateDate.ToShamsi(),
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,

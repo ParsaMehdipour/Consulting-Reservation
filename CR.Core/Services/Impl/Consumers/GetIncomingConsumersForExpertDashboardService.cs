@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Consumers;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.Consumers
 {
@@ -36,6 +36,7 @@ namespace CR.Core.Services.Impl.Consumers
                     FullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentPrice = a.Price.ToString().GetPersianNumber(),
+                    AppointmentTime = a.TimeOfDay.StartHour + " - " + a.TimeOfDay.FinishHour,
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     ConsumerIconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ConsumerId = a.ConsumerInformation.ConsumerId,

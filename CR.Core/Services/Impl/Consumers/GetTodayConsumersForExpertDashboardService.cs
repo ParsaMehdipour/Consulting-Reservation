@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Consumers;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.Consumers
 {
@@ -24,8 +24,8 @@ namespace CR.Core.Services.Impl.Consumers
             int rowCount = 0;
 
             var consumers = _context.Appointments
-                .Include(a=>a.TimeOfDay)
-                .ThenInclude(a=>a.Day)
+                .Include(a => a.TimeOfDay)
+                .ThenInclude(a => a.Day)
                 .Include(a => a.ExpertInformation)
                 .Include(a => a.ConsumerInformation)
                 .ThenInclude(a => a.Consumer)
@@ -36,10 +36,11 @@ namespace CR.Core.Services.Impl.Consumers
                     FullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentPrice = a.Price.ToString().GetPersianNumber(),
+                    AppointmentTime = a.TimeOfDay.StartHour + " - " + a.TimeOfDay.FinishHour,
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     ConsumerIconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ConsumerId = a.ConsumerInformation.ConsumerId,
-                    ConsumerType = (_context.Appointments.Any(c=>c.ConsumerInformationId == a.ConsumerInformationId && a.TimeOfDay.Day.Date.Date < DateTime.Now.Date)) ? "مراجع قدیمی" : "مراجع جدید"
+                    ConsumerType = (_context.Appointments.Any(c => c.ConsumerInformationId == a.ConsumerInformationId && a.TimeOfDay.Day.Date.Date < DateTime.Now.Date)) ? "مراجع قدیمی" : "مراجع جدید"
                 }).OrderByDescending(a => a.AppointmentDate)
                 .AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)
