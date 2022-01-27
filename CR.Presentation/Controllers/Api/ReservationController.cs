@@ -53,6 +53,5 @@ namespace CR.Presentation.Controllers.Api
             return outPut;
         }
 
-
     }
 }
