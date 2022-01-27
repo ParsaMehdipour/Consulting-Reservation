@@ -42,9 +42,6 @@ namespace CR.Core.Services.Impl.Experts
             {
                 ExpertInformationId = expertInformation.Id,
                 IconSrc = (string.IsNullOrWhiteSpace(expertInformation.IconSrc)) ? "assets/img/icon-256x256.png" : expertInformation.IconSrc,
-                usePhoneCall = expertInformation.UsePhoneCall,
-                useVoiceCall = expertInformation.UseVoiceCall,
-                useTextCall = expertInformation.UseTextCall,
                 phonePrice = expertInformation.UsePhoneCall ? expertInformation.PhoneCallPrice : 0,
                 voicePrice = expertInformation.UseVoiceCall ? expertInformation.VoiceCallPrice : 0,
                 textPrice = expertInformation.UseTextCall ? expertInformation.TextCallPrice : 0,
