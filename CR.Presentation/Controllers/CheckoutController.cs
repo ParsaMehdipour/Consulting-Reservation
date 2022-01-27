@@ -8,6 +8,7 @@ using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CR.Presentation.Controllers
 {
@@ -20,18 +21,18 @@ namespace CR.Presentation.Controllers
 
         public CheckoutController(IAddAppointmentService addAppointmentService
         , IHttpContextAccessor contextAccessor
-        ,IGetUserFlagService _getUserFlagService)
+        , IGetUserFlagService _getUserFlagService)
         {
             _addAppointmentService = addAppointmentService;
             this._getUserFlagService = _getUserFlagService;
 
-            var userId = ClaimUtility.GetUserId(contextAccessor.HttpContext.User);
+            var userId = ClaimUtility.GetUserId(contextAccessor.HttpContext?.User);
 
             resultCheckUserFlag = _getUserFlagService.Execute(userId);
         }
 
         [HttpPost]
-        public IActionResult Index(RequestAddAppointmentDto request)
+        public IActionResult Index(List<RequestAddAppointmentDto> requests)
         {
             if (resultCheckUserFlag.UserFlag != UserFlag.Consumer)
                 return new JsonResult(new ResultDto()
@@ -40,9 +41,9 @@ namespace CR.Presentation.Controllers
                     Message = "تنها مراجعه کنندگان قابلیت رزرو وقت دارند"
                 });
 
-            request.consumerId = ClaimUtility.GetUserId(User).Value;
+            var consumerId = ClaimUtility.GetUserId(User).Value;
 
-            var result = _addAppointmentService.Execute(request);
+            var result = _addAppointmentService.Execute(requests, consumerId);
 
             return new JsonResult(result);
         }
