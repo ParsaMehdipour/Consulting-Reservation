@@ -1,10 +1,24 @@
+using CR.Core.Services.Impl.Appointment;
+using CR.Core.Services.Impl.CommissionAndDiscounts;
 using CR.Core.Services.Impl.Consumers;
+using CR.Core.Services.Impl.ExpertAvailabilities;
+using CR.Core.Services.Impl.ExpertImages;
+using CR.Core.Services.Impl.Experts;
 using CR.Core.Services.Impl.Images;
 using CR.Core.Services.Impl.Specialites;
+using CR.Core.Services.Impl.Statistics;
+using CR.Core.Services.Impl.Timings;
 using CR.Core.Services.Impl.Users;
+using CR.Core.Services.Interfaces.Appointment;
+using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.Consumers;
+using CR.Core.Services.Interfaces.ExpertAvailabilities;
+using CR.Core.Services.Interfaces.ExpertImages;
+using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Images;
 using CR.Core.Services.Interfaces.Specialites;
+using CR.Core.Services.Interfaces.Statistics;
+using CR.Core.Services.Interfaces.Timings;
 using CR.Core.Services.Interfaces.Users;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.Roles;
@@ -19,20 +33,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PersianTranslation.Identity;
 using System;
-using CR.Core.Services.Impl.Appointment;
-using CR.Core.Services.Impl.CommissionAndDiscounts;
-using CR.Core.Services.Impl.ExpertAvailabilities;
-using CR.Core.Services.Impl.ExpertImages;
-using CR.Core.Services.Impl.Experts;
-using CR.Core.Services.Impl.Statistics;
-using CR.Core.Services.Impl.Timings;
-using CR.Core.Services.Interfaces.Appointment;
-using CR.Core.Services.Interfaces.CommissionAndDiscounts;
-using CR.Core.Services.Interfaces.ExpertAvailabilities;
-using CR.Core.Services.Interfaces.ExpertImages;
-using CR.Core.Services.Interfaces.Experts;
-using CR.Core.Services.Interfaces.Statistics;
-using CR.Core.Services.Interfaces.Timings;
 
 namespace CR.Presentation
 {
@@ -119,6 +119,7 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertDetailsForPartialService, GetExpertDetailsForPartialService>();
             services.AddScoped<IEditBasicExpertDetailsService, EditBasicExpertDetailsService>();
             services.AddScoped<IEditAdvancedExpertDetailsService, EditAdvancedExpertDetailsService>();
+            services.AddScoped<IGetExpertCallUsesService, GetExpertCallUsesService>();
             //Timings
             services.AddScoped<IGetTimingsForDropDownService, GetTimingsForDropDownService>();
             services.AddScoped<IAddNewTimingService, AddNewTimingService>();
@@ -133,6 +134,7 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertDetailsForReservationService, GetExpertDetailsForReservationService>();
             services.AddScoped<IGetThisDateExpertDetailsForReservationService, GetThisDateExpertDetailsForReservationService>();
             services.AddScoped<IGetExpertAvailabilitiesForReservationService, GetExpertAvailabilitiesForReservationService>();
+            services.AddScoped<IGetTimeOfDayPriceForReservationService, GetTimeOfDayPriceForReservationService>();
             //Consumers
             services.AddScoped<IGetAllConsumersService, GetAllConsumersService>();
             services.AddScoped<IGetConsumerDetailsForProfileService, GetConsumerDetailsForProfileService>();
@@ -148,7 +150,7 @@ namespace CR.Presentation
             services.AddScoped<IGetConsumerDetailsForPartialService, GetConsumerDetailsForPartialService>();
             //Specialites
             services.AddScoped<IAddNewSpecialityService, AddNewSpecialityService>();
-            services.AddScoped<IEditSpecialityService,EditSpecialityService>();
+            services.AddScoped<IEditSpecialityService, EditSpecialityService>();
             services.AddScoped<IRemoveSpecialityService, RemoveSpecialityService>();
             services.AddScoped<IGetAllSpecialitiesService, GetAllSpecialitiesService>();
             services.AddScoped<IGetSpecialtiesForExpertProfileDropDownService, GetSpecialtiesForExpertProfileDropDownService>();
