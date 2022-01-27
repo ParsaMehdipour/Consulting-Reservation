@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CR.DataAccess.Enums
 {
@@ -33,7 +32,7 @@ namespace CR.DataAccess.Enums
     {
         [Display(Name = "ثبت اولیه")]
         Waiting = 0,
-        [Display(Name="پرداخت موفق")]
+        [Display(Name = "پرداخت موفق")]
         SuccessfulPayment = 1,
         [Display(Name = "پرداخت ناموفق")]
         UnsuccessfulPayment = 2,
@@ -47,6 +46,16 @@ namespace CR.DataAccess.Enums
         MediumSpan = 1,
         [Display(Name = "بلند مدت")]
         LongSpan = 2,
+    }
+
+    public enum CallingType
+    {
+        [Display(Name = "تلفنی")]
+        PhoneCall = 0,
+        [Display(Name = "صوتی")]
+        VoiceCall = 1,
+        [Display(Name = "متنی")]
+        TextCall = 2,
     }
 }
 

@@ -80,6 +80,10 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
                         };
                     }
 
+                    var startMinutes = (timing.StartTime.Hour * 60) + timing.StartTime.Minute;
+                    var endMinutes = (timing.EndTime.Hour * 60) + timing.EndTime.Minute;
+                    var pureMinutes = endMinutes - startMinutes;
+
                     var timeOfDay = new TimeOfDay
                     {
                         DayId = request.dayId,
@@ -91,9 +95,9 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
                         StartTime = timing.StartTime,
                         FinishTime = timing.EndTime,
                         TimingType = timing.TimingType,
-                        PhoneCallPrice = expertInformation.PhoneCallPrice,
-                        VoiceCallPrice = expertInformation.VoiceCallPrice,
-                        TextCallPrice = expertInformation.TextCallPrice,
+                        PhoneCallPrice = (pureMinutes * expertInformation.PhoneCallPrice) / 60,
+                        VoiceCallPrice = (pureMinutes * expertInformation.VoiceCallPrice) / 60,
+                        TextCallPrice = (pureMinutes * expertInformation.TextCallPrice) / 60,
                     };
 
                     timeOfDaysList.Add(timeOfDay);
