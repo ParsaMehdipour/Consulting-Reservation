@@ -86,20 +86,9 @@
                     <div class="schedule-header">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="wrapper" style="margin-right:31%">
-                                    <input type="radio" name="call" id="phone" value="0" checked>
-                                    <input type="radio" name="call" id="voice" value="1">
-                                    <input type="radio" name="call" id="text" value="2">
-                                    <label for="phone" class="option phone">
-                                        <span>تلفتی</span>
-                                    </label>
-                                    <label for="voice" class="option voice">
-                                        <span>صوتی</span>
-                                    </label>
-                                    <label for="text" class="option text">
-                                        <span>متنی</span>
-                                    </label>
-                                </div><hr />
+                                <div class="wrapper" style="margin-right:31%" id="usesWrapper">
+                                </div>
+                                <hr />
                                 <div class="wrapper" style="margin-right: 31%">
                                     <input onclick="GetSpecificTimings(0)" type="radio" name="select" id="option-1" value="0" checked>
                                     <input onclick="GetSpecificTimings(1)" type="radio" name="select" id="option-2" value="1">
@@ -145,6 +134,11 @@
                 <!-- /Schedule Widget -->
                 <!-- Submit Section -->
                 <div class="submit-section proceed-btn text-right">
+                    <label>جمع کل مبلغ : </label>
+                    <label id="totalAmount"></label>
+                    <label > ريال</label>
+                </div>
+                <div class="submit-section proceed-btn text-right">
                     <a onclick="Checkout()" class="btn btn-primary submit-btn">ادامه فرایند خرید</a>
                 </div>
                 <!-- /Submit Section -->
@@ -158,50 +152,119 @@
 @section Scripts
 {
 <script>
+    var SumOfPrices = 0;
     var timeOfDayId = 0;
+    var price = 0;
+    var callingType = null;
 
     $(document).ready(function () {
 
         GetSpecificTimings(0);
-
+        GetExpertCallUses();
     });
 
+    function SetCallingType(CT) {
+
+        swal.fire({
+            title: 'تغیر نوع ارتباط',
+            text: "کاربر گرامی از تغیر نوع ارتباط مطمئن هستید؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'تایید',
+            cancelButtonText: 'انصراف'
+        }).then((result) => {
+            if (result.value) {
+                 callingType = CT;
+                 var els = document.querySelectorAll('.timing.selected');
+
+                for (var i = 0; i < els.length; i++) {
+                els[i].classList.remove('selected');
+                }
+                SumOfPrices = 0;
+                $("#totalAmount").html(SumOfPrices);
+
+            }
+        });
+    }
 
     function SetId(id) {
         timeOfDayId = id;
         if ($("#timeOfDay_" + id).hasClass("selected") === false) {
+
+            if (callingType == null) {
+                swal.fire('هشدار!',
+                    'لطفا نوع ارتباط را انتخاب کنید',
+                    'warning');
+                return;
+            }
+
             $("#timeOfDay_" + id).addClass("selected");
+
+            var data = {};
+            data["callingType"] = callingType;
+            data["timeOfDayId"] = id;
+
+            $.ajax({
+                type: "POST",
+                url: '/api/Reservation/GetTimeOfDayPrice',
+                data: JSON.stringify(data),
+                dataType: "json",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                enctype: 'application/json',
+                success: function(response) {
+
+                    var data = response.data;
+                    price = data;
+                    SumOfPrices = SumOfPrices += data;
+                    var sumOfPricesString = SumOfPrices.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    $("#totalAmount").html(sumOfPricesString);
+
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+
         } else {
             $("#timeOfDay_" + id).removeClass("selected");
+            SumOfPrices = SumOfPrices - price;
+            var sumOfPricesString = SumOfPrices.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $("#totalAmount").html(sumOfPricesString);
         }
     }
 
     function Checkout() {
-        var checkoutForm = new FormData();
 
-        if (timeOfDayId === 0) {
+        var requests = GetTimeOfDays();
+
+        if (requests.length === 0) {
             swal.fire('هشدار!',
                 'لطفا یک زمانبندی را انتخاب کنید',
                 'warning');
             return;
         }
 
-        checkoutForm.append("timeOfDayId",timeOfDayId);
-        checkoutForm.append("expertInformationId",$("#expertInformationId").val());
+        console.log(requests);
+
+        var postData = {
+            'requests' : requests
+        }
 
         $.ajax({
             type: 'POST',
             url: '@Url.Action("Index", "Checkout")',
-            processData: false,
-            contentType: false,
+            contentType: 'application/x-www-form-urlencoded',
             dataType: 'json',
-            cache: false,
-            data: checkoutForm,
+            data: postData,
             success: function(data) {
-                if (data.isSuccess == true) {
+                if (data.isSuccess === true) {
                     swal.fire('موفقیت!',
                         data.message,
                         'success').then(function(isConfirm) {
+                        //window.location = location.reload();
                         window.location.href = "/Payment?factorNumber=" + data.data;
                     });
                 } else {
@@ -220,8 +283,9 @@
 
         var data = {};
         data["timingType"] = TT;
-        data["expertInformationId"] = Number($("#expertInformationId").val());;
-
+        data["expertInformationId"] = Number($("#expertInformationId").val());
+        SumOfPrices = 0;
+        $("#totalAmount").html(0);
         $.ajax({
             type: "POST",
             url: '/api/Reservation/GetDetails',
@@ -246,7 +310,7 @@
                     body2 += '<li>';
                     if (data[i].timeOfDayDtos.length > 0) {
                         for (let j = 0; j < data[i].timeOfDayDtos.length; j++) {
-                            body2 += '<a class="timing" onclick="SetId(' + data[i].timeOfDayDtos[j].id + ')" id="timeOfDay_' + data[i].timeOfDayDtos[j].id +'">';
+                            body2 += '<a class="timing" onclick="SetId(' + data[i].timeOfDayDtos[j].id + ')" id="timeOfDay_' + data[i].timeOfDayDtos[j].id +'" name="timeDay">';
                             body2 += '<span>' + data[i].timeOfDayDtos[j].start + ' - ' +data[i].timeOfDayDtos[j].finish +'</span>';
                             body2 += '</a>';
                         }
@@ -263,6 +327,70 @@
                 alert(request.responseText);
             }
         });
+    }
+
+    function GetExpertCallUses() {
+
+        var data = {};
+        data["expertInformationId"] = Number($("#expertInformationId").val());
+
+        $.ajax({
+            type: "POST",
+            url: '/api/Reservation/GetExpertCallUses',
+            data: JSON.stringify(data),
+            dataType: "json",
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            enctype: 'application/json',
+            success: function(response) {
+
+                var data = response.data;
+                var body3 = "";
+
+                if (data.usePhoneCall === true) {
+                    body3 += '<input onclick="SetCallingType(0)" type="radio" name="call" id="phone" value="0"/>';
+                    body3 += '<label for="phone" class="option phone">';
+                    body3 += '<span>تلفتی</span>';
+                    body3 += '</label>';
+                }
+                if (data.useVoiceCall === true) {
+                    body3 += '<input onclick="SetCallingType(1)" type="radio" name="call" id="voice" value="0"/>';
+                    body3 += '<label for="voice" class="option voice">';
+                    body3 += '<span>صوتی</span>';
+                    body3 += '</label>';
+                }
+                if (data.useTextCall === true) {
+                    body3 += '<input onclick="SetCallingType(2)" type="radio" name="call" id="text" value="0"/>';
+                    body3 += '<label for="text" class="option text">';
+                    body3 += '<span>متنی</span>';
+                    body3 += '</label>';
+                }
+                $("#usesWrapper").html(body3);
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function GetTimeOfDays() {
+        var timeOfDayIds = [];
+
+        timeOfDayIds = $('a[name^=timeDay]').map(function(idx, elem) {
+            if ($(elem).hasClass("selected") === true) {
+                return Number($(elem).attr("id").replace("timeOfDay_",""));
+            }
+        }).get();
+
+        var appointments = [];
+
+        for (let  i = 0; i < timeOfDayIds.length; i++) {
+
+            appointments.push({timeOfDayId : timeOfDayIds[i], expertInformationId: Number($("#expertInformationId").val()), callingType: callingType});
+
+        }
+
+        return appointments;
     }
 
 </script>
