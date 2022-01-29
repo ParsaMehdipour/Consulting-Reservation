@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs;
@@ -9,6 +7,8 @@ using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.ExpertInformations;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.Experts
 {
@@ -78,15 +78,15 @@ namespace CR.Core.Services.Impl.Experts
                     };
                 }
 
-                if (expert.ExpertInformation.ExpertAppointments.Any(e =>
-                        e.TimeOfDay.Day.Date.Date > DateTime.Now && e.TimeOfDay.IsReserved == true))
-                {
-                    return new ResultDto()
-                    {
-                        IsSuccess = false,
-                        Message = "به دلیل داشتن نوبت های گرفته شده امکان ویرایش برای شما وجود ندارد"
-                    };
-                }
+                //if (expert.ExpertInformation.ExpertAppointments.Any(e =>
+                //        e.TimeOfDay.Day.Date.Date > DateTime.Now && e.TimeOfDay.IsReserved == true))
+                //{
+                //    return new ResultDto()
+                //    {
+                //        IsSuccess = false,
+                //        Message = "به دلیل داشتن نوبت های گرفته شده امکان ویرایش برای شما وجود ندارد"
+                //    };
+                //}
 
                 if (request.image != null)
                 {
