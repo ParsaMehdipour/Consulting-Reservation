@@ -2,6 +2,7 @@
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace CR.Core.Services.Impl.ExpertAvailabilities
@@ -17,7 +18,10 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
 
         public ResultDto<long> Execute(CallingType callingType, long timeOfDayId)
         {
-            var timeOfDay = _context.TimeOfDays.FirstOrDefault(t => t.Id == timeOfDayId);
+            var timeOfDay = _context.TimeOfDays
+                .Include(t => t.ExpertInformation)
+                .ThenInclude(e => e.CommissionAndDiscount)
+                .FirstOrDefault(t => t.Id == timeOfDayId);
 
             if (timeOfDay == null)
             {
@@ -29,15 +33,30 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
             }
 
             long price = 0;
+            long commission = 0;
+            long discount = 0;
 
             if (callingType == CallingType.PhoneCall)
-                price = timeOfDay.PhoneCallPrice;
+            {
+                commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.PhoneCallCommission * timeOfDay.PhoneCallPrice) / 100);
+                discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.PhoneCallDiscount * timeOfDay.PhoneCallPrice) / 100);
+                price = ((timeOfDay.PhoneCallPrice + commission) - discount);
+            }
+
 
             if (callingType == CallingType.VoiceCall)
-                price = timeOfDay.VoiceCallPrice;
+            {
+                commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.VoiceCallCommission * timeOfDay.PhoneCallPrice) / 100);
+                discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.VoiceCallDiscount * timeOfDay.PhoneCallPrice) / 100);
+                price = ((timeOfDay.VoiceCallPrice + commission) - discount);
+            }
 
             if (callingType == CallingType.TextCall)
-                price = timeOfDay.TextCallPrice;
+            {
+                commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.PhoneCallPrice) / 100);
+                discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.PhoneCallPrice) / 100);
+                price = ((timeOfDay.TextCallPrice + commission) - discount);
+            }
 
             return new ResultDto<long>()
             {
