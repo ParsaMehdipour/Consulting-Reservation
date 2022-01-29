@@ -4,14 +4,16 @@ using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220129135444_AddedTwoIdsForFactor")]
+    partial class AddedTwoIdsForFactor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -357,13 +359,13 @@ namespace CR.DataAccess.Migrations
                     b.Property<string>("CardHolderPAN")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("ConsumerInformationId")
+                    b.Property<long>("ConsumerInformationId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("ExpertInformationId")
+                    b.Property<long>("ExpertInformationId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("FactorNumber")
@@ -933,11 +935,15 @@ namespace CR.DataAccess.Migrations
                 {
                     b.HasOne("CR.DataAccess.Entities.IndividualInformations.ConsumerInfromation", "ConsumerInformation")
                         .WithMany("Factors")
-                        .HasForeignKey("ConsumerInformationId");
+                        .HasForeignKey("ConsumerInformationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
                         .WithMany("Factors")
-                        .HasForeignKey("ExpertInformationId");
+                        .HasForeignKey("ExpertInformationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ConsumerInformation");
 

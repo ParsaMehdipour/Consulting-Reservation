@@ -4,14 +4,16 @@ using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220129095452_AddedCallingTypeToAppointment")]
+    partial class AddedCallingTypeToAppointment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -357,14 +359,8 @@ namespace CR.DataAccess.Migrations
                     b.Property<string>("CardHolderPAN")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("ConsumerInformationId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<long?>("ExpertInformationId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("FactorNumber")
                         .HasColumnType("nvarchar(max)");
@@ -382,10 +378,6 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ConsumerInformationId");
-
-                    b.HasIndex("ExpertInformationId");
 
                     b.ToTable("TBL_Factors");
                 });
@@ -929,21 +921,6 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("ExpertInformation");
                 });
 
-            modelBuilder.Entity("CR.DataAccess.Entities.Factors.Factor", b =>
-                {
-                    b.HasOne("CR.DataAccess.Entities.IndividualInformations.ConsumerInfromation", "ConsumerInformation")
-                        .WithMany("Factors")
-                        .HasForeignKey("ConsumerInformationId");
-
-                    b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
-                        .WithMany("Factors")
-                        .HasForeignKey("ExpertInformationId");
-
-                    b.Navigation("ConsumerInformation");
-
-                    b.Navigation("ExpertInformation");
-                });
-
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", b =>
                 {
                     b.HasOne("CR.DataAccess.Entities.CommissionAndDiscounts.CommissionAndDiscount", "CommissionAndDiscount")
@@ -1050,8 +1027,6 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("Consumer");
 
                     b.Navigation("ConsumerAppointments");
-
-                    b.Navigation("Factors");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", b =>
@@ -1073,8 +1048,6 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("ExpertStudies");
 
                     b.Navigation("ExpertSubscriptions");
-
-                    b.Navigation("Factors");
 
                     b.Navigation("TimeOfDays");
                 });
