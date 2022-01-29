@@ -57,5 +57,26 @@ namespace CR.DataAccess.Enums
         [Display(Name = "متنی")]
         TextCall = 2,
     }
+
+    public enum TransactionStatus
+    {
+        //[Display(Name = "نامشخص")]
+        //UnDefined = 0,
+        [Display(Name = "ناموفق")]
+        Failed = 0,
+        [Display(Name = "موفق")]
+        Successful = 1,
+
+    }
+
+    public enum TransactionType
+    {
+        [Display(Name = "پرداخت از کارت بانکی")]
+        PayFromCreditCard = 0,
+        [Display(Name = "پرداخت از کیف پول")]
+        PayFromWallet = 1,
+        [Display(Name = "شارژ کیف پول")]
+        ChargeWallet = 2,
+    }
 }
 
