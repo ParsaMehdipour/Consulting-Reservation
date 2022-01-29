@@ -1,11 +1,13 @@
-﻿	<!-- Breadcrumb -->
+﻿@model CR.Core.DTOs.Factors.FactorDetailsForSiteDto
+
+<!-- Breadcrumb -->
 <div class="breadcrumb-bar">
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="col-md-12 col-12">
                 <nav aria-label="breadcrumb" class="page-breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">خانه</a></li>
                         <li class="breadcrumb-item active" aria-current="page">پرداخت</li>
                     </ol>
                 </nav>
@@ -26,39 +28,6 @@
 
                         <!-- Checkout Form -->
                         <div>
-                            <!-- Personal Information -->
-                            <div class="info-widget">
-                                <h4 class="card-title">اطلاعات شخصی</h4>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="form-group card-label">
-                                            <label>نام</label>
-                                            <input class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="form-group card-label">
-                                            <label>نام خانوادگی</label>
-                                            <input class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="form-group card-label">
-                                            <label>ایمیل</label>
-                                            <input class="form-control" type="email">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="form-group card-label">
-                                            <label>شماره</label>
-                                            <input class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="exist-customer">اکانت دارید؟<a href="#">برای ثبت نام کلیک کنید</a></div>
-                            </div>
-                            <!-- /Personal Information -->
-
                             <div class="payment-widget">
                                 <h4 class="card-title">روش پرداخت</h4>
 
@@ -67,7 +36,7 @@
                                     <label class="payment-radio credit-card-option">
                                         <input type="radio" name="radio" checked>
                                         <span class="checkmark"></span>
-                                        کارت اعتباری
+                                        کارت بانکی
                                     </label>
                                 </div>
                                 <!-- /Credit Card Payment -->
@@ -76,7 +45,7 @@
                                     <label class="payment-radio paypal-option">
                                         <input type="radio" name="radio">
                                         <span class="checkmark"></span>
-                                        پی‌پال
+                                        کیف پول
                                     </label>
                                 </div>
                                 <!-- /Paypal Payment -->
@@ -115,10 +84,10 @@
                         <!-- Booking Doctor Info -->
                         <div class="booking-doc-info">
                             <a href="doctor-profile.html" class="booking-doc-img">
-                                <img src="assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                                <img src="~/@Model.expertIconSrc" alt="User Image">
                             </a>
                             <div class="booking-info">
-                                <h4><a href="doctor-profile.html">پزشک دارن الدر</a></h4>
+                                <h4><a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.expertInformationId">@Model.expertFullName</a></h4>
                                 <div class="rating">
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
@@ -127,29 +96,30 @@
                                     <i class="fas fa-star"></i>
                                     <span class="d-inline-block average-rating">35</span>
                                 </div>
-                                <div class="clinic-details">
-                                    <p class="doc-location"><i class="fas fa-map-marker-alt"></i>نیویورک، آمریکا</p>
-                                </div>
                             </div>
                         </div>
+                        <br />
                         <!-- Booking Doctor Info -->
 
                         <div class="booking-summary">
                             <div class="booking-item-wrap">
-                                <ul class="booking-date">
-                                    <li>تاریخ<span>16 بهمن 1399</span></li>
-                                    <li>زمان<span>10:00 قبل از ظهر</span></li>
-                                </ul>
+                                @foreach (var appointment in Model.AppointmentDetailsForSiteDtos)
+                                {
+                                    <ul class="booking-date">
+                                        <li>تاریخ<span>@appointment.Date</span></li>
+                                        <li>زمان<span>@appointment.Time</span></li>
+                                    </ul>
+                                    <hr/>
+                                }
                                 <ul class="booking-fee">
-                                    <li>نرخ مشاوره<span>100 تومان</span></li>
-                                    <li>نرخ رزرو<span>10 تومان</span></li>
-                                    <li>تماس تصویری<span>50 تومان</span></li>
+                                    <li>نوع مشاوره<span>@Model.AppointmentDetailsForSiteDtos.FirstOrDefault()?.TimingType</span></li>
+                                    <li>نوع ارتباط<span>@Model.AppointmentDetailsForSiteDtos.FirstOrDefault()?.CallingType</span></li>
                                 </ul>
                                 <div class="booking-total">
                                     <ul class="booking-total-list">
                                         <li>
                                             <span>کل</span>
-                                            <span class="total-cost">160 تومان</span>
+                                            <span class="total-cost">@Model.price.ToString("n0") ريال</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -189,6 +159,16 @@
             error: function(request, status, error) {
                 alert(request.responseText);
             }
+        });
+    }
+
+    function addCommas(n){
+        var rx=  /(\d+)(\d{3})/;
+        return String(n).replace(/^\d+/, function(w){
+            while(rx.test(w)){
+                w= w.replace(rx, '$1,$2');
+            }
+            return w;
         });
     }
 </script>
