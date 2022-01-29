@@ -1,10 +1,7 @@
 ﻿using CR.DataAccess.Common.Entity;
 using CR.DataAccess.Entities.ExpertAvailabilities;
-using CR.DataAccess.Entities.IndividualInformations;
-using CR.DataAccess.Entities.Users;
-using System;
-using System.Collections.Generic;
 using CR.DataAccess.Entities.Factors;
+using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
 
 namespace CR.DataAccess.Entities.Appointments
@@ -12,6 +9,7 @@ namespace CR.DataAccess.Entities.Appointments
     public class Appointment : BaseEntity
     {
         public AppointmentStatus AppointmentStatus { get; set; }
+        public CallingType CallingType { get; set; }
         public string Reason { get; set; }
         public long? Price { get; set; }
 

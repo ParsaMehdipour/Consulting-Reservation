@@ -1,13 +1,14 @@
 ﻿using CR.DataAccess.Common.Entity;
 using CR.DataAccess.Entities.Appointments;
+using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertAvailabilities;
+using CR.DataAccess.Entities.ExpertInformations;
+using CR.DataAccess.Entities.Factors;
 using CR.DataAccess.Entities.Specialties;
 using CR.DataAccess.Entities.Users;
 using CR.DataAccess.Enums;
 using System;
 using System.Collections.Generic;
-using CR.DataAccess.Entities.CommissionAndDiscounts;
-using CR.DataAccess.Entities.ExpertInformations;
 
 namespace CR.DataAccess.Entities.IndividualInformations
 {
@@ -27,7 +28,6 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public string ClinicName { get; set; }
         public string ClinicAddress { get; set; }
         public string Tag { get; set; }
-        //public bool IsFreeOfCharge { get; set; }
         public bool UsePhoneCall { get; set; }
         public long PhoneCallPrice { get; set; } = 0;
         public bool UseVoiceCall { get; set; }
@@ -51,6 +51,7 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public User Expert { get; set; }
         public virtual Specialty Specialty { get; set; }
         public virtual CommissionAndDiscount CommissionAndDiscount { get; set; }
+        public List<Factor> Factors { get; set; }
         public List<Appointment> ExpertAppointments { get; set; }
         public List<Day> Days { get; set; }
         public List<TimeOfDay> TimeOfDays { get; set; }

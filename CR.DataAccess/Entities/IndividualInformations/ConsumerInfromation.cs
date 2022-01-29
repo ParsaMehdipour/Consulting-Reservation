@@ -1,5 +1,6 @@
 ﻿using CR.DataAccess.Common.Entity;
 using CR.DataAccess.Entities.Appointments;
+using CR.DataAccess.Entities.Factors;
 using CR.DataAccess.Entities.Users;
 using CR.DataAccess.Enums;
 using System;
@@ -33,6 +34,8 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public User Consumer { get; set; }
 
         public List<Appointment> ConsumerAppointments { get; set; }
+
+        public List<Factor> Factors { get; set; }
         #endregion
     }
 }
