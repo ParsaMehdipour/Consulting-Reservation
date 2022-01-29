@@ -4,6 +4,7 @@ using CR.Core.Services.Impl.Consumers;
 using CR.Core.Services.Impl.ExpertAvailabilities;
 using CR.Core.Services.Impl.ExpertImages;
 using CR.Core.Services.Impl.Experts;
+using CR.Core.Services.Impl.Factors;
 using CR.Core.Services.Impl.Images;
 using CR.Core.Services.Impl.Specialites;
 using CR.Core.Services.Impl.Statistics;
@@ -15,6 +16,7 @@ using CR.Core.Services.Interfaces.Consumers;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.ExpertImages;
 using CR.Core.Services.Interfaces.Experts;
+using CR.Core.Services.Interfaces.Factors;
 using CR.Core.Services.Interfaces.Images;
 using CR.Core.Services.Interfaces.Specialites;
 using CR.Core.Services.Interfaces.Statistics;
@@ -178,6 +180,9 @@ namespace CR.Presentation
             services.AddScoped<IAddNewCommissionAndDiscountService, AddNewCommissionAndDiscountService>();
             services.AddScoped<IGetCommissionAndDiscountDetailsForAdminService, GetCommissionAndDiscountDetailsForAdminService>();
             services.AddScoped<IEditCommissionAndDiscountService, EditCommissionAndDiscountService>();
+            //Factors
+            services.AddScoped<IGetFactorDetailsService, GetFactorDetailsService>();
+            services.AddScoped<IGetAllFactorsForAdminPanelService, GetAllFactorsForAdminPanelService>();
 
             #endregion
 
