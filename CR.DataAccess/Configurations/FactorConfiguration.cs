@@ -13,6 +13,14 @@ namespace CR.DataAccess.Configurations
             builder.HasMany(f => f.Appointments)
                 .WithOne(f => f.Factor)
                 .HasForeignKey(f => f.FactorId);
+
+            builder.HasOne(f => f.ExpertInformation)
+                .WithMany(f => f.Factors)
+                .HasForeignKey(f => f.ExpertInformationId);
+
+            builder.HasOne(f => f.ConsumerInformation)
+                .WithMany(f => f.Factors)
+                .HasForeignKey(f => f.ConsumerInformationId);
         }
     }
 }
