@@ -6,6 +6,6 @@ namespace CR.Core.Services.Interfaces.Appointment
 {
     public interface IAddAppointmentService
     {
-        ResultDto<List<string>> Execute(List<RequestAddAppointmentDto> requests, long consumerId);
+        ResultDto<string> Execute(List<RequestAddAppointmentDto> requests, long consumerId);
     }
 }

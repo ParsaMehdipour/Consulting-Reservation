@@ -4,6 +4,7 @@ using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.ExpertAvailabilities;
 using CR.DataAccess.Entities.Factors;
+using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,25 @@ namespace CR.Core.Services.Impl.Appointment
             _context = context;
         }
 
-        public ResultDto<List<string>> Execute(List<RequestAddAppointmentDto> requests, long consumerId)
+        public ResultDto<string> Execute(List<RequestAddAppointmentDto> requests, long consumerId)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-                List<string> factorNumbers = new List<string>();
+                List<DataAccess.Entities.Appointments.Appointment> appointments = new List<DataAccess.Entities.Appointments.Appointment>();
+                var expertInformation = new ExpertInformation();
+                var consumerInformation = new ConsumerInfromation();
+
+                var factor = new Factor()
+                {
+                    FactorStatus = FactorStatus.Waiting,
+                    FactorNumber = GetLastFactorNumber(),
+                };
+
+                _context.Factors.Add(factor);
+                _context.SaveChanges();
+
 
                 foreach (var request in requests)
                 {
@@ -34,7 +47,7 @@ namespace CR.Core.Services.Impl.Appointment
 
                     if (timeOfDay == null)
                     {
-                        return new ResultDto<List<string>>
+                        return new ResultDto<string>
                         {
                             IsSuccess = false,
                             Message = "زمانبندی یافت نشد!!",
@@ -42,12 +55,11 @@ namespace CR.Core.Services.Impl.Appointment
                         };
                     }
 
-                    var consumerInformation =
-                        _context.ConsumerInfromations.FirstOrDefault(c => c.ConsumerId == consumerId);
+                    consumerInformation = _context.ConsumerInfromations.FirstOrDefault(c => c.ConsumerId == consumerId);
 
                     if (consumerInformation == null)
                     {
-                        return new ResultDto<List<string>>
+                        return new ResultDto<string>
                         {
                             IsSuccess = false,
                             Message = "اطلاعات شما یافت نشد!!",
@@ -55,12 +67,12 @@ namespace CR.Core.Services.Impl.Appointment
                         };
                     }
 
-                    var expertInformation =
-                        _context.ExpertInformations.FirstOrDefault(e => e.Id == request.expertInformationId);
+
+                    expertInformation = _context.ExpertInformations.FirstOrDefault(e => e.Id == request.expertInformationId);
 
                     if (expertInformation == null)
                     {
-                        return new ResultDto<List<string>>
+                        return new ResultDto<string>
                         {
                             IsSuccess = false,
                             Message = "اطلاعات متخصص یافت نشد!!",
@@ -68,16 +80,7 @@ namespace CR.Core.Services.Impl.Appointment
                         };
                     }
 
-                    var factor = new Factor()
-                    {
-                        FactorStatus = FactorStatus.Waiting,
-                        FactorNumber = GetLastFactorNumber(),
-                    };
 
-                    _context.Factors.Add(factor);
-                    _context.SaveChanges();
-
-                    factorNumbers.Add(factor.FactorNumber);
 
                     var appointment = new DataAccess.Entities.Appointments.Appointment()
                     {
@@ -88,11 +91,13 @@ namespace CR.Core.Services.Impl.Appointment
                         TimeOfDay = timeOfDay,
                         TimeOfDayId = timeOfDay.Id,
                         Price = CheckCallingType(request.callingType, timeOfDay),
+                        CallingType = request.callingType,
                         FactorId = factor.Id,
                         Factor = factor
                     };
 
                     _context.Appointments.Add(appointment);
+                    appointments.Add(appointment);
 
                     _context.SaveChanges();
 
@@ -106,20 +111,28 @@ namespace CR.Core.Services.Impl.Appointment
                     expertInformation.ExpertAppointments.Add(appointment);
 
                 }
+
+                factor.Appointments.AddRange(appointments);
+                factor.TotalPrice = appointments.Sum(a => a.Price) ?? 0;
+                factor.ExpertInformationId = expertInformation.Id;
+                factor.ExpertInformation = expertInformation;
+                factor.ConsumerInformationId = consumerInformation.Id;
+                factor.ConsumerInformation = consumerInformation;
+
                 _context.SaveChanges();
 
                 transaction.Commit();
 
-                return new ResultDto<List<string>>
+                return new ResultDto<string>
                 {
                     IsSuccess = true,
                     Message = "نوبت شما با موفقیت رزرو شد",
-                    Data = factorNumbers
+                    Data = factor.FactorNumber
                 };
             }
             catch (Exception)
             {
-                return new ResultDto<List<string>>()
+                return new ResultDto<string>()
                 {
                     Data = null,
                     Message = "خطا از سمت سرور!!",
