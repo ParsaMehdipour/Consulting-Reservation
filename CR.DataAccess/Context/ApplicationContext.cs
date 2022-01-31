@@ -1,20 +1,21 @@
 ﻿using CR.DataAccess.Entities.Appointments;
+using CR.DataAccess.Entities.Blogs;
+using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertAvailabilities;
+using CR.DataAccess.Entities.ExpertInformations;
+using CR.DataAccess.Entities.Factors;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Entities.Roles;
 using CR.DataAccess.Entities.Specialties;
+using CR.DataAccess.Entities.Timings;
 using CR.DataAccess.Entities.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using CR.DataAccess.Entities.CommissionAndDiscounts;
-using CR.DataAccess.Entities.ExpertInformations;
-using CR.DataAccess.Entities.Factors;
-using CR.DataAccess.Entities.Timings;
 
 namespace CR.DataAccess.Context
 {
-    public class ApplicationContext : IdentityDbContext<User,Role,long>
+    public class ApplicationContext : IdentityDbContext<User, Role, long>
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
@@ -36,6 +37,7 @@ namespace CR.DataAccess.Context
         public DbSet<Factor> Factors { get; set; }
         public DbSet<CommissionAndDiscount> CommissionAndDiscounts { get; set; }
         public DbSet<Timing> Timings { get; set; }
+        public DbSet<BlogCategory> BlogCategories { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
