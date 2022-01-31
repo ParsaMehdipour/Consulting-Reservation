@@ -31,38 +31,53 @@
                             </tr>
                         </thead>
                         <tbody>
-                           @foreach (var factor in Model.FactorForAdminDtos)
-                           {
-                               <tr>
-                                   <td><a href="invoice.html">@factor.FactorNumber</a></td>
-                                   <td>
-                                       <h2 class="table-avatar">
-                                           <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@factor.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@factor.ConsumerIconSrc" alt="User Image"></a>
-                                           <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@factor.ConsumerId">@factor.ConsumerFullName </a>
-                                       </h2>
-                                   </td>
-                                   <td>@factor.TotalPrice تومان</td>
-                                   <td>@factor.CreateDate</td>
-                                   <td class="text-center">
-                                       @if (factor.Status == FactorStatus.Waiting.GetDisplayName())
-                                       {
-                                           <span class="badge badge-pill bg-warning inv-badge">در انتظار</span>
-                                       }
-                                       else if(factor.Status == FactorStatus.SuccessfulPayment.GetDisplayName())
-                                       {
-                                           <span class="badge badge-pill bg-success inv-badge">پرداخت شده</span>
-                                       }
-                                       else
-                                       {
-                                           <span class="badge badge-pill bg-danger inv-badge">پرداخت ناموفق</span>
-                                       }
-                                   </td>
-                               </tr>
-                           }
+                            @foreach (var factor in Model.FactorForAdminDtos)
+                            {
+                                <tr>
+                                    <td><a href="invoice.html">@factor.FactorNumber</a></td>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@factor.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@factor.ConsumerIconSrc" alt="User Image"></a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@factor.ConsumerId">@factor.ConsumerFullName </a>
+                                        </h2>
+                                    </td>
+                                    <td>@factor.TotalPrice تومان</td>
+                                    <td>@factor.CreateDate</td>
+                                    <td class="text-center">
+                                        @if (factor.Status == FactorStatus.Waiting.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-warning inv-badge">در انتظار</span>
+                                        }
+                                        else if (factor.Status == FactorStatus.SuccessfulPayment.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-success inv-badge">پرداخت شده</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-pill bg-danger inv-badge">پرداخت ناموفق</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
+        <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    show-first-numbered-page="true"
+                    show-last-numbered-page="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize"
+                    gap-size="2">
+            </paging>
         </div>
     </div>
 </div>
