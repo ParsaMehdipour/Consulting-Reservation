@@ -1,0 +1,88 @@
+﻿@model CR.Core.DTOs.ResultDTOs.ResultGetBlogCategoriesForAdminPanelDto
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-7 col-auto">
+            <h3 class="page-title">دسته بندی های مقاله</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">داشبورد</a></li>
+                <li class="breadcrumb-item active">دسته بندی ها</li>
+            </ul>
+        </div>
+        <div class="col-sm-5 col">
+            <a href="#Add_Specialities_details" data-toggle="modal" class="btn btn-primary float-right mt-2">افزودن</a>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="datatable table table-hover table-center mb-0">
+                        <thead>
+                            <tr>
+                                <th>نام دسته بندی</th>
+                                <th>پدر</th>
+                                <th>شماره نمایش</th>
+                                <th>توضیحات</th>
+                                <th>تعداد مقالات</th>
+                                <th>تاریخ ایجاد</th>
+                                <th class="text-right"> اقدامات </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @if (Model.BlogCategoryForAdminPanelDtos.Count > 0)
+                           {
+                               @foreach (var blogCategory in Model.BlogCategoryForAdminPanelDtos)
+                               {
+                                   <tr>
+                                       <td>
+                                           <h2 class="table-avatar">
+                                               <a class="avatar avatar-sm mr-2">
+                                                   <img class="avatar-img" src="~/@blogCategory.PictureSrc" alt="Speciality">
+                                               </a>
+                                               <a href="profile.html">@blogCategory.Name</a>
+                                           </h2>
+                                       </td>
+
+                                       <td>@blogCategory.ParentCategory</td>
+
+                                       <td>@blogCategory.ShowOrder</td>
+
+                                       <td>@blogCategory.Description</td>
+
+                                       <td>@blogCategory.BlogsCount</td>
+
+                                       <td>@blogCategory.CreationDate</td>
+
+                                       <td class="text-right">
+                                           <div class="actions">
+                                               @if (blogCategory.ParentCategory == null)
+                                               {
+                                                   <a href="~/admin/Blogcategories/AddNewBlogCategory?ParentId=@blogCategory.Id" class="btn btn-success">افزودن فرزند</a>
+                                               }
+
+                                               @if (blogCategory.HasChild == true)
+                                               {
+                                                   <a href="~/admin/BlogCategories/index?ParentId=@blogCategory.Id" class="btn btn-info">مشاهده لیست فرزند ها </a>
+                                               }
+                                               <a class="btn btn-sm bg-success-light" data-toggle="modal" href="#edit_specialities_details">
+                                                   <i class="fe fe-pencil"></i> ویرایش
+                                               </a>
+                                               <a data-toggle="modal" href="#delete_modal" class="btn btn-sm bg-danger-light">
+                                                   <i class="fe fe-trash"></i> حذف
+                                               </a>
+                                           </div>
+                                       </td>
+                                   </tr>
+                               }
+                           }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
