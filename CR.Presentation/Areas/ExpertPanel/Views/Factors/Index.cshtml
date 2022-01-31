@@ -1,0 +1,115 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using CR.Common.Utilities
+@using CR.DataAccess.Enums
+@model CR.Core.DTOs.ResultDTOs.ResultGetAllFactorsForExpertPanelService
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">صورت‌حساب</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">صورت‌حساب</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+
+                <partial name="ExpertPnelSideBarMenu" />
+
+            </div>
+            <div class="col-md-7 col-lg-8 col-xl-9">
+                <div class="card card-table">
+                    <div class="card-body">
+
+                        <!-- Invoice Table -->
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>شماره فاکتور</th>
+                                        <th>مراجعه‌کننده</th>
+                                        <th>مبلغ</th>
+                                        <th class="text-center"> وضعیت </th>
+                                        <th>تاریخ ایجاد</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.FactorForExpertPanelDtos.Count > 0)
+                                    {
+                                        @foreach (var factor in Model.FactorForExpertPanelDtos)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a href="invoice-view.html">@factor.FactorNumber</a>
+                                                </td>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a href="patient-profile.html" class="avatar avatar-sm mr-2">
+                                                            <img class="avatar-img rounded-circle" src="~/@factor.ConsumerIconSrc" alt="User Image">
+                                                        </a>
+                                                        <a href="patient-profile.html">@factor.ConsumerFullName</a>
+                                                    </h2>
+                                                </td>
+                                                <td> @factor.TotalPrice تومان </td>
+                                                <td class="text-center">
+                                                    @if (factor.Status == FactorStatus.Waiting.GetDisplayName())
+                                                    {
+                                                        <span class="badge badge-pill bg-warning inv-badge">در انتظار</span>
+                                                    }
+                                                    else if (factor.Status == FactorStatus.SuccessfulPayment.GetDisplayName())
+                                                    {
+                                                        <span class="badge badge-pill bg-success inv-badge">پرداخت شده</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-pill bg-danger inv-badge">پرداخت ناموفق</span>
+                                                    }
+                                                </td>
+                                                <td>@factor.CreateDate</td>
+                                                <td class="text-right">
+                                                    <div class="table-action">
+                                                        <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                                            <i class="far fa-eye"></i> مشاهده
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                                            <i class="fas fa-print"></i> چاپ
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /Invoice Table -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- /Page Content -->
+
+@section Scripts
+{
+    <script src="~/assets/js/ExpertPanel/Factor/Factor.js"></script>
+    <script src="~/assets/js/ExpertPanel/layout.js"></script>
+}
