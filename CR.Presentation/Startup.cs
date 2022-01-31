@@ -1,4 +1,5 @@
 using CR.Core.Services.Impl.Appointment;
+using CR.Core.Services.Impl.Blogs;
 using CR.Core.Services.Impl.CommissionAndDiscounts;
 using CR.Core.Services.Impl.Consumers;
 using CR.Core.Services.Impl.ExpertAvailabilities;
@@ -11,6 +12,7 @@ using CR.Core.Services.Impl.Statistics;
 using CR.Core.Services.Impl.Timings;
 using CR.Core.Services.Impl.Users;
 using CR.Core.Services.Interfaces.Appointment;
+using CR.Core.Services.Interfaces.Blogs;
 using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
@@ -183,6 +185,9 @@ namespace CR.Presentation
             //Factors
             services.AddScoped<IGetFactorDetailsService, GetFactorDetailsService>();
             services.AddScoped<IGetAllFactorsForAdminPanelService, GetAllFactorsForAdminPanelService>();
+            services.AddScoped<IGetAllFactorsForExpertPanelService, GetAllFactorsForExpertPanelService>();
+            //BlogCategories
+            services.AddScoped<IGetBlogCategoriesForAdminPanelService, GetBlogCategoriesForAdminPanelService>();
 
             #endregion
 
