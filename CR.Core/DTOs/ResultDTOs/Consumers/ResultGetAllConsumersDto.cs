@@ -1,7 +1,7 @@
 ﻿using CR.Core.DTOs.Consumers;
 using System.Collections.Generic;
 
-namespace CR.Core.DTOs.ResultDTOs
+namespace CR.Core.DTOs.ResultDTOs.Consumers
 {
     public class ResultGetAllConsumersDto
     {

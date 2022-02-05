@@ -8,6 +8,7 @@ using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using CR.Common.Utilities;
+using CR.Core.DTOs.ResultDTOs.Consumers;
 
 namespace CR.Core.Services.Impl.Consumers
 {

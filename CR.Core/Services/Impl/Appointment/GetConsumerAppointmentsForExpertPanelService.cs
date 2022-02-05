@@ -7,6 +7,7 @@ using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using CR.Core.DTOs.ResultDTOs.Consumers;
 
 namespace CR.Core.Services.Impl.Appointment
 {

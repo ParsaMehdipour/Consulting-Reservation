@@ -1,6 +1,6 @@
 ﻿using CR.Core.DTOs.Consumers;
 
-namespace CR.Core.DTOs.ResultDTOs
+namespace CR.Core.DTOs.ResultDTOs.Consumers
 {
     public class ResultGetConsumerDetailsForSiteDto
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CR.Core.DTOs.Appointments;
 
-namespace CR.Core.DTOs.ResultDTOs
+namespace CR.Core.DTOs.ResultDTOs.Consumers
 {
     public class ResultGetConsumerAppointmentsForExpertPanel
     {
