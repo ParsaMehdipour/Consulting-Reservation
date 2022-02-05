@@ -10,7 +10,7 @@
             </ul>
         </div>
         <div class="col-sm-5 col">
-            <a href="#Add_Specialities_details" data-toggle="modal" class="btn btn-primary float-right mt-2">افزودن</a>
+            <a asp-area="AdminPanel" asp-controller="BlogCategories" asp-action="AddNewBlogCategory" asp-route-parentId="@ViewData["parentId"]" class="btn btn-primary float-right mt-2">افزودن</a>
         </div>
     </div>
 </div>
@@ -22,63 +22,69 @@
                 <div class="table-responsive">
                     <table class="datatable table table-hover table-center mb-0">
                         <thead>
-                            <tr>
-                                <th>نام دسته بندی</th>
-                                <th>پدر</th>
-                                <th>شماره نمایش</th>
-                                <th>توضیحات</th>
-                                <th>تعداد مقالات</th>
-                                <th>تاریخ ایجاد</th>
-                                <th class="text-right"> اقدامات </th>
-                            </tr>
+                        <tr>
+                            <th>نام دسته بندی</th>
+                            <th>پدر</th>
+                            <th>شماره نمایش</th>
+                            <th>توضیحات</th>
+                            <th>تعداد مقالات</th>
+                            <th>تاریخ ایجاد</th>
+                            <th class="text-right"> اقدامات </th>
+                        </tr>
                         </thead>
                         <tbody>
-                           @if (Model.BlogCategoryForAdminPanelDtos.Count > 0)
-                           {
-                               @foreach (var blogCategory in Model.BlogCategoryForAdminPanelDtos)
-                               {
-                                   <tr>
-                                       <td>
-                                           <h2 class="table-avatar">
-                                               <a class="avatar avatar-sm mr-2">
-                                                   <img class="avatar-img" src="~/@blogCategory.PictureSrc" alt="Speciality">
-                                               </a>
-                                               <a href="profile.html">@blogCategory.Name</a>
-                                           </h2>
-                                       </td>
+                        @if (Model.BlogCategoryForAdminPanelDtos.Count > 0)
+                        {
+                            @foreach (var blogCategory in Model.BlogCategoryForAdminPanelDtos)
+                            {
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a class="avatar avatar-sm mr-2">
+                                                <img class="avatar-img" src="~/@blogCategory.PictureSrc" alt="Speciality">
+                                            </a>
+                                            <a href="profile.html">@blogCategory.Name</a>
+                                        </h2>
+                                    </td>
 
-                                       <td>@blogCategory.ParentCategory</td>
+                                    <td>
+                                        @{
+                                            string parent = blogCategory.ParentCategory != null ? blogCategory.ParentCategory.Name : "-";
+                                        }
 
-                                       <td>@blogCategory.ShowOrder</td>
+                                        <text> @parent </text>
+                                    </td>
 
-                                       <td>@blogCategory.Description</td>
+                                    <td>@blogCategory.ShowOrder</td>
 
-                                       <td>@blogCategory.BlogsCount</td>
+                                    <td>@blogCategory.Description</td>
 
-                                       <td>@blogCategory.CreationDate</td>
+                                    <td>@blogCategory.BlogsCount</td>
 
-                                       <td class="text-right">
-                                           <div class="actions">
-                                               @if (blogCategory.ParentCategory == null)
-                                               {
-                                                   <a href="~/admin/Blogcategories/AddNewBlogCategory?ParentId=@blogCategory.Id" class="btn btn-success">افزودن فرزند</a>
-                                               }
+                                    <td>@blogCategory.CreationDate</td>
 
-                                               @if (blogCategory.HasChild == true)
-                                               {
-                                                   <a href="~/admin/BlogCategories/index?ParentId=@blogCategory.Id" class="btn btn-info">مشاهده لیست فرزند ها </a>
-                                               }
-                                               <a class="btn btn-sm bg-success-light" data-toggle="modal" href="#edit_specialities_details">
-                                                   <i class="fe fe-pencil"></i> ویرایش
-                                               </a>
-                                               <a data-toggle="modal" href="#delete_modal" class="btn btn-sm bg-danger-light">
-                                                   <i class="fe fe-trash"></i> حذف
-                                               </a>
-                                           </div>
-                                       </td>
-                                   </tr>
-                               }
-                           }
+                                    <td class="text-right">
+                                        <div class="actions">
+                                            @if (blogCategory.ParentCategory == null)
+                                            {
+                                                <a asp-controller="BlogCategories" asp-action="AddNewBlogCategory" asp-route-parentId="@blogCategory.Id" class="btn btn-success">افزودن فرزند</a>
+                                            }
+
+                                            @if (blogCategory.HasChild)
+                                            {
+                                                <a asp-controller="BlogCategories" asp-action="Index" asp-route-parentId="@blogCategory.Id" class="btn btn-info">مشاهده لیست فرزند ها </a>
+                                            }
+                                            <a class="btn btn-sm bg-success-light" asp-controller="BlogCategories" asp-action="Details" asp-route-id="@blogCategory.Id">
+                                                <i class="fe fe-pencil"></i> ویرایش
+                                            </a>
+                                            <a onclick="Delete(@blogCategory.Id)" class="btn btn-sm bg-danger-light">
+                                                <i class="fe fe-trash"></i> حذف
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
                         </tbody>
                     </table>
                 </div>
@@ -86,3 +92,58 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+
+        function Delete(Id){
+            swal.fire({
+                title: 'حذف گروه',
+                text: "مدیریت گرامی از حذف گروه مقاله مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'تایید',
+                cancelButtonText: 'انصراف'
+            }).then((result) => {
+                if (result.value) {
+                    var data = {};
+                    data["id"] = Number(Id);
+                    $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: "POST",
+                        enctype: 'application/json',
+                        url: '/api/BlogCategories/DeleteBlogCategory',
+                        data: JSON.stringify(data),
+                        success: function(data) {
+                            if (data.isSuccess === true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function(isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+                }
+            });
+        }
+
+    </script>
+}
