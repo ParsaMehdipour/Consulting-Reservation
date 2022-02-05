@@ -5,6 +5,12 @@ namespace CR.DataAccess.Entities.Blogs
 {
     public class BlogCategory : BaseEntity
     {
+
+        public BlogCategory()
+        {
+            SubCategories = new List<BlogCategory>();
+        }
+
         public string Name { get; set; }
         public string Description { get; set; }
         public string Slug { get; set; }
@@ -21,7 +27,7 @@ namespace CR.DataAccess.Entities.Blogs
         #region Navigation Properties
 
         public virtual BlogCategory ParentCategory { get; set; }
-        public virtual ICollection<BlogCategory> SubCategories { get; set; }
+        public ICollection<BlogCategory> SubCategories { get; set; }
 
 
         #endregion
