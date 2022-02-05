@@ -22,7 +22,8 @@ namespace CR.Core.Services.Impl.Blogs
         {
             int rowCount = 0;
 
-            var blogCategories = _context.BlogCategories.Include(b => b.ParentCategory)
+            var blogCategories = _context.BlogCategories
+                .Include(b => b.ParentCategory)
                 .Include(b => b.SubCategories)
                 .Where(b => b.ParentCategoryId == parentId)
                 .Select(b => new BlogCategoryForAdminPanelDto
@@ -35,16 +36,13 @@ namespace CR.Core.Services.Impl.Blogs
                     Name = b.Name,
                     ShowOrder = b.ShowOrder,
                     Slug = b.Slug,
-                    ParentCategory = b.ParentCategory != null
-                        ? new
-                            ParentBlogCategoryDto
-                        {
-                            Id = b.ParentCategory.Id,
-                            Name = b.ParentCategory.Name,
+                    ParentCategory = b.ParentCategory != null ? new ParentBlogCategoryDto
+                    {
+                        Id = b.ParentCategory.Id,
+                        Name = b.ParentCategory.Name,
 
-                        }
-                        : null,
-                    HasChild = b.SubCategories.Any() ? true : false
+                    } : null,
+                    HasChild = b.SubCategories.Any()
                 }).OrderBy(b => b.ShowOrder).ToList();
 
             return new ResultDto<ResultGetBlogCategoriesForAdminPanelDto>()
