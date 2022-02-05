@@ -124,11 +124,14 @@ namespace CR.Core.Services.Impl.Experts
                 expertInformation.Gender = request.gender;
                 if (request.iconImage != null)
                 {
-                    expertInformation.IconSrc = _imageUploaderService.Execute(new UploadImageDto()
+                    string iconSrc = _imageUploaderService.Execute(new UploadImageDto()
                     {
                         File = request.iconImage,
                         Folder = "Experts"
                     });
+
+                    expertInformation.IconSrc = iconSrc;
+                    expert.IconSrc = iconSrc;
                 }
                 expertInformation.Province = request.province;
                 expertInformation.SpecificAddress = request.specificAddress;
@@ -142,6 +145,8 @@ namespace CR.Core.Services.Impl.Experts
                 expert.IsActive = false;
                 expert.Email = request.email;
                 expert.PhoneNumber = request.phoneNumber;
+                expert.FirstName = request.firstName;
+                expert.LastName = request.lastName;
 
                 _context.SaveChanges();
 

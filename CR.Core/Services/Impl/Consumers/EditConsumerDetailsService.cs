@@ -1,13 +1,13 @@
-﻿using System;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
+using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Consumers;
-using CR.DataAccess.Context;
-using System.Linq;
-using CR.Common.Convertor;
-using CR.Core.DTOs.Images;
 using CR.Core.Services.Interfaces.Images;
+using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.Consumers
 {
@@ -62,11 +62,14 @@ namespace CR.Core.Services.Impl.Consumers
                 consumerInformation.PostalCode = request.PostalCode;
                 if (request.IconImage != null)
                 {
-                    consumerInformation.IconSrc = _imageUploaderService.Execute(new UploadImageDto()
+                    string iconSrc = _imageUploaderService.Execute(new UploadImageDto()
                     {
                         File = request.IconImage,
                         Folder = "Consumer"
                     });
+
+                    consumerInformation.IconSrc = iconSrc;
+                    consumer.IconSrc = iconSrc;
                 }
 
                 if (request.gender != 0)
@@ -78,6 +81,8 @@ namespace CR.Core.Services.Impl.Consumers
                     consumerInformation.Gender = GenderType.Male;
                 }
 
+                consumer.FirstName = request.FirstName;
+                consumer.LastName = request.LastName;
                 consumer.Email = request.Email;
 
                 _context.SaveChanges();

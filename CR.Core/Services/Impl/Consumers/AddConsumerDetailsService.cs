@@ -1,14 +1,14 @@
-﻿using System;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
+using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Consumers;
+using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.IndividualInformations;
-using System.Linq;
-using CR.Common.Convertor;
-using CR.Core.DTOs.Images;
-using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Enums;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.Consumers
 {
@@ -18,7 +18,7 @@ namespace CR.Core.Services.Impl.Consumers
         private readonly IImageUploaderService _imageUploaderService;
 
         public AddConsumerDetailsService(ApplicationContext context
-        ,IImageUploaderService imageUploaderService)
+        , IImageUploaderService imageUploaderService)
         {
             _context = context;
             _imageUploaderService = imageUploaderService;
@@ -55,6 +55,9 @@ namespace CR.Core.Services.Impl.Consumers
                     Consumer = consumer,
                 };
 
+                consumer.FirstName = request.firstName;
+                consumer.LastName = request.firstName;
+
                 if (request.gender != 0)
                 {
                     consumerInformation.Gender = request.gender;
@@ -66,11 +69,14 @@ namespace CR.Core.Services.Impl.Consumers
 
                 if (request.iconImage != null)
                 {
-                    consumerInformation.IconSrc = _imageUploaderService.Execute(new UploadImageDto()
+                    string iconSrc = _imageUploaderService.Execute(new UploadImageDto()
                     {
                         File = request.iconImage,
                         Folder = "Consumers"
                     });
+
+                    consumerInformation.IconSrc = iconSrc;
+                    consumer.IconSrc = iconSrc;
                 }
 
                 consumer.Email = request.email;

@@ -7,6 +7,9 @@ namespace CR.DataAccess.Entities.Users
 {
     public class User : IdentityUser<long>
     {
+        public string IconSrc { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.Now;
         public UserFlag UserFlag { get; set; } = 0;
         public bool IsActive { get; set; } = true;

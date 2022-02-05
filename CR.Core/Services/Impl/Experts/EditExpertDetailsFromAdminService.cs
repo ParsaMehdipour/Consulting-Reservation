@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.Experts;
-using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.Experts
 {
@@ -58,6 +57,8 @@ namespace CR.Core.Services.Impl.Experts
 
                 expert.PhoneNumber = request.phoneNumber;
                 expert.Email = request.email;
+                expert.FirstName = request.firstName;
+                expert.LastName = request.lastName;
 
                 _context.SaveChanges();
 
