@@ -188,6 +188,10 @@ namespace CR.Presentation
             services.AddScoped<IGetAllFactorsForExpertPanelService, GetAllFactorsForExpertPanelService>();
             //BlogCategories
             services.AddScoped<IGetBlogCategoriesForAdminPanelService, GetBlogCategoriesForAdminPanelService>();
+            services.AddScoped<IAddNewBlogCategoryService, AddNewBlogCategoryService>();
+            services.AddScoped<IDeleteBlogCategoryService, DeleteBlogCategoryService>();
+            services.AddScoped<IGetBlogCategoryDetailsService, GetBlogCategoryDetailsService>();
+            services.AddScoped<IEditBlogCategoryDetailsService, EditBlogCategoryDetailsService>();
 
             #endregion
 
