@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220131125407_AddedPictureToBrandCategory")]
-    partial class AddedPictureToBrandCategory
+    [Migration("20220203075454_AddedBlogCategory")]
+    partial class AddedBlogCategory
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,9 +73,6 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("BlogCategoryId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -101,8 +98,6 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BlogCategoryId");
 
                     b.HasIndex("ParentCategoryId");
 
@@ -874,12 +869,8 @@ namespace CR.DataAccess.Migrations
 
             modelBuilder.Entity("CR.DataAccess.Entities.Blogs.BlogCategory", b =>
                 {
-                    b.HasOne("CR.DataAccess.Entities.Blogs.BlogCategory", null)
-                        .WithMany("SubCategories")
-                        .HasForeignKey("BlogCategoryId");
-
                     b.HasOne("CR.DataAccess.Entities.Blogs.BlogCategory", "ParentCategory")
-                        .WithMany()
+                        .WithMany("SubCategories")
                         .HasForeignKey("ParentCategoryId");
 
                     b.Navigation("ParentCategory");

@@ -18,20 +18,13 @@ namespace CR.DataAccess.Migrations
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShowOrder = table.Column<int>(type: "int", nullable: false),
-                    Keywords = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PictureSrc = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ParentCategoryId = table.Column<long>(type: "bigint", nullable: true),
-                    BlogCategoryId = table.Column<long>(type: "bigint", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TBL_BlogCategories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TBL_BlogCategories_TBL_BlogCategories_BlogCategoryId",
-                        column: x => x.BlogCategoryId,
-                        principalTable: "TBL_BlogCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TBL_BlogCategories_TBL_BlogCategories_ParentCategoryId",
                         column: x => x.ParentCategoryId,
@@ -39,11 +32,6 @@ namespace CR.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TBL_BlogCategories_BlogCategoryId",
-                table: "TBL_BlogCategories",
-                column: "BlogCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TBL_BlogCategories_ParentCategoryId",
