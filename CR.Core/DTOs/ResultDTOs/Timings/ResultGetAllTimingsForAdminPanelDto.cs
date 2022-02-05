@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using CR.Core.DTOs.Timings;
-using CR.DataAccess.Enums;
 
-namespace CR.Core.DTOs.ResultDTOs
+namespace CR.Core.DTOs.ResultDTOs.Timings
 {
     public class ResultGetAllTimingsForAdminPanelDto
     {

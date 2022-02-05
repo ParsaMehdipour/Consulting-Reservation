@@ -1,7 +1,7 @@
 ﻿using CR.Core.DTOs.Blogs;
 using System.Collections.Generic;
 
-namespace CR.Core.DTOs.ResultDTOs
+namespace CR.Core.DTOs.ResultDTOs.Blogs
 {
     public class ResultGetBlogCategoriesForAdminPanelDto
     {

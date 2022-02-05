@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using CR.Core.DTOs.CommissionAndDiscounts;
-using CR.DataAccess.Entities.CommissionAndDiscounts;
 
-namespace CR.Core.DTOs.ResultDTOs
+namespace CR.Core.DTOs.ResultDTOs.CommissionAndDiscounts
 {
     public class ResultGetALLCommissionAndDiscountsForAdminDto
     {

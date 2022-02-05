@@ -4,6 +4,7 @@ using System.Linq;
 using CR.Common.DTOs;
 using CR.Core.DTOs.CommissionAndDiscounts;
 using CR.Core.DTOs.ResultDTOs;
+using CR.Core.DTOs.ResultDTOs.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.CommissionAndDiscounts;

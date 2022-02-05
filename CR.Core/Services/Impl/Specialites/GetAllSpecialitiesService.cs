@@ -5,6 +5,7 @@ using CR.Core.Services.Interfaces.Specialites;
 using CR.DataAccess.Context;
 using System.Linq;
 using CR.Common.Utilities;
+using CR.Core.DTOs.ResultDTOs.Specialities;
 
 namespace CR.Core.Services.Impl.Specialites
 {

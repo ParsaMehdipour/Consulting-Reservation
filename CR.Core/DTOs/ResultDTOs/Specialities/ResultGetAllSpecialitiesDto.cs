@@ -1,7 +1,7 @@
-﻿using CR.Core.DTOs.Specialities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using CR.Core.DTOs.Specialities;
 
-namespace CR.Core.DTOs.ResultDTOs
+namespace CR.Core.DTOs.ResultDTOs.Specialities
 {
     public class ResultGetAllSpecialitiesDto
     {
