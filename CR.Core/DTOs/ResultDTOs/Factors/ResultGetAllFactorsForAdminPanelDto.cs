@@ -1,7 +1,7 @@
-﻿using CR.Core.DTOs.Factors;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using CR.Core.DTOs.Factors;
 
-namespace CR.Core.DTOs.ResultDTOs
+namespace CR.Core.DTOs.ResultDTOs.Factors
 {
     public class ResultGetAllFactorsForAdminPanelDto
     {
