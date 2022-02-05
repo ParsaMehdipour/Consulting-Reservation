@@ -5,6 +5,7 @@ using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Experts;
 using CR.Core.DTOs.ResultDTOs;
+using CR.Core.DTOs.ResultDTOs.Experts;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;

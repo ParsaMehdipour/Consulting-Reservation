@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CR.Core.DTOs.ResultDTOs;
+using CR.Core.DTOs.ResultDTOs.Experts;
 using CR.Core.DTOs.Specialities;
 
 namespace CR.Presentation.Models.ViewModels
