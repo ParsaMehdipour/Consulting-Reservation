@@ -1,0 +1,198 @@
+﻿@model CR.Core.DTOs.RequestDTOs.RequestAddNewBlogCategoryDto
+
+<link rel="stylesheet" href="~/assets/css/style.css">
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">افزودن گروه مقاله</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item"><a href="javascript:(0);">صفحات</a></li>
+                <li class="breadcrumb-item active">افزودن گروه مقاله</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <input type="hidden" id="parentId" value="@ViewBag.parentId" />
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body custom-edit-service">
+
+                @*        <div class="row mb-5">
+                    <div class="col">
+                    <ul class="nav nav-tabs nav-tabs-solid">
+                    <li class="nav-item">
+                    <a class="nav-link" href="blog.html">بلاگ فعال</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="pending-blog.html">بلاگ درانتظار</a>
+                    </li>
+                    </ul>
+                    </div>
+                    <div class="col-auto">
+                    <a class="btn btn-primary btn-sm" href="add-blog.html"><i class="fas fa-plus mr-1"></i>افزودن بلاگ </a>
+                    </div>
+                    </div>*@
+
+                <!-- Add Blog -->
+                <form id="addNewBlogCategoryForm">
+                    <div class="service-fields mb-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="change-avatar">
+                                        <div class="profile-img">
+                                            <img src="~/assets/img/upload-icon-flat-vector-download-260nw-1378175036.jpg" alt="User Image">
+                                        </div>
+                                        <div class="upload-img">
+                                            <div class="change-photo-btn">
+                                                <span><i class="fa fa-upload"></i> بارگذاری تصویر </span>
+                                                <input type="file" class="upload" id="fileImage">
+                                            </div>
+                                            <small class="form-text text-muted">JPG ، GIF یا PNG مجاز است. حداکثر اندازه 2 مگابایت</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>عنوان گروه <span class="text-danger">*</span></label>
+                                    <input onchange="makeSlug('name', 'slug')" class="form-control" type="text" asp-for="name" id="name" name="name">
+                                    <span asp-validation-for="name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Slug <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" asp-for="slug" readonly="readonly" id="slug" name="slug">
+                                    <span asp-validation-for="slug" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>ترتیب نمایش <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="number" asp-for="showOrder" id="showOrder" name="showOrder">
+                                    <span asp-validation-for="showOrder" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="service-fields mb-3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>توضیحات<span class="text-danger">*</span></label>
+                                    <textarea class="form-control service-desc" asp-for="description" id="description" name="description"></textarea>
+                                    <span asp-validation-for="description" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>توضیحات متا<span class="text-danger">*</span></label>
+                                    <textarea class="form-control service-desc" asp-for="metaDescription" id="metaDescription" name="metaDescription"></textarea>
+                                    <span asp-validation-for="metaDescription" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button onclick="AddNewBlogCategory()" type="submit" class="btn btn-primary submit-btn"> ارسال</button>
+                    </div>
+                </form>
+                <!-- /Add Blog -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script>
+
+    function AddNewBlogCategory() {
+
+        if ($("#addNewBlogCategoryForm").valid()) {
+
+            var addNewBlogCategoryForm = new FormData();
+            addNewBlogCategoryForm.append("name",$("#name").val());
+            addNewBlogCategoryForm.append("parentId",$("#parentId").val());
+            addNewBlogCategoryForm.append("slug",$("#slug").val());
+            addNewBlogCategoryForm.append("showOrder",$("#showOrder").val());
+            addNewBlogCategoryForm.append("description",$("#description").val());
+            addNewBlogCategoryForm.append("metaDescription",$("#metaDescription").val());
+            addNewBlogCategoryForm.append("file",$("#fileImage").get(0).files[0]);
+
+            $("#addNewBlogCategoryForm").submit(function(event) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddNewBlogCategory", "BlogCategories")',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    cache: false,
+                    data: addNewBlogCategoryForm,
+                    beforeSend: function(x) {
+                        $('#loading').show(0);
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide(0);
+                    },
+                    fail: function() {
+                        $('#loading').hide(0);
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+
+                event.preventDefault();
+            });
+       }
+    }
+
+    function makeSlug(source, dist) {
+        var value = $('#' + source).val();
+        $('#' + dist).val(convertToSlug(value));
+    }
+
+    var convertToSlug = function (str) {
+        var $slug = '';
+        var trimmed = $.trim(str);
+        $slug = trimmed.replace(/[^a-z0-9-آ-ی-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+        return $slug.toLowerCase();
+    };
+
+    function checkSlugDuplication(url, dist) {
+        var slug = $('#' + dist).val();
+        var id = convertToSlug(slug);
+        $.get({
+            url: url + '/' + id,
+            success: function (data) {
+                if (data) {
+                    sendNotification('error', 'top right', "خطا", "اسلاگ نمی تواند تکراری باشد");
+                }
+            }
+        });
+    }
+
+    function fillField(source, dist) {
+        var value = $('#' + source).val();
+        $('#' + dist).val(value);
+    }
+</script>
+}
