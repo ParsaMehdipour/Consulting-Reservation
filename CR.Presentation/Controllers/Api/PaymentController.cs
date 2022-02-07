@@ -1,16 +1,8 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
-using CR.Common.DTOs;
-using CR.Common.Utilities;
-using CR.Core.DTOs.Payment;
-using Microsoft.AspNetCore.Http;
+﻿using CR.Common.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
+using ServiceReference2;
+using System;
+using System.Threading.Tasks;
 
 namespace CR.Presentation.Controllers.Api
 {
@@ -30,42 +22,56 @@ namespace CR.Presentation.Controllers.Api
                 });
             }
 
-            var date = DateTime.Now;
+            //var date = DateTime.Now;
 
-            var request = new RequestPaymentDto()
-            {
-                amount = Convert.ToInt32(price),
-                callBackUrl = "http://localhost:23065/Payment/Verify",
-                orderId = Convert.ToInt32(factorNumber),
-                terminalId = 6240330,
-                userName = "choole777",
-                userPassword = "16020307",
-                localDate = $"{date.Year}{date.Month}{date.Day}",
-                localTime = $"{date.Hour}{date.Minute}{date.Second}",
-                payerId = ClaimUtility.GetUserId(User).Value,
-                additionalData = "پس از نیم ساعت امکان لغو درخواست وجود ندارد"
-            };
+            //var request = new RequestPaymentDto()
+            //{
+            //    amount = Convert.ToInt32(price),
+            //    callBackUrl = "http://localhost:23065/Payment/Verify",
+            //    orderId = Convert.ToInt32(factorNumber),
+            //    terminalId = 6240330,
+            //    userName = "choole777",
+            //    userPassword = "16020307",
+            //    localDate = $"{date.Year}{date.Month}{date.Day}",
+            //    localTime = $"{date.Hour}{date.Minute}{date.Second}",
+            //    payerId = ClaimUtility.GetUserId(User).Value,
+            //    additionalData = "پس از نیم ساعت امکان لغو درخواست وجود ندارد"
+            //};
 
-            var data = new
-            {
-                request.amount,
-                request.callBackUrl,
-                request.terminalId,
-                request.orderId,
-                request.userName,
-                request.userPassword,
-                request.localDate,
-                request.localTime,
-                request.payerId,
-                request.additionalData
-            };
+            //var data = new
+            //{
+            //    request.amount,
+            //    request.callBackUrl,
+            //    request.terminalId,
+            //    request.orderId,
+            //    request.userName,
+            //    request.userPassword,
+            //    request.localDate,
+            //    request.localTime,
+            //    request.payerId,
+            //    request.additionalData
+            //};
 
-            var ipgUrl = "https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl";
-            var res = CallApi<object>(ipgUrl, data);
+            //var ipgUrl = "https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl";
+            //var res = CallApi<object>(ipgUrl, data);
+            //res.Wait();
+
+            var res = CallApi(price, factorNumber);
             res.Wait();
 
+            var output = res.Result.Body.@return;
 
-            return new RedirectResult("/");
+            if (output.Split().Length >= 2)
+            {
+                var status = output.Split(",")[0];
+                var refId = output.Split(",")[1];
+
+                if (status == "0")
+                {
+                    return new RedirectResult("https://pgw.bpm.bankmellat.ir/pgwchannel/startpay.mellat?RefId=" + refId);
+                }
+            }
+
         }
 
         [Route("/api/Payment/Verify")]
@@ -74,23 +80,40 @@ namespace CR.Presentation.Controllers.Api
             return new JsonResult('s');
         }
 
-        public static async Task<T> CallApi<T>(string apiUrl, object value)
+        private async Task<bpPayRequestResponse> CallApi(string price, string factorNumber)
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
-            using (var client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri(apiUrl);
-                client.DefaultRequestHeaders.Accept.Clear();
-                var w = client.PostAsJsonAsync(apiUrl,value);
-                w.Wait();
-                HttpResponseMessage response = w.Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = response.Content.ReadAsAsync<T>();
-                    result.Wait();
-                    return result.Result;
-                }
-                return default(T);
+                var date = DateTime.Now;
+
+                PaymentGatewayClient client = new PaymentGatewayClient(PaymentGatewayClient.EndpointConfiguration.PaymentGatewayImplPort);
+
+                var result = await client.bpPayRequestAsync(
+                    terminalId: 6240330,
+                    userName: "choole777",
+                    userPassword: "16020307",
+                    orderId: Convert.ToInt32(factorNumber),
+                    amount: Convert.ToInt32(price),
+                    localDate: $"{date.Year}{date.Month}{date.Day}",
+                    localTime: $"{date.Hour}{date.Minute}{date.Second}",
+                    additionalData: "پس از نیم ساعت امکان لغو درخواست وجود ندارد",
+                    callBackUrl: "http://chalechoole.com/Payment/Verify",
+                    payerId: "0",
+                    mobileNo: "989122502978",
+                    encPan: "",
+                    panHiddenMode: "",
+                    cartItem: "",
+                    enc: ""
+                );
+
+                return result;
+
+            }
+            catch (Exception e)
+            {
+                var exception = e.Message;
+
+                return null;
             }
         }
     }
