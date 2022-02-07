@@ -9,6 +9,7 @@ namespace CR.Core.DTOs.Factors
         public string expertIconSrc { get; set; }
         public string expertFullName { get; set; }
         public long price { get; set; }
+        public string refId { get; set; }
         public List<AppointmentDetailsForSiteDto> AppointmentDetailsForSiteDtos { get; set; }
     }
 }
