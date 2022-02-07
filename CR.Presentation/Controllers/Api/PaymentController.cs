@@ -72,6 +72,8 @@ namespace CR.Presentation.Controllers.Api
                 }
             }
 
+            return new RedirectResult("/");
+
         }
 
         [Route("/api/Payment/Verify")]
