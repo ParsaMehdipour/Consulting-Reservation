@@ -73,7 +73,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>تاریخ انتشار <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" asp-for="publishDate" id="publishDate" name="publishDate">
+                                    <input class="form-control datetimepicker" type="text" asp-for="publishDate" id="publishDate" name="publishDate">
                                     <span asp-validation-for="publishDate" class="text-danger"></span>
 
                                 </div>
@@ -144,7 +144,7 @@
                     </div>
 
                     <div class="submit-section">
-                        <button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">افزودن</button>
+                        <button onclick="AddBlog()" class="btn btn-primary submit-btn" type="submit" value="submit">افزودن</button>
                     </div>
                 </form>
                 <!-- /Add Blog -->
@@ -194,6 +194,62 @@
     function fillField(source, dist) {
         var value = $('#' + source).val();
         $('#' + dist).val(value);
+    }
+
+    function AddBlog() {
+        
+        if ($("#addNewBlogForm").valid()) {
+
+            var blogCategorySelect = document.getElementById('blogCategoryId');
+
+            var data = {};
+
+            data["title"] = $("#title").val();
+            data["slug"] = $("#slug").val();
+            data["blogCategoryId"] = blogCategorySelect.options[blogCategorySelect.selectedIndex].value;
+            data["shortDescription"] = $("#shortDescription").val();
+            data["description"] = CKEDITOR.instances.description.getData();
+            data["orderNumber"] = $("#orderNumber").val();
+            data["keyWords"] = $("#keyWords").val();
+            data["status"] = $("#status").is(":checked");
+            data["metaDescription"] = $("#metaDescription").val();
+            data["publishDate"] = $("#publishDate").val();
+            data["canonicalAddress"] = $("#canonicalAddress").val();
+
+            $( "#addNewBlogForm" ).submit(function( event ) {
+                $.ajax({
+                    type: "POST",
+                    url: '/api/Blogs/AddNewBlog',
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    enctype: 'application/json',
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(data) {
+                        if (data.isSuccess == true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                event.preventDefault();
+            });
+        }
     }
 </script>
 }
