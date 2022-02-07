@@ -65,7 +65,8 @@ namespace CR.Core.Services.Impl.Factors
                     price = appointments.Sum(a => a.Price),
                     expertFullName = factor.Appointments.FirstOrDefault()?.ExpertInformation.FirstName + " " + factor.Appointments.FirstOrDefault()?.ExpertInformation.LastName,
                     expertIconSrc = factor.Appointments.FirstOrDefault()?.ExpertInformation.IconSrc,
-                    expertInformationId = factor.Appointments.FirstOrDefault()?.ExpertInformation.Id
+                    expertInformationId = factor.Appointments.FirstOrDefault()?.ExpertInformation.Id,
+                    refId = factor.RefId
                 },
                 IsSuccess = true,
             };
