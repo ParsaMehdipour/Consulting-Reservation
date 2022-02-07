@@ -192,6 +192,9 @@ namespace CR.Presentation
             services.AddScoped<IDeleteBlogCategoryService, DeleteBlogCategoryService>();
             services.AddScoped<IGetBlogCategoryDetailsService, GetBlogCategoryDetailsService>();
             services.AddScoped<IEditBlogCategoryDetailsService, EditBlogCategoryDetailsService>();
+            services.AddScoped<IGetBlogCategoriesForDropdownService, GetBlogCategoriesForDropdownService>();
+            //Blogs
+            services.AddScoped<IGetBlogsForAdminPanelService, GetBlogsForAdminPanelService>();
 
             #endregion
 

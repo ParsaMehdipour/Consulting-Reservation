@@ -49,6 +49,8 @@
 
     <!-- SweetAlert Css -->
     <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    
+    @RenderSection("Styles" , false)
 
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
@@ -223,8 +225,12 @@
                         </li>
                         <li>
                             <a asp-controller="Consumers" asp-action="Index"><i class="fe fe-user"></i> <span>مراجعان</span></a>
-
+                        </li>
+                        <li>
                             <a asp-controller="BlogCategories" asp-action="Index"><i class="fe fe-user"></i> <span>گروه مقالات</span></a>
+                        </li>
+                        <li>
+                            <a asp-controller="Blogs" asp-action="Index"><i class="fe fe-user"></i> <span>مقالات</span></a>
                         </li>
                         @*                        <li>
                             <a href="reviews.html"><i class="fe fe-star-o"></i> <span>نظرات</span></a>
@@ -263,7 +269,7 @@
 
             <div class="content container-fluid">
 
-                @RenderBody();
+                @RenderBody()
 
             </div>
         </div>
