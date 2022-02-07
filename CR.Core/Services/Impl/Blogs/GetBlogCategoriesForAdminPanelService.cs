@@ -6,6 +6,7 @@ using CR.Core.Services.Interfaces.Blogs;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using CR.Core.DTOs.ResultDTOs.Blogs;
 
 namespace CR.Core.Services.Impl.Blogs
 {

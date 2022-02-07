@@ -10,7 +10,13 @@ namespace CR.DataAccess.Configurations
         {
             builder.ToTable("TBL_BlogCategories");
 
-            builder.HasOne(b => b.ParentCategory).WithMany(_ => _.SubCategories).HasForeignKey(_ => _.ParentCategoryId);
+            builder.HasOne(b => b.ParentCategory)
+                .WithMany(_ => _.SubCategories)
+                .HasForeignKey(_ => _.ParentCategoryId);
+
+            builder.HasMany(_ => _.Blogs)
+                .WithOne(_ => _.BlogCategory)
+                .HasForeignKey(_ => _.BlogCategoryId);
 
         }
     }

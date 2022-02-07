@@ -4,6 +4,7 @@ using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs;
+using CR.Core.DTOs.ResultDTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;

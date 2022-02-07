@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.Consumers;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Impl.Consumers
 {
@@ -56,7 +56,8 @@ namespace CR.Core.Services.Impl.Consumers
                 consumerInformation.BirthDate_String = request.birthDate_String;
                 consumerInformation.BirthDate = request.birthDate_String.ToGeorgianDateTime();
 
-
+                consumer.FirstName = request.firstName;
+                consumer.LastName = request.lastName;
                 consumer.PhoneNumber = request.phoneNumber;
                 consumer.Email = request.email;
 

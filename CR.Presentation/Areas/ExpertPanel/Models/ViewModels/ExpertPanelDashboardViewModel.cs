@@ -1,4 +1,5 @@
 ﻿using CR.Core.DTOs.ResultDTOs;
+using CR.Core.DTOs.ResultDTOs.Consumers;
 using CR.Core.DTOs.Statistics;
 
 namespace CR.Presentation.Areas.ExpertPanel.Models.ViewModels

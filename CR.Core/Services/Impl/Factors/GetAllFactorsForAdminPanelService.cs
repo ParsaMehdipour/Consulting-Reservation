@@ -7,6 +7,7 @@ using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using CR.Core.DTOs.ResultDTOs.Factors;
 
 namespace CR.Core.Services.Impl.Factors
 {

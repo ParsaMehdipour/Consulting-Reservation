@@ -2,6 +2,7 @@
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.ResultDTOs;
+using CR.Core.DTOs.ResultDTOs.Timings;
 using CR.Core.DTOs.Timings;
 using CR.Core.Services.Interfaces.Timings;
 using CR.DataAccess.Context;

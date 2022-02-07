@@ -1,0 +1,199 @@
+﻿@model CR.Core.DTOs.RequestDTOs.Blogs.RequestAddNewBlogDto
+
+@section Styles
+{
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/datatables/datatables.min.css">
+
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">افزودن بلاگ</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">داشبورد</a></li>
+                <li class="breadcrumb-item"><a href="javascript:(0);">صفحات</a></li>
+                <li class="breadcrumb-item active">افزودن بلاگ</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body custom-edit-service">
+
+                <!-- Add Blog -->
+                <form id="addNewBlogForm">
+                    <div class="service-fields mb-3">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>عنوان بلاگ <span class="text-danger">*</span></label>
+                                    <input onchange="makeSlug('title', 'slug')" class="form-control" type="text" asp-for="title" id="title" name="title">
+                                    <span asp-validation-for="title" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Slug<span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" asp-for="slug" id="slug" name="slug" readonly="readonly">
+                                    <span asp-validation-for="slug" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>ترتیب نمایش <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="number" asp-for="orderNumber" id="orderNumber" name="orderNumber">
+                                    <span asp-validation-for="orderNumber" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>وضعیت نمایش<span class="text-danger">*</span></label>
+                                    <input class="form-control" type="checkbox" asp-for="status" id="status" name="status">
+                                    <span asp-validation-for="status" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-fields mb-3">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>تاریخ انتشار <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" asp-for="publishDate" id="publishDate" name="publishDate">
+                                    <span asp-validation-for="publishDate" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>دسته بندی<span class="text-danger">*</span></label>
+                                    <select class="form-control" asp-items="ViewBag.Categories" asp-for="blogCategoryId" id="blogCategoryId" name="blogCategoryId">
+                                        <option>انتخاب کنید</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="service-fields mb-3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>توضیحات کوتاه<span class="text-danger">*</span></label>
+                                    <textarea asp-for="shortDescription" class="form-control service-desc" id="shortDescription" name="shortDescription"></textarea>
+                                    <span asp-validation-for="shortDescription" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-fields mb-3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>توضیحات متا<span class="text-danger">*</span></label>
+                                    <textarea asp-for="metaDescription" class="form-control service-desc" id="metaDescription" name="metaDescription"></textarea>
+                                    <span asp-validation-for="metaDescription" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-fields mb-3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>متن<span class="text-danger">*</span></label>
+                                    <textarea asp-for="description" class="form-control service-desc" id="description" name="description"></textarea>
+                                    <span asp-validation-for="description" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-fields mb-3">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>کلمات کلیدی<span class="text-danger">*</span></label>
+                                    <input type="text" data-role="tagsinput" class="input-tags form-control" asp-for="keyWords" id="keyWords" name="keyWords">
+                                    <small class="form-text text-muted">توجه: برای افزودن کلمات های جدید ، اینتر را فشار داده و وارد کنید</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Canonical Address<span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" asp-for="canonicalAddress" id="canonicalAddress" name="canonicalAddress">
+                                    <span asp-validation-for="canonicalAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">افزودن</button>
+                    </div>
+                </form>
+                <!-- /Add Blog -->
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+
+<script src="~/assets/js/ckeditor/ckeditor.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        CKEDITOR.replace('description');
+    });
+
+    function makeSlug(source, dist) {
+        var value = $('#' + source).val();
+        $('#' + dist).val(convertToSlug(value));
+    }
+
+    var convertToSlug = function (str) {
+        var $slug = '';
+        var trimmed = $.trim(str);
+        $slug = trimmed.replace(/[^a-z0-9-آ-ی-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+        return $slug.toLowerCase();
+    };
+
+    function checkSlugDuplication(url, dist) {
+        var slug = $('#' + dist).val();
+        var id = convertToSlug(slug);
+        $.get({
+            url: url + '/' + id,
+            success: function (data) {
+                if (data) {
+                    sendNotification('error', 'top right', "خطا", "اسلاگ نمی تواند تکراری باشد");
+                }
+            }
+        });
+    }
+
+    function fillField(source, dist) {
+        var value = $('#' + source).val();
+        $('#' + dist).val(value);
+    }
+</script>
+}

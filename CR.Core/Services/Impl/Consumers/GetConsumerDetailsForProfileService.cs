@@ -5,6 +5,7 @@ using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
 using System.Linq;
 using CR.Common.Utilities;
+using CR.Core.DTOs.ResultDTOs.Consumers;
 
 namespace CR.Core.Services.Impl.Consumers
 {

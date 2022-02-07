@@ -64,6 +64,59 @@ namespace CR.DataAccess.Migrations
                     b.ToTable("TBL_Appointments");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Blogs.Blog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("BlogCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CanonicalAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Keywords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ShortDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ShowOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogCategoryId");
+
+                    b.ToTable("TBL_Blogs");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.Blogs.BlogCategory", b =>
                 {
                     b.Property<long>("Id")
@@ -679,8 +732,17 @@ namespace CR.DataAccess.Migrations
                     b.Property<long?>("ExpertInformationId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconSrc")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -863,6 +925,17 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("ExpertInformation");
 
                     b.Navigation("Factor");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Blogs.Blog", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Blogs.BlogCategory", "BlogCategory")
+                        .WithMany("Blogs")
+                        .HasForeignKey("BlogCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BlogCategory");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.Blogs.BlogCategory", b =>
@@ -1079,6 +1152,8 @@ namespace CR.DataAccess.Migrations
 
             modelBuilder.Entity("CR.DataAccess.Entities.Blogs.BlogCategory", b =>
                 {
+                    b.Navigation("Blogs");
+
                     b.Navigation("SubCategories");
                 });
 

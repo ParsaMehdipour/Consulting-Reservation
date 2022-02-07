@@ -9,6 +9,7 @@ namespace CR.DataAccess.Entities.Blogs
         public BlogCategory()
         {
             SubCategories = new List<BlogCategory>();
+            Blogs = new List<Blog>();
         }
 
         public string Name { get; set; }
@@ -28,6 +29,7 @@ namespace CR.DataAccess.Entities.Blogs
 
         public virtual BlogCategory ParentCategory { get; set; }
         public ICollection<BlogCategory> SubCategories { get; set; }
+        public List<Blog> Blogs { get; set; }
 
 
         #endregion

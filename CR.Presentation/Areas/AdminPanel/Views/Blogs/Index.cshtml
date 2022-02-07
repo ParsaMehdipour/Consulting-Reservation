@@ -1,0 +1,83 @@
+﻿@model CR.Core.DTOs.ResultDTOs.Blogs.ResultGetBlogsForAdminPanelDto
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-7 col-auto">
+            <h3 class="page-title">مقالات</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">داشبورد</a></li>
+                <li class="breadcrumb-item active">مقالات</li>
+            </ul>
+        </div>
+        <div class="col-sm-5 col">
+            <a asp-area="AdminPanel" asp-controller="Blogs" asp-action="AddNewBlog" class="btn btn-primary float-right mt-2">افزودن</a>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="datatable table table-hover table-center mb-0">
+                        <thead>
+                            <tr>
+                                <th>عنوان مقاله</th>
+                                <th>دسته بندی</th>
+                                <th>نویسنده</th>
+                                <th>توضیحات کوتاه</th>
+                                <th>تاریخ ایجاد</th>
+                                <th>تاریخ انتشار</th>
+                                <th>وضعیت</th>
+                                <th>Slug</th>
+                                <th>Canonical Address</th>
+                                <th class="text-right"> اقدامات </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.BlogForAdminPanelDtos.Count > 0)
+                            {
+                                @foreach (var blog in Model.BlogForAdminPanelDtos)
+                                {
+                                    <tr>
+                                        <td>@blog.Title</td>
+
+                                        <td>@blog.BlogCategory</td>
+
+                                        <td>@blog.Author</td>
+
+                                        <td>@blog.ShortDescription</td>
+
+                                        <td>@blog.CreateDate</td>
+
+                                        <td>@blog.PublishDate</td>
+
+                                        <td>@blog.Status</td>
+
+                                        <td>@blog.Slug</td>
+
+                                        <td>@blog.CanonicalAddress</td>
+
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a class="btn btn-sm bg-success-light" asp-controller="Blogs" asp-action="Details" asp-route-id="@blog.Id">
+                                                    <i class="fe fe-pencil"></i> ویرایش
+                                                </a>
+                                                <a onclick="Delete(@blog.Id)" class="btn btn-sm bg-danger-light">
+                                                    <i class="fe fe-trash"></i> حذف
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
