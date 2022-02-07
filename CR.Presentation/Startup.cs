@@ -186,6 +186,8 @@ namespace CR.Presentation
             services.AddScoped<IGetFactorDetailsService, GetFactorDetailsService>();
             services.AddScoped<IGetAllFactorsForAdminPanelService, GetAllFactorsForAdminPanelService>();
             services.AddScoped<IGetAllFactorsForExpertPanelService, GetAllFactorsForExpertPanelService>();
+            services.AddScoped<IUpdateFactorRefIdService, UpdateFactorRefIdService>();
+            services.AddScoped<IUpdateFactorSaleReferenceIdService, UpdateFactorSaleReferenceIdService>();
             //BlogCategories
             services.AddScoped<IGetBlogCategoriesForAdminPanelService, GetBlogCategoriesForAdminPanelService>();
             services.AddScoped<IAddNewBlogCategoryService, AddNewBlogCategoryService>();
@@ -195,6 +197,7 @@ namespace CR.Presentation
             services.AddScoped<IGetBlogCategoriesForDropdownService, GetBlogCategoriesForDropdownService>();
             //Blogs
             services.AddScoped<IGetBlogsForAdminPanelService, GetBlogsForAdminPanelService>();
+            services.AddScoped<IAddNewBlogService, AddNewBlogService>();
 
             #endregion
 
