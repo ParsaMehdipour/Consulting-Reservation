@@ -16,6 +16,9 @@ namespace CR.Presentation.Controllers.View
         {
             var model = _getFactorDetailsService.Execute(factorNumber).Data;
 
+            ViewData["factorNumber"] = factorNumber;
+            ViewData["price"] = model.price;
+
             return View(model);
         }
     }

@@ -140,16 +140,22 @@
 {
 <script>
     function RedirectToPayment() {
+
+        var data = {};
+        data["factorNumber"] = @ViewData["factorNumber"];
+        data["price"] = @ViewData["price"];
+
+
         $.ajax({
-            type: 'POST',
+            type: "POST",
             url: '/api/Payment/RedirectToPayment',
-            processData: false,
-            contentType: "application/json; charset=utf-8",
-            enctype: "application/json",
-            dataType: 'json',
+            data: JSON.stringify(data),
+            dataType: "json",
             cache: false,
+            contentType: "application/json; charset=utf-8",
+            enctype: 'application/json',
             success: function(data) {
-                if (data.isSuccess == true) {
+                if (data.isSuccess === true) {
                 } else {
                     swal.fire('هشدار!',
                         data.message,

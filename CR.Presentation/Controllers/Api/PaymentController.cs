@@ -1,4 +1,5 @@
 ﻿using CR.Common.DTOs;
+using CR.Core.DTOs.RequestDTOs.Payment;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
 using System;
@@ -11,9 +12,9 @@ namespace CR.Presentation.Controllers.Api
     {
         [Route("/api/Payment/RedirectToPayment")]
         [HttpPost]
-        public IActionResult RedirectToPayment(string price = "1000", string factorNumber = "1")
+        public IActionResult RedirectToPayment(RedirectToPaymentDto model)
         {
-            if (string.IsNullOrEmpty(price) || string.IsNullOrEmpty(factorNumber))
+            if (model.price == 0 || model.factorNumber == 0)
             {
                 return new JsonResult(new ResultDto()
                 {
@@ -56,7 +57,7 @@ namespace CR.Presentation.Controllers.Api
             //var res = CallApi<object>(ipgUrl, data);
             //res.Wait();
 
-            var res = CallApi(price, factorNumber);
+            var res = CallApi(model.price.ToString(), model.factorNumber.ToString());
             res.Wait();
 
             var output = res.Result.Body.@return;

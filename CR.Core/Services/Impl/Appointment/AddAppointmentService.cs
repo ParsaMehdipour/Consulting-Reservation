@@ -103,7 +103,6 @@ namespace CR.Core.Services.Impl.Appointment
 
                     timeOfDay.Appointment = appointment;
                     timeOfDay.AppointmentId = appointment.Id;
-                    timeOfDay.IsReserved = true;
 
 
                     consumerInformation.ConsumerAppointments.Add(appointment);
