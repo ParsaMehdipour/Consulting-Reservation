@@ -1,4 +1,5 @@
-﻿using CR.Common.DTOs;
+﻿using CR.Common.Convertor;
+using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs.Blogs;
 using CR.Core.Services.Interfaces.Blogs;
 using CR.DataAccess.Context;
@@ -29,12 +30,20 @@ namespace CR.Core.Services.Impl.Blogs
                     CanonicalAddress = request.canonicalAddress,
                     Description = request.description,
                     MetaDescription = request.metaDescription,
-                    ShowOrder = 1
+                    ShowOrder = request.orderNumber,
+                    Keywords = request.keyWords,
+                    PublishDate = request.publishDate.ToGeorgianDateTime(),
                 };
+
+                _context.Blogs.Add(blog);
+                _context.SaveChanges();
+
+                transaction.Commit();
 
                 return new ResultDto()
                 {
-                    IsSuccess = true
+                    IsSuccess = true,
+                    Message = "مقاله با موفقیت افزوده شد"
                 };
             }
             catch (Exception)
