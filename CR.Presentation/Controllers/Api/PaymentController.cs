@@ -45,7 +45,7 @@ namespace CR.Presentation.Controllers.Api
                 if (status == "0")
                 {
                     _updateFactorRefIdService.Execute(model.factorNumber.ToString(), refId);
-                    return new RedirectResult("https://pgw.bpm.bankmellat.ir/pgwchannel/startpay.mellat?RefId=" + refId);
+                    return new RedirectResult("https://pgw.bpm.bankmellat.ir/pgwchannel/payment.mellat?RefId=" + refId);
                 }
             }
 
