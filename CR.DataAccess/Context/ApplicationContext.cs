@@ -38,6 +38,7 @@ namespace CR.DataAccess.Context
         public DbSet<CommissionAndDiscount> CommissionAndDiscounts { get; set; }
         public DbSet<Timing> Timings { get; set; }
         public DbSet<BlogCategory> BlogCategories { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
