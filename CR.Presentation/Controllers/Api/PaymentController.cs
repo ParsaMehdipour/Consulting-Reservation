@@ -37,7 +37,7 @@ namespace CR.Presentation.Controllers.Api
 
             var output = res.Result.Body.@return;
 
-            if (output.Split().Length >= 2)
+            if (output.Split(",").Length >= 2)
             {
                 var status = output.Split(",")[0];
                 var refId = output.Split(",")[1];
