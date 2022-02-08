@@ -23,7 +23,7 @@ namespace CR.Core.Services.Impl.Blogs
 
         public ResultDto Execute(RequestAddNewBlogCategoryDto request)
         {
-            using var trasnaction = _context.Database.BeginTransaction();
+            using var transaction = _context.Database.BeginTransaction();
 
             try
             {
@@ -52,7 +52,7 @@ namespace CR.Core.Services.Impl.Blogs
                 _context.BlogCategories.Add(blogCategory);
                 _context.SaveChanges();
 
-                trasnaction.Commit();
+                transaction.Commit();
 
                 return new ResultDto()
                 {

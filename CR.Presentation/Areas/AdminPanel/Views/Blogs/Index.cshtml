@@ -24,14 +24,13 @@
                     <table class="datatable table table-hover table-center mb-0">
                         <thead>
                             <tr>
+                                <th>تصویر</th>
                                 <th>عنوان مقاله</th>
                                 <th>دسته بندی</th>
                                 <th>نویسنده</th>
-                                <th>توضیحات کوتاه</th>
                                 <th>تاریخ ایجاد</th>
                                 <th>تاریخ انتشار</th>
                                 <th>وضعیت</th>
-                                <th>Canonical Address</th>
                                 <th class="text-right"> اقدامات </th>
                             </tr>
                         </thead>
@@ -41,21 +40,23 @@
                                 @foreach (var blog in Model.BlogForAdminPanelDtos)
                                 {
                                     <tr>
+                                        <td>
+                                            <a class="avatar avatar-sm mr-2">
+                                                <img class="avatar-img" src="~/@blog.BlogPictureSrc" alt="@blog.Title">
+                                            </a>
+                                        </td>
+
                                         <td>@blog.Title</td>
 
                                         <td>@blog.BlogCategory</td>
 
                                         <td>@blog.Author</td>
 
-                                        <td>@blog.ShortDescription</td>
-
                                         <td>@blog.CreateDate</td>
 
                                         <td>@blog.PublishDate</td>
 
                                         <td>@blog.Status</td>
-
-                                        <td>@blog.CanonicalAddress</td>
 
                                         <td class="text-right">
                                             <div class="actions">
