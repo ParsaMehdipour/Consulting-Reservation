@@ -27,6 +27,7 @@ namespace CR.DataAccess.Entities.Factors
         public virtual ExpertInformation ExpertInformation { get; set; }
         public virtual ConsumerInfromation ConsumerInformation { get; set; }
         public List<Appointment> Appointments { get; set; }
+        public List<FinancialTransaction.FinancialTransaction> FinancialTransactions { get; set; }
 
         #endregion
     }
