@@ -1,7 +1,9 @@
 ﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
+using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs.Blogs;
 using CR.Core.Services.Interfaces.Blogs;
+using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.Blogs;
 using System;
@@ -11,10 +13,13 @@ namespace CR.Core.Services.Impl.Blogs
     public class AddNewBlogService : IAddNewBlogService
     {
         private readonly ApplicationContext _context;
+        private readonly IImageUploaderService _imageUploaderService;
 
-        public AddNewBlogService(ApplicationContext context)
+        public AddNewBlogService(ApplicationContext context
+        , IImageUploaderService imageUploaderService)
         {
             _context = context;
+            _imageUploaderService = imageUploaderService;
         }
 
         public ResultDto Execute(RequestAddNewBlogDto request)
@@ -25,6 +30,9 @@ namespace CR.Core.Services.Impl.Blogs
             {
                 var blog = new Blog()
                 {
+                    Title = request.title,
+                    Slug = request.slug,
+                    ShortDescription = request.shortDescription,
                     BlogCategory = GetBlogCategory(request.blogCategoryId),
                     BlogCategoryId = request.blogCategoryId,
                     CanonicalAddress = request.canonicalAddress,
@@ -34,6 +42,15 @@ namespace CR.Core.Services.Impl.Blogs
                     Keywords = request.keyWords,
                     PublishDate = request.publishDate.ToGeorgianDateTime(),
                 };
+
+                if (request.file != null)
+                {
+                    blog.PictureSrc = _imageUploaderService.Execute(new UploadImageDto()
+                    {
+                        File = request.file,
+                        Folder = "Blogs"
+                    });
+                }
 
                 _context.Blogs.Add(blog);
                 _context.SaveChanges();

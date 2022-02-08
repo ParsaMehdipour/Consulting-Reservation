@@ -1,5 +1,4 @@
 ﻿using CR.Core.Services.Interfaces.Factors;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
 using System;
@@ -30,8 +29,7 @@ namespace CR.Presentation.Controllers.View
         }
 
 
-        [EnableCors("AllowOrigin")]
-        [HttpGet]
+        [HttpPost]
         public IActionResult Verify(string RefId, string ResCode, long saleOrderId, long SaleReferenceId)
         {
             var factor = _getFactorDetailsService.Execute(saleOrderId.ToString()).Data;

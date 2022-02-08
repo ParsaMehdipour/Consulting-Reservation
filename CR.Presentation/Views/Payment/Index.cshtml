@@ -154,9 +154,11 @@
             cache: false,
             contentType: "application/json; charset=utf-8",
             enctype: 'application/json',
-            success: function(data) {
-                if (data.isSuccess === true) {
-                } else {
+            success: function(response) {
+                if (response.isSuccess === true) {
+                    window.location = response.data;
+                } 
+                else {
                     swal.fire('هشدار!',
                         data.message,
                         'warning');
