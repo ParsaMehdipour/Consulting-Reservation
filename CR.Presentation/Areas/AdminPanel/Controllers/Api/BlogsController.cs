@@ -16,7 +16,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.Api
 
         [Route("/api/Blogs/AddNewBlog")]
         [HttpPost]
-        public IActionResult AddNewBlog([FromBody] RequestAddNewBlogDto model)
+        public IActionResult AddNewBlog([FromForm] RequestAddNewBlogDto model)
         {
             var result = _addNewBlogService.Execute(model);
 

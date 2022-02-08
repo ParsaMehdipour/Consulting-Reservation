@@ -28,12 +28,11 @@ namespace CR.Core.Services.Impl.Blogs
                 .Select(_ => new BlogForAdminDto
                 {
                     Id = _.Id,
-                    Title = _.Title,
+                    BlogPictureSrc = _.PictureSrc ?? "assets/img/img-pharmacy1.jpg",
+                    Title = (_.Title.Length > 15) ? _.Title.Substring(0, Math.Min(_.ShortDescription.Length, 15)) + "..." : _.Title,
                     Author = "سامانه چاله چوله",
                     BlogCategory = _.BlogCategory.Name,
-                    CanonicalAddress = _.CanonicalAddress,
                     CreateDate = _.CreateDate.ToShamsi(),
-                    ShortDescription = _.ShortDescription.Substring(0, Math.Min(_.ShortDescription.Length, 50)) + " ...",
                     PublishDate = _.PublishDate.ToShamsi(),
                     Status = _.Status,
                 }).ToList();
