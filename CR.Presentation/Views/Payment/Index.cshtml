@@ -87,7 +87,7 @@
                                 <img src="~/@Model.expertIconSrc" alt="User Image">
                             </a>
                             <div class="booking-info">
-                                <h4><a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.expertInformationId">@Model.expertFullName</a></h4>
+                                <h4><a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.expertInformationId">متخصص @Model.expertFullName</a></h4>
                                 <div class="rating">
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
@@ -119,7 +119,7 @@
                                     <ul class="booking-total-list">
                                         <li>
                                             <span>کل</span>
-                                            <span class="total-cost">@Model.price.ToString("n0") ريال</span>
+                                            <span class="total-cost">@Model.price.ToString("n0") تومان</span>
                                         </li>
                                     </ul>
                                 </div>

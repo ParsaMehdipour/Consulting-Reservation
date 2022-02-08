@@ -11,7 +11,7 @@ namespace CR.Presentation.Controllers
         private readonly IGetExpertsForPresentationService _getExpertsForPresentationService;
 
         public HomeController(IGetSpecialitiesForPresentationService getSpecialitiesForPresentationService
-        ,IGetExpertsForPresentationService getExpertsForPresentationService)
+        , IGetExpertsForPresentationService getExpertsForPresentationService)
         {
             _getSpecialitiesForPresentationService = getSpecialitiesForPresentationService;
             _getExpertsForPresentationService = getExpertsForPresentationService;

@@ -4,6 +4,7 @@ using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertAvailabilities;
 using CR.DataAccess.Entities.ExpertInformations;
 using CR.DataAccess.Entities.Factors;
+using CR.DataAccess.Entities.FinancialTransaction;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Entities.Roles;
 using CR.DataAccess.Entities.Specialties;
@@ -39,6 +40,7 @@ namespace CR.DataAccess.Context
         public DbSet<Timing> Timings { get; set; }
         public DbSet<BlogCategory> BlogCategories { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

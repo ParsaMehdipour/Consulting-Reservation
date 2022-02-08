@@ -21,6 +21,11 @@ namespace CR.DataAccess.Configurations
             builder.HasOne(f => f.ConsumerInformation)
                 .WithMany(f => f.Factors)
                 .HasForeignKey(f => f.ConsumerInformationId);
+
+            builder.HasMany(f => f.FinancialTransactions)
+                .WithOne(f => f.Factor)
+                .HasForeignKey(f => f.FactorId);
+
         }
     }
 }

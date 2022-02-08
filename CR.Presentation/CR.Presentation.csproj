@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="jQuery.Validation" Version="1.19.3" />
     <PackageReference Include="LazZiya.TagHelpers" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.12">
       <PrivateAssets>all</PrivateAssets>
