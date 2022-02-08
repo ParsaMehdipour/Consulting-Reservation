@@ -22,14 +22,6 @@ namespace CR.Presentation.Controllers.Api
         [HttpPost]
         public IActionResult RedirectToPayment(RedirectToPaymentDto model)
         {
-
-            return new JsonResult(new ResultDto<string>()
-            {
-                IsSuccess = true,
-                Message = string.Empty,
-                Data = "https://bpm.shaparak.ir/pgwchannel/payment.mellat?RefId=C295F5E37484B578"
-            });
-
             if (model.price == 0 || model.factorNumber == 0)
             {
                 return new JsonResult(new ResultDto<string>()
@@ -67,7 +59,7 @@ namespace CR.Presentation.Controllers.Api
             {
                 IsSuccess = true,
                 Message = string.Empty,
-                Data = "https://bpm.shaparak.ir/pgwchannel/payment.mellat?RefId=C295F5E37484B578"
+                Data = "/"
             });
 
         }
@@ -89,7 +81,7 @@ namespace CR.Presentation.Controllers.Api
                     localDate: $"{date.Year}{date.Month}{date.Day}",
                     localTime: $"{date.Hour}{date.Minute}{date.Second}",
                     additionalData: "پس از نیم ساعت امکان لغو درخواست وجود ندارد",
-                    callBackUrl: "http://localhost:23065/Payment/Verify",
+                    callBackUrl: "http://www.chalechoole.com/Payment/Verify",
                     payerId: "0",
                     mobileNo: "989122502978",
                     encPan: "",
