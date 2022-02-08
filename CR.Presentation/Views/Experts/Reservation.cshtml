@@ -67,9 +67,9 @@
                         </div>
                     </div>
                 </div>
-               @* <div class="row">
-                   
-                </div>*@
+                @* <div class="row">
+
+                    </div>*@
                 <!-- Schedule Widget -->
                 <div class="card booking-schedule schedule-widget">
                     <!-- Schedule Header -->
@@ -138,7 +138,7 @@
                 <div class="submit-section proceed-btn text-right">
                     <label>جمع کل مبلغ : </label>
                     <label id="totalAmount"></label>
-                    <label > تومان</label>
+                    <label> تومان</label>
                 </div>
                 <div class="submit-section proceed-btn text-right">
                     <a onclick="Checkout()" class="btn btn-primary submit-btn">ادامه فرایند خرید</a>
@@ -167,28 +167,15 @@
 
     function SetCallingType(CT) {
 
-        swal.fire({
-            title: 'تغیر نوع ارتباط',
-            text: "کاربر گرامی از تغیر نوع ارتباط مطمئن هستید؟",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#7cacbe',
-            confirmButtonText: 'تایید',
-            cancelButtonText: 'انصراف'
-        }).then((result) => {
-            if (result.value) {
-                 callingType = CT;
-                 var els = document.querySelectorAll('.timing.selected');
+        callingType = CT;
+        var els = document.querySelectorAll('.timing.selected');
+        for (var i = 0; i < els.length; i++) {
+            els[i].classList.remove('selected');
+        }
+        SumOfPrices = 0;
+        $("#totalAmount").html(SumOfPrices);
 
-                for (var i = 0; i < els.length; i++) {
-                els[i].classList.remove('selected');
-                }
-                SumOfPrices = 0;
-                $("#totalAmount").html(SumOfPrices);
 
-            }
-        });
     }
 
     function SetId(id) {
