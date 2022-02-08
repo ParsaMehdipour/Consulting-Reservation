@@ -1,6 +1,7 @@
 ﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs.Payment;
 using CR.Core.Services.Interfaces.Factors;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
 using System;
@@ -19,6 +20,7 @@ namespace CR.Presentation.Controllers.Api
         }
 
         [Route("/api/Payment/RedirectToPayment")]
+        [EnableCors("AllowOrigin")]
         [HttpPost]
         public IActionResult RedirectToPayment(RedirectToPaymentDto model)
         {
