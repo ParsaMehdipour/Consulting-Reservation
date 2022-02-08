@@ -5,6 +5,7 @@ using CR.Core.DTOs.ResultDTOs.Blogs;
 using CR.Core.Services.Interfaces.Blogs;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace CR.Core.Services.Impl.Blogs
@@ -32,10 +33,9 @@ namespace CR.Core.Services.Impl.Blogs
                     BlogCategory = _.BlogCategory.Name,
                     CanonicalAddress = _.CanonicalAddress,
                     CreateDate = _.CreateDate.ToShamsi(),
-                    ShortDescription = _.ShortDescription,
+                    ShortDescription = _.ShortDescription.Substring(0, Math.Min(_.ShortDescription.Length, 50)) + " ...",
                     PublishDate = _.PublishDate.ToShamsi(),
                     Status = _.Status,
-                    Slug = _.Slug,
                 }).ToList();
 
             return new ResultDto<ResultGetBlogsForAdminPanelDto>()

@@ -8,7 +8,6 @@
         public bool Status { get; set; }
         public string Title { get; set; }
         public string ShortDescription { get; set; }
-        public string Slug { get; set; }
         public string CanonicalAddress { get; set; }
         public string CreateDate { get; set; }
         public string PublishDate { get; set; }

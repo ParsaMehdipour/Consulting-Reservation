@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace CR.Core.DTOs.RequestDTOs.Blogs
 {
@@ -32,5 +33,7 @@ namespace CR.Core.DTOs.RequestDTOs.Blogs
 
         [Required(ErrorMessage = "تاریخ انتشار را وارد کنید")]
         public string publishDate { get; set; }
+
+        public IFormFile file { get; set; }
     }
 }

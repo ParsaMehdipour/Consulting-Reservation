@@ -1,7 +1,6 @@
 ﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs.Payment;
 using CR.Core.Services.Interfaces.Factors;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
 using System;
@@ -20,15 +19,14 @@ namespace CR.Presentation.Controllers.Api
         }
 
         [Route("/api/Payment/RedirectToPayment")]
-        [EnableCors("AllowOrigin")]
         [HttpPost]
         public IActionResult RedirectToPayment(RedirectToPaymentDto model)
         {
-
             if (model.price == 0 || model.factorNumber == 0)
             {
-                return new JsonResult(new ResultDto()
+                return new JsonResult(new ResultDto<string>()
                 {
+                    Data = null,
                     IsSuccess = false,
                     Message = "شماره فاکتور یا مبلغ قابل پرداخت نامعتبر است"
                 });
@@ -47,11 +45,22 @@ namespace CR.Presentation.Controllers.Api
                 if (status == "0")
                 {
                     _updateFactorRefIdService.Execute(model.factorNumber.ToString(), refId);
-                    return new RedirectResult("https://bpm.shaparak.ir/pgwchannel/payment.mellat?RefId=" + refId);
+                    string url = "https://bpm.shaparak.ir/pgwchannel/payment.mellat?RefId=" + refId;
+                    return new JsonResult(new ResultDto<string>()
+                    {
+                        IsSuccess = true,
+                        Message = string.Empty,
+                        Data = url
+                    });
                 }
             }
 
-            return new RedirectResult("/");
+            return new JsonResult(new ResultDto<string>()
+            {
+                IsSuccess = true,
+                Message = string.Empty,
+                Data = "/"
+            });
 
         }
 
@@ -72,7 +81,7 @@ namespace CR.Presentation.Controllers.Api
                     localDate: $"{date.Year}{date.Month}{date.Day}",
                     localTime: $"{date.Hour}{date.Minute}{date.Second}",
                     additionalData: "پس از نیم ساعت امکان لغو درخواست وجود ندارد",
-                    callBackUrl: "http://chalechoole.com/Payment/Verify",
+                    callBackUrl: "http://www.chalechoole.com/Payment/Verify",
                     payerId: "0",
                     mobileNo: "989122502978",
                     encPan: "",
