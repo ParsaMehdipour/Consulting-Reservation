@@ -26,6 +26,7 @@ namespace CR.Core.Services.Impl.Factors
             var factors = _context.Factors
                 .Include(f => f.Appointments)
                 .Include(f => f.ConsumerInformation)
+                .AsNoTracking()
                 .Select(f => new FactorForAdminDto()
                 {
                     ConsumerId = f.ConsumerInformation.ConsumerId,
