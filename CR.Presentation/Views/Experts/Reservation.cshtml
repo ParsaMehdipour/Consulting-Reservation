@@ -201,6 +201,9 @@
                 cache: false,
                 contentType: "application/json; charset=utf-8",
                 enctype: 'application/json',
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
                 success: function(response) {
 
                     var data = response.data;
@@ -209,6 +212,12 @@
                     var sumOfPricesString = SumOfPrices.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     $("#totalAmount").html(sumOfPricesString);
 
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
                 },
                 error: function(request, status, error) {
                     alert(request.responseText);
@@ -231,6 +240,9 @@
                 cache: false,
                 contentType: "application/json; charset=utf-8",
                 enctype: 'application/json',
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
                 success: function(response) {
 
                     var data = response.data;
@@ -239,6 +251,12 @@
                     var sumOfPricesString = SumOfPrices.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     $("#totalAmount").html(sumOfPricesString);
 
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
                 },
                 error: function(request, status, error) {
                     alert(request.responseText);
@@ -307,6 +325,9 @@
             cache: false,
             contentType: "application/json; charset=utf-8",
             enctype: 'application/json',
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
             success: function(response) {
                 var body1 = "";
                 var body2 = "";
@@ -336,6 +357,12 @@
                 $("#Days").html(body1);
                 $("#timeOfDays").html(body2);
             },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
+            },
             error: function(request, status, error) {
                 alert(request.responseText);
             }
@@ -355,6 +382,9 @@
             cache: false,
             contentType: "application/json; charset=utf-8",
             enctype: 'application/json',
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
             success: function(response) {
 
                 var data = response.data;
@@ -383,6 +413,12 @@
                     document.getElementById("textCallPrice").style.visibility = "visible";
                 }
                 $("#usesWrapper").html(body3);
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
             },
             error: function(request, status, error) {
                 alert(request.responseText);

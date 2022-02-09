@@ -109,7 +109,7 @@
                                         <li>تاریخ<span>@appointment.Date</span></li>
                                         <li>زمان<span>@appointment.Time</span></li>
                                     </ul>
-                                    <hr/>
+                                    <hr />
                                 }
                                 <ul class="booking-fee">
                                     <li>نوع مشاوره<span>@Model.AppointmentDetailsForSiteDtos.FirstOrDefault()?.TimingType</span></li>
@@ -154,15 +154,24 @@
             cache: false,
             contentType: "application/json; charset=utf-8",
             enctype: 'application/json',
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
             success: function(response) {
                 if (response.isSuccess === true) {
                     window.location = response.data;
-                } 
+                }
                 else {
                     swal.fire('هشدار!',
                         data.message,
                         'warning');
                 }
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
             },
             error: function(request, status, error) {
                 alert(request.responseText);

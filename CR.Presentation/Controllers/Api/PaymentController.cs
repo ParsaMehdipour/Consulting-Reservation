@@ -32,7 +32,9 @@ namespace CR.Presentation.Controllers.Api
                 });
             }
 
-            var res = CallApi(model.price.ToString(), model.factorNumber.ToString());
+            int price = model.price * 10;
+
+            var res = CallApi(price.ToString(), model.factorNumber.ToString());
             res.Wait();
 
             var output = res.Result.Body.@return;
