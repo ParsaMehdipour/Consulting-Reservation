@@ -293,12 +293,9 @@
             data: postData,
             success: function(data) {
                 if (data.isSuccess === true) {
-                    swal.fire('موفقیت!',
-                        data.message,
-                        'success').then(function(isConfirm) {
-                        window.location.href = "/Payment?factorNumber=" + data.data;
-                    });
-                } else {
+                    window.location.href = "/Payment?factorNumber=" + data.data;
+                } 
+                else {
                     swal.fire('هشدار!',
                         data.message,
                         'warning');
