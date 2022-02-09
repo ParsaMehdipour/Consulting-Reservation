@@ -47,7 +47,6 @@ namespace CR.Presentation
             Configuration = configuration;
         }
 
-        readonly string _POLICY_NAME = "_myAllowSpecificOrigins";
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -188,6 +187,8 @@ namespace CR.Presentation
             services.AddScoped<IGetAllFactorsForExpertPanelService, GetAllFactorsForExpertPanelService>();
             services.AddScoped<IUpdateFactorRefIdService, UpdateFactorRefIdService>();
             services.AddScoped<IUpdateFactorSaleReferenceIdService, UpdateFactorSaleReferenceIdService>();
+            services.AddScoped<IUpdateFactorCartHolderPanService, UpdateFactorCartHolderPanService>();
+            services.AddScoped<IUpdateFactorStatusService, UpdateFactorStatusService>();
             //BlogCategories
             services.AddScoped<IGetBlogCategoriesForAdminPanelService, GetBlogCategoriesForAdminPanelService>();
             services.AddScoped<IAddNewBlogCategoryService, AddNewBlogCategoryService>();
