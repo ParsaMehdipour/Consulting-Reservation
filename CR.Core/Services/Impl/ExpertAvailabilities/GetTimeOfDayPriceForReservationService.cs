@@ -55,8 +55,8 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
             {
                 if (timeOfDay.ExpertInformation.CommissionAndDiscount != null)
                 {
-                    commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.VoiceCallCommission * timeOfDay.PhoneCallPrice) / 100);
-                    discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.VoiceCallDiscount * timeOfDay.PhoneCallPrice) / 100);
+                    commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.VoiceCallCommission * timeOfDay.VoiceCallPrice) / 100);
+                    discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.VoiceCallDiscount * timeOfDay.VoiceCallPrice) / 100);
                     price = ((timeOfDay.VoiceCallPrice + commission) - discount);
                 }
                 else
@@ -69,8 +69,8 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
             {
                 if (timeOfDay.ExpertInformation.CommissionAndDiscount != null)
                 {
-                    commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.PhoneCallPrice) / 100);
-                    discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.PhoneCallPrice) / 100);
+                    commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.TextCallPrice) / 100);
+                    discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.TextCallPrice) / 100);
                     price = ((timeOfDay.TextCallPrice + commission) - discount);
                 }
                 else
