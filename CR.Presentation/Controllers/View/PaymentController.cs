@@ -1,4 +1,5 @@
 ﻿using CR.Core.Services.Interfaces.Factors;
+using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
 using System;
@@ -10,12 +11,18 @@ namespace CR.Presentation.Controllers.View
     {
         private readonly IGetFactorDetailsService _getFactorDetailsService;
         private readonly IUpdateFactorSaleReferenceIdService _updateFactorSaleReferenceIdService;
+        private readonly IUpdateFactorCartHolderPanService _updateFactorCartHolderPanService;
+        private readonly IUpdateFactorStatusService _updateFactorStatusService;
 
         public PaymentController(IGetFactorDetailsService getFactorDetailsService
-        , IUpdateFactorSaleReferenceIdService updateFactorSaleReferenceIdService)
+        , IUpdateFactorSaleReferenceIdService updateFactorSaleReferenceIdService
+        , IUpdateFactorCartHolderPanService updateFactorCartHolderPanService
+        , IUpdateFactorStatusService updateFactorStatusService)
         {
             _getFactorDetailsService = getFactorDetailsService;
             _updateFactorSaleReferenceIdService = updateFactorSaleReferenceIdService;
+            _updateFactorCartHolderPanService = updateFactorCartHolderPanService;
+            _updateFactorStatusService = updateFactorStatusService;
         }
 
         public IActionResult Index(string factorNumber)
@@ -32,13 +39,12 @@ namespace CR.Presentation.Controllers.View
         [HttpPost]
         public IActionResult Verify(string RefId, string ResCode, long SaleOrderId, long SaleReferenceId, string CardHolderPan, long FinalAmount)
         {
-            ViewData["Info"] = "ResCode : " + ResCode
-                                            + "RefId : " + RefId
-                                            + "SaleOrderId : " + SaleOrderId
-                                            + "SaleReferenceId : " + SaleReferenceId
-                                            + "CardHolderPan : " + CardHolderPan
-                                            + "FinalAmount : " + FinalAmount;
-
+            //ViewData["Info"] = "ResCode : " + ResCode
+            //                                + "RefId : " + RefId
+            //                                + "SaleOrderId : " + SaleOrderId
+            //                                + "SaleReferenceId : " + SaleReferenceId
+            //                                + "CardHolderPan : " + CardHolderPan
+            //                                + "FinalAmount : " + FinalAmount;
             if (ResCode == "0")
             {
                 var factor = _getFactorDetailsService.Execute(SaleOrderId.ToString()).Data;
@@ -71,12 +77,18 @@ namespace CR.Presentation.Controllers.View
 
                 if (resCode == "0")
                 {
-                    ViewData["Description"] = "تراکنش با موفقیت انجام شد" + resCode;
+                    _updateFactorCartHolderPanService.Execute(SaleOrderId.ToString(), CardHolderPan);
+
+                    _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.SuccessfulPayment);
+
+                    ViewData["Description"] = "تراکنش با موفقیت انجام شد، کد رهگیری پرداخت شما : " + SaleReferenceId;
 
                     return View();
                 }
 
                 ViewData["Description"] = "تراکنش ناموفق" + resCode;
+
+                _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment);
 
                 return View();
             }
