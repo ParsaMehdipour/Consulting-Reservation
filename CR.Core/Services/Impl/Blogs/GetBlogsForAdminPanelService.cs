@@ -25,6 +25,7 @@ namespace CR.Core.Services.Impl.Blogs
 
             var blogs = _context.Blogs
                 .Include(_ => _.BlogCategory)
+                .AsNoTracking()
                 .Select(_ => new BlogForAdminDto
                 {
                     Id = _.Id,
