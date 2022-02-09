@@ -36,6 +36,7 @@ namespace CR.Presentation.Controllers.View
                                             + "RefId : " + RefId
                                             + "SaleOrderId : " + SaleOrderId
                                             + "SaleReferenceId : " + SaleReferenceId
+                                            + "CardHolderPan : " + CardHolderPan
                                             + "FinalAmount : " + FinalAmount;
 
             if (ResCode == "0")
