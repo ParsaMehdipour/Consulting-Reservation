@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Connected Services\ServiceReference1\Reference.cs" />
+    <Compile Remove="Connected Services\ServiceReference1\**" />
+    <Content Remove="Connected Services\ServiceReference1\**" />
+    <EmbeddedResource Remove="Connected Services\ServiceReference1\**" />
+    <None Remove="Connected Services\ServiceReference1\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,7 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Connected Services\ServiceReference1\Reference.cs" />
     <None Include="wwwroot\assets\js\ckeditor\adapters\jquery.js" />
     <None Include="wwwroot\assets\js\ckeditor\build-config.js" />
     <None Include="wwwroot\assets\js\ckeditor\CHANGES.md" />
