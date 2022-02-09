@@ -6,6 +6,7 @@ using CR.DataAccess.Entities.ExpertAvailabilities;
 using CR.DataAccess.Entities.Factors;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,10 @@ namespace CR.Core.Services.Impl.Appointment
 
                 foreach (var request in requests)
                 {
-                    var timeOfDay = _context.TimeOfDays.FirstOrDefault(t => t.Id == request.timeOfDayId);
+                    var timeOfDay = _context.TimeOfDays
+                        .Include(t => t.ExpertInformation)
+                        .ThenInclude(e => e.CommissionAndDiscount)
+                        .FirstOrDefault(t => t.Id == request.timeOfDayId);
 
                     if (timeOfDay == null)
                     {
@@ -154,11 +158,39 @@ namespace CR.Core.Services.Impl.Appointment
 
         private long CheckCallingType(CallingType callingType, TimeOfDay entity)
         {
+            long commission = 0;
+            long discount = 0;
+
             if (callingType == CallingType.PhoneCall)
-                return entity.PhoneCallPrice;
-            if (callingType == CallingType.VoiceCall)
+            {
+                if (entity.ExpertInformation.CommissionAndDiscount != null)
+                {
+                    commission = (long)((entity.ExpertInformation.CommissionAndDiscount.PhoneCallCommission * entity.PhoneCallPrice) / 100);
+                    discount = (long)((entity.ExpertInformation.CommissionAndDiscount.PhoneCallDiscount * entity.PhoneCallPrice) / 100);
+                    return ((entity.PhoneCallPrice + commission) - discount);
+                }
+
                 return entity.VoiceCallPrice;
+            }
+            if (callingType == CallingType.VoiceCall)
+            {
+                if (entity.ExpertInformation.CommissionAndDiscount != null)
+                {
+                    commission = (long)((entity.ExpertInformation.CommissionAndDiscount.VoiceCallCommission * entity.VoiceCallPrice) / 100);
+                    discount = (long)((entity.ExpertInformation.CommissionAndDiscount.VoiceCallDiscount * entity.VoiceCallPrice) / 100);
+                    return ((entity.VoiceCallPrice + commission) - discount);
+                }
+                return entity.VoiceCallPrice;
+            }
+            if (entity.ExpertInformation.CommissionAndDiscount != null)
+            {
+                commission = (long)((entity.ExpertInformation.CommissionAndDiscount.TextCallCommission * entity.TextCallPrice) / 100);
+                discount = (long)((entity.ExpertInformation.CommissionAndDiscount.TextCallDiscount * entity.TextCallPrice) / 100);
+                return ((entity.TextCallPrice + commission) - discount);
+            }
+
             return entity.TextCallPrice;
+
         }
     }
 
