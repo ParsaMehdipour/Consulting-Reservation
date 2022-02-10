@@ -4,7 +4,6 @@ using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertAvailabilities;
 using CR.DataAccess.Entities.ExpertInformations;
 using CR.DataAccess.Entities.Factors;
-using CR.DataAccess.Entities.FinancialTransaction;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Entities.Roles;
 using CR.DataAccess.Entities.Specialties;
@@ -13,6 +12,7 @@ using CR.DataAccess.Entities.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using CR.DataAccess.Entities.FinancialTransactions;
 
 namespace CR.DataAccess.Context
 {
