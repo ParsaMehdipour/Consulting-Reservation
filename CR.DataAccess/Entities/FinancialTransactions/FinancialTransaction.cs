@@ -2,7 +2,7 @@
 using CR.DataAccess.Entities.Factors;
 using CR.DataAccess.Enums;
 
-namespace CR.DataAccess.Entities.FinancialTransaction
+namespace CR.DataAccess.Entities.FinancialTransactions
 {
     public class FinancialTransaction : BaseEntity
     {

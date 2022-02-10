@@ -1,4 +1,4 @@
-﻿using CR.DataAccess.Entities.FinancialTransaction;
+﻿using CR.DataAccess.Entities.FinancialTransactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

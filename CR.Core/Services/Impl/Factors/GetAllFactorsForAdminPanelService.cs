@@ -26,6 +26,7 @@ namespace CR.Core.Services.Impl.Factors
             var factors = _context.Factors
                 .Include(f => f.Appointments)
                 .Include(f => f.ConsumerInformation)
+                .OrderByDescending(_ => _.CreateDate)
                 .AsNoTracking()
                 .Select(f => new FactorForAdminDto()
                 {
