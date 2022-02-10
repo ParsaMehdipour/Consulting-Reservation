@@ -24,18 +24,32 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
 
-                <!-- Success Card -->
-                <div class="card success-card">
-                    <div class="card-body">
-                        <div class="success-cont">
-                            <i class="fas fa-check"></i>
-                            <h3>@ViewData["Description"]</h3>
-                            <p>@ViewData["Info"]</p><br/>
-                            <a href="invoice-view.html" class="btn btn-primary view-inv-btn">مشاهده صورت حساب</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Success Card -->
+               @if (ViewData["ResCode"].ToString() == "0")
+               {
+                   <!-- Success Card -->
+                   <div class="card success-card">
+                       <div class="card-body">
+                           <div class="success-cont">
+                               <i class="fas fa-check"></i>
+                               <h3>@ViewData["Description"]</h3>
+                           </div>
+                       </div>
+                   </div>
+                   <!-- /Success Card -->
+               }
+               else
+               {
+                   <!-- Success Card -->
+                   <div class="card success-card">
+                       <div class="card-body">
+                           <div class="success-cont" style="background-color: red;">
+                               <i class="fas fa-times-circle"></i>
+                               <h3>@ViewData["Description"]</h3>
+                           </div>
+                       </div>
+                   </div>
+                   <!-- /Success Card -->
+               }
 
             </div>
         </div>
