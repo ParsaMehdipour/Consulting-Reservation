@@ -91,6 +91,8 @@ namespace CR.Presentation.Controllers.View
 
             ViewData["Description"] = "پرداخت ناموفق";
 
+            _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment);
+
             ViewData["ResCode"] = ResCode;
 
             return View();
