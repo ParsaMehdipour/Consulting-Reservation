@@ -67,9 +67,9 @@
                         </div>
                     </div>
                 </div>
-               @* <div class="row">
-                   
-                </div>*@
+                @* <div class="row">
+
+                    </div>*@
                 <!-- Schedule Widget -->
                 <div class="card booking-schedule schedule-widget">
                     <!-- Schedule Header -->
@@ -138,7 +138,7 @@
                 <div class="submit-section proceed-btn text-right">
                     <label>جمع کل مبلغ : </label>
                     <label id="totalAmount"></label>
-                    <label > تومان</label>
+                    <label> تومان</label>
                 </div>
                 <div class="submit-section proceed-btn text-right">
                     <a onclick="Checkout()" class="btn btn-primary submit-btn">ادامه فرایند خرید</a>
@@ -167,28 +167,13 @@
 
     function SetCallingType(CT) {
 
-        swal.fire({
-            title: 'تغیر نوع ارتباط',
-            text: "کاربر گرامی از تغیر نوع ارتباط مطمئن هستید؟",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#7cacbe',
-            confirmButtonText: 'تایید',
-            cancelButtonText: 'انصراف'
-        }).then((result) => {
-            if (result.value) {
-                 callingType = CT;
-                 var els = document.querySelectorAll('.timing.selected');
-
-                for (var i = 0; i < els.length; i++) {
-                els[i].classList.remove('selected');
-                }
-                SumOfPrices = 0;
-                $("#totalAmount").html(SumOfPrices);
-
-            }
-        });
+        callingType = CT;
+        var els = document.querySelectorAll('.timing.selected');
+        for (var i = 0; i < els.length; i++) {
+            els[i].classList.remove('selected');
+        }
+        SumOfPrices = 0;
+        $("#totalAmount").html(SumOfPrices);
     }
 
     function SetId(id) {
@@ -216,6 +201,9 @@
                 cache: false,
                 contentType: "application/json; charset=utf-8",
                 enctype: 'application/json',
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
                 success: function(response) {
 
                     var data = response.data;
@@ -224,6 +212,12 @@
                     var sumOfPricesString = SumOfPrices.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     $("#totalAmount").html(sumOfPricesString);
 
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
                 },
                 error: function(request, status, error) {
                     alert(request.responseText);
@@ -246,6 +240,9 @@
                 cache: false,
                 contentType: "application/json; charset=utf-8",
                 enctype: 'application/json',
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
                 success: function(response) {
 
                     var data = response.data;
@@ -254,6 +251,12 @@
                     var sumOfPricesString = SumOfPrices.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     $("#totalAmount").html(sumOfPricesString);
 
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
                 },
                 error: function(request, status, error) {
                     alert(request.responseText);
@@ -290,12 +293,9 @@
             data: postData,
             success: function(data) {
                 if (data.isSuccess === true) {
-                    swal.fire('موفقیت!',
-                        data.message,
-                        'success').then(function(isConfirm) {
-                        window.location.href = "/Payment?factorNumber=" + data.data;
-                    });
-                } else {
+                    window.location.href = "/Payment?factorNumber=" + data.data;
+                } 
+                else {
                     swal.fire('هشدار!',
                         data.message,
                         'warning');
@@ -322,6 +322,9 @@
             cache: false,
             contentType: "application/json; charset=utf-8",
             enctype: 'application/json',
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
             success: function(response) {
                 var body1 = "";
                 var body2 = "";
@@ -351,6 +354,12 @@
                 $("#Days").html(body1);
                 $("#timeOfDays").html(body2);
             },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
+            },
             error: function(request, status, error) {
                 alert(request.responseText);
             }
@@ -370,6 +379,9 @@
             cache: false,
             contentType: "application/json; charset=utf-8",
             enctype: 'application/json',
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
             success: function(response) {
 
                 var data = response.data;
@@ -378,7 +390,7 @@
                 if (data.usePhoneCall === true) {
                     body3 += '<input onclick="SetCallingType(0)" type="radio" name="call" id="phone" value="0"/>';
                     body3 += '<label for="phone" class="option phone">';
-                    body3 += '<span>تلفتی</span>';
+                    body3 += '<span>تلفنی</span>';
                     body3 += '</label>';
                     document.getElementById("phoneCallPrice").style.visibility = "visible";
 
@@ -398,6 +410,12 @@
                     document.getElementById("textCallPrice").style.visibility = "visible";
                 }
                 $("#usesWrapper").html(body3);
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
             },
             error: function(request, status, error) {
                 alert(request.responseText);

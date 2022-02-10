@@ -87,7 +87,7 @@
                                 <img src="~/@Model.expertIconSrc" alt="User Image">
                             </a>
                             <div class="booking-info">
-                                <h4><a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.expertInformationId">@Model.expertFullName</a></h4>
+                                <h4><a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.expertInformationId">متخصص @Model.expertFullName</a></h4>
                                 <div class="rating">
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
@@ -109,7 +109,7 @@
                                         <li>تاریخ<span>@appointment.Date</span></li>
                                         <li>زمان<span>@appointment.Time</span></li>
                                     </ul>
-                                    <hr/>
+                                    <hr />
                                 }
                                 <ul class="booking-fee">
                                     <li>نوع مشاوره<span>@Model.AppointmentDetailsForSiteDtos.FirstOrDefault()?.TimingType</span></li>
@@ -119,7 +119,7 @@
                                     <ul class="booking-total-list">
                                         <li>
                                             <span>کل</span>
-                                            <span class="total-cost">@Model.price.ToString("n0") ريال</span>
+                                            <span class="total-cost">@Model.price.ToString("n0") تومان</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -154,13 +154,24 @@
             cache: false,
             contentType: "application/json; charset=utf-8",
             enctype: 'application/json',
-            success: function(data) {
-                if (data.isSuccess === true) {
-                } else {
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
+            success: function(response) {
+                if (response.isSuccess === true) {
+                    window.location = response.data;
+                }
+                else {
                     swal.fire('هشدار!',
                         data.message,
                         'warning');
                 }
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
             },
             error: function(request, status, error) {
                 alert(request.responseText);

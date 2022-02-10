@@ -4,7 +4,7 @@
 {
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/datatables/datatables.min.css">
-
+    <link rel="stylesheet" href="~/assets/css/style.css">
 }
 
 <!-- Page Header -->
@@ -31,6 +31,22 @@
                 <form id="addNewBlogForm">
                     <div class="service-fields mb-3">
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="change-avatar">
+                                        <div class="profile-img">
+                                            <img src="~/assets/img/upload-icon-flat-vector-download-260nw-1378175036.jpg" alt="User Image">
+                                        </div>
+                                        <div class="upload-img">
+                                            <div class="change-photo-btn">
+                                                <span><i class="fa fa-upload"></i> بارگذاری تصویر </span>
+                                                <input type="file" class="upload" id="fileImage">
+                                            </div>
+                                            <small class="form-text text-muted">JPG ، GIF یا PNG مجاز است. حداکثر اندازه 2 مگابایت</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>عنوان بلاگ <span class="text-danger">*</span></label>
@@ -202,34 +218,34 @@
 
             var blogCategorySelect = document.getElementById('blogCategoryId');
 
-            var data = {};
+            var data = new FormData();
 
-            data["title"] = $("#title").val();
-            data["slug"] = $("#slug").val();
-            data["blogCategoryId"] = blogCategorySelect.options[blogCategorySelect.selectedIndex].value;
-            data["shortDescription"] = $("#shortDescription").val();
-            data["description"] = CKEDITOR.instances.description.getData();
-            data["orderNumber"] = $("#orderNumber").val();
-            data["keyWords"] = $("#keyWords").val();
-            data["status"] = $("#status").is(":checked");
-            data["metaDescription"] = $("#metaDescription").val();
-            data["publishDate"] = $("#publishDate").val();
-            data["canonicalAddress"] = $("#canonicalAddress").val();
+            data.append("title",$("#addNewBlogForm #title").val());
+            data.append("slug",$("#addNewBlogForm #slug").val());
+            data.append("blogCategoryId",blogCategorySelect.options[blogCategorySelect.selectedIndex].value);
+            data.append("shortDescription",$("#addNewBlogForm #shortDescription").val());
+            data.append("description",CKEDITOR.instances.description.getData());
+            data.append("shortDescription",$("#addNewBlogForm #shortDescription").val());
+            data.append("orderNumber",$("#addNewBlogForm #orderNumber").val());
+            data.append("keyWords",$("#addNewBlogForm #keyWords").val());
+            data.append("status",$("#addNewBlogForm #status").is(":checked"));
+            data.append("metaDescription",$("#addNewBlogForm #metaDescription").val());
+            data.append("publishDate",$("#addNewBlogForm #publishDate").val());
+            data.append("canonicalAddress",$("#addNewBlogForm #canonicalAddress").val());
+            data.append("file",$("#addNewBlogForm #fileImage").get(0).files[0]);
 
             $( "#addNewBlogForm" ).submit(function( event ) {
                 $.ajax({
                     type: "POST",
                     url: '/api/Blogs/AddNewBlog',
-                    data: JSON.stringify(data),
-                    dataType: "json",
-                    cache: false,
-                    contentType: "application/json; charset=utf-8",
-                    enctype: 'application/json',
+                    data: data,
+                    processData: false,
+                    contentType: false,
                     beforeSend: function(x) {
                         $('#loading').show();
                     },
                     success: function(data) {
-                        if (data.isSuccess == true) {
+                        if (data.isSuccess === true) {
                             swal.fire('موفق!',
                                 data.message,
                                 'success').then(function(isConfirm) {

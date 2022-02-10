@@ -38,24 +38,45 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
 
             if (callingType == CallingType.PhoneCall)
             {
-                commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.PhoneCallCommission * timeOfDay.PhoneCallPrice) / 100);
-                discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.PhoneCallDiscount * timeOfDay.PhoneCallPrice) / 100);
-                price = ((timeOfDay.PhoneCallPrice + commission) - discount);
+                if (timeOfDay.ExpertInformation.CommissionAndDiscount != null)
+                {
+                    commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.PhoneCallCommission * timeOfDay.PhoneCallPrice) / 100);
+                    discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.PhoneCallDiscount * timeOfDay.PhoneCallPrice) / 100);
+                    price = ((timeOfDay.PhoneCallPrice + commission) - discount);
+                }
+                else
+                {
+                    price = timeOfDay.PhoneCallPrice;
+                }
             }
 
 
             if (callingType == CallingType.VoiceCall)
             {
-                commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.VoiceCallCommission * timeOfDay.PhoneCallPrice) / 100);
-                discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.VoiceCallDiscount * timeOfDay.PhoneCallPrice) / 100);
-                price = ((timeOfDay.VoiceCallPrice + commission) - discount);
+                if (timeOfDay.ExpertInformation.CommissionAndDiscount != null)
+                {
+                    commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.VoiceCallCommission * timeOfDay.VoiceCallPrice) / 100);
+                    discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.VoiceCallDiscount * timeOfDay.VoiceCallPrice) / 100);
+                    price = ((timeOfDay.VoiceCallPrice + commission) - discount);
+                }
+                else
+                {
+                    price = timeOfDay.VoiceCallPrice;
+                }
             }
 
             if (callingType == CallingType.TextCall)
             {
-                commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.PhoneCallPrice) / 100);
-                discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.PhoneCallPrice) / 100);
-                price = ((timeOfDay.TextCallPrice + commission) - discount);
+                if (timeOfDay.ExpertInformation.CommissionAndDiscount != null)
+                {
+                    commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.TextCallPrice) / 100);
+                    discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.TextCallPrice) / 100);
+                    price = ((timeOfDay.TextCallPrice + commission) - discount);
+                }
+                else
+                {
+                    price = timeOfDay.TextCallPrice;
+                }
             }
 
             return new ResultDto<long>()

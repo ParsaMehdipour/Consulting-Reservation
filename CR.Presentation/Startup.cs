@@ -6,6 +6,7 @@ using CR.Core.Services.Impl.ExpertAvailabilities;
 using CR.Core.Services.Impl.ExpertImages;
 using CR.Core.Services.Impl.Experts;
 using CR.Core.Services.Impl.Factors;
+using CR.Core.Services.Impl.FinancialTransactions;
 using CR.Core.Services.Impl.Images;
 using CR.Core.Services.Impl.Specialites;
 using CR.Core.Services.Impl.Statistics;
@@ -19,6 +20,7 @@ using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.ExpertImages;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Factors;
+using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.Core.Services.Interfaces.Images;
 using CR.Core.Services.Interfaces.Specialites;
 using CR.Core.Services.Interfaces.Statistics;
@@ -52,7 +54,6 @@ namespace CR.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
 
             services.AddDbContext<ApplicationContext>(options =>
@@ -188,6 +189,8 @@ namespace CR.Presentation
             services.AddScoped<IGetAllFactorsForExpertPanelService, GetAllFactorsForExpertPanelService>();
             services.AddScoped<IUpdateFactorRefIdService, UpdateFactorRefIdService>();
             services.AddScoped<IUpdateFactorSaleReferenceIdService, UpdateFactorSaleReferenceIdService>();
+            services.AddScoped<IUpdateFactorCartHolderPanService, UpdateFactorCartHolderPanService>();
+            services.AddScoped<IUpdateFactorStatusService, UpdateFactorStatusService>();
             //BlogCategories
             services.AddScoped<IGetBlogCategoriesForAdminPanelService, GetBlogCategoriesForAdminPanelService>();
             services.AddScoped<IAddNewBlogCategoryService, AddNewBlogCategoryService>();
@@ -198,6 +201,8 @@ namespace CR.Presentation
             //Blogs
             services.AddScoped<IGetBlogsForAdminPanelService, GetBlogsForAdminPanelService>();
             services.AddScoped<IAddNewBlogService, AddNewBlogService>();
+            //FinancialTransactions
+            services.AddScoped<IGetFinancialTransactionsForAdminService, GetFinancialTransactionsForAdminService>();
 
             #endregion
 
@@ -225,6 +230,7 @@ namespace CR.Presentation
             app.UseAuthentication();
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

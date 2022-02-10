@@ -1,4 +1,5 @@
 ﻿using CR.Core.Services.Interfaces.Factors;
+using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
 using System;
@@ -10,12 +11,18 @@ namespace CR.Presentation.Controllers.View
     {
         private readonly IGetFactorDetailsService _getFactorDetailsService;
         private readonly IUpdateFactorSaleReferenceIdService _updateFactorSaleReferenceIdService;
+        private readonly IUpdateFactorCartHolderPanService _updateFactorCartHolderPanService;
+        private readonly IUpdateFactorStatusService _updateFactorStatusService;
 
         public PaymentController(IGetFactorDetailsService getFactorDetailsService
-        , IUpdateFactorSaleReferenceIdService updateFactorSaleReferenceIdService)
+        , IUpdateFactorSaleReferenceIdService updateFactorSaleReferenceIdService
+        , IUpdateFactorCartHolderPanService updateFactorCartHolderPanService
+        , IUpdateFactorStatusService updateFactorStatusService)
         {
             _getFactorDetailsService = getFactorDetailsService;
             _updateFactorSaleReferenceIdService = updateFactorSaleReferenceIdService;
+            _updateFactorCartHolderPanService = updateFactorCartHolderPanService;
+            _updateFactorStatusService = updateFactorStatusService;
         }
 
         public IActionResult Index(string factorNumber)
@@ -29,40 +36,64 @@ namespace CR.Presentation.Controllers.View
         }
 
 
-        public IActionResult Verify(string RefId, string ResCode, long saleOrderId, long SaleReferenceId)
+        [HttpPost]
+        public IActionResult Verify(string RefId, string ResCode, long SaleOrderId, long SaleReferenceId, string CardHolderPan, long FinalAmount)
         {
-            var factor = _getFactorDetailsService.Execute(saleOrderId.ToString()).Data;
-
-            if (factor == null)
+            if (ResCode == "0")
             {
-                ViewData["Description"] = "فاکتور معتبر نمی باشد!!";
+                var factor = _getFactorDetailsService.Execute(SaleOrderId.ToString()).Data;
+
+                if (factor == null)
+                {
+                    ViewData["Description"] = "فاکتور معتبر نمی باشد!!";
+                    return View();
+                }
+
+                if (factor.refId != RefId)
+                {
+                    ViewData["Description"] = "تراکنش معتبر نمی باشد";
+                    return View();
+                }
+
+                if (factor.price != FinalAmount / 10)
+                {
+                    ViewData["Description"] = "تراکنش معتبر نمی باشد";
+                    return View();
+                }
+
+                _updateFactorSaleReferenceIdService.Execute(SaleOrderId.ToString(), SaleReferenceId);
+
+                var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
+
+                res.Wait();
+
+                var resCode = res.Result.Body.@return;
+
+                if (resCode == "0")
+                {
+                    _updateFactorCartHolderPanService.Execute(SaleOrderId.ToString(), CardHolderPan);
+
+                    _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.SuccessfulPayment);
+
+                    ViewData["Description"] = "تراکنش با موفقیت انجام شد، کد رهگیری پرداخت شما : " + SaleReferenceId;
+
+                    return View();
+                }
+
+                ViewData["Description"] = "تراکنش ناموفق";
+
+                ViewData["ResCode"] = resCode;
+
+                _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment);
+
                 return View();
             }
-            else if (factor.refId != RefId)
-            {
-                ViewData["Description"] = "تراکنش معتبر نمی باشد";
-                return View();
-            }
 
-            _updateFactorSaleReferenceIdService.Execute(saleOrderId.ToString(), SaleReferenceId);
+            ViewData["Description"] = "پرداخت ناموفق";
 
-            var res = CallApi(saleOrderId.ToString(), SaleReferenceId);
-
-            res.Wait();
-
-            var resCode = res.Result.Body.@return;
-
-            if (resCode == "0")
-            {
-                ViewData["Description"] = "تراکنش با موفقیت انجام شد";
-
-                return View();
-            }
-
-            ViewData["Description"] = "پرداخت نا موفق";
+            ViewData["ResCode"] = ResCode;
 
             return View();
-
         }
 
         private async Task<bpVerifyRequestResponse> CallApi(string factorNumber, long saleReferenceId)

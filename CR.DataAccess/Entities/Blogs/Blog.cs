@@ -6,6 +6,7 @@ namespace CR.DataAccess.Entities.Blogs
     public class Blog : BaseEntity
     {
         public string Title { get; set; }
+        public string PictureSrc { get; set; }
         public string Description { get; set; }
         public string ShortDescription { get; set; }
         public int ShowOrder { get; set; }

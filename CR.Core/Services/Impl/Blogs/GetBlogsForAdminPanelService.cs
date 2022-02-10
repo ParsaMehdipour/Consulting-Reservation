@@ -5,6 +5,7 @@ using CR.Core.DTOs.ResultDTOs.Blogs;
 using CR.Core.Services.Interfaces.Blogs;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace CR.Core.Services.Impl.Blogs
@@ -24,18 +25,17 @@ namespace CR.Core.Services.Impl.Blogs
 
             var blogs = _context.Blogs
                 .Include(_ => _.BlogCategory)
+                .AsNoTracking()
                 .Select(_ => new BlogForAdminDto
                 {
                     Id = _.Id,
-                    Title = _.Title,
+                    BlogPictureSrc = _.PictureSrc ?? "assets/img/img-pharmacy1.jpg",
+                    Title = (_.Title.Length > 15) ? _.Title.Substring(0, Math.Min(_.ShortDescription.Length, 15)) + "..." : _.Title,
                     Author = "سامانه چاله چوله",
                     BlogCategory = _.BlogCategory.Name,
-                    CanonicalAddress = _.CanonicalAddress,
                     CreateDate = _.CreateDate.ToShamsi(),
-                    ShortDescription = _.ShortDescription,
                     PublishDate = _.PublishDate.ToShamsi(),
                     Status = _.Status,
-                    Slug = _.Slug,
                 }).ToList();
 
             return new ResultDto<ResultGetBlogsForAdminPanelDto>()

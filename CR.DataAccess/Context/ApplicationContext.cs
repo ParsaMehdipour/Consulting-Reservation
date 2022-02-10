@@ -12,6 +12,7 @@ using CR.DataAccess.Entities.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using CR.DataAccess.Entities.FinancialTransactions;
 
 namespace CR.DataAccess.Context
 {
@@ -39,6 +40,7 @@ namespace CR.DataAccess.Context
         public DbSet<Timing> Timings { get; set; }
         public DbSet<BlogCategory> BlogCategories { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

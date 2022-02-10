@@ -1,12 +1,11 @@
 ﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.Blogs;
-using CR.Core.DTOs.ResultDTOs;
+using CR.Core.DTOs.ResultDTOs.Blogs;
 using CR.Core.Services.Interfaces.Blogs;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using CR.Core.DTOs.ResultDTOs.Blogs;
 
 namespace CR.Core.Services.Impl.Blogs
 {
@@ -26,6 +25,7 @@ namespace CR.Core.Services.Impl.Blogs
             var blogCategories = _context.BlogCategories
                 .Include(b => b.ParentCategory)
                 .Include(b => b.SubCategories)
+                .AsNoTracking()
                 .Where(b => b.ParentCategoryId == parentId)
                 .Select(b => new BlogCategoryForAdminPanelDto
                 {

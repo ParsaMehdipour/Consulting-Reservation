@@ -1,14 +1,15 @@
-﻿@using CR.DataAccess.Enums
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using CR.DataAccess.Enums
 @using CR.Common.Utilities
 @model CR.Core.DTOs.ResultDTOs.Factors.ResultGetAllFactorsForAdminPanelDto
 <!-- Page Header -->
 <div class="page-header">
     <div class="row">
         <div class="col-sm-12">
-            <h3 class="page-title">فاکتور گزارش </h3>
+            <h3 class="page-title">گزارش فاکتور ها </h3>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
-                <li class="breadcrumb-item active">فاکتور گزارش </li>
+                <li class="breadcrumb-item active">گزارش فاکتور ها </li>
             </ul>
         </div>
     </div>
@@ -46,15 +47,15 @@
                                     <td class="text-center">
                                         @if (factor.Status == FactorStatus.Waiting.GetDisplayName())
                                         {
-                                            <span class="badge badge-pill bg-warning inv-badge">در انتظار</span>
+                                            <span class="badge badge-pill bg-warning inv-badge">@factor.Status</span>
                                         }
                                         else if (factor.Status == FactorStatus.SuccessfulPayment.GetDisplayName())
                                         {
-                                            <span class="badge badge-pill bg-success inv-badge">پرداخت شده</span>
+                                            <span class="badge badge-pill bg-success inv-badge">@factor.Status</span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-pill bg-danger inv-badge">پرداخت ناموفق</span>
+                                            <span class="badge badge-pill bg-danger inv-badge">@factor.Status</span>
                                         }
                                     </td>
                                 </tr>

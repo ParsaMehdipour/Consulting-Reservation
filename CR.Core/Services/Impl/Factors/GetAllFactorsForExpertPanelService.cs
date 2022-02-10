@@ -2,12 +2,11 @@
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Factors;
-using CR.Core.DTOs.ResultDTOs;
+using CR.Core.DTOs.ResultDTOs.Factors;
 using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using CR.Core.DTOs.ResultDTOs.Factors;
 
 namespace CR.Core.Services.Impl.Factors
 {
@@ -28,6 +27,7 @@ namespace CR.Core.Services.Impl.Factors
                 .Include(f => f.ExpertInformation)
                 .Include(f => f.Appointments)
                 .Include(f => f.ConsumerInformation)
+                .AsNoTracking()
                 .Where(f => f.ExpertInformation.ExpertId == expertId)
                 .Select(f => new FactorForExpertPanelDto()
                 {
