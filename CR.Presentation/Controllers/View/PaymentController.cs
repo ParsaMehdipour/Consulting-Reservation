@@ -1,4 +1,5 @@
-﻿using CR.Core.Services.Interfaces.Factors;
+﻿using CR.Common.DTOs;
+using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
@@ -39,6 +40,11 @@ namespace CR.Presentation.Controllers.View
         [HttpPost]
         public IActionResult Verify(string RefId, string ResCode, long SaleOrderId, long SaleReferenceId, string CardHolderPan, long FinalAmount)
         {
+            var result = new ResultDto()
+            {
+                IsSuccess = false
+            };
+
             if (ResCode == "0")
             {
                 var factor = _getFactorDetailsService.Execute(SaleOrderId.ToString()).Data;
@@ -46,28 +52,28 @@ namespace CR.Presentation.Controllers.View
                 if (factor == null)
                 {
                     ViewData["Description"] = "فاکتور معتبر نمی باشد!!";
-                    return View("1");
+                    return View(result);
                 }
 
                 if (factor.refId != RefId)
                 {
                     ViewData["Description"] = "تراکنش معتبر نمی باشد";
-                    return View("1");
+                    return View(result);
                 }
 
                 if (factor.price != FinalAmount / 10)
                 {
                     ViewData["Description"] = "تراکنش معتبر نمی باشد";
-                    return View("1");
+                    return View(result);
                 }
 
                 _updateFactorSaleReferenceIdService.Execute(SaleOrderId.ToString(), SaleReferenceId);
 
-                //var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
+                var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
 
-                //res.Wait();
+                res.Wait();
 
-                var resCode = "0";
+                var resCode = res.Result.Body.@return;
 
                 if (resCode == "0")
                 {
@@ -79,7 +85,9 @@ namespace CR.Presentation.Controllers.View
 
                     var temp = ViewData["Description"];
 
-                    return View("0");
+                    result.IsSuccess = true;
+
+                    return View(result);
                 }
 
                 ViewData["Description"] = "تراکنش ناموفق";
@@ -88,7 +96,7 @@ namespace CR.Presentation.Controllers.View
 
                 _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment, TransactionStatus.Failed);
 
-                return View("1");
+                return View(result);
             }
 
             ViewData["Description"] = "پرداخت ناموفق";
@@ -97,7 +105,7 @@ namespace CR.Presentation.Controllers.View
 
             ViewData["ResCode"] = ResCode;
 
-            return View("1");
+            return View(result);
         }
 
         private async Task<bpVerifyRequestResponse> CallApi(string factorNumber, long saleReferenceId)
