@@ -24,11 +24,11 @@
                     <table class="datatable table table-hover table-center mb-0">
                         <thead>
                             <tr>
-                                <th>پرداخت کننده </th>
-                                <th>دریافت کننده</th>
-                                <th> مبلغ کل </th>
-                                <th> تاریخ ایجاد </th>
-                                <th> نوع تراکنش </th>
+                                <th class="text-center">پرداخت کننده </th>
+                                <th class="text-center">دریافت کننده</th>
+                                <th class="text-center"> مبلغ کل </th>
+                                <th class="text-center"> تاریخ ایجاد </th>
+                                <th class="text-center"> نوع تراکنش </th>
                                 <th class="text-center"> وضعیت </th>
                             </tr>
                         </thead>
@@ -36,26 +36,26 @@
                             @foreach (var transaction in Model.FinancialTransactionForAdminDtos)
                             {
                                 <tr>
-                                    <td>
+                                    <td class="text-center">
                                         <h2 class="table-avatar">
                                             <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@transaction.PayerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@transaction.PayerIconSrc" alt="Payer"></a>
                                             <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@transaction.PayerId">@transaction.PayerFullName </a>
                                         </h2>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <h2 class="table-avatar">
                                             <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@transaction.ReceiverId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@transaction.ReceiverIconSrc" alt="Receiver"></a>
                                             <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@transaction.ReceiverId">@transaction.ReceiverFullName </a>
                                         </h2>
                                     </td>
-                                    <td>@transaction.Price تومان</td>
-                                    <td>@transaction.CreateDate</td>
+                                    <td class="text-center">@transaction.Price تومان</td>
+                                    <td class="text-center">@transaction.CreateDate</td>
                                     <td class="text-center">
                                         @if (transaction.TransactionType == TransactionType.ChargeWallet.GetDisplayName())
                                         {
                                             <span class="badge badge-pill bg-warning inv-badge">@transaction.TransactionType</span>
                                         }
-                                        else if (transaction.TransactionStatus == TransactionType.PayFromCreditCard.GetDisplayName())
+                                        else if (transaction.TransactionType == TransactionType.PayFromCreditCard.GetDisplayName())
                                         {
                                             <span class="badge badge-pill bg-success inv-badge">@transaction.TransactionType</span>
                                         }
