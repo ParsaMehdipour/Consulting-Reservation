@@ -47,15 +47,15 @@
                                     <td class="text-center">
                                         @if (factor.Status == FactorStatus.Waiting.GetDisplayName())
                                         {
-                                            <span class="badge badge-pill bg-warning inv-badge">در انتظار</span>
+                                            <span class="badge badge-pill bg-warning inv-badge">@factor.Status</span>
                                         }
                                         else if (factor.Status == FactorStatus.SuccessfulPayment.GetDisplayName())
                                         {
-                                            <span class="badge badge-pill bg-success inv-badge">پرداخت شده</span>
+                                            <span class="badge badge-pill bg-success inv-badge">@factor.Status</span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-pill bg-danger inv-badge">پرداخت ناموفق</span>
+                                            <span class="badge badge-pill bg-danger inv-badge">@factor.Status</span>
                                         }
                                     </td>
                                 </tr>
