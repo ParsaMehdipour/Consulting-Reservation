@@ -69,7 +69,7 @@ namespace CR.Core.Services.Impl.ExpertAvailabilities
             {
                 if (timeOfDay.ExpertInformation.CommissionAndDiscount != null)
                 {
-                    commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.TextCallPrice) / 100);
+                    commission = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallCommission * timeOfDay.TextCallPrice) / 100);
                     discount = (long)((timeOfDay.ExpertInformation.CommissionAndDiscount.TextCallDiscount * timeOfDay.TextCallPrice) / 100);
                     price = ((timeOfDay.TextCallPrice + commission) - discount);
                 }
