@@ -39,12 +39,6 @@ namespace CR.Presentation.Controllers.View
         [HttpPost]
         public IActionResult Verify(string RefId, string ResCode, long SaleOrderId, long SaleReferenceId, string CardHolderPan, long FinalAmount)
         {
-            //ViewData["Info"] = "ResCode : " + ResCode
-            //                                + "RefId : " + RefId
-            //                                + "SaleOrderId : " + SaleOrderId
-            //                                + "SaleReferenceId : " + SaleReferenceId
-            //                                + "CardHolderPan : " + CardHolderPan
-            //                                + "FinalAmount : " + FinalAmount;
             if (ResCode == "0")
             {
                 var factor = _getFactorDetailsService.Execute(SaleOrderId.ToString()).Data;
@@ -86,14 +80,18 @@ namespace CR.Presentation.Controllers.View
                     return View();
                 }
 
-                ViewData["Description"] = "تراکنش ناموفق" + resCode;
+                ViewData["Description"] = "تراکنش ناموفق";
+
+                ViewData["ResCode"] = resCode;
 
                 _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment);
 
                 return View();
             }
 
-            ViewData["Description"] = "پرداخت ناموفق" + ResCode;
+            ViewData["Description"] = "پرداخت ناموفق";
+
+            ViewData["ResCode"] = ResCode;
 
             return View();
         }
