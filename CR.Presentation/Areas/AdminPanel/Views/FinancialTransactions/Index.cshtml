@@ -1,0 +1,104 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using CR.DataAccess.Enums
+@using CR.Common.Utilities
+@model CR.Core.DTOs.ResultDTOs.FinancialTransactions.ResultGetFinancialTransactionsForAdminPanel
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">گزارش تراکنش ها </h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item active">گزارش تراکنش ها </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="datatable table table-hover table-center mb-0">
+                        <thead>
+                            <tr>
+                                <th>پرداخت کننده </th>
+                                <th>دریافت کننده</th>
+                                <th> مبلغ کل </th>
+                                <th> تاریخ ایجاد </th>
+                                <th> نوع تراکنش </th>
+                                <th class="text-center"> وضعیت </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var transaction in Model.FinancialTransactionForAdminDtos)
+                            {
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@transaction.PayerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@transaction.PayerIconSrc" alt="Payer"></a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@transaction.PayerId">@transaction.PayerFullName </a>
+                                        </h2>
+                                    </td>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@transaction.ReceiverId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@transaction.ReceiverIconSrc" alt="Receiver"></a>
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@transaction.ReceiverId">@transaction.ReceiverFullName </a>
+                                        </h2>
+                                    </td>
+                                    <td>@transaction.Price تومان</td>
+                                    <td>@transaction.CreateDate</td>
+                                    <td class="text-center">
+                                        @if (transaction.TransactionType == TransactionType.ChargeWallet.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-warning inv-badge">@transaction.TransactionType</span>
+                                        }
+                                        else if (transaction.TransactionStatus == TransactionType.PayFromCreditCard.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-success inv-badge">@transaction.TransactionType</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-pill bg-danger inv-badge">@transaction.TransactionType</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @if (transaction.TransactionStatus == TransactionStatus.UnDefined.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-warning inv-badge">@transaction.TransactionStatus</span>
+                                        }
+                                        else if (transaction.TransactionStatus == TransactionStatus.Successful.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-success inv-badge">@transaction.TransactionStatus</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-pill bg-danger inv-badge">@transaction.TransactionStatus</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    show-first-numbered-page="true"
+                    show-last-numbered-page="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize"
+                    gap-size="2">
+            </paging>
+        </div>
+    </div>
+</div>
