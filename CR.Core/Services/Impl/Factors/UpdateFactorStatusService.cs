@@ -68,6 +68,8 @@ namespace CR.Core.Services.Impl.Factors
 
                 financialTransaction.Status = TransactionStatus.Failed;
 
+                _context.FinancialTransactions.Add(financialTransaction);
+
                 _context.SaveChanges();
 
                 transaction.Commit();
