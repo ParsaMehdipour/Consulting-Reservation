@@ -19,7 +19,7 @@ namespace CR.Core.Services.Impl.Factors
         {
             _context = context;
         }
-        public ResultDto Execute(string factorNumber, FactorStatus factorStatus)
+        public ResultDto Execute(string factorNumber, FactorStatus factorStatus, TransactionStatus transactionStatus)
         {
             using var transaction = _context.Database.BeginTransaction();
 
@@ -50,7 +50,7 @@ namespace CR.Core.Services.Impl.Factors
                     ReceiverId = factor.ExpertInformation.ExpertId,
                     Price_Digit = factor.TotalPrice,
                     Price_String = factor.TotalPrice.ToString().GetPersianNumber(),
-                    Status = TransactionStatus.UnDefined,
+                    Status = transactionStatus,
                     TransactionType = TransactionType.PayFromCreditCard
                 };
 
@@ -62,11 +62,7 @@ namespace CR.Core.Services.Impl.Factors
                     {
                         appointment.TimeOfDay.IsReserved = true;
                     }
-
-                    financialTransaction.Status = TransactionStatus.Successful;
                 }
-
-                financialTransaction.Status = TransactionStatus.Failed;
 
                 _context.FinancialTransactions.Add(financialTransaction);
 
