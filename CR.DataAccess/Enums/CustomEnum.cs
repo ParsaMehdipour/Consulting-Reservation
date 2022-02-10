@@ -30,7 +30,7 @@ namespace CR.DataAccess.Enums
 
     public enum FactorStatus
     {
-        [Display(Name = "ثبت اولیه")]
+        [Display(Name = "در انتظار پرداخت")]
         Waiting = 0,
         [Display(Name = "پرداخت موفق")]
         SuccessfulPayment = 1,
