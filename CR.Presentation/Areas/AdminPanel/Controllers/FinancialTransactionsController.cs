@@ -1,8 +1,11 @@
 ﻿using CR.Core.Services.Interfaces.FinancialTransaction;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CR.Presentation.Areas.AdminPanel.Controllers
 {
+    [Area("AdminPanel")]
+    [Authorize]
     public class FinancialTransactionsController : Controller
     {
         private readonly IGetFinancialTransactionsForAdminService _getFinancialTransactionsForAdminService;
