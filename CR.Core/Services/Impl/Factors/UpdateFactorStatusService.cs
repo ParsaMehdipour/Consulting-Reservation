@@ -1,6 +1,9 @@
-﻿using CR.Common.DTOs;
+﻿using CR.Common.Convertor;
+using CR.Common.DTOs;
+using CR.Common.Utilities;
 using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
+using CR.DataAccess.Entities.FinancialTransactions;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,6 +28,8 @@ namespace CR.Core.Services.Impl.Factors
                 var factor = _context.Factors
                     .Include(_ => _.Appointments)
                     .ThenInclude(_ => _.TimeOfDay)
+                    .Include(f => f.ConsumerInformation)
+                    .Include(f => f.ExpertInformation)
                     .First(_ => _.FactorNumber == factorNumber);
 
                 if (factor == null)
@@ -36,6 +41,19 @@ namespace CR.Core.Services.Impl.Factors
                     };
                 }
 
+                var financialTransaction = new FinancialTransaction()
+                {
+                    CreateDate_String = DateTime.Now.ToShamsi(),
+                    Factor = factor,
+                    FactorId = factor.Id,
+                    PayerId = factor.ConsumerInformation.ConsumerId,
+                    ReceiverId = factor.ExpertInformation.ExpertId,
+                    Price_Digit = factor.TotalPrice,
+                    Price_String = factor.TotalPrice.ToString().GetPersianNumber(),
+                    Status = TransactionStatus.UnDefined,
+                    TransactionType = TransactionType.PayFromCreditCard
+                };
+
                 factor.FactorStatus = factorStatus;
 
                 if (factorStatus == FactorStatus.SuccessfulPayment)
@@ -44,7 +62,11 @@ namespace CR.Core.Services.Impl.Factors
                     {
                         appointment.TimeOfDay.IsReserved = true;
                     }
+
+                    financialTransaction.Status = TransactionStatus.Successful;
                 }
+
+                financialTransaction.Status = TransactionStatus.Failed;
 
                 _context.SaveChanges();
 
