@@ -73,7 +73,7 @@ namespace CR.Presentation.Controllers.View
                 {
                     _updateFactorCartHolderPanService.Execute(SaleOrderId.ToString(), CardHolderPan);
 
-                    _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.SuccessfulPayment);
+                    _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.SuccessfulPayment, TransactionStatus.Successful);
 
                     ViewData["Description"] = "تراکنش با موفقیت انجام شد، کد رهگیری پرداخت شما : " + SaleReferenceId;
 
@@ -84,14 +84,14 @@ namespace CR.Presentation.Controllers.View
 
                 ViewData["ResCode"] = resCode;
 
-                _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment);
+                _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment, TransactionStatus.Failed);
 
                 return View();
             }
 
             ViewData["Description"] = "پرداخت ناموفق";
 
-            _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment);
+            _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment, TransactionStatus.Failed);
 
             ViewData["ResCode"] = ResCode;
 
