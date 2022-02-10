@@ -46,28 +46,28 @@ namespace CR.Presentation.Controllers.View
                 if (factor == null)
                 {
                     ViewData["Description"] = "فاکتور معتبر نمی باشد!!";
-                    return View();
+                    return View("1");
                 }
 
                 if (factor.refId != RefId)
                 {
                     ViewData["Description"] = "تراکنش معتبر نمی باشد";
-                    return View();
+                    return View("1");
                 }
 
                 if (factor.price != FinalAmount / 10)
                 {
                     ViewData["Description"] = "تراکنش معتبر نمی باشد";
-                    return View();
+                    return View("1");
                 }
 
                 _updateFactorSaleReferenceIdService.Execute(SaleOrderId.ToString(), SaleReferenceId);
 
-                var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
+                //var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
 
-                res.Wait();
+                //res.Wait();
 
-                var resCode = res.Result.Body.@return;
+                var resCode = "0";
 
                 if (resCode == "0")
                 {
@@ -77,7 +77,9 @@ namespace CR.Presentation.Controllers.View
 
                     ViewData["Description"] = "تراکنش با موفقیت انجام شد، کد رهگیری پرداخت شما : " + SaleReferenceId;
 
-                    return View();
+                    var temp = ViewData["Description"];
+
+                    return View("0");
                 }
 
                 ViewData["Description"] = "تراکنش ناموفق";
@@ -86,7 +88,7 @@ namespace CR.Presentation.Controllers.View
 
                 _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment, TransactionStatus.Failed);
 
-                return View();
+                return View("1");
             }
 
             ViewData["Description"] = "پرداخت ناموفق";
@@ -95,7 +97,7 @@ namespace CR.Presentation.Controllers.View
 
             ViewData["ResCode"] = ResCode;
 
-            return View();
+            return View("1");
         }
 
         private async Task<bpVerifyRequestResponse> CallApi(string factorNumber, long saleReferenceId)
