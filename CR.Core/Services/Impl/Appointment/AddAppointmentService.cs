@@ -28,7 +28,8 @@ namespace CR.Core.Services.Impl.Appointment
 
             try
             {
-                List<DataAccess.Entities.Appointments.Appointment> appointments = new List<DataAccess.Entities.Appointments.Appointment>();
+                List<DataAccess.Entities.Appointments.Appointment> appointments =
+                    new List<DataAccess.Entities.Appointments.Appointment>();
                 var expertInformation = new ExpertInformation();
                 var consumerInformation = new ConsumerInfromation();
 
@@ -72,7 +73,8 @@ namespace CR.Core.Services.Impl.Appointment
                     }
 
 
-                    expertInformation = _context.ExpertInformations.FirstOrDefault(e => e.Id == request.expertInformationId);
+                    expertInformation =
+                        _context.ExpertInformations.FirstOrDefault(e => e.Id == request.expertInformationId);
 
                     if (expertInformation == null)
                     {
@@ -135,12 +137,18 @@ namespace CR.Core.Services.Impl.Appointment
             }
             catch (Exception)
             {
+                transaction.Rollback();
+
                 return new ResultDto<string>()
                 {
                     Data = null,
                     Message = "خطا از سمت سرور!!",
                     IsSuccess = false
                 };
+            }
+            finally
+            {
+                transaction.Dispose();
             }
         }
 
