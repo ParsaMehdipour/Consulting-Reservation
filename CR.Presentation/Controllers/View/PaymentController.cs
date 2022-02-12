@@ -69,11 +69,11 @@ namespace CR.Presentation.Controllers.View
 
                 _updateFactorSaleReferenceIdService.Execute(SaleOrderId.ToString(), SaleReferenceId);
 
-                var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
+                //var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
 
-                res.Wait();
+                //res.Wait();
 
-                var resCode = res.Result.Body.@return;
+                var resCode = "0";
 
                 if (resCode == "0")
                 {
