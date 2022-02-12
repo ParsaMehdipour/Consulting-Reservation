@@ -11,6 +11,10 @@ namespace CR.DataAccess.Entities.FinancialTransactions
         public long Price_Digit { get; set; }
         public string Price_String { get; set; }
         public string CreateDate_String { get; set; }
+        public string TransactionNumber { get; set; }
+        public string RefId { get; set; }
+        public string CardHolderPAN { get; set; }
+        public long SaleReferenceId { get; set; }
         public TransactionType TransactionType { get; set; }
         public TransactionStatus Status { get; set; }
 

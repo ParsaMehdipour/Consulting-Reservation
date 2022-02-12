@@ -203,6 +203,8 @@ namespace CR.Presentation
             services.AddScoped<IAddNewBlogService, AddNewBlogService>();
             //FinancialTransactions
             services.AddScoped<IGetFinancialTransactionsForAdminService, GetFinancialTransactionsForAdminService>();
+            services.AddScoped<IGetConsumerFinancialTransactionsService, GetConsumerFinancialTransactionsService>();
+            services.AddScoped<IAddChargeWalletFinancialTransactionService, AddChargeWalletFinancialTransactionService>();
 
             #endregion
 
