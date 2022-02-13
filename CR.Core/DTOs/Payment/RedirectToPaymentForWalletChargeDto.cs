@@ -2,7 +2,7 @@
 {
     public class RedirectToPaymentForWalletChargeDto
     {
-        public int transactionNumber { get; set; }
+        public string transactionNumber { get; set; }
         public long price { get; set; }
     }
 }
