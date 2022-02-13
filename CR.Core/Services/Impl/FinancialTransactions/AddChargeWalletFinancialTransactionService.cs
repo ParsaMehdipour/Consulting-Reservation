@@ -1,4 +1,5 @@
-﻿using CR.Common.DTOs;
+﻿using CR.Common.Convertor;
+using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Payment;
 using CR.Core.Services.Interfaces.FinancialTransaction;
@@ -39,6 +40,7 @@ namespace CR.Core.Services.Impl.FinancialTransactions
                 {
                     PayerId = payerId,
                     Price_Digit = price,
+                    CreateDate_String = DateTime.Now.ToShamsi(),
                     Price_String = price.ToString().GetPersianNumber(),
                     TransactionNumber = GetLastTransactionNumber(),
                     TransactionType = TransactionType.ChargeWallet
@@ -48,12 +50,14 @@ namespace CR.Core.Services.Impl.FinancialTransactions
 
                 _context.SaveChanges();
 
+                transaction.Commit();
+
                 return new ResultDto<RedirectToPaymentForWalletChargeDto>()
                 {
                     Data = new RedirectToPaymentForWalletChargeDto()
                     {
                         price = financialTransaction.Price_Digit,
-                        transactionNumber = Convert.ToInt32(financialTransaction.TransactionNumber)
+                        transactionNumber = financialTransaction.TransactionNumber
                     },
                     IsSuccess = true,
                     Message = string.Empty
@@ -82,10 +86,11 @@ namespace CR.Core.Services.Impl.FinancialTransactions
 
             if (financialTransactions == null)
             {
-                return 1.ToString();
+                return "T" + "1";
             }
 
-            return (Convert.ToInt32(financialTransactions.TransactionNumber) + 1).ToString();
+
+            return "T" + (Convert.ToInt32(financialTransactions.TransactionNumber.Split("T")[1]) + 1);
         }
     }
 }

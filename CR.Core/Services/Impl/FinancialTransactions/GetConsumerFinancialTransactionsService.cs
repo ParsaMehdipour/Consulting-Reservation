@@ -30,7 +30,7 @@ namespace CR.Core.Services.Impl.FinancialTransactions
                 {
                     CreateDate = _.CreateDate_String,
                     ExpertInformationId = _.Factor.ExpertInformationId,
-                    ExpertIconSrc = (_.Factor.ExpertInformation != null) ? _.Factor.ExpertInformation.IconSrc : "/assets/img/favicon-32x32.png",
+                    ExpertIconSrc = (_.Factor.ExpertInformation != null) ? _.Factor.ExpertInformation.IconSrc : "assets/img/favicon-32x32.png",
                     ExpertFullName = (_.Factor.ExpertInformation != null) ? _.Factor.ExpertInformation.FirstName + " " + _.Factor.ExpertInformation.LastName : "",
                     Price = _.Price_String,
                     TransactionStatus = _.Status.GetDisplayName(),

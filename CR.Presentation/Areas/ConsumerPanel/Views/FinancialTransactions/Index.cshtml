@@ -59,7 +59,7 @@
                                             <table class="table table-hover table-center mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-center"> متخصص </th>
+                                                        <th class="text-center"> دریافت کننده </th>
                                                         <th class="text-center">مبلغ کل </th>
                                                         <th class="text-center"> تاریخ ایجاد </th>
                                                         <th class="text-center"> نوع تراکنش </th>
@@ -75,7 +75,7 @@
                                                                     <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@transaction.ExpertInformationId" class="avatar avatar-sm mr-2">
                                                                         <img class="avatar-img rounded-circle" src="~/@transaction.ExpertIconSrc" alt="User Image">
                                                                     </a>
-                                                                    <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@transaction.ExpertInformationId">متخصص @transaction.ExpertFullName</a>
+                                                                    <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@transaction.ExpertInformationId">@transaction.ExpertFullName</a>
                                                                 </h2>
                                                             </td>
                                                             <td class="text-center">@transaction.Price تومان</td>
@@ -146,10 +146,51 @@
 <script src="~/assets/js/ConusmerPanel/layout.js"></script>
 
 <script>
-    function ChargeWallet() {
+    function ChargeWallet(){
+
         var chargeWalletForm = new FormData();
 
-        chargeWalletForm.append("price",);
+        console.log(Number($("#price").cleanVal()));
+
+        chargeWalletForm.append("price",Number($("#price").cleanVal()));
+
+        $.ajax({
+            type: "POST",
+            url: '/api/Payment/ChargeWallet',
+            data: chargeWalletForm,
+            processData: false,
+            contentType: false,
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
+            success: function(data) {
+                if (data.isSuccess === true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                }
+                else {
+
+                    swal.fire(
+                        'هشدار!',
+                        data.message,
+                        'warning'
+                    );
+
+                }
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
     }
 </script>
 }
@@ -173,7 +214,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal" data-original-title="" title="">بستن</button>
-                <button class="btn btn-primary" type="button" data-original-title="" title="">شارژ</button>
+                <button onclick="ChargeWallet()" class="btn btn-primary" type="button" data-original-title="" title="">شارژ</button>
             </div>
         </div>
     </div>

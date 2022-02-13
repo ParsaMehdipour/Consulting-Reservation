@@ -9,26 +9,38 @@ using System.Threading.Tasks;
 
 namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class PaymentController : ControllerBase
     {
         private readonly IAddChargeWalletFinancialTransactionService _addChargeWalletFinancialTransactionService;
+        private readonly IUpdateFinancialTransactionsRefIdService _updateFinancialTransactionsRefIdService;
 
-        public PaymentController(IAddChargeWalletFinancialTransactionService addChargeWalletFinancialTransactionService)
+        public PaymentController(IAddChargeWalletFinancialTransactionService addChargeWalletFinancialTransactionService
+        , IUpdateFinancialTransactionsRefIdService updateFinancialTransactionsRefIdService)
         {
             _addChargeWalletFinancialTransactionService = addChargeWalletFinancialTransactionService;
+            _updateFinancialTransactionsRefIdService = updateFinancialTransactionsRefIdService;
         }
 
         [Route("/api/Payment/ChargeWallet")]
         [HttpPost]
-        public IActionResult ChargeWallet(ChargeWalletPaymentDto model)
+        public IActionResult ChargeWallet([FromForm] ChargeWalletPaymentDto model)
         {
             var payerId = ClaimUtility.GetUserId(User).Value;
 
             var result = _addChargeWalletFinancialTransactionService.Execute(payerId, model.price);
 
-            if (result.Data.price == 0 || result.Data.transactionNumber == 0)
+            if (result.IsSuccess == false)
+            {
+                return new JsonResult(new ResultDto<string>()
+                {
+                    Data = null,
+                    IsSuccess = false,
+                    Message = result.Message
+                });
+            }
+
+            if (result.Data.price == 0 || result.Data.transactionNumber == "0")
             {
                 return new JsonResult(new ResultDto<string>()
                 {
@@ -40,7 +52,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
 
             long price = model.price * 10;
 
-            var res = CallApi(price.ToString(), result.Data.transactionNumber.ToString());
+            var res = CallApi(price.ToString(), result.Data.transactionNumber);
             res.Wait();
 
             var output = res.Result.Body.@return;
@@ -52,7 +64,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
 
                 if (status == "0")
                 {
-                    //_updateFactorRefIdService.Execute(model.factorNumber.ToString(), refId);
+                    _updateFinancialTransactionsRefIdService.Execute(result.Data.transactionNumber, refId);
                     string url = "https://bpm.shaparak.ir/pgwchannel/payment.mellat?RefId=" + refId;
                     return new JsonResult(new ResultDto<string>()
                     {
@@ -65,7 +77,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
 
             return new JsonResult(new ResultDto<string>()
             {
-                IsSuccess = true,
+                IsSuccess = false,
                 Message = string.Empty,
                 Data = "/"
             });
@@ -89,7 +101,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
                     localDate: $"{date.Year}{date.Month}{date.Day}",
                     localTime: $"{date.Hour}{date.Minute}{date.Second}",
                     additionalData: "پس از نیم ساعت امکان لغو درخواست وجود ندارد",
-                    callBackUrl: "http://www.chalechoole.com/Payment/Verify",
+                    callBackUrl: "http://www.chalechoole.com/ConsumerPanel/Payment/Verify",
                     payerId: "0",
                     mobileNo: "989122502978",
                     encPan: "",
