@@ -207,7 +207,7 @@ namespace CR.Presentation
             services.AddScoped<IAddChargeWalletFinancialTransactionService, AddChargeWalletFinancialTransactionService>();
             services.AddScoped<IUpdateFinancialTransactionsRefIdService, UpdateFinancialTransactionsRefIdService>();
             services.AddScoped<IGetFinancialTransactionForVerifyService, GetFinancialTransactionForVerifyService>();
-            services.AddScoped<IUpdateFinancialTransactionSaleReferenceIdService, IUpdateFinancialTransactionSaleReferenceIdService>();
+            services.AddScoped<IUpdateFinancialTransactionSaleReferenceIdService, UpdateFinancialTransactionSaleReferenceIdService>();
             services.AddScoped<IUpdateFinancialTransactionCarHolderPANService, UpdateFinancialTransactionCarHolderPAN>();
             services.AddScoped<IUpdateFinancialTransactionStatusService, UpdateFinancialTransactionStatusService>();
 
