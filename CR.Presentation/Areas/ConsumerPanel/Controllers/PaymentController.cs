@@ -77,8 +77,6 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers
 
                     ViewData["Description"] = "تراکنش با موفقیت انجام شد، کد رهگیری پرداخت شما : " + SaleReferenceId;
 
-                    var temp = ViewData["Description"];
-
                     result.IsSuccess = true;
 
                     return View(result);
