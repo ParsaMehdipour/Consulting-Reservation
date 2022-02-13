@@ -66,7 +66,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers
 
                 res.Wait();
 
-                var resCode = "0";
+                var resCode = res.Result.Body.@return;
 
                 if (resCode == "0")
                 {
