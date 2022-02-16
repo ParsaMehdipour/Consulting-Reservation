@@ -1,13 +1,14 @@
-﻿using CR.Common.Convertor;
+﻿using System.Linq;
+using CR.Common.Convertor;
 using CR.Common.DTOs;
+using CR.Core.DTOs.BlogCategories;
 using CR.Core.DTOs.Blogs;
 using CR.Core.DTOs.ResultDTOs.Blogs;
-using CR.Core.Services.Interfaces.Blogs;
+using CR.Core.Services.Interfaces.BlogCategories;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
-namespace CR.Core.Services.Impl.Blogs
+namespace CR.Core.Services.Impl.BlogCategories
 {
     public class GetBlogCategoriesForAdminPanelService : IGetBlogCategoriesForAdminPanelService
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CR.Core.DTOs.Blogs
+namespace CR.Core.DTOs.BlogCategories
 {
     public class BlogCategoryDetailsForAdminDto
     {

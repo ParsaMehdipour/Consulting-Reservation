@@ -1,11 +1,12 @@
-﻿using CR.Core.DTOs.Blogs;
-using CR.Core.Services.Interfaces.Blogs;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CR.Core.DTOs.BlogCategories;
+using CR.Core.DTOs.Blogs;
+using CR.Core.Services.Interfaces.BlogCategories;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace CR.Core.Services.Impl.Blogs
+namespace CR.Core.Services.Impl.BlogCategories
 {
     public class GetBlogCategoriesForDropdownService : IGetBlogCategoriesForDropdownService
     {

@@ -1,11 +1,11 @@
-﻿using CR.Common.DTOs;
-using CR.Core.Services.Interfaces.Blogs;
+﻿using System;
+using System.Linq;
+using CR.Common.DTOs;
+using CR.Core.Services.Interfaces.BlogCategories;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
-namespace CR.Core.Services.Impl.Blogs
+namespace CR.Core.Services.Impl.BlogCategories
 {
     public class DeleteBlogCategoryService : IDeleteBlogCategoryService
     {

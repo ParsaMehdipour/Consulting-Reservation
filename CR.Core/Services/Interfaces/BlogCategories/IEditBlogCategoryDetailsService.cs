@@ -1,7 +1,7 @@
 ﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs;
 
-namespace CR.Core.Services.Interfaces.Blogs
+namespace CR.Core.Services.Interfaces.BlogCategories
 {
     public interface IEditBlogCategoryDetailsService
     {

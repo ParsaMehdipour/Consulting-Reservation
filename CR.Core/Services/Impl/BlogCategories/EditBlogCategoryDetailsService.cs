@@ -1,12 +1,12 @@
-﻿using CR.Common.DTOs;
+﻿using System;
+using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs;
-using CR.Core.Services.Interfaces.Blogs;
+using CR.Core.Services.Interfaces.BlogCategories;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
-using System;
 
-namespace CR.Core.Services.Impl.Blogs
+namespace CR.Core.Services.Impl.BlogCategories
 {
     public class EditBlogCategoryDetailsService : IEditBlogCategoryDetailsService
     {
