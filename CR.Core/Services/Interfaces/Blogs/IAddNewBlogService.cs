@@ -5,6 +5,6 @@ namespace CR.Core.Services.Interfaces.Blogs
 {
     public interface IAddNewBlogService
     {
-        ResultDto Execute(RequestAddNewBlogDto request);
+        ResultDto Execute(RequestAddNewBlogDto request, long userId);
     }
 }

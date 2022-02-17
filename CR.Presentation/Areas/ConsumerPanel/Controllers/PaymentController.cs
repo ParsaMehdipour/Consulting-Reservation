@@ -30,8 +30,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers
         }
 
         [HttpPost]
-        public IActionResult Verify(string RefId, string ResCode, long SaleOrderId, long SaleReferenceId,
-            string CardHolderPan, long FinalAmount)
+        public IActionResult Verify(string RefId, string ResCode, long SaleOrderId, long SaleReferenceId, string CardHolderPan, long FinalAmount)
         {
             var result = new ResultDto()
             {
@@ -62,11 +61,13 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers
 
                 _updateFinancialTransactionSaleReferenceIdService.Execute(SaleOrderId.ToString(), SaleReferenceId);
 
-                var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
+                //var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
 
-                res.Wait();
+                //res.Wait();
 
-                var resCode = res.Result.Body.@return;
+                //var resCode = res.Result.Body.@return;
+
+                var resCode = "0";
 
                 if (resCode == "0")
                 {
