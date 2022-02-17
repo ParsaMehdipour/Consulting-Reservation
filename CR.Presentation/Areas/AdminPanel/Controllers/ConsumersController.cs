@@ -2,7 +2,6 @@
 using CR.Core.DTOs.Consumers;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.Users;
-using CR.Core.Services.Impl.Users;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.Core.Services.Interfaces.Users;
 using Microsoft.AspNetCore.Authorization;

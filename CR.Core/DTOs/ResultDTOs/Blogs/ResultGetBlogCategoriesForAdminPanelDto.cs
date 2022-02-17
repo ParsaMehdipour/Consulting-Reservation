@@ -1,5 +1,6 @@
 ﻿using CR.Core.DTOs.Blogs;
 using System.Collections.Generic;
+using CR.Core.DTOs.BlogCategories;
 
 namespace CR.Core.DTOs.ResultDTOs.Blogs
 {
