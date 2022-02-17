@@ -8,10 +8,16 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.Api
     public class BlogsController : ControllerBase
     {
         private readonly IAddNewBlogService _addNewBlogService;
+        private readonly IDeleteBlogService _deleteBlogService;
+        private readonly IEditBlogFromAdminService _editBlogFromAdminService;
 
-        public BlogsController(IAddNewBlogService addNewBlogService)
+        public BlogsController(IAddNewBlogService addNewBlogService
+        , IDeleteBlogService deleteBlogService
+        , IEditBlogFromAdminService editBlogFromAdminService)
         {
             _addNewBlogService = addNewBlogService;
+            _deleteBlogService = deleteBlogService;
+            _editBlogFromAdminService = editBlogFromAdminService;
         }
 
         [Route("/api/Blogs/AddNewBlog")]
@@ -19,6 +25,24 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.Api
         public IActionResult AddNewBlog([FromForm] RequestAddNewBlogDto model)
         {
             var result = _addNewBlogService.Execute(model);
+
+            return new JsonResult(result);
+        }
+
+        [Route("/api/Blogs/RemoveBlog")]
+        [HttpPost]
+        public IActionResult RemoveBlog(RequestDeleteBlogDto request)
+        {
+            var result = _deleteBlogService.Execute(request.id);
+
+            return new JsonResult(result);
+        }
+
+        [Route("/api/Blogs/EditBlogDetails")]
+        [HttpPost]
+        public IActionResult EditBlog([FromForm] RequestEditBlogDto request)
+        {
+            var result = _editBlogFromAdminService.Execute(request);
 
             return new JsonResult(result);
         }
