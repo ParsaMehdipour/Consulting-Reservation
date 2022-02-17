@@ -33,6 +33,7 @@ namespace CR.Core.Services.Implementations.Blogs
             var blogDetailsForAdminPanel = new BlogDetailsForAdminDto
             {
                 id = blogDetails.Id,
+                status = blogDetails.Status,
                 author = GetAuthorName(blogDetails.UserId),
                 authorIconSrc = GetAuthorIconSrc(blogDetails.UserId),
                 authorDescription = GetAuthorDescription(blogDetails.UserId),

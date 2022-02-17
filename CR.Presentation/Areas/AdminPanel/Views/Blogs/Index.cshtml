@@ -56,7 +56,14 @@
 
                                         <td>@blog.PublishDate</td>
 
-                                        <td>@blog.Status</td>
+                                        @if (blog.Status)
+                                        {
+                                            <td class="text text-success">فعال</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text text-danger">غیر فعال</td>
+                                        }
 
                                         <td class="text-right">
                                             <div class="actions">

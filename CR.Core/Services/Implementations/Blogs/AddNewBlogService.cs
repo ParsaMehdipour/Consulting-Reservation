@@ -42,6 +42,7 @@ namespace CR.Core.Services.Implementations.Blogs
                     ShowOrder = request.orderNumber,
                     Keywords = request.keyWords,
                     PublishDate = request.publishDate.ToGeorgianDateTime(),
+                    Status = request.status
                 };
 
                 if (request.file != null)
