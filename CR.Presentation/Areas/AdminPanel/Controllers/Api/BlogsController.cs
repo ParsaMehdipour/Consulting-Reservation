@@ -1,4 +1,5 @@
-﻿using CR.Core.DTOs.RequestDTOs.Blogs;
+﻿using CR.Common.Utilities;
+using CR.Core.DTOs.RequestDTOs.Blogs;
 using CR.Core.Services.Interfaces.Blogs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,9 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.Api
         [HttpPost]
         public IActionResult AddNewBlog([FromForm] RequestAddNewBlogDto model)
         {
-            var result = _addNewBlogService.Execute(model);
+            var userId = ClaimUtility.GetUserId(User).Value;
+
+            var result = _addNewBlogService.Execute(model, userId);
 
             return new JsonResult(result);
         }

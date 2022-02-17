@@ -11,10 +11,18 @@ namespace CR.Core.DTOs.Blogs
         [Required(ErrorMessage = "عنوان مقاله را وارد کنید")]
         public string title { get; set; }
 
+        public string authorIconSrc { get; set; }
+
+        public string author { get; set; }
+
+        public string authorDescription { get; set; }
+
         public string slug { get; set; }
 
         [Required(ErrorMessage = "گروه مقاله را وارد کنید")]
         public long blogCategoryId { get; set; }
+
+        public string blogCategoryName { get; set; }
 
         [Required(ErrorMessage = "توضیحات کوتاه را وارد کنید")]
         public string shortDescription { get; set; }

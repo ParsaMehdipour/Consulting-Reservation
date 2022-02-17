@@ -2,9 +2,9 @@
 
 @section Styles
 {
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/datatables/datatables.min.css">
-    <link rel="stylesheet" href="~/assets/css/style.css">
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="~/AdminTemplate/assets/plugins/datatables/datatables.min.css">
+<link rel="stylesheet" href="~/assets/css/style.css">
 }
 
 <!-- Page Header -->
@@ -116,7 +116,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="service-fields mb-3">
                         <div class="row">
                             <div class="col-lg-12">
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="service-fields mb-3">
                         <div class="row">
                             <div class="col-lg-6">
@@ -211,27 +211,27 @@
     }
 
     function EditBlog(Id) {
-        
-        if ($("#addNewBlogForm").valid()) {
+
+        if ($("#editBlogForm").valid()) {
 
             var blogCategorySelect = document.getElementById('blogCategoryId');
 
             var data = new FormData();
 
-            data.append("title",$("#addNewBlogForm #title").val());
+            data.append("title",$("#editBlogForm #title").val());
             data.append("id",Id);
-            data.append("slug",$("#addNewBlogForm #slug").val());
+            data.append("slug",$("#editBlogForm #slug").val());
             data.append("blogCategoryId",blogCategorySelect.options[blogCategorySelect.selectedIndex].value);
-            data.append("shortDescription",$("#addNewBlogForm #shortDescription").val());
+            data.append("shortDescription",$("#editBlogForm #shortDescription").val());
             data.append("description",CKEDITOR.instances.description.getData());
-            data.append("shortDescription",$("#addNewBlogForm #shortDescription").val());
-            data.append("orderNumber",$("#addNewBlogForm #orderNumber").val());
-            data.append("keyWords",$("#addNewBlogForm #keyWords").val());
-            data.append("status",$("#addNewBlogForm #status").is(":checked"));
-            data.append("metaDescription",$("#addNewBlogForm #metaDescription").val());
-            data.append("publishDate",$("#addNewBlogForm #publishDate").val());
-            data.append("canonicalAddress",$("#addNewBlogForm #canonicalAddress").val());
-            data.append("file",$("#addNewBlogForm #fileImage").get(0).files[0]);
+            data.append("shortDescription",$("#editBlogForm #shortDescription").val());
+            data.append("orderNumber",$("#editBlogForm #orderNumber").val());
+            data.append("keyWords",$("#editBlogForm #keyWords").val());
+            data.append("status",$("#editBlogForm #status").is(":checked"));
+            data.append("metaDescription",$("#editBlogForm #metaDescription").val());
+            data.append("publishDate",$("#editBlogForm #publishDate").val());
+            data.append("canonicalAddress",$("#editBlogForm #canonicalAddress").val());
+            data.append("file",$("#editBlogForm #fileImage").get(0).files[0]);
 
             $( "#editBlogForm" ).submit(function( event ) {
                 $.ajax({

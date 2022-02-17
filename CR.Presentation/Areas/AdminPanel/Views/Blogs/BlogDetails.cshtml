@@ -1,21 +1,15 @@
-﻿@model CR.Core.DTOs.Blogs.BlogDetailsForAdminDto
-
-@section Styles
-{
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/datatables/datatables.min.css">
-    <link rel="stylesheet" href="~/assets/css/style.css">
-}
+﻿@using CR.Common.Convertor
+@model CR.Core.DTOs.Blogs.BlogDetailsForAdminDto
 
 <!-- Page Header -->
 <div class="page-header">
     <div class="row">
         <div class="col-sm-12">
-            <h3 class="page-title">افزودن بلاگ</h3>
+            <h3 class="page-title">‌جزییات بلاگ</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">داشبورد</a></li>
+                <li class="breadcrumb-item"><a href="index.html">دشبرد</a></li>
                 <li class="breadcrumb-item"><a href="javascript:(0);">صفحات</a></li>
-                <li class="breadcrumb-item active">ویرایش مقاله</li>
+                <li class="breadcrumb-item active">‌جزییات بلاگ</li>
             </ul>
         </div>
     </div>
@@ -24,247 +18,172 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="card">
-            <div class="card-body custom-edit-service">
 
-                <!-- Add Blog -->
-                <form id="editBlogForm">
-                    <div class="service-fields mb-3">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="change-avatar">
-                                        <div class="profile-img">
-                                            <img src="~/@Model.pictureSrc" alt="User Image">
+
+        <!-- Blog Details-->
+        <div class="blog-view">
+            <div class="blog blog-single-post">
+                <div class="blog-image">
+                    <a href="javascript:void(0);"><img alt="" src="~/@Model.pictureSrc" class="img-fluid"></a>
+                </div>
+                <h3 class="blog-title">@Model.title</h3>
+                <div class="blog-info clearfix">
+                    <div class="post-left">
+                        <ul>
+                            <li>
+                                <div class="post-author">
+                                    <a href="#"><img src="~/@Model.authorIconSrc" alt="Post Author"> <span>@Model.author</span></a>
+                                </div>
+                            </li>
+                            <li><i class="far fa-calendar"></i>@Model.publishDate.ToShamsi()</li>
+                            <li><i class="far fa-comments"></i>12 نظر</li>
+                            <li><i class="fa fa-tags"></i>@Model.blogCategoryName</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="blog-content">
+                    @Html.Raw(@Model.description)
+                </div>
+            </div>
+
+            <div class="card author-widget clearfix">
+                <div class="card-header">
+                    <h4 class="card-title">درباره نویسنده</h4>
+                </div>
+                <div class="card-body">
+                    <div class="about-author">
+                        <div class="about-author-img">
+                            <div class="author-img-wrap">
+                                <a href="#"><img class="img-fluid rounded-circle" alt="" src="~/@Model.authorIconSrc"></a>
+                            </div>
+                        </div>
+                        <div class="author-details">
+                            <a href="doctor-profile.html" class="blog-author-name">@Model.author</a>
+                            <p class="mb-0">@Model.authorDescription</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card blog-comments clearfix">
+                <div class="card-header">
+                    <h4 class="card-title">نظر (12)</h4>
+                </div>
+                <div class="card-body pb-0">
+                    <ul class="comments-list">
+                        <li>
+                            <div class="comment">
+                                <div class="comment-author">
+                                    <img class="avatar" alt="" src="assets/img/patients/patient4.jpg">
+                                </div>
+                                <div class="comment-block">
+                                    <span class="comment-by">
+                                        <span class="blog-author-name">میچل فایرفکس</span>
+                                    </span>
+                                    <p>برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
+                                    <p class="blog-date">6 مهر 1399</p>
+                                    <a class="comment-btn" href="#">
+                                        <i class="fas fa-reply"></i> پاسخ
+                                    </a>
+                                </div>
+                            </div>
+                            <ul class="comments-list reply">
+                                <li>
+                                    <div class="comment">
+                                        <div class="comment-author">
+                                            <img class="avatar" alt="" src="assets/img/patients/patient5.jpg">
                                         </div>
-                                        <div class="upload-img">
-                                            <div class="change-photo-btn">
-                                                <span><i class="fa fa-upload"></i> بارگذاری تصویر </span>
-                                                <input type="file" class="upload" id="fileImage">
-                                            </div>
-                                            <small class="form-text text-muted">JPG ، GIF یا PNG مجاز است. حداکثر اندازه 2 مگابایت</small>
+                                        <div class="comment-block">
+                                            <span class="comment-by">
+                                                <span class="blog-author-name">جینا مور</span>
+                                            </span>
+                                            <p>تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+                                            <p class="blog-date">6 مهر 1399</p>
+                                            <a class="comment-btn" href="#">
+                                                <i class="fas fa-reply"></i> پاسخ
+                                            </a>
                                         </div>
                                     </div>
+                                </li>
+                                <li>
+                                    <div class="comment">
+                                        <div class="comment-author">
+                                            <img class="avatar" alt="" src="assets/img/patients/patient3.jpg">
+                                        </div>
+                                        <div class="comment-block">
+                                            <span class="comment-by">
+                                                <span class="blog-author-name">کارل کلی</span>
+                                            </span>
+                                            <p>تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+                                            <p class="blog-date">7 مهر 1399</p>
+                                            <a class="comment-btn" href="#">
+                                                <i class="fas fa-reply"></i> پاسخ
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="comment">
+                                <div class="comment-author">
+                                    <img class="avatar" alt="" src="assets/img/patients/patient6.jpg">
+                                </div>
+                                <div class="comment-block">
+                                    <span class="comment-by">
+                                        <span class="blog-author-name">ایلس گیلی</span>
+                                    </span>
+                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </p>
+                                    <p class="blog-date">11 مهر 1399</p>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>عنوان مقاله <span class="text-danger">*</span></label>
-                                    <input onchange="makeSlug('title', 'slug')" class="form-control" type="text" asp-for="title" id="title" name="title">
-                                    <span asp-validation-for="title" class="text-danger"></span>
-
+                        </li>
+                        <li>
+                            <div class="comment">
+                                <div class="comment-author">
+                                    <img class="avatar" alt="" src="assets/img/patients/patient7.jpg">
+                                </div>
+                                <div class="comment-block">
+                                    <span class="comment-by">
+                                        <span class="blog-author-name">جوان گاردنر</span>
+                                    </span>
+                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </p>
+                                    <p class="blog-date">13 مهر 1399</p>
+                                    <a class="comment-btn" href="#">
+                                        <i class="fas fa-reply"></i> پاسخ
+                                    </a>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Slug<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" asp-for="slug" id="slug" name="slug" readonly="readonly">
-                                    <span asp-validation-for="slug" class="text-danger"></span>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>ترتیب نمایش <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="number" asp-for="orderNumber" id="orderNumber" name="orderNumber">
-                                    <span asp-validation-for="orderNumber" class="text-danger"></span>
-
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>وضعیت نمایش<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="checkbox" asp-for="status" id="status" name="status">
-                                    <span asp-validation-for="status" class="text-danger"></span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="service-fields mb-3">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>تاریخ انتشار <span class="text-danger">*</span></label>
-                                    <input class="form-control datetimepicker" type="text" asp-for="publishDate" id="publishDate" name="publishDate">
-                                    <span asp-validation-for="publishDate" class="text-danger"></span>
-
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>دسته بندی<span class="text-danger">*</span></label>
-                                    <select class="form-control" asp-items="ViewBag.Categories" asp-for="blogCategoryId" id="blogCategoryId" name="blogCategoryId">
-                                        <option>انتخاب کنید</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="service-fields mb-3">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>توضیحات کوتاه<span class="text-danger">*</span></label>
-                                    <textarea asp-for="shortDescription" class="form-control service-desc" id="shortDescription" name="shortDescription"></textarea>
-                                    <span asp-validation-for="shortDescription" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="service-fields mb-3">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>توضیحات متا<span class="text-danger">*</span></label>
-                                    <textarea asp-for="metaDescription" class="form-control service-desc" id="metaDescription" name="metaDescription"></textarea>
-                                    <span asp-validation-for="metaDescription" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="service-fields mb-3">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>متن<span class="text-danger">*</span></label>
-                                    <textarea asp-for="description" class="form-control service-desc" id="description" name="description"></textarea>
-                                    <span asp-validation-for="description" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="service-fields mb-3">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>کلمات کلیدی<span class="text-danger">*</span></label>
-                                    <input type="text" data-role="tagsinput" class="input-tags form-control" asp-for="keyWords" id="keyWords" name="keyWords">
-                                    <small class="form-text text-muted">توجه: برای افزودن کلمات های جدید ، اینتر را فشار داده و وارد کنید</small>
-                                </div>
-                                <div class="form-group">
-                                    <label>Canonical Address<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" asp-for="canonicalAddress" id="canonicalAddress" name="canonicalAddress">
-                                    <span asp-validation-for="canonicalAddress" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="submit-section">
-                        <button onclick="EditBlog(@Model.id)" class="btn btn-warning submit-btn" type="submit" value="submit">ویرایش</button>
-                    </div>
-                </form>
-                <!-- /Add Blog -->
-
+                        </li>
+                    </ul>
+                </div>
             </div>
+
+            <div class="card new-comment clearfix">
+                <div class="card-header">
+                    <h4 class="card-title">ارسال نظر</h4>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label>نام <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label> ایمیل <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label> نظر </label>
+                            <textarea rows="4" class="form-control"></textarea>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn" type="submit"> ارسال</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
+        <!-- /Blog Details-->
     </div>
 </div>
-
-@section Scripts
-{
-
-<script src="~/assets/js/ckeditor/ckeditor.js"></script>
-
-<script>
-
-    $(document).ready(function () {
-        CKEDITOR.replace('description');
-    });
-
-    function makeSlug(source, dist) {
-        var value = $('#' + source).val();
-        $('#' + dist).val(convertToSlug(value));
-    }
-
-    var convertToSlug = function (str) {
-        var $slug = '';
-        var trimmed = $.trim(str);
-        $slug = trimmed.replace(/[^a-z0-9-آ-ی-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-        return $slug.toLowerCase();
-    };
-
-    function checkSlugDuplication(url, dist) {
-        var slug = $('#' + dist).val();
-        var id = convertToSlug(slug);
-        $.get({
-            url: url + '/' + id,
-            success: function (data) {
-                if (data) {
-                    sendNotification('error', 'top right', "خطا", "اسلاگ نمی تواند تکراری باشد");
-                }
-            }
-        });
-    }
-
-    function fillField(source, dist) {
-        var value = $('#' + source).val();
-        $('#' + dist).val(value);
-    }
-
-    function EditBlog(Id) {
-        
-        if ($("#editBlogForm").valid()) {
-
-            var blogCategorySelect = document.getElementById('blogCategoryId');
-
-            var data = new FormData();
-
-            data.append("title",$("#editBlogForm #title").val());
-            data.append("id",Id);
-            data.append("slug",$("#editBlogForm #slug").val());
-            data.append("blogCategoryId",blogCategorySelect.options[blogCategorySelect.selectedIndex].value);
-            data.append("shortDescription",$("#editBlogForm #shortDescription").val());
-            data.append("description",CKEDITOR.instances.description.getData());
-            data.append("shortDescription",$("#editBlogForm #shortDescription").val());
-            data.append("orderNumber",$("#editBlogForm #orderNumber").val());
-            data.append("keyWords",$("#editBlogForm #keyWords").val());
-            data.append("status",$("#editBlogForm #status").is(":checked"));
-            data.append("metaDescription",$("#editBlogForm #metaDescription").val());
-            data.append("publishDate",$("#editBlogForm #publishDate").val());
-            data.append("canonicalAddress",$("#editBlogForm #canonicalAddress").val());
-            data.append("file",$("#editBlogForm #fileImage").get(0).files[0]);
-
-            $( "#editBlogForm" ).submit(function( event ) {
-                $.ajax({
-                    type: "POST",
-                    url: '/api/Blogs/EditBlogDetails',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    beforeSend: function(x) {
-                        $('#loading').show();
-                    },
-                    success: function(data) {
-                        if (data.isSuccess === true) {
-                            swal.fire('موفق!',
-                                data.message,
-                                'success').then(function(isConfirm) {
-                                location.reload();
-                            });
-                        }
-                    },
-                    complete: function() {
-                        $('#loading').hide();
-                    },
-                    fail: function() {
-                        $('#loading').hide();
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
-                    }
-                });
-                event.preventDefault();
-            });
-        }
-    }
-</script>
-}

@@ -2,6 +2,8 @@
 using CR.Core.DTOs.Blogs;
 using CR.Core.Services.Interfaces.Blogs;
 using CR.DataAccess.Context;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Blogs
 {
@@ -31,8 +33,12 @@ namespace CR.Core.Services.Implementations.Blogs
             var blogDetailsForAdminPanel = new BlogDetailsForAdminDto
             {
                 id = blogDetails.Id,
+                author = GetAuthorName(blogDetails.UserId),
+                authorIconSrc = GetAuthorIconSrc(blogDetails.UserId),
+                authorDescription = GetAuthorDescription(blogDetails.UserId),
                 title = blogDetails.Title,
                 blogCategoryId = blogDetails.BlogCategoryId,
+                blogCategoryName = GetBlogCategoryName(blogDetails.BlogCategoryId),
                 canonicalAddress = blogDetails.CanonicalAddress,
                 description = blogDetails.Description,
                 keyWords = blogDetails.Keywords,
@@ -50,6 +56,38 @@ namespace CR.Core.Services.Implementations.Blogs
                 IsSuccess = true,
             };
 
+        }
+
+        private string GetAuthorName(long id)
+        {
+            var user = _context.Users.Find(id);
+
+            if (user != null)
+                return user.FirstName + " " + user.LastName;
+            return "سامانه چاله چوله";
+        }
+
+        private string GetAuthorIconSrc(long id)
+        {
+            var user = _context.Users.Find(id);
+
+            if (user != null)
+                return user.IconSrc;
+            return "assets/img/favicon-32x32.png";
+        }
+
+        private string GetBlogCategoryName(long blogCategoryId)
+        {
+            return _context.BlogCategories.Find(blogCategoryId).Name;
+        }
+
+        private string GetAuthorDescription(long id)
+        {
+            var user = _context.Users.Include(_ => _.ExpertInformation).FirstOrDefault(_ => _.Id == id);
+
+            if (user != null)
+                return user.ExpertInformation.Bio;
+            return "سامانه یکپارچه چاله چوله";
         }
     }
 }

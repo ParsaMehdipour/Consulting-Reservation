@@ -38,11 +38,18 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
             return View();
         }
 
-        public IActionResult BlogDetails(long id)
+        public IActionResult EditBlogDetails(long id)
         {
             var model = _getBlogDetailsForAdminPanelService.Execute(id).Data;
 
             ViewBag.Categories = new SelectList(_getBlogCategoriesForDropdownService.Execute(), "Id", "Name");
+
+            return View(model);
+        }
+
+        public IActionResult BlogDetails(long id)
+        {
+            var model = _getBlogDetailsForAdminPanelService.Execute(id).Data;
 
             return View(model);
         }
