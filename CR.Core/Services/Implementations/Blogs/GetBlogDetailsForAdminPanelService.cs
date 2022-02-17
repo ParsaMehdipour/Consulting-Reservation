@@ -30,13 +30,15 @@ namespace CR.Core.Services.Implementations.Blogs
 
             var blogDetailsForAdminPanel = new BlogDetailsForAdminDto
             {
+                id = blogDetails.Id,
+                title = blogDetails.Title,
                 blogCategoryId = blogDetails.BlogCategoryId,
                 canonicalAddress = blogDetails.CanonicalAddress,
                 description = blogDetails.Description,
                 keyWords = blogDetails.Keywords,
                 metaDescription = blogDetails.MetaDescription,
                 orderNumber = blogDetails.ShowOrder,
-                pictureSrc = blogDetails.PictureSrc,
+                pictureSrc = blogDetails.PictureSrc ?? "assets/img/upload-icon-flat-vector-download-260nw-1378175036.jpg",
                 publishDate = blogDetails.PublishDate,
                 shortDescription = blogDetails.ShortDescription,
                 slug = blogDetails.Slug,

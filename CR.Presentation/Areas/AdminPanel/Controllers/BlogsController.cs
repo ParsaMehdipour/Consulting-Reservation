@@ -1,4 +1,5 @@
-﻿using CR.Core.Services.Interfaces.Blogs;
+﻿using CR.Core.Services.Interfaces.BlogCategories;
+using CR.Core.Services.Interfaces.Blogs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,12 +12,15 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
     {
         private readonly IGetBlogsForAdminPanelService _getBlogsForAdminPanelService;
         private readonly IGetBlogCategoriesForDropdownService _getBlogCategoriesForDropdownService;
+        private readonly IGetBlogDetailsForAdminPanelService _getBlogDetailsForAdminPanelService;
 
         public BlogsController(IGetBlogsForAdminPanelService getBlogsForAdminPanelService
-        , IGetBlogCategoriesForDropdownService getBlogCategoriesForDropdownService)
+        , IGetBlogCategoriesForDropdownService getBlogCategoriesForDropdownService
+        , IGetBlogDetailsForAdminPanelService getBlogDetailsForAdminPanelService)
         {
             _getBlogsForAdminPanelService = getBlogsForAdminPanelService;
             _getBlogCategoriesForDropdownService = getBlogCategoriesForDropdownService;
+            _getBlogDetailsForAdminPanelService = getBlogDetailsForAdminPanelService;
         }
 
         public IActionResult Index(int page = 1, int pageSize = 20)
@@ -32,6 +36,15 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
             ViewBag.Categories = new SelectList(_getBlogCategoriesForDropdownService.Execute(), "Id", "Name");
 
             return View();
+        }
+
+        public IActionResult BlogDetails(long id)
+        {
+            var model = _getBlogDetailsForAdminPanelService.Execute(id).Data;
+
+            ViewBag.Categories = new SelectList(_getBlogCategoriesForDropdownService.Execute(), "Id", "Name");
+
+            return View(model);
         }
     }
 }
