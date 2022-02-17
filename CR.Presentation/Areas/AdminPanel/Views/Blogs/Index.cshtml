@@ -60,7 +60,7 @@
 
                                         <td class="text-right">
                                             <div class="actions">
-                                                <a class="btn btn-sm bg-success-light" asp-controller="Blogs" asp-action="Details" asp-route-id="@blog.Id">
+                                                <a class="btn btn-sm bg-success-light" asp-controller="Blogs" asp-action="BlogDetails" asp-route-id="@blog.Id">
                                                     <i class="fe fe-pencil"></i> ویرایش
                                                 </a>
                                                 <a onclick="Delete(@blog.Id)" class="btn btn-sm bg-danger-light">
@@ -79,3 +79,55 @@
     </div>
 </div>
 
+@section Scripts
+{
+    <script>
+        function Delete(Id) {
+            swal.fire({
+                title: 'حذف مقاله',
+                text: "مدیریت گرامی از حذف مقاله مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'تایید',
+                cancelButtonText: 'انصراف'
+            }).then((result) => {
+                if (result.value) {
+                    var data = {};
+                    data["id"] = Number(Id);
+                    $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: "POST",
+                        enctype: 'application/json',
+                        url: '/api/Blogs/RemoveBlog',
+                        data: JSON.stringify(data),
+                        success: function(data) {
+                            if (data.isSuccess === true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function(isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+                }
+            });
+        }
+    </script>
+}
