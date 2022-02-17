@@ -1,18 +1,20 @@
-using CR.Core.Services.Impl.Appointment;
-using CR.Core.Services.Impl.Blogs;
-using CR.Core.Services.Impl.CommissionAndDiscounts;
-using CR.Core.Services.Impl.Consumers;
-using CR.Core.Services.Impl.ExpertAvailabilities;
-using CR.Core.Services.Impl.ExpertImages;
-using CR.Core.Services.Impl.Experts;
-using CR.Core.Services.Impl.Factors;
-using CR.Core.Services.Impl.FinancialTransactions;
-using CR.Core.Services.Impl.Images;
-using CR.Core.Services.Impl.Specialites;
-using CR.Core.Services.Impl.Statistics;
-using CR.Core.Services.Impl.Timings;
-using CR.Core.Services.Impl.Users;
+using CR.Core.Services.Implementations.Appointment;
+using CR.Core.Services.Implementations.BlogCategories;
+using CR.Core.Services.Implementations.Blogs;
+using CR.Core.Services.Implementations.CommissionAndDiscounts;
+using CR.Core.Services.Implementations.Consumers;
+using CR.Core.Services.Implementations.ExpertAvailabilities;
+using CR.Core.Services.Implementations.ExpertImages;
+using CR.Core.Services.Implementations.Experts;
+using CR.Core.Services.Implementations.Factors;
+using CR.Core.Services.Implementations.FinancialTransactions;
+using CR.Core.Services.Implementations.Images;
+using CR.Core.Services.Implementations.Specialites;
+using CR.Core.Services.Implementations.Statistics;
+using CR.Core.Services.Implementations.Timings;
+using CR.Core.Services.Implementations.Users;
 using CR.Core.Services.Interfaces.Appointment;
+using CR.Core.Services.Interfaces.BlogCategories;
 using CR.Core.Services.Interfaces.Blogs;
 using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.Consumers;
@@ -201,6 +203,9 @@ namespace CR.Presentation
             //Blogs
             services.AddScoped<IGetBlogsForAdminPanelService, GetBlogsForAdminPanelService>();
             services.AddScoped<IAddNewBlogService, AddNewBlogService>();
+            services.AddScoped<IDeleteBlogService, DeleteBlogService>();
+            services.AddScoped<IGetBlogDetailsForAdminPanelService, GetBlogDetailsForAdminPanelService>();
+            services.AddScoped<IEditBlogFromAdminService, EditBlogFromAdminService>();
             //FinancialTransactions
             services.AddScoped<IGetFinancialTransactionsForAdminService, GetFinancialTransactionsForAdminService>();
             services.AddScoped<IGetConsumerFinancialTransactionsService, GetConsumerFinancialTransactionsService>();
