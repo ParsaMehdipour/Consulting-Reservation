@@ -1,5 +1,4 @@
-﻿using System;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs.Blogs;
@@ -7,6 +6,7 @@ using CR.Core.Services.Interfaces.Blogs;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.Blogs;
+using System;
 
 namespace CR.Core.Services.Implementations.Blogs
 {
@@ -22,7 +22,7 @@ namespace CR.Core.Services.Implementations.Blogs
             _imageUploaderService = imageUploaderService;
         }
 
-        public ResultDto Execute(RequestAddNewBlogDto request)
+        public ResultDto Execute(RequestAddNewBlogDto request, long userId)
         {
             using var transaction = _context.Database.BeginTransaction();
 
@@ -31,6 +31,7 @@ namespace CR.Core.Services.Implementations.Blogs
                 var blog = new Blog()
                 {
                     Title = request.title,
+                    UserId = userId,
                     Slug = request.slug,
                     ShortDescription = request.shortDescription,
                     BlogCategory = GetBlogCategory(request.blogCategoryId),
