@@ -36,7 +36,7 @@ namespace CR.Core.DTOs.Consumers
         [Required(ErrorMessage = "آدرس مراجعه کننده را وارد کنید")]
         public string specificAddress { get; set; }
 
-        [Required(ErrorMessage = "کدپستی مراجعه کننده را وارد کنید")]
-        public string postalCode { get; set; }
+        [Required(ErrorMessage = "میزان تحصیلات مراجعه کننده را وارد کنید")]
+        public string degree { get; set; }
     }
 }

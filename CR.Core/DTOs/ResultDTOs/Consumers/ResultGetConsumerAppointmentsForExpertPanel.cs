@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using CR.Core.DTOs.Appointments;
+﻿using CR.Core.DTOs.Appointments;
+using System.Collections.Generic;
 
 namespace CR.Core.DTOs.ResultDTOs.Consumers
 {
@@ -11,7 +11,7 @@ namespace CR.Core.DTOs.ResultDTOs.Consumers
         public string ConsumerIconSrc { get; set; }
         public string ConsumerFullName { get; set; }
         public string Age { get; set; }
-        public string BloodType { get; set; }
+        public string Degree { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
         public string Gender { get; set; }

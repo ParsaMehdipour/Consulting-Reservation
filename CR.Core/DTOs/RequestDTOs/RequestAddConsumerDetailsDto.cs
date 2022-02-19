@@ -1,5 +1,4 @@
-﻿using System;
-using CR.DataAccess.Enums;
+﻿using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Http;
 
 namespace CR.Core.DTOs.RequestDTOs
@@ -20,7 +19,7 @@ namespace CR.Core.DTOs.RequestDTOs
 
         public string city { get; set; }
 
-        public string postalCode { get; set; }
+        public string degree { get; set; }
 
         public string phoneNumber { get; set; }
 

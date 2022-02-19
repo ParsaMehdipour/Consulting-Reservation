@@ -1,6 +1,6 @@
-﻿using System;
-using CR.DataAccess.Enums;
+﻿using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace CR.Core.DTOs.RequestDTOs
 {
@@ -14,7 +14,7 @@ namespace CR.Core.DTOs.RequestDTOs
         public string SpecificAddress { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
-        public string PostalCode { get; set; }
+        public string degree { get; set; }
         public string IconSrc { get; set; }
         public IFormFile IconImage { get; set; }
         public long ConsumerInformationId { get; set; }

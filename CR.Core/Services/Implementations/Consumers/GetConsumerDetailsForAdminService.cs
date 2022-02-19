@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Consumers;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Consumers
 {
@@ -20,7 +20,7 @@ namespace CR.Core.Services.Implementations.Consumers
         public ResultDto<ConsumerDetailsForAdminDto> Execute(long consumerId)
         {
             var consumer = _context.Users
-                .Where(u=>u.UserFlag == UserFlag.Consumer)
+                .Where(u => u.UserFlag == UserFlag.Consumer)
                 .FirstOrDefault(u => u.Id == consumerId);
 
             if (consumer == null)
@@ -61,7 +61,7 @@ namespace CR.Core.Services.Implementations.Consumers
                     phoneNumber = consumer.PhoneNumber.GetPersianNumber() ?? consumer.UserName,
                     email = consumer.Email,
                     specificAddress = consumerInformation.SpecificAddress,
-                    postalCode = consumerInformation.PostalCode.GetPersianNumber(),
+                    degree = consumerInformation.Degree.GetPersianNumber(),
                     iconSrc = consumerInformation.IconSrc ?? "assets/img/icon-256x256.png"
                 },
                 IsSuccess = true

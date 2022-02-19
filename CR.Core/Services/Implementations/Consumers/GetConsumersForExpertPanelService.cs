@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Consumers;
@@ -7,6 +6,7 @@ using CR.Core.DTOs.ResultDTOs.Consumers;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Consumers
 {
@@ -19,7 +19,7 @@ namespace CR.Core.Services.Implementations.Consumers
             _context = context;
         }
 
-        public ResultDto<ResultGetConsumersForExpertPanelDto> Execute(long expertId,int Page = 1, int PageSize = 20)
+        public ResultDto<ResultGetConsumersForExpertPanelDto> Execute(long expertId, int Page = 1, int PageSize = 20)
         {
 
             int rowCount = 0;
@@ -38,9 +38,10 @@ namespace CR.Core.Services.Implementations.Consumers
                     Gender = a.ConsumerInformation.Gender.GetDisplayName(),
                     IconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     Id = a.ConsumerInformation.ConsumerId,
-                    PhoneNumber = a.ConsumerInformation.Consumer.PhoneNumber.GetPersianNumber()
+                    PhoneNumber = a.ConsumerInformation.Consumer.PhoneNumber.GetPersianNumber(),
+                    Degree = a.ConsumerInformation.Degree
 
-                }).OrderByDescending(a=>a.Id).Distinct()
+                }).OrderByDescending(a => a.Id).Distinct()
                 .AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)
                 .ToList();

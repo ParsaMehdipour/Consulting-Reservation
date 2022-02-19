@@ -1,7 +1,9 @@
-﻿using CR.DataAccess.Entities.IndividualInformations;
+﻿using CR.DataAccess.Entities.Favorites;
+using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace CR.DataAccess.Entities.Users
 {
@@ -28,6 +30,8 @@ namespace CR.DataAccess.Entities.Users
         public virtual ConsumerInfromation ConsumerInfromation { get; set; }
 
         public virtual ExpertInformation ExpertInformation { get; set; }
+
+        public ICollection<Favorite> Favorites { get; set; }
 
         #endregion
 

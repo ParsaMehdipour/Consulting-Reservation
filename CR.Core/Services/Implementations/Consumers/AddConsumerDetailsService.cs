@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs;
@@ -9,6 +7,8 @@ using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Consumers
 {
@@ -50,7 +50,7 @@ namespace CR.Core.Services.Implementations.Consumers
                     Province = request.province,
                     City = request.city,
                     SpecificAddress = request.specificAddress,
-                    PostalCode = request.postalCode,
+                    Degree = request.degree,
                     ConsumerId = request.consumerId,
                     Consumer = consumer,
                 };

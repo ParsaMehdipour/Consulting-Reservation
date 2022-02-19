@@ -18,7 +18,7 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public string SpecificAddress { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
-        public string PostalCode { get; set; }
+        public string Degree { get; set; }
         public string IconSrc { get; set; }
 
 

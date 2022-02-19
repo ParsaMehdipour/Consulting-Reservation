@@ -4,6 +4,7 @@ using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertAvailabilities;
 using CR.DataAccess.Entities.ExpertInformations;
 using CR.DataAccess.Entities.Factors;
+using CR.DataAccess.Entities.Favorites;
 using CR.DataAccess.Entities.Specialties;
 using CR.DataAccess.Entities.Users;
 using CR.DataAccess.Enums;
@@ -61,6 +62,7 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public List<ExpertStudy> ExpertStudies { get; set; }
         public List<ExpertPrize> ExpertPrizes { get; set; }
         public List<ExpertSubscription> ExpertSubscriptions { get; set; }
+        public ICollection<Favorite> Favorites { get; set; }
 
         #endregion
 

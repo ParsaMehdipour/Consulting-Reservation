@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Consumers;
 using CR.Core.DTOs.ResultDTOs.Consumers;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Consumers
 {
@@ -19,7 +19,7 @@ namespace CR.Core.Services.Implementations.Consumers
 
         public ResultDto<ResultGetConsumerDetailsForSiteDto> Execute(long consumerId)
         {
-            var consumer = _context.Users.FirstOrDefault(p=>p.Id == consumerId);
+            var consumer = _context.Users.FirstOrDefault(p => p.Id == consumerId);
 
             var consumerInformationId = consumer.ConsumerInformationId;
 
@@ -46,7 +46,7 @@ namespace CR.Core.Services.Implementations.Consumers
                     province = consumerInformation.Province,
                     city = consumerInformation.City,
                     specificAddress = consumerInformation.SpecificAddress,
-                    postalCode = consumerInformation.PostalCode.GetPersianNumber(),
+                    degree = consumerInformation.Degree,
                     phoneNumber = consumer.PhoneNumber.GetPersianNumber(),
                     email = consumer.Email,
                     birthDate = consumerInformation.BirthDate,

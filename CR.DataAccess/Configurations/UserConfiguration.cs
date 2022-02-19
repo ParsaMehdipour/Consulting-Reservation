@@ -16,6 +16,10 @@ namespace CR.DataAccess.Configurations
                 .WithOne(p => p.Expert)
                 .HasForeignKey<User>(p => p.ExpertInformationId);
 
+            builder.HasMany(p => p.Favorites)
+                .WithOne(p => p.User)
+                .HasForeignKey(p => p.UserId);
+
         }
     }
 }

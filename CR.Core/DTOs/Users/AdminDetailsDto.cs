@@ -32,8 +32,8 @@ namespace CR.Core.DTOs.Users
         [Required(ErrorMessage = "آدرس خود را وارد کنید")]
         public string specificAddress { get; set; }
 
-        [Required(ErrorMessage = "کدپستی خود را وارد کنید")]
-        public string postalCode { get; set; }
+        [Required(ErrorMessage = "میزان تحصیلات خود را وارد کنید")]
+        public string degree { get; set; }
 
         [Required(ErrorMessage = "رمزعبور جدید را وارد کنید")]
         [DataType(DataType.Password)]
