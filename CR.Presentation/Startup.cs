@@ -7,6 +7,7 @@ using CR.Core.Services.Implementations.ExpertAvailabilities;
 using CR.Core.Services.Implementations.ExpertImages;
 using CR.Core.Services.Implementations.Experts;
 using CR.Core.Services.Implementations.Factors;
+using CR.Core.Services.Implementations.Favorites;
 using CR.Core.Services.Implementations.FinancialTransactions;
 using CR.Core.Services.Implementations.Images;
 using CR.Core.Services.Implementations.Specialites;
@@ -22,6 +23,7 @@ using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.ExpertImages;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Factors;
+using CR.Core.Services.Interfaces.Favorites;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.Core.Services.Interfaces.Images;
 using CR.Core.Services.Interfaces.Specialites;
@@ -215,6 +217,10 @@ namespace CR.Presentation
             services.AddScoped<IUpdateFinancialTransactionSaleReferenceIdService, UpdateFinancialTransactionSaleReferenceIdService>();
             services.AddScoped<IUpdateFinancialTransactionCarHolderPANService, UpdateFinancialTransactionCarHolderPAN>();
             services.AddScoped<IUpdateFinancialTransactionStatusService, UpdateFinancialTransactionStatusService>();
+            //Favorites
+            services.AddScoped<IAddNewFavoriteService, AddNewFavoriteService>();
+            services.AddScoped<IGetConsumerFavoritesService, GetConsumerFavoritesService>();
+            services.AddScoped<IRemoveFromFavoritesListService, RemoveFromFavoritesListService>();
 
             #endregion
 
