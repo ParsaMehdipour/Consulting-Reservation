@@ -16,7 +16,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
 
         [Route("/api/Favorites/RemoveFavorite")]
         [HttpPost]
-        public IActionResult RemoveFavorite([FromBody] RequestRemoveFormFavoritesListDto request)
+        public IActionResult RemoveFavorite([FromForm] RequestRemoveFormFavoritesListDto request)
         {
             var result = _removeFromFavoritesListService.Execute(request);
 
