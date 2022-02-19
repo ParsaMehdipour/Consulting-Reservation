@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs;
@@ -8,6 +6,8 @@ using CR.Core.Services.Interfaces.Consumers;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Consumers
 {
@@ -59,7 +59,7 @@ namespace CR.Core.Services.Implementations.Consumers
                 consumerInformation.Province = request.Province;
                 consumerInformation.City = request.City;
                 consumerInformation.SpecificAddress = request.SpecificAddress;
-                consumerInformation.PostalCode = request.PostalCode;
+                consumerInformation.Degree = request.degree;
                 if (request.IconImage != null)
                 {
                     string iconSrc = _imageUploaderService.Execute(new UploadImageDto()

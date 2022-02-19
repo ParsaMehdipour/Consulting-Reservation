@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using CR.DataAccess.Enums;
+﻿using CR.DataAccess.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CR.Core.DTOs.Users
 {
@@ -47,8 +47,8 @@ namespace CR.Core.DTOs.Users
         [Display(Name = "آدرس مراجعه کننده")]
         public string specificAddress { get; set; }
 
-        [Required(ErrorMessage = "کد پستی مراجعه کننده را وارد کنید")]
-        [Display(Name = "کد پستی مراجعه کننده")]
-        public string postalCode { get; set; }
+        [Required(ErrorMessage = "میزان تحصیلات مراجعه کننده را وارد کنید")]
+        [Display(Name = "میزان تحصیلات مراجعه کننده")]
+        public string degree { get; set; }
     }
 }

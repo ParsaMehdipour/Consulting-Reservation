@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Users;
 using CR.Core.Services.Interfaces.Users;
 using CR.DataAccess.Context;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Users
 {
@@ -61,7 +61,7 @@ namespace CR.Core.Services.Implementations.Users
                         phoneNumber = admin.PhoneNumber.GetPersianNumber() ?? admin.UserName,
                         email = admin.Email,
                         specificAddress = expertInformation.SpecificAddress,
-                        postalCode = expertInformation.PostalCode.GetPersianNumber()
+                        degree = expertInformation.PostalCode.GetPersianNumber()
                     },
                     IsSuccess = true
                 };
@@ -97,7 +97,7 @@ namespace CR.Core.Services.Implementations.Users
                         phoneNumber = admin.PhoneNumber ?? admin.UserName,
                         email = admin.Email,
                         specificAddress = consumerInformation.SpecificAddress,
-                        postalCode = consumerInformation.PostalCode
+                        degree = consumerInformation.Degree
                     },
                     IsSuccess = true
                 };

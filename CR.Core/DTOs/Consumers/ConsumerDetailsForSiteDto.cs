@@ -1,7 +1,7 @@
 ﻿using CR.DataAccess.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 
 namespace CR.Core.DTOs.Consumers
 {
@@ -43,8 +43,8 @@ namespace CR.Core.DTOs.Consumers
         [Required(ErrorMessage = "شهر را وارد کنید")]
         public string city { get; set; }
 
-        [Required(ErrorMessage = "کد پستی را وارد کنید")]
-        public string postalCode { get; set; }
+        [Required(ErrorMessage = "میزان تحصیلات را وارد کنید")]
+        public string degree { get; set; }
 
         public string iconSrc { get; set; }
     }

@@ -1,0 +1,129 @@
+﻿@using CR.Common.Utilities
+@model CR.Core.DTOs.ResultDTOs.Favorites.ResultGetConsumerFavoritesDto
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">‌علاقه‌مندیها</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">‌علاقه‌مندیها</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+                <partial name="ConsumerPanelSideBarMenu" />
+            </div>
+            <div class="col-md-7 col-lg-8 col-xl-9">
+                <div class="row row-grid">
+                   @foreach (var favorite in Model.ConsumerFavorites)
+                   {
+                        <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="profile-widget">
+                            <div class="doc-img">
+                                <a href="doctor-profile.html">
+                                    <img class="img-fluid" alt="User Image" src="~/@favorite.IconSrc">
+                                </a>
+                                <a onclick="RemoveFromFavoritesList(@favorite.ExpertInformationId)" href="javascript:void(0)" class="fav-btn" style=" background-color: #fb1612; border-color: #fb1612; color: #fff;">
+                                    <i class="far fa-bookmark"></i>
+                                </a>
+                            </div>
+                            <div class="pro-content">
+                                <h3 class="title">
+                                    <a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@favorite.ExpertInformationId">@favorite.FullName</a>
+                                    <i class="fas fa-check-circle verified"></i>
+                                </h3>
+                                <p class="speciality"> @favorite.Tags </p>
+                                <div class="rating">
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <span class="d-inline-block average-rating">(17)</span>
+                                </div>
+                                <ul class="available-info">
+                                    <li>
+                                        <p class="doc-department"><img src="~/@favorite.SpecialitySrc" class="img-fluid" alt="Speciality">‌@favorite.Speciality</p>
+                                    </li>
+                                </ul>
+                                <div class="row row-sm">
+                                    <div class="col-6">
+                                        <a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@favorite.ExpertInformationId" class="btn view-btn">مشاهده پروفایل</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="#" class="btn book-btn">رزرو کنید</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+<input type="hidden" value="@ClaimUtility.GetUserId(User).Value" id="userId" name="userId"/>
+
+@section Scripts
+{
+    <script src="~/assets/js/ConusmerPanel/Favorites/Favorites.js"></script>
+    <script src="~/assets/js/ConusmerPanel/layout.js"></script>
+    
+    <script>
+        function RemoveFromFavoritesList(Id) {
+
+            var removeFavoriteForm = new FormData();
+
+            removeFavoriteForm.append("expertInformationId",Id);
+            removeFavoriteForm.append("userId",$("#userId").val());
+
+            $.ajax({
+                type: "POST",
+                url: '/api/Favorites/RemoveFavorite',
+                data: removeFavoriteForm,
+                processData: false,
+                contentType: false,
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
+                success: function(data) {
+                    if (data.isSuccess === true) {
+                        swal.fire('موفق!',
+                            data.message,
+                            'success').then(function(isConfirm) {
+                            location.reload();
+                        });
+                    } 
+                    else {
+                        swal.fire('هشدار!',
+                            data.message,
+                            'warning');
+                    }
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        }
+    </script>
+}

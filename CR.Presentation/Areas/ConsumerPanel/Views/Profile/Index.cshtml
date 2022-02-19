@@ -143,9 +143,9 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                        <label>کد پستی</label>
-                                        <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
-                                        <span asp-validation-for="postalCode" class="text-danger"></span>
+                                        <label>میزان تحصیلات</label>
+                                        <input type="text" class="form-control" asp-for="degree" id="degree" name="degree">
+                                        <span asp-validation-for="degree" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
                 addConsumerProfileForm.append("specificAddress", $("#consumerProfileForm #specificAddress").val());
                 addConsumerProfileForm.append("city", $("#consumerProfileForm #city").val());
                 addConsumerProfileForm.append("province", $("#consumerProfileForm #province").val());
-                addConsumerProfileForm.append("postalCode", $("#consumerProfileForm #postalCode").val());
+                addConsumerProfileForm.append("degree", $("#consumerProfileForm #degree").val());
                 addConsumerProfileForm.append("iconImage", $("#consumerProfileForm #iconImage").get(0).files[0]);
                 addConsumerProfileForm.append("gender", genderSelect.options[genderSelect.selectedIndex].value);
 
@@ -253,7 +253,7 @@
                 editConsumerProfileForm.append("specificAddress", $("#consumerProfileForm #specificAddress").val());
                 editConsumerProfileForm.append("city", $("#consumerProfileForm #city").val());
                 editConsumerProfileForm.append("province", $("#consumerProfileForm #province").val());
-                editConsumerProfileForm.append("postalCode", $("#consumerProfileForm #postalCode").val());
+                editConsumerProfileForm.append("degree", $("#consumerProfileForm #degree").val());
                 editConsumerProfileForm.append("consumerInformationId", id);
                 editConsumerProfileForm.append("iconImage", $("#consumerProfileForm #iconImage").get(0).files[0]);
                 editConsumerProfileForm.append("gender", genderSelect.options[genderSelect.selectedIndex].value);

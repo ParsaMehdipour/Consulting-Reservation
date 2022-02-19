@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.Consumers;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Consumers
 {
@@ -51,7 +51,7 @@ namespace CR.Core.Services.Implementations.Consumers
                 consumerInformation.LastName = request.lastName;
                 consumerInformation.Province = request.province;
                 consumerInformation.City = request.city;
-                consumerInformation.PostalCode = request.postalCode;
+                consumerInformation.Degree = request.degree;
                 consumerInformation.SpecificAddress = request.specificAddress;
                 consumerInformation.BirthDate_String = request.birthDate_String;
                 consumerInformation.BirthDate = request.birthDate_String.ToGeorgianDateTime();

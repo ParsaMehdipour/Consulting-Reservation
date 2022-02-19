@@ -4,6 +4,8 @@ using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertAvailabilities;
 using CR.DataAccess.Entities.ExpertInformations;
 using CR.DataAccess.Entities.Factors;
+using CR.DataAccess.Entities.Favorites;
+using CR.DataAccess.Entities.FinancialTransactions;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Entities.Roles;
 using CR.DataAccess.Entities.Specialties;
@@ -12,7 +14,6 @@ using CR.DataAccess.Entities.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using CR.DataAccess.Entities.FinancialTransactions;
 
 namespace CR.DataAccess.Context
 {
@@ -41,6 +42,7 @@ namespace CR.DataAccess.Context
         public DbSet<BlogCategory> BlogCategories { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

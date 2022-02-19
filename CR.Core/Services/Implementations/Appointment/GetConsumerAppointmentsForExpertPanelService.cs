@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Appointments;
@@ -7,6 +6,7 @@ using CR.Core.DTOs.ResultDTOs.Consumers;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Appointment
 {
@@ -62,6 +62,7 @@ namespace CR.Core.Services.Implementations.Appointment
                     Age = consumer.ConsumerInformation.BirthDate.GetAge().ToString().GetPersianNumber(),
                     Province = consumer.ConsumerInformation.Province,
                     City = consumer.ConsumerInformation.City,
+                    Degree = consumer.ConsumerInformation.Degree,
                     Gender = consumer.ConsumerInformation.Gender.GetDisplayName(),
                     PhoneNumber = consumer.ConsumerInformation.Consumer.PhoneNumber.GetPersianNumber(),
                     CurrentPage = Page,

@@ -99,8 +99,8 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label">کدپستی</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" asp-for="postalCode" id="postalCode" name="postalCode">
-                                    <span asp-validation-for="postalCode" class="text-danger"></span>
+                                    <input type="text" class="form-control" asp-for="degree" id="degree" name="degree">
+                                    <span asp-validation-for="degree" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                 formData.append("specificAddress", $("#registerConsumerForm #specificAddress").val());
                 formData.append("province", $("#registerConsumerForm #province").val());
                 formData.append("city", $("#registerConsumerForm #city").val());
-                formData.append("postalCode", $("#registerConsumerForm #postalCode").val());
+                formData.append("degree", $("#registerConsumerForm #degree").val());
                 formData.append("gender", genderSelect.options[genderSelect.selectedIndex].value);
 
                 $("#registerConsumerForm").submit(function(event) {
