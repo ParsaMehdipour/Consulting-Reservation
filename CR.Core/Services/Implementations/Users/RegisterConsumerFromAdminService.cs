@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.Users;
 using CR.Core.Services.Interfaces.Users;
 using CR.DataAccess.Context;
@@ -9,6 +6,9 @@ using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Entities.Users;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CR.Core.Services.Implementations.Users
 {
@@ -18,7 +18,7 @@ namespace CR.Core.Services.Implementations.Users
         private readonly UserManager<User> _userManager;
 
         public RegisterConsumerFromAdminService(ApplicationContext context
-        ,UserManager<User> userManager)
+        , UserManager<User> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -51,7 +51,7 @@ namespace CR.Core.Services.Implementations.Users
                     Province = request.province,
                     City = request.city,
                     SpecificAddress = request.specificAddress,
-                    PostalCode = request.postalCode,
+                    Degree = request.degree,
                     ConsumerId = addedUser.Id,
                     Consumer = addedUser
                 };

@@ -61,10 +61,10 @@
                                                 <table class="table table-hover table-center mb-0">
                                                     <thead>
                                                         <tr>
-                                                            <th>پزشک</th>
+                                                            <th>مشاور</th>
                                                             <th>تاریخ نوبت</th>
                                                             <th> تاریخ رزرو </th>
-                                                            <th>مقدار</th>
+                                                            <th>هزینه مشاوره</th>
                                                             <th> پیگیری </th>
                                                             <th> وضعیت </th>
                                                             <th></th>
@@ -79,7 +79,7 @@
                                                                         <a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@appointment.ExpertInformationId"  class="avatar avatar-sm mr-2">
                                                                             <img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image">
                                                                         </a>
-                                                                        <a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@appointment.ExpertInformationId">متخصص @appointment.ExpertFullName <span>@appointment.Speciality</span></a>
+                                                                        <a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@appointment.ExpertInformationId">@appointment.ExpertFullName <span>@appointment.Speciality</span></a>
                                                                     </h2>
                                                                 </td>
                                                                 <td>@appointment.AppointmentDate <span class="d-block text-info">@appointment.AppointmentTime</span></td>
