@@ -1,12 +1,13 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
+using CR.Common.Utilities;
 using CR.Core.DTOs.Blogs;
 using CR.Core.DTOs.ResultDTOs.Blogs;
 using CR.Core.Services.Interfaces.Blogs;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Blogs
 {
@@ -21,8 +22,6 @@ namespace CR.Core.Services.Implementations.Blogs
 
         public ResultDto<ResultGetBlogsForAdminPanelDto> Execute(int page = 1, int pageSize = 20)
         {
-            int rowCount = 0;
-
             var blogs = _context.Blogs
                 .Include(_ => _.BlogCategory)
                 .AsNoTracking()
@@ -36,7 +35,9 @@ namespace CR.Core.Services.Implementations.Blogs
                     CreateDate = _.CreateDate.ToShamsi(),
                     PublishDate = _.PublishDate.ToShamsi(),
                     Status = _.Status,
-                }).ToList();
+                }).AsEnumerable()
+                .ToPaged(page, pageSize, out var rowCount)
+                .ToList();
 
             return new ResultDto<ResultGetBlogsForAdminPanelDto>()
             {
