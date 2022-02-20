@@ -14,6 +14,9 @@
                 </nav>
                 <h2 class="breadcrumb-title">مقالات</h2>
             </div>
+            <div class="col-md-12 col-12">
+                <a asp-area="ExpertPanel" asp-controller="Blogs" asp-action="AddNewBlog" class="btn btn-primary float-right mt-2">افزودن</a>
+            </div>
         </div>
     </div>
 </div>
@@ -119,6 +122,56 @@
 <!-- /Page Content -->
 @section Scripts
 {
-<script src="~/assets/js/ExpertPanel/Blogs/Blogs.js"></script>
-<script src="~/assets/js/ExpertPanel/layout.js"></script>
+    <script src="~/assets/js/ExpertPanel/Blogs/Blogs.js"></script>
+    <script src="~/assets/js/ExpertPanel/layout.js"></script>
+
+    <script>
+        function Delete(Id) {
+            swal.fire({
+                title: 'حذف مقاله',
+                text: "مدیریت گرامی از حذف مقاله مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'تایید',
+                cancelButtonText: 'انصراف'
+            }).then((result) => {
+                if (result.value) {
+                    var data = {};
+                    data["id"] = Number(Id);
+                    $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: "POST",
+                        enctype: 'application/json',
+                        url: '/api/ExpertBlogs/RemoveBlog',
+                        data: JSON.stringify(data),
+                        success: function(data) {
+                            if (data.isSuccess === true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function(isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+                }
+            });
+        }
+    </script>
 }
