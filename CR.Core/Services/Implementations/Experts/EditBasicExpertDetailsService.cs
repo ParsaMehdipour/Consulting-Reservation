@@ -6,6 +6,7 @@ using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.ExpertInformations;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -134,7 +135,61 @@ namespace CR.Core.Services.Implementations.Experts
                     expert.IconSrc = iconSrc;
                 }
 
-                //if (request.phoneCallPrice != expertInformation.PhoneCallPrice)
+                if (Convert.ToInt32(request.phoneCallPrice) != expertInformation.PhoneCallPrice)
+                {
+                    var notReservedTimeOfDays = _context.TimeOfDays
+                        .Include(_ => _.Day)
+                        .Where(_ =>
+                        _.ExpertInformationId == expertInformation.Id && _.IsReserved == false && _.Day.Date.Day >= DateTime.Now.Day).ToList();
+
+                    foreach (var timeOfDay in notReservedTimeOfDays)
+                    {
+                        if (timeOfDay.TimingType == TimingType.ShortSpan)
+                            timeOfDay.PhoneCallPrice = Convert.ToInt32(request.phoneCallPrice) * 30;
+                        else if (timeOfDay.TimingType == TimingType.MediumSpan)
+                            timeOfDay.PhoneCallPrice = Convert.ToInt32(request.phoneCallPrice) * 60;
+                        else
+                            timeOfDay.PhoneCallPrice = Convert.ToInt32(request.phoneCallPrice) * 90;
+                    }
+                }
+
+                if (Convert.ToInt32(request.voiceCallPrice) != expertInformation.VoiceCallPrice)
+                {
+                    var notReservedTimeOfDays = _context.TimeOfDays
+                        .Include(_ => _.Day)
+                        .Where(_ =>
+                            _.ExpertInformationId == expertInformation.Id && _.IsReserved == false && _.Day.Date.Day >= DateTime.Now.Day).ToList();
+
+                    foreach (var timeOfDay in notReservedTimeOfDays)
+                    {
+                        if (timeOfDay.TimingType == TimingType.ShortSpan)
+                            timeOfDay.VoiceCallPrice = Convert.ToInt32(request.voiceCallPrice) * 30;
+                        else if (timeOfDay.TimingType == TimingType.MediumSpan)
+                            timeOfDay.VoiceCallPrice = Convert.ToInt32(request.voiceCallPrice) * 60;
+                        else
+                            timeOfDay.VoiceCallPrice = Convert.ToInt32(request.voiceCallPrice) * 90;
+                    }
+                }
+
+                if (Convert.ToInt32(request.textCallPrice) != expertInformation.TextCallPrice)
+                {
+                    var notReservedTimeOfDays = _context.TimeOfDays
+                        .Include(_ => _.Day)
+                        .Where(_ =>
+                            _.ExpertInformationId == expertInformation.Id && _.IsReserved == false && _.Day.Date.Day >= DateTime.Now.Day).ToList();
+
+                    foreach (var timeOfDay in notReservedTimeOfDays)
+                    {
+                        if (timeOfDay.TimingType == TimingType.ShortSpan)
+                            timeOfDay.TextCallPrice = Convert.ToInt32(request.textCallPrice) * 30;
+                        else if (timeOfDay.TimingType == TimingType.MediumSpan)
+                            timeOfDay.TextCallPrice = Convert.ToInt32(request.textCallPrice) * 60;
+                        else
+                            timeOfDay.TextCallPrice = Convert.ToInt32(request.textCallPrice) * 90;
+                    }
+                }
+
+                _context.SaveChanges();
 
                 expertInformation.Province = request.province;
                 expertInformation.SpecificAddress = request.specificAddress;

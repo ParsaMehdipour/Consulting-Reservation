@@ -12,7 +12,7 @@
             <div class="col-md-12 col-12">
                 <nav aria-label="breadcrumb" class="page-breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">خانه</a></li>
                         <li class="breadcrumb-item active" aria-current="page">رزرو نوبت</li>
                     </ol>
                 </nav>
@@ -341,9 +341,9 @@
                     body2 += '<li>';
                     if (data[i].timeOfDayDtos.length > 0) {
                         for (let j = 0; j < data[i].timeOfDayDtos.length; j++) {
-                            body2 += '<a class="timing" onclick="SetId(' + data[i].timeOfDayDtos[j].id + ')" id="timeOfDay_' + data[i].timeOfDayDtos[j].id +'" name="timeDay">';
+                            body2 += '<button class="btn btn-block btn-outline timing" onclick="SetId(' + data[i].timeOfDayDtos[j].id + ')" id="timeOfDay_' + data[i].timeOfDayDtos[j].id +'" name="timeDay">';
                             body2 += '<span>' + data[i].timeOfDayDtos[j].start + ' - ' +data[i].timeOfDayDtos[j].finish +'</span>';
-                            body2 += '</a>';
+                            body2 += '</button>';
                         }
                     }else {
                         body2 += '<button type="button" class="btn btn-block btn-outline-danger active">نوبتی وجود ندارد</button>';
@@ -392,22 +392,18 @@
                     body3 += '<label for="phone" class="option phone">';
                     body3 += '<span>تلفنی</span>';
                     body3 += '</label>';
-                    document.getElementById("phoneCallPrice").style.visibility = "visible";
-
                 }
                 if (data.useVoiceCall === true) {
                     body3 += '<input onclick="SetCallingType(1)" type="radio" name="call" id="voice" value="0"/>';
                     body3 += '<label for="voice" class="option voice">';
                     body3 += '<span>صوتی</span>';
                     body3 += '</label>';
-                    document.getElementById("voiceCallPrice").style.visibility = "visible";
                 }
                 if (data.useTextCall === true) {
                     body3 += '<input onclick="SetCallingType(2)" type="radio" name="call" id="text" value="0"/>';
                     body3 += '<label for="text" class="option text">';
                     body3 += '<span>متنی</span>';
                     body3 += '</label>';
-                    document.getElementById("textCallPrice").style.visibility = "visible";
                 }
                 $("#usesWrapper").html(body3);
             },
