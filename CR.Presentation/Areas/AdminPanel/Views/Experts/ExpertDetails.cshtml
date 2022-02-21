@@ -227,8 +227,8 @@
                     {
                         <div class="row custom_price_cont" id="custom_price_cont_phoneCallPrice">
                             <div class="col-md-4">
-                                <input type="text" class="form-control" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
-                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                                <input type="text" class="form-control money2" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
                             </div>
                         </div>
                     }
@@ -236,8 +236,8 @@
                     {
                         <div class="row custom_price_cont" id="custom_price_cont_phoneCallPrice" style="display: none;">
                             <div class="col-md-4">
-                                <input type="text" class="form-control" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
-                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                                <input type="text" class="form-control money2" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
                             </div>
                         </div>
                     }
@@ -273,8 +273,8 @@
                     {
                         <div class="row custom_price_cont" id="voiceCallPrice_Custom">
                             <div class="col-md-4">
-                                <input type="text" class="form-control" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
-                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                                <input type="text" class="form-control money2" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
                             </div>
                         </div>
                     }
@@ -282,8 +282,8 @@
                     {
                         <div class="row custom_price_cont" id="voiceCallPrice_Custom" style="display: none;">
                             <div class="col-md-4">
-                                <input type="text" class="form-control" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
-                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                                <input type="text" class="form-control money2" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
                             </div>
                         </div>
                     }
@@ -319,8 +319,8 @@
                     {
                         <div class="row custom_price_cont" id="textCallPrice_Custom">
                             <div class="col-md-4">
-                                <input type="text" class="form-control" id="custom_rating_input_textCallPrice" name="custom_rating_count_textCallPrice" value="@Model.textCallPrice">
-                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                                <input type="text" class="form-control money2" id="custom_rating_input_textCallPrice" name="custom_rating_count_textCallPrice" value="@Model.textCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
                             </div>
                         </div>
                     }
@@ -328,8 +328,8 @@
                     {
                         <div class="row custom_price_cont" id="textCallPrice_Custom" style="display: none;">
                             <div class="col-md-4">
-                                <input type="text" class="form-control" id="custom_rating_input_textCallPrice" name="custom_rating_count_textCallPrice" value="@Model.textCallPrice">
-                                <small class="form-text text-muted">مبلغ مورد نظر شما(ساعتی به تومان)</small>
+                                <input type="text" class="form-control money2" id="custom_rating_input_textCallPrice" name="custom_rating_count_textCallPrice" value="@Model.textCallPrice">
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
                             </div>
                         </div>
                     }
@@ -702,7 +702,7 @@
 
             if (document.getElementById('price_free_phoneCallPrice').checked) {
                 expertProfileData.append("usePhoneCall", true);
-                expertProfileData.append("phoneCallPrice", $('input[name=custom_rating_count_phoneCallPrice]').val());
+                expertProfileData.append("phoneCallPrice", $('input[name=custom_rating_count_phoneCallPrice]').cleanVal());
 
             }
             else {
@@ -711,7 +711,7 @@
 
             if (document.getElementById('price_free_voiceCallPrice').checked) {
                 expertProfileData.append("useVoiceCall", true);
-                expertProfileData.append("voiceCallPrice", $('input[name=custom_rating_count_voiceCallPrice]').val());
+                expertProfileData.append("voiceCallPrice", $('input[name=custom_rating_count_voiceCallPrice]').cleanVal());
 
             }
             else {
@@ -720,7 +720,7 @@
 
             if (document.getElementById('price_free_textCallPrice').checked) {
                 expertProfileData.append("useTextCall", true);
-                expertProfileData.append("textCallPrice", $('input[name=custom_rating_count_textCallPrice]').val());
+                expertProfileData.append("textCallPrice", $('input[name=custom_rating_count_textCallPrice]').cleanVal());
             }
             else {
                 expertProfileData.append("useTextCall", false);

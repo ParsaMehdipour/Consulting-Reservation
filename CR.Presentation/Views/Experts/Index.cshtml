@@ -147,7 +147,7 @@
                                     </div>
                                     <div class="clinic-booking">
                                         <a class="view-pro-btn" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">مشاهده پروفایل</a>
-                                        @if (@expert.HasTimeOfDays == true)
+                                        @if (@expert.HasTimeOfDays)
                                         {
                                             <a class="apt-btn" asp-controller="Experts" asp-action="Reservation" asp-route-expertInformationId="@expert.expertInformationId">رزرو نوبت</a>
                                         }

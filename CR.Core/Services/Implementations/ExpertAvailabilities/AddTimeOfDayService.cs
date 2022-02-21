@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.ExpertAvailabilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.ExpertAvailabilities
 {
@@ -95,9 +95,9 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
                         StartTime = timing.StartTime,
                         FinishTime = timing.EndTime,
                         TimingType = timing.TimingType,
-                        PhoneCallPrice = (pureMinutes * expertInformation.PhoneCallPrice) / 60,
-                        VoiceCallPrice = (pureMinutes * expertInformation.VoiceCallPrice) / 60,
-                        TextCallPrice = (pureMinutes * expertInformation.TextCallPrice) / 60,
+                        PhoneCallPrice = (pureMinutes * expertInformation.PhoneCallPrice),
+                        VoiceCallPrice = (pureMinutes * expertInformation.VoiceCallPrice),
+                        TextCallPrice = (pureMinutes * expertInformation.TextCallPrice),
                     };
 
                     timeOfDaysList.Add(timeOfDay);
