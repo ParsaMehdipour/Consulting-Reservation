@@ -24,7 +24,7 @@ namespace CR.Core.Services.Implementations.Experts
                 return new ResultDto<ExpertCallUsesDto>()
                 {
                     IsSuccess = false,
-                    Message = "اطلاعات متخصص یافت نشد!!",
+                    Message = "اطلاعات مشاور یافت نشد!!",
                     Data = null
                 };
             }

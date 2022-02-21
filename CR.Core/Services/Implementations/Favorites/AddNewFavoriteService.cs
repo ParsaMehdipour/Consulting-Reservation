@@ -31,7 +31,7 @@ namespace CR.Core.Services.Implementations.Favorites
                     return new ResultDto()
                     {
                         IsSuccess = false,
-                        Message = "متخصص یافت نشد"
+                        Message = "مشاور یافت نشد"
                     };
                 }
 

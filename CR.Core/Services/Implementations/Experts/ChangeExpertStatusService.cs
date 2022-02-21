@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Experts
 {
@@ -15,7 +15,7 @@ namespace CR.Core.Services.Implementations.Experts
             _context = context;
         }
 
-        public ResultDto Execute(long expertId,bool activeStatus)
+        public ResultDto Execute(long expertId, bool activeStatus)
         {
             using var transaction = _context.Database.BeginTransaction();
 
@@ -28,7 +28,7 @@ namespace CR.Core.Services.Implementations.Experts
                     return new ResultDto()
                     {
                         IsSuccess = false,
-                        Message = "پزشک پیدا نشد !!"
+                        Message = "مشاور پیدا نشد !!"
                     };
                 }
 
@@ -41,7 +41,7 @@ namespace CR.Core.Services.Implementations.Experts
                 return new ResultDto()
                 {
                     IsSuccess = true,
-                    Message = "وضعیت پزشک با موفقیت تغیر کرد"
+                    Message = "وضعیت مشاور با موفقیت تغیر کرد"
                 };
             }
             catch (Exception)

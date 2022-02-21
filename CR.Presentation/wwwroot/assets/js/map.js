@@ -10,7 +10,7 @@ var bounds = new google.maps.LatLngBounds();
 var map, current = 0;
 var locations =[{
 	"id":01,
-	"doc_name":"پزشک رابی پرین",
+	"doc_name":"مشاور رابی پرین",
 	"speciality":"MDS - پریودنتولوژی و ایمپلنتولوژی دهان ، BDS",
 	"address":"فلوریدا, آمریکا",
 	"next_available":"موجود از شنبه, 22 مهر",
@@ -37,8 +37,8 @@ var locations =[{
 	"image":'assets/img/user/patient1.jpg'
 	}, {
 	"id":03,
-	"doc_name":"پزشک دبرا آنجل",
-	"speciality":"MBBS، MD - پزشکی عمومی ، DNB - قلب و عروق",
+	"doc_name":"مشاور دبرا آنجل",
+	"speciality":"MBBS، MD - مشاوری عمومی ، DNB - قلب و عروق",
 	"address":"جورجیا, آمریکا",
 	"next_available":"موجود از شنبه, 24 Mar",
 	"amount":"100 تومان - 400 تومان",
@@ -50,7 +50,7 @@ var locations =[{
 	"image":'assets/img/user/patient2.jpg'
 	}, {
 	"id":04,
-	"doc_name":"پزشک سوفیا برنت",
+	"doc_name":"مشاور سوفیا برنت",
 	"speciality":"MBBS، MS - جراحی عمومی ، MCh - اورولوژی",
 	"address":"لوییزینا - آمریکا",
 	"next_available":"موجود در شنبه 25 مهر",
@@ -63,8 +63,8 @@ var locations =[{
 	"image":'assets/img/user/patient3.jpg'
 	}, {
 	"id":05,
-	"doc_name":"پزشک ماروین کمپل",
-	"speciality":"MBBS, MD - چشم پزشکی, DNB - چشم پزشکی",
+	"doc_name":"مشاور ماروین کمپل",
+	"speciality":"MBBS, MD - چشم مشاوری, DNB - چشم مشاوری",
 	"address":"میشیگان, آمریکا",
 	"next_available":"موجود در شنبه 25 مهر",
 	"amount":"100 تومان - 500 تومان",
@@ -76,7 +76,7 @@ var locations =[{
 	"image":'assets/img/user/patient4.jpg'
 	}, {
 	"id":06,
-	"doc_name":"پزشک کاترینا برتفولد",
+	"doc_name":"مشاور کاترینا برتفولد",
 	"speciality":"MS - ارتوپدی, MBBS, M.Ch - ارتوپدی",
 	"address":"تگزاس, آمریکا",
 	"next_available":"موجود در شنبه 25 مهر",
@@ -89,8 +89,8 @@ var locations =[{
 	"image":'assets/img/user/patient5.jpg'
 	}, {
 	"id":07,
-	"doc_name":"پزشک لیندا توبین",
-	"speciality":"MBBS، MD - پزشکی عمومی ، DM - عصب شناسی",
+	"doc_name":"مشاور لیندا توبین",
+	"speciality":"MBBS، MD - مشاوری عمومی ، DM - عصب شناسی",
 	"address":"کنزاس, آمریکا",
 	"next_available":"موجود در شنبه 25 مهر",
 	"amount":"100 تومان - 1000 تومان",
@@ -102,7 +102,7 @@ var locations =[{
 	"image":'assets/img/user/patient6.jpg'
 	}, {
 	"id":08,
-	"doc_name":"پزشک پول ریچارد",
+	"doc_name":"مشاور پول ریچارد",
 	"speciality":"MDS - پریودنتولوژی و ایمپلنتولوژی دهان ، BDS",
 	"address":"کالیفرنیا - آمریکا",
 	"next_available":"موجود در شنبه 25 مهر",
@@ -115,7 +115,7 @@ var locations =[{
 	"image":'assets/img/user/patient7.jpg'
 	}, {
 	"id":09,
-	"doc_name":"پزشک جان گیبز",
+	"doc_name":"مشاور جان گیبز",
 	"speciality":"MBBS, MD - پوست , Venereology & Lepros",
 	"address":"اوکلاما, آمریکا",
 	"next_available":"موجود در شنبه 25 مهر",
@@ -128,7 +128,7 @@ var locations =[{
 	"image":'assets/img/user/patient8.jpg'
 	}, {
 	"id":10,
-	"doc_name":"پزشک اولگا بارلو",
+	"doc_name":"مشاور اولگا بارلو",
 	"speciality":"MDS - پریودنتولوژی و ایمپلنتولوژی دهان ، BDS",
 	"address":"مونتانا - آمریکا",
 	"next_available":"موجود در شنبه 25 مهر",
@@ -142,7 +142,7 @@ var locations =[{
 	}, {
 	"id":11,
 	"doc_name":"Dr. Julia Washington",
-	"speciality":"MBBS، MD - پزشکی عمومی ، DM - غدد درون ریز",
+	"speciality":"MBBS، MD - مشاوری عمومی ، DM - غدد درون ریز",
 	"address":"اوکلاما, آمریکا",
 	"next_available":"موجود در شنبه 25 مهر",
 	"amount":" 275 تومان  -  45 تومان0",

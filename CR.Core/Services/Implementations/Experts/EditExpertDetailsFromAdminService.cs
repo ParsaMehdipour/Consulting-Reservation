@@ -31,7 +31,7 @@ namespace CR.Core.Services.Implementations.Experts
                     return new ResultDto()
                     {
                         IsSuccess = false,
-                        Message = "اطلاعات متخصص یافت نشد"
+                        Message = "اطلاعات مشاور یافت نشد"
                     };
                 }
 
@@ -42,7 +42,7 @@ namespace CR.Core.Services.Implementations.Experts
                     return new ResultDto()
                     {
                         IsSuccess = false,
-                        Message = "متخصص یافت نشد"
+                        Message = "مشاور یافت نشد"
                     };
                 }
 
@@ -67,7 +67,7 @@ namespace CR.Core.Services.Implementations.Experts
                 return new ResultDto()
                 {
                     IsSuccess = true,
-                    Message = "اطلاعات متخصص با موفقیت ویرایش"
+                    Message = "اطلاعات مشاور با موفقیت ویرایش"
                 };
             }
             catch (Exception)

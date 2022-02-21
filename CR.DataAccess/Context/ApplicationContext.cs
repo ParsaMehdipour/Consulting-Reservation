@@ -1,5 +1,6 @@
 ﻿using CR.DataAccess.Entities.Appointments;
 using CR.DataAccess.Entities.Blogs;
+using CR.DataAccess.Entities.Comments;
 using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertAvailabilities;
 using CR.DataAccess.Entities.ExpertInformations;
@@ -43,6 +44,7 @@ namespace CR.DataAccess.Context
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

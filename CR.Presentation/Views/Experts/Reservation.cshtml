@@ -34,7 +34,7 @@
                                 <img src="~/@Model.IconSrc" alt="User Image">
                             </a>
                             <div class="booking-info col-md-8">
-                                <h4><a href="doctor-profile.html">متخصص @Model.FullName</a></h4>
+                                <h4><a href="doctor-profile.html">مشاور @Model.FullName</a></h4>
                                 <div class="rating">
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
@@ -44,9 +44,9 @@
                                     <span class="d-inline-block average-rating">35</span>
                                 </div>
                                 <p class="doc-department"><img src="~/@Model.SpecialitySrc" class="img-fluid" alt="Speciality">‌@Model.Speciality</p>
-                                <p id="phoneCallPrice" class="text-muted mb-0" style="visibility: hidden"><i class="far fa-money-bill-alt"></i> نرخ نوبت تلفنی (ساعتی) : @Model.phonePrice?.ToString("n0") تومان</p>
+@*                                <p id="phoneCallPrice" class="text-muted mb-0" style="visibility: hidden"><i class="far fa-money-bill-alt"></i> نرخ نوبت تلفنی (ساعتی) : @Model.phonePrice?.ToString("n0") تومان</p>
                                 <p id="voiceCallPrice" class="text-muted mb-0" style="visibility: hidden"><i class="far fa-money-bill-alt"></i> نرخ نوبت صوتی (ساعتی) : @Model.voicePrice?.ToString("n0") تومان</p>
-                                <p id="textCallPrice" class="text-muted mb-0" style="visibility: hidden"><i class="far fa-money-bill-alt"></i> نرخ نوبت متنی (ساعتی) : @Model.textPrice?.ToString("n0") تومان</p>
+                                <p id="textCallPrice" class="text-muted mb-0" style="visibility: hidden"><i class="far fa-money-bill-alt"></i> نرخ نوبت متنی (ساعتی) : @Model.textPrice?.ToString("n0") تومان</p>*@
                             </div>
                             <div class="booking-info">
                                 <form asp-action="Reservation" asp-controller="Experts" method="post">

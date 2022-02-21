@@ -33,7 +33,7 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
                     return new ResultDto()
                     {
                         IsSuccess = false,
-                        Message = "اطلاعات متخصص یافت نشد !!"
+                        Message = "اطلاعات مشاور یافت نشد !!"
                     };
                 }
 

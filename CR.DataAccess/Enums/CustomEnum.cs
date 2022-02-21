@@ -6,7 +6,7 @@ namespace CR.DataAccess.Enums
     {
         [Display(Name = "مراجعه کننده")]
         Consumer = 0,
-        [Display(Name = "پزشک")]
+        [Display(Name = "مشاور")]
         Expert = 1,
     }
 
@@ -77,6 +77,22 @@ namespace CR.DataAccess.Enums
         PayFromWallet = 1,
         [Display(Name = "شارژ کیف پول")]
         ChargeWallet = 2,
+    }
+
+    public enum CommentStatus
+    {
+        [Display(Name = "در انتظار")]
+        Waiting = 0,
+        [Display(Name = "تایید شده")]
+        Accepted = 1,
+        [Display(Name = "کنسل شده")]
+        Declined = 2,
+    }
+
+    public enum CommentType
+    {
+        Expert = 0,
+        Blog = 1
     }
 }
 

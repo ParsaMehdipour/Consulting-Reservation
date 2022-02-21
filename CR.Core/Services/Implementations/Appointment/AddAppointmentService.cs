@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
@@ -10,6 +7,9 @@ using CR.DataAccess.Entities.Factors;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Appointment
 {
@@ -81,7 +81,7 @@ namespace CR.Core.Services.Implementations.Appointment
                         return new ResultDto<string>
                         {
                             IsSuccess = false,
-                            Message = "اطلاعات متخصص یافت نشد!!",
+                            Message = "اطلاعات مشاور یافت نشد!!",
                             Data = null
                         };
                     }

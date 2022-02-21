@@ -28,7 +28,7 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
                 return new ResultDto<ResultGetDaysDto>()
                 {
                     IsSuccess = false,
-                    Message = "اطلاعات متخصص یافت نشد"
+                    Message = "اطلاعات مشاور یافت نشد"
                 };
             }
 

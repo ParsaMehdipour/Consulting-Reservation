@@ -14,7 +14,7 @@
                         <li class="breadcrumb-item active" aria-current="page">جستجو</li>
                     </ol>
                 </nav>
-                <h2 class="breadcrumb-title">متخصصین</h2>
+                <h2 class="breadcrumb-title">مشاورین</h2>
             </div>
          @*   <div class="col-md-4 col-12 d-md-block d-none">
                 <div class="sort-by">
@@ -57,18 +57,18 @@
                             <div>
                                 <label class="custom_check">
                                     <input type="checkbox" name="gender" id="gender_male" value="1">
-                                    <span class="checkmark"></span> متخصص مرد
+                                    <span class="checkmark"></span> مشاور مرد
                                 </label>
                             </div>
                             <div>
                                 <label class="custom_check">
                                     <input type="checkbox" name="gender" id="gender_female" value="2">
-                                    <span class="checkmark"></span> متخصص زن
+                                    <span class="checkmark"></span> مشاور زن
                                 </label>
                             </div>
                         </div>
                         <div class="filter-widget">
-                            <h4> متخصص را انتخاب کنید </h4>
+                            <h4> مشاور را انتخاب کنید </h4>
                             @foreach (var speciality in Model.Specialities)
                             {
                                 <div>
@@ -103,7 +103,7 @@
                                         </a>
                                     </div>
                                     <div class="doc-info-cont">
-                                        <h4 class="doc-name"><a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">متخصص @expert.FullName</a></h4>
+                                        <h4 class="doc-name"><a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">مشاور @expert.FullName</a></h4>
                                         <p class="doc-speciality"> @expert.Bio </p>
                                         <h5 class="doc-department">
 

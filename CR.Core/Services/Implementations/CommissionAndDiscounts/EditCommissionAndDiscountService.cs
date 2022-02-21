@@ -29,7 +29,7 @@ namespace CR.Core.Services.Implementations.CommissionAndDiscounts
                     return new ResultDto()
                     {
                         IsSuccess = false,
-                        Message = "کارمزد و تخفیف متخصص یافت نشد!!"
+                        Message = "کارمزد و تخفیف مشاور یافت نشد!!"
                     };
                 }
 

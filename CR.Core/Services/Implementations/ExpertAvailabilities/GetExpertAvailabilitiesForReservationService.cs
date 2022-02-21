@@ -33,7 +33,7 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
                 {
                     Data = null,
                     IsSuccess = false,
-                    Message = "اطلاعات متخصص یافت نشد"
+                    Message = "اطلاعات مشاور یافت نشد"
                 };
             }
 
