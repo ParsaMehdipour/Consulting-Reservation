@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs;
@@ -9,6 +7,8 @@ using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.ExpertInformations;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Experts
 {
@@ -133,15 +133,18 @@ namespace CR.Core.Services.Implementations.Experts
                     expertInformation.IconSrc = iconSrc;
                     expert.IconSrc = iconSrc;
                 }
+
+                //if (request.phoneCallPrice != expertInformation.PhoneCallPrice)
+
                 expertInformation.Province = request.province;
                 expertInformation.SpecificAddress = request.specificAddress;
                 expertInformation.PostalCode = request.postalCode;
                 expertInformation.UsePhoneCall = request.usePhoneCall;
                 expertInformation.UseTextCall = request.useTextCall;
                 expertInformation.UseVoiceCall = request.useVoiceCall;
-                expertInformation.PhoneCallPrice = request.usePhoneCall ? Convert.ToInt32(request.phoneCallPrice.ToEnglishNumber()) : 0;
-                expertInformation.VoiceCallPrice = request.useVoiceCall ? Convert.ToInt32(request.voiceCallPrice.ToEnglishNumber()) : 0;
-                expertInformation.TextCallPrice = request.useTextCall ? Convert.ToInt32(request.textCallPrice.ToEnglishNumber()) : 0;
+                expertInformation.PhoneCallPrice = (request.usePhoneCall && request.phoneCallPrice != null) ? Convert.ToInt32(request.phoneCallPrice.ToEnglishNumber()) : 0;
+                expertInformation.VoiceCallPrice = (request.useVoiceCall && request.voiceCallPrice != null) ? Convert.ToInt32(request.voiceCallPrice.ToEnglishNumber()) : 0;
+                expertInformation.TextCallPrice = (request.useTextCall && request.textCallPrice != null) ? Convert.ToInt32(request.textCallPrice.ToEnglishNumber()) : 0;
                 expert.IsActive = false;
                 expert.Email = request.email;
                 expert.PhoneNumber = request.phoneNumber;

@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Experts;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Experts
 {
@@ -58,7 +58,7 @@ namespace CR.Core.Services.Implementations.Experts
                     clinicName = expertInformation.ClinicName,
                     email = expert.Email,
                     gender = expertInformation.Gender,
-                    iconSrc = (expertInformation.IconSrc == null) ? "assets/img/icon-256x256.png" : expertInformation.IconSrc,
+                    iconSrc = expertInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     province = expertInformation.Province,
                     postalCode = expertInformation.PostalCode.GetPersianNumber(),
                     specificAddress = expertInformation.SpecificAddress,
@@ -66,18 +66,18 @@ namespace CR.Core.Services.Implementations.Experts
                     lastName = expertInformation.LastName,
                     specialtyId = expertInformation.Specialty?.Id ?? 0,
                     usePhoneCall = expertInformation.UsePhoneCall,
-                    phoneCallPrice = expertInformation.UsePhoneCall ? expertInformation.PhoneCallPrice.ToString().GetPersianNumber() : 0.ToString().GetPersianNumber(),
+                    phoneCallPrice = expertInformation.UsePhoneCall ? expertInformation.PhoneCallPrice.ToString() : 0.ToString().GetPersianNumber(),
                     useVoiceCall = expertInformation.UseVoiceCall,
-                    voiceCallPrice = expertInformation.UseVoiceCall ? expertInformation.VoiceCallPrice.ToString().GetPersianNumber() : 0.ToString().GetPersianNumber(),
+                    voiceCallPrice = expertInformation.UseVoiceCall ? expertInformation.VoiceCallPrice.ToString() : 0.ToString().GetPersianNumber(),
                     useTextCall = expertInformation.UseTextCall,
-                    textCallPrice = expertInformation.UseTextCall ? expertInformation.TextCallPrice.ToString().GetPersianNumber() : 0.ToString().GetPersianNumber(),
+                    textCallPrice = expertInformation.UseTextCall ? expertInformation.TextCallPrice.ToString() : 0.ToString().GetPersianNumber(),
                     tag = expertInformation.Tag,
-                    Tags = (string.IsNullOrEmpty(expertInformation.Tag))?new List<string>(): expertInformation.Tag.Split(",").ToList(),
+                    Tags = (string.IsNullOrEmpty(expertInformation.Tag)) ? new List<string>() : expertInformation.Tag.Split(",").ToList(),
                     images = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages.Select(i => new ExpertImageDto
-                        {
-                            Id = i.Id,
-                            Src = i.Src
-                        }
+                    {
+                        Id = i.Id,
+                        Src = i.Src
+                    }
                     ).ToList(),
                     experiences = (expertInformation.ExpertExperiences == null) ? new List<ExpertExperienceDto>() : expertInformation.ExpertExperiences.Select(e => new ExpertExperienceDto
                     {
