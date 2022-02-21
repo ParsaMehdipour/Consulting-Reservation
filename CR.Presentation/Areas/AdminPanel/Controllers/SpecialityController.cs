@@ -1,4 +1,5 @@
-﻿using CR.Core.DTOs.RequestDTOs;
+﻿using CR.Common.ActiveMenus;
+using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Specialites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,9 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public SpecialityController(
              IAddNewSpecialityService addNewSpecialityService
-            ,IGetAllSpecialitiesService getAllSpecialitiesService
-            ,IEditSpecialityService editSpecialityService
-            ,IRemoveSpecialityService removeSpecialityService)
+            , IGetAllSpecialitiesService getAllSpecialitiesService
+            , IEditSpecialityService editSpecialityService
+            , IRemoveSpecialityService removeSpecialityService)
         {
             _addNewSpecialityService = addNewSpecialityService;
             _getAllSpecialitiesService = getAllSpecialitiesService;
@@ -28,7 +29,9 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult Index(int page = 1, int pageSize = 20)
         {
-            var model = _getAllSpecialitiesService.Execute(page,pageSize).Data;
+            TempData["activemenu"] = ActiveMenu.Speciality;
+
+            var model = _getAllSpecialitiesService.Execute(page, pageSize).Data;
 
             return View(model);
         }

@@ -1,4 +1,5 @@
-﻿using CR.Core.DTOs.CommissionAndDiscounts;
+﻿using CR.Common.ActiveMenus;
+using CR.Core.DTOs.CommissionAndDiscounts;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using Microsoft.AspNetCore.Authorization;
@@ -16,9 +17,9 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         private readonly IEditCommissionAndDiscountService _editCommissionAndDiscountService;
 
         public CommissionAndDiscountsController(IGetAllCommissionAndDiscountsForAdminService getAllCommissionAndDiscountsForAdminService
-        ,IAddNewCommissionAndDiscountService addNewCommissionAndDiscountService
-        ,IGetCommissionAndDiscountDetailsForAdminService getCommissionAndDiscountDetailsForAdminService
-        ,IEditCommissionAndDiscountService editCommissionAndDiscountService)
+        , IAddNewCommissionAndDiscountService addNewCommissionAndDiscountService
+        , IGetCommissionAndDiscountDetailsForAdminService getCommissionAndDiscountDetailsForAdminService
+        , IEditCommissionAndDiscountService editCommissionAndDiscountService)
         {
             _getAllCommissionAndDiscountsForAdminService = getAllCommissionAndDiscountsForAdminService;
             _addNewCommissionAndDiscountService = addNewCommissionAndDiscountService;
@@ -28,6 +29,9 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult Index()
         {
+            TempData["activemenu"] = ActiveMenu.CommissionAndDiscounts;
+
+
             var model = _getAllCommissionAndDiscountsForAdminService.Execute().Data;
 
             return View(model);

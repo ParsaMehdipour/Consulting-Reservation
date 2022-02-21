@@ -1,4 +1,5 @@
-﻿using CR.Core.DTOs.RequestDTOs;
+﻿using CR.Common.ActiveMenus;
+using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Timings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,8 +15,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         private readonly IRemoveTimingService _removeTimingService;
 
         public TimingsController(IGetAllTimingsForAdminService getAllTimingsForAdminService
-        ,IAddNewTimingService addNewTimingService
-        ,IRemoveTimingService removeTimingService)
+        , IAddNewTimingService addNewTimingService
+        , IRemoveTimingService removeTimingService)
         {
             _getAllTimingsForAdminService = getAllTimingsForAdminService;
             _addNewTimingService = addNewTimingService;
@@ -24,6 +25,9 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult Index(int page = 1, int pageSize = 20)
         {
+            TempData["activemenu"] = ActiveMenu.Timings;
+
+
             var model = _getAllTimingsForAdminService.Execute(page, pageSize).Data;
 
             return View(model);

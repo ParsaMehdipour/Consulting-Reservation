@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using CR.Core.DTOs.Consumers;
+﻿using CR.Common.ActiveMenus;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.Users;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.Core.Services.Interfaces.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CR.Presentation.Areas.AdminPanel.Controllers
 {
@@ -20,10 +20,10 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         private readonly IAddConsumerDetailsService _addConsumerDetailsService;
 
         public ConsumersController(IGetAllConsumersService getAllConsumersService
-        ,IRegisterConsumerFromAdminService registerConsumerFromAdminService
-        ,IGetConsumerDetailsForProfileService getConsumerDetailsForProfileService
-        ,IEditConsumerDetailsService editConsumerDetailsService
-        ,IAddConsumerDetailsService addConsumerDetailsService)
+        , IRegisterConsumerFromAdminService registerConsumerFromAdminService
+        , IGetConsumerDetailsForProfileService getConsumerDetailsForProfileService
+        , IEditConsumerDetailsService editConsumerDetailsService
+        , IAddConsumerDetailsService addConsumerDetailsService)
         {
             _getAllConsumersService = getAllConsumersService;
             _registerConsumerFromAdminService = registerConsumerFromAdminService;
@@ -34,7 +34,9 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult Index(int page = 1, int pageSize = 20)
         {
-            var model = _getAllConsumersService.Execute(page,pageSize).Data;
+            TempData["activemenu"] = ActiveMenu.Consumers;
+
+            var model = _getAllConsumersService.Execute(page, pageSize).Data;
 
             return View(model);
         }
@@ -42,6 +44,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         [HttpGet]
         public IActionResult AddNewConsumer()
         {
+            TempData["activemenu"] = ActiveMenu.Consumers;
+
             return View();
         }
 
@@ -56,6 +60,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         [HttpGet]
         public IActionResult ConsumerDetails(long id)
         {
+            TempData["activemenu"] = ActiveMenu.Consumers;
+
             ViewData["id"] = id;
 
             var model = _getConsumerDetailsForProfileService.Execute(id).Data.ConsumerDetailsForSiteDto;
