@@ -5,11 +5,11 @@ namespace CR.Core.DTOs.Account
     public class RegisterExpertViewModel
     {
         [Required(ErrorMessage = "نام خود را وارد کنید")]
-        [Display(Name = "نام متخصص")]
+        [Display(Name = "نام مشاور")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "نام خانوادگی خود را وارد کنید")]
-        [Display(Name = "نام خانوادگی متخصص")]
+        [Display(Name = "نام خانوادگی مشاور")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "شماره تماس را وارد کنید")]

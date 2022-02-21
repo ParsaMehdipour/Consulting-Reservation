@@ -29,7 +29,7 @@ namespace CR.Core.Services.Implementations.Consumers
                 {
                     Data = null,
                     IsSuccess = false,
-                    Message = "متخصص یافت نشد"
+                    Message = "مشاور یافت نشد"
                 };
             }
 
@@ -42,7 +42,7 @@ namespace CR.Core.Services.Implementations.Consumers
                 {
                     Data = null,
                     IsSuccess = false,
-                    Message = "اطلاعات متخصص یافت نشد"
+                    Message = "اطلاعات مشاور یافت نشد"
                 };
             }
 

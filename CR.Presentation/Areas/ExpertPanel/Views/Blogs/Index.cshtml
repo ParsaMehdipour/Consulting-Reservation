@@ -1,0 +1,177 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@model CR.Core.DTOs.ResultDTOs.Blogs.ResultGetBlogsForExpertPanelDto
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">مقالات</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">مقالات</h2>
+            </div>
+            <div class="col-md-12 col-12">
+                <a asp-area="ExpertPanel" asp-controller="Blogs" asp-action="AddNewBlog" class="btn btn-primary float-right mt-2">افزودن</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+
+                <partial name="ExpertPnelSideBarMenu" />
+
+            </div>
+            <div class="col-md-7 col-lg-8 col-xl-9">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <!-- Invoice Table -->
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">تصویر</th>
+                                    <th class="text-center">عنوان مقاله</th>
+                                    <th class="text-center">دسته بندی</th>
+                                    <th class="text-center">تاریخ ایجاد</th>
+                                    <th class="text-center">تاریخ انتشار</th>
+                                    <th class="text-center">وضعیت</th>
+                                    <th class="text-right"> اقدامات </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if (Model.BlogForExpertPanelDtos.Count > 0)
+                                {
+                                    @foreach (var blog in Model.BlogForExpertPanelDtos)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="avatar avatar-sm mr-2">
+                                                    <img class="avatar-img" src="~/@blog.BlogPictureSrc" alt="@blog.Title">
+                                                </a>
+                                            </td>
+
+                                            <td class="text-center">@blog.Title</td>
+
+                                            <td class="text-center">@blog.BlogCategory</td>
+
+
+                                            <td class="text-center">@blog.CreateDate</td>
+
+                                            <td class="text-center">@blog.PublishDate</td>
+
+                                            @if (blog.Status)
+                                            {
+                                                <td class="text text-center text-success">فعال</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text text-center text-danger">غیر فعال</td>
+                                            }
+
+                                            <td class="text-right">
+                                                <div class="actions">
+                                                    <a class="btn btn-sm bg-primary-light" asp-controller="Blogs" asp-action="BlogDetails" asp-route-id="@blog.Id">
+                                                        <i class="fe fe-pencil"></i> جزییات
+                                                    </a>
+                                                    <a class="btn btn-sm bg-success-light" asp-controller="Blogs" asp-action="EditBlogDetails" asp-route-id="@blog.Id">
+                                                        <i class="fe fe-pencil"></i> ویرایش
+                                                    </a>
+                                                    <a onclick="Delete(@blog.Id)" class="btn btn-sm bg-danger-light">
+                                                        <i class="fe fe-trash"></i> حذف
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /Invoice Table -->
+                    </div>
+                </div>
+                <div class="text-center">
+                    <paging total-records="Model.RowCount"
+                            page-no="Model.CurrentPage"
+                            page-size="Model.PageSize"
+                            show-prev-next="true"
+                            show-total-pages="false"
+                            show-total-records="false"
+                            show-page-size-nav="true"
+                            show-first-numbered-page="true"
+                            show-last-numbered-page="true"
+                            query-string-key-page-no="Page"
+                            query-string-key-page-size="PageSize"
+                            gap-size="2">
+                    </paging>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+@section Scripts
+{
+    <script src="~/assets/js/ExpertPanel/Blogs/Blogs.js"></script>
+    <script src="~/assets/js/ExpertPanel/layout.js"></script>
+
+    <script>
+        function Delete(Id) {
+            swal.fire({
+                title: 'حذف مقاله',
+                text: "مدیریت گرامی از حذف مقاله مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'تایید',
+                cancelButtonText: 'انصراف'
+            }).then((result) => {
+                if (result.value) {
+                    var data = {};
+                    data["id"] = Number(Id);
+                    $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: "POST",
+                        enctype: 'application/json',
+                        url: '/api/ExpertBlogs/RemoveBlog',
+                        data: JSON.stringify(data),
+                        success: function(data) {
+                            if (data.isSuccess === true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function(isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+                }
+            });
+        }
+    </script>
+}

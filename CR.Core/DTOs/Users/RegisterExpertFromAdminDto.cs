@@ -7,23 +7,23 @@ namespace CR.Core.DTOs.Users
 {
     public class RegisterExpertFromAdminDto
     {
-        [Required(ErrorMessage = "نام متخصص را وارد کنید")]
-        [Display(Name = "نام متخصص")]
+        [Required(ErrorMessage = "نام مشاور را وارد کنید")]
+        [Display(Name = "نام مشاور")]
         public string firstName { get; set; }
 
-        [Required(ErrorMessage = "نام خانوادگی متخصص را وارد کنید")]
-        [Display(Name = "نام خانوادگی متخصص")]
+        [Required(ErrorMessage = "نام خانوادگی مشاور را وارد کنید")]
+        [Display(Name = "نام خانوادگی مشاور")]
         public string lastName { get; set; }
 
         public GenderType gender { get; set; }
 
-        [Required(ErrorMessage = "شماره تماس متخصص را وارد کنید")]
-        [Display(Name = "شماره تماس متخصص")]
+        [Required(ErrorMessage = "شماره تماس مشاور را وارد کنید")]
+        [Display(Name = "شماره تماس مشاور")]
         [Phone]
         public string phoneNumber { get; set; }
 
-        [Required(ErrorMessage = "پست الکترونیکی متخصص را وارد کنید")]
-        [Display(Name = "پست الکترونیکی متخصص")]
+        [Required(ErrorMessage = "پست الکترونیکی مشاور را وارد کنید")]
+        [Display(Name = "پست الکترونیکی مشاور")]
         public string email { get; set; }
 
         [Required(ErrorMessage = "رمزعبور را وارد کنید")]
@@ -37,20 +37,20 @@ namespace CR.Core.DTOs.Users
         [DataType(DataType.Password)]
         public string confirmPassword { get; set; }
 
-        [Required(ErrorMessage = "استان متخصص را وارد کنید")]
-        [Display(Name = "استان متخصص")]
+        [Required(ErrorMessage = "استان مشاور را وارد کنید")]
+        [Display(Name = "استان مشاور")]
         public string province { get; set; }
 
-        [Required(ErrorMessage = "شهر متخصص را وارد کنید")]
-        [Display(Name = "شهر متخصص")]
+        [Required(ErrorMessage = "شهر مشاور را وارد کنید")]
+        [Display(Name = "شهر مشاور")]
         public string city { get; set; }
 
-        [Required(ErrorMessage = "آدرس متخصص را وارد کنید")]
-        [Display(Name = "آدرس متخصص")]
+        [Required(ErrorMessage = "آدرس مشاور را وارد کنید")]
+        [Display(Name = "آدرس مشاور")]
         public string specificAddress { get; set; }
 
-        [Required(ErrorMessage = "کد پستی متخصص را وارد کنید")]
-        [Display(Name = "کد پستی متخصص")]
+        [Required(ErrorMessage = "کد پستی مشاور را وارد کنید")]
+        [Display(Name = "کد پستی مشاور")]
         public string postalCode { get; set; }
     }
 }

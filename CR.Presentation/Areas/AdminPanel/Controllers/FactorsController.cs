@@ -1,4 +1,5 @@
-﻿using CR.Core.Services.Interfaces.Factors;
+﻿using CR.Common.ActiveMenus;
+using CR.Core.Services.Interfaces.Factors;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult Index(int page = 1, int pageSize = 20)
         {
+            TempData["activemenu"] = ActiveMenu.Factors;
+
             var model = _getAllFactorsForAdminPanel.Execute(page, pageSize).Data;
 
             return View(model);

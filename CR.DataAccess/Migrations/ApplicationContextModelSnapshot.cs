@@ -158,6 +158,46 @@ namespace CR.DataAccess.Migrations
                     b.ToTable("TBL_BlogCategories");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CommentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("OwnerRecordId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TBL_Comments");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.CommissionAndDiscounts.CommissionAndDiscount", b =>
                 {
                     b.Property<long>("Id")
@@ -1028,6 +1068,23 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("ParentCategory");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Comments.Comment", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("CR.DataAccess.Entities.Users.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parent");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.Day", b =>
                 {
                     b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
@@ -1266,6 +1323,11 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("SubCategories");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
+                {
+                    b.Navigation("Children");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.CommissionAndDiscounts.CommissionAndDiscount", b =>
                 {
                     b.Navigation("ExpertInformation");
@@ -1326,6 +1388,8 @@ namespace CR.DataAccess.Migrations
 
             modelBuilder.Entity("CR.DataAccess.Entities.Users.User", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Favorites");
                 });
 #pragma warning restore 612, 618

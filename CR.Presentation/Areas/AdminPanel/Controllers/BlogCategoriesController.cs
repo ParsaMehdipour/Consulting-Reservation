@@ -1,10 +1,10 @@
-﻿using CR.Core.DTOs.RequestDTOs;
-using CR.Core.Services.Interfaces.Blogs;
+﻿using CR.Common.ActiveMenus;
+using CR.Core.DTOs.RequestDTOs;
+using CR.Core.Services.Interfaces.BlogCategories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
-using CR.Core.Services.Interfaces.BlogCategories;
 
 namespace CR.Presentation.Areas.AdminPanel.Controllers
 {
@@ -30,14 +30,16 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult Index(long? parentId, int page = 1, int pageSize = 20)
         {
+            TempData["activemenu"] = ActiveMenu.BlogCategories;
+
             var model = _getBlogCategoriesForAdminPanelService.Execute(parentId, page, pageSize).Data.BlogCategoryForAdminPanelDtos;
 
             ViewData["parentId"] = parentId;
 
             var parentBlogCategory = model.Select(p => new
             {
-                Id = p.Id,
-                Name = p.Name
+                p.Id,
+                p.Name
             });
 
             ViewBag.parent = new SelectList(parentBlogCategory, "Id", "Name");
@@ -47,7 +49,10 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult AddNewBlogCategory(long? parentId)
         {
+            TempData["activemenu"] = ActiveMenu.BlogCategories;
+
             ViewBag.parentId = parentId;
+
             return View();
         }
 
@@ -62,6 +67,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         [HttpGet]
         public IActionResult Details(long id)
         {
+            TempData["activemenu"] = ActiveMenu.BlogCategories;
+
             var details = _getBlogCategoryDetailsService.Execute(id).Data;
 
             return View(details);

@@ -1,11 +1,11 @@
-﻿using System;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.BlogCategories;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.Blogs;
+using System;
 
 namespace CR.Core.Services.Implementations.BlogCategories
 {
@@ -44,10 +44,10 @@ namespace CR.Core.Services.Implementations.BlogCategories
                     ParentCategory = parentCategory,
                 };
 
-                //if (parentCategory != null)
-                //{
-                //    parentCategory.SubCategories.Add(blogCategory);
-                //}
+                if (parentCategory != null)
+                {
+                    parentCategory.SubCategories.Add(blogCategory);
+                }
 
                 _context.BlogCategories.Add(blogCategory);
                 _context.SaveChanges();

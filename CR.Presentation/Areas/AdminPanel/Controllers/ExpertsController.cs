@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CR.Core.DTOs.Experts;
+﻿using CR.Common.ActiveMenus;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.Users;
 using CR.Core.Services.Interfaces.ExpertImages;
@@ -9,6 +8,7 @@ using CR.Core.Services.Interfaces.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading.Tasks;
 
 namespace CR.Presentation.Areas.AdminPanel.Controllers
 {
@@ -29,14 +29,14 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public ExpertsController(IGetAllExpertsService getAllExpertsService
         , IChangeExpertStatusService changeExpertStatusService
-        ,IRegisterExpertFromAdminService registerExpertFromAdminService
-        ,IGetExpertDetailsForAdminService getExpertDetailsForAdminService
-        ,IEditExpertDetailsFromAdminService editExpertDetailsFromAdminService
-        ,IGetExpertDetailsForProfileService getExpertDetailsForProfileService
-        ,IGetSpecialtiesForExpertProfileDropDownService getSpecialtiesForExpertProfileDropDownService
-        ,IEditBasicExpertDetailsService editBasicExpertDetailsService
-        ,IEditAdvancedExpertDetailsService editAdvancedExpertDetailsService
-        ,IRemoveExpertImagesService removeExpertImagesService)
+        , IRegisterExpertFromAdminService registerExpertFromAdminService
+        , IGetExpertDetailsForAdminService getExpertDetailsForAdminService
+        , IEditExpertDetailsFromAdminService editExpertDetailsFromAdminService
+        , IGetExpertDetailsForProfileService getExpertDetailsForProfileService
+        , IGetSpecialtiesForExpertProfileDropDownService getSpecialtiesForExpertProfileDropDownService
+        , IEditBasicExpertDetailsService editBasicExpertDetailsService
+        , IEditAdvancedExpertDetailsService editAdvancedExpertDetailsService
+        , IRemoveExpertImagesService removeExpertImagesService)
         {
             _getAllExpertsService = getAllExpertsService;
             _changeExpertStatusService = changeExpertStatusService;
@@ -52,7 +52,10 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult Index(int page = 1, int pageSize = 20)
         {
-            var model = _getAllExpertsService.Execute(page,pageSize).Data;
+            TempData["activemenu"] = ActiveMenu.Experts;
+
+
+            var model = _getAllExpertsService.Execute(page, pageSize).Data;
 
             return View(model);
         }
@@ -68,6 +71,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         [HttpGet]
         public IActionResult AddNewExpert()
         {
+            TempData["activemenu"] = ActiveMenu.Experts;
+
             return View();
         }
 
@@ -82,6 +87,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         [HttpGet]
         public IActionResult ExpertDetails(long id)
         {
+            TempData["activemenu"] = ActiveMenu.Experts;
+
             ViewBag.Specialties = new SelectList(_getSpecialtiesForExpertProfileDropDownService.Execute().Data, "Id", "Name");
 
             var model = _getExpertDetailsForProfileService.Execute(id).Data;

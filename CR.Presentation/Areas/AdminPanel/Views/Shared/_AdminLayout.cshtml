@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using CR.Common.ActiveMenus
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -153,7 +154,7 @@
                     <img class="avatar-img rounded-circle" alt="User Image" src="~/AdminTemplate/assets/img/patients/patient3.jpg">
                     </span>
                     <div class="media-body">
-                    <p class="noti-details"><span class="noti-title">کارل کلی</span> پیام ارسال کرد <span class="noti-title"> به پزشکش </span></p>
+                    <p class="noti-details"><span class="noti-title">کارل کلی</span> پیام ارسال کرد <span class="noti-title"> به مشاورش </span></p>
                     <p class="noti-time"><span class="notification-time">12 دقیقه قبل </span></p>
                     </div>
                     </div>
@@ -202,37 +203,37 @@
                         <li>
                             <a asp-area="" asp-controller="Home" asp-action="Index"><i class="fe fe-home"></i> <span>صفحه اصلی سایت</span></a>
                         </li>
-                        <li class="active">
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.Dashboard ? @"class=active" : "")>
                             <a asp-controller="Home" asp-action="Index"><i class="fe fe-home"></i> <span>داشبورد</span></a>
                         </li>
-                        <li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.Appointments ? @"class=active" : "")>
                             <a asp-controller="Appointments" asp-action="Index"><i class="fe fe-layout"></i> <span>نوبت‌دهی</span></a>
                         </li>
-                        <li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.CommissionAndDiscounts ? @"class=active" : "")>
                             <a asp-controller="CommissionAndDiscounts" asp-action="Index"><i class="fe fe-file"></i> <span>امور مالی</span></a>
                         </li>
-                        <li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.Factors ? @"class=active" : "")>
                             <a asp-controller="Factors" asp-action="Index"><i class="fe fe-activity"></i> <span>گزارش فاکتور ها</span></a>
                         </li>
-                        <li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.FinancialTransactions ? @"class=active" : "")>
                             <a asp-controller="FinancialTransactions" asp-action="Index"><i class="fe fe-activity"></i> <span>گزارش تراکنش ها</span></a>
                         </li>
-                        <li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.Speciality ? @"class=active" : "")>
                             <a asp-controller="Speciality" asp-action="Index"><i class="fe fe-users"></i> <span>تخصص ها</span></a>
                         </li>
-                        <li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.Timings ? @"class=active" : "")>
                             <a asp-controller="Timings" asp-action="Index"><i class="fe fe-vector"></i> <span>زمانبندی ها</span></a>
                         </li>
-                        <li>
-                            <a asp-controller="Experts" asp-action="Index"><i class="fe fe-user-plus"></i> <span>متخصصین</span></a>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.Experts ? @"class=active" : "")>
+                            <a asp-controller="Experts" asp-action="Index"><i class="fe fe-user-plus"></i> <span>مشاورین</span></a>
                         </li>
-                        <li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.Consumers ? @"class=active" : "")>
                             <a asp-controller="Consumers" asp-action="Index"><i class="fe fe-user"></i> <span>مراجعان</span></a>
                         </li>
-                        <li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.BlogCategories ? @"class=active" : "")>
                             <a asp-controller="BlogCategories" asp-action="Index"><i class="fe fe-user"></i> <span>گروه مقالات</span></a>
                         </li>
-                        <li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.Blogs ? @"class=active" : "")>
                             <a asp-controller="Blogs" asp-action="Index"><i class="fe fe-user"></i> <span>مقالات</span></a>
                         </li>
                         @*                        <li>

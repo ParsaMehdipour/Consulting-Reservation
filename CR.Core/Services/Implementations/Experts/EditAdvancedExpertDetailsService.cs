@@ -68,7 +68,7 @@ namespace CR.Core.Services.Implementations.Experts
                     };
                 }
 
-                //ویرایش تجربه های پزشک
+                //ویرایش تجربه های مشاور
                 _context.ExpertExperiences.RemoveRange(expertInformation.ExpertExperiences);
 
                 if (request.experiences != null)
@@ -92,7 +92,7 @@ namespace CR.Core.Services.Implementations.Experts
                     _context.ExpertExperiences.AddRange(expertExperiences);
                 }
 
-                //ویرایش جوایز پزشک
+                //ویرایش جوایز مشاور
                 _context.ExpertPrizes.RemoveRange(expertInformation.ExpertPrizes);
 
                 if (request.prizes != null)
@@ -114,7 +114,7 @@ namespace CR.Core.Services.Implementations.Experts
                     _context.ExpertPrizes.AddRange(expertPrizes);
                 }
 
-                //ویرایش عضویت های پزشک
+                //ویرایش عضویت های مشاور
                 _context.ExpertMemberships.RemoveRange(expertInformation.ExpertMemberships);
 
                 if (request.memberships != null)
@@ -136,7 +136,7 @@ namespace CR.Core.Services.Implementations.Experts
                     _context.ExpertMemberships.AddRange(expertMemberships);
                 }
 
-                //ویرایش تحصیلات پزشک
+                //ویرایش تحصیلات مشاور
                 _context.ExpertStudies.RemoveRange(expertInformation.ExpertStudies);
 
                 if (request.studies != null)
@@ -160,7 +160,7 @@ namespace CR.Core.Services.Implementations.Experts
                     _context.ExpertStudies.AddRange(expertStudies);
                 }
 
-                //ویرایش ثبت نام های پزشک
+                //ویرایش ثبت نام های مشاور
                 _context.ExpertSubscriptions.RemoveRange(expertInformation.ExpertSubscriptions);
 
                 if (request.subscriptions != null)

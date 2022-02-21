@@ -39,7 +39,7 @@
 //	    ],
 //	    xkey: 'y',
 //	    ykeys: ['a', 'b'],
-//	    labels: ['پزشکان', 'مراجعان'],
+//	    labels: ['مشاوران', 'مراجعان'],
 //	    lineColors: ['#1b5a90','#ff9d00'],
 //	    lineWidth: 1,
 //	    gridTextSize: 10,

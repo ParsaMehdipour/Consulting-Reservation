@@ -38,7 +38,7 @@ namespace CR.Core.Services.Implementations.Experts
                 {
                     Data = null,
                     IsSuccess = false,
-                    Message = "اطلاعات پزشک پیدا نشد !!"
+                    Message = "اطلاعات مشاور پیدا نشد !!"
                 };
             }
 

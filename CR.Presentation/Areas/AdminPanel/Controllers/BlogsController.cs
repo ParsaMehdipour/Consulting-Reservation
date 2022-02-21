@@ -1,4 +1,5 @@
-﻿using CR.Core.Services.Interfaces.BlogCategories;
+﻿using CR.Common.ActiveMenus;
+using CR.Core.Services.Interfaces.BlogCategories;
 using CR.Core.Services.Interfaces.Blogs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult Index(int page = 1, int pageSize = 20)
         {
+            TempData["activemenu"] = ActiveMenu.Blogs;
 
             var model = _getBlogsForAdminPanelService.Execute(page, pageSize).Data;
 
@@ -33,6 +35,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult AddNewBlog()
         {
+            TempData["activemenu"] = ActiveMenu.Blogs;
+
             ViewBag.Categories = new SelectList(_getBlogCategoriesForDropdownService.Execute(), "Id", "Name");
 
             return View();
@@ -40,6 +44,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult EditBlogDetails(long id)
         {
+            TempData["activemenu"] = ActiveMenu.Blogs;
+
             var model = _getBlogDetailsForAdminPanelService.Execute(id).Data;
 
             ViewBag.Categories = new SelectList(_getBlogCategoriesForDropdownService.Execute(), "Id", "Name");
@@ -49,6 +55,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult BlogDetails(long id)
         {
+            TempData["activemenu"] = ActiveMenu.Blogs;
+
             var model = _getBlogDetailsForAdminPanelService.Execute(id).Data;
 
             return View(model);

@@ -1,4 +1,5 @@
-﻿using CR.DataAccess.Entities.Favorites;
+﻿using CR.DataAccess.Entities.Comments;
+using CR.DataAccess.Entities.Favorites;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Identity;
@@ -32,6 +33,8 @@ namespace CR.DataAccess.Entities.Users
         public virtual ExpertInformation ExpertInformation { get; set; }
 
         public ICollection<Favorite> Favorites { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
 
         #endregion
 

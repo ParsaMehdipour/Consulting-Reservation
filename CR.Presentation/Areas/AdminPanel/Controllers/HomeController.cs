@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using CR.Common.ActiveMenus;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Account;
 using CR.Core.DTOs.Users;
@@ -13,6 +13,7 @@ using CR.Presentation.Areas.AdminPanel.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CR.Presentation.Areas.AdminPanel.Controllers
 {
@@ -34,9 +35,9 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         , IGetAdminDetailsService getAdminDetailsService
         , IEditAdminDetailsService editAdminDetailsService
         , UserManager<User> userManager
-        ,ApplicationContext context
-        ,IGetStatisticsForAdminPanelService getStatisticsForAdminPanelService
-        ,IGetAppointmentsForAdminDashboardService getAppointmentsForAdminDashboardService)
+        , ApplicationContext context
+        , IGetStatisticsForAdminPanelService getStatisticsForAdminPanelService
+        , IGetAppointmentsForAdminDashboardService getAppointmentsForAdminDashboardService)
         {
             _getLatestExpertsForAdminService = getLatestExpertsForAdminService;
             _getLatestConsumersForAdminService = getLatestConsumersForAdminService;
@@ -50,6 +51,9 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
 
         public IActionResult Index()
         {
+            TempData["activemenu"] = ActiveMenu.Dashboard;
+
+
             var viewModel = new AdminDashboardViewModel()
             {
                 LatestExpertForAdminDtos = _getLatestExpertsForAdminService.Execute().Data,

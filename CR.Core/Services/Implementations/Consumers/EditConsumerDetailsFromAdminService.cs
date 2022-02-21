@@ -32,7 +32,7 @@ namespace CR.Core.Services.Implementations.Consumers
                     return new ResultDto()
                     {
                         IsSuccess = false,
-                        Message = "اطلاعات متخصص یافت نشد"
+                        Message = "اطلاعات مشاور یافت نشد"
                     };
                 }
 
@@ -43,7 +43,7 @@ namespace CR.Core.Services.Implementations.Consumers
                     return new ResultDto()
                     {
                         IsSuccess = false,
-                        Message = "متخصص یافت نشد"
+                        Message = "مشاور یافت نشد"
                     };
                 }
 

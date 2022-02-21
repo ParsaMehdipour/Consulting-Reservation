@@ -71,7 +71,7 @@ namespace CR.Core.Services.Implementations.Users
                 return new ResultDto()
                 {
                     IsSuccess = true,
-                    Message = "متخصص با موفقیت افزوده شد"
+                    Message = "مشاور با موفقیت افزوده شد"
                 };
 
             }

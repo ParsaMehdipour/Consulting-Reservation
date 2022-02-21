@@ -208,6 +208,7 @@ namespace CR.Presentation
             services.AddScoped<IDeleteBlogService, DeleteBlogService>();
             services.AddScoped<IGetBlogDetailsForAdminPanelService, GetBlogDetailsForAdminPanelService>();
             services.AddScoped<IEditBlogFromAdminService, EditBlogFromAdminService>();
+            services.AddScoped<IGetBlogsForExpertPanelService, GetBlogsForExpertPanelService>();
             //FinancialTransactions
             services.AddScoped<IGetFinancialTransactionsForAdminService, GetFinancialTransactionsForAdminService>();
             services.AddScoped<IGetConsumerFinancialTransactionsService, GetConsumerFinancialTransactionsService>();

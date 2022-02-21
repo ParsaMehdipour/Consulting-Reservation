@@ -24,13 +24,13 @@
                     <table class="datatable table table-hover table-center mb-0">
                         <thead>
                             <tr>
-                                <th>تصویر</th>
-                                <th>عنوان مقاله</th>
-                                <th>دسته بندی</th>
-                                <th>نویسنده</th>
-                                <th>تاریخ ایجاد</th>
-                                <th>تاریخ انتشار</th>
-                                <th>وضعیت</th>
+                                <th class="text-center">تصویر</th>
+                                <th class="text-center">عنوان مقاله</th>
+                                <th class="text-center">دسته بندی</th>
+                                <th class="text-center">نویسنده</th>
+                                <th class="text-center">تاریخ ایجاد</th>
+                                <th class="text-center">تاریخ انتشار</th>
+                                <th class="text-center">وضعیت</th>
                                 <th class="text-right"> اقدامات </th>
                             </tr>
                         </thead>
@@ -46,23 +46,23 @@
                                             </a>
                                         </td>
 
-                                        <td>@blog.Title</td>
+                                        <td class="text-center">@blog.Title</td>
 
-                                        <td>@blog.BlogCategory</td>
+                                        <td class="text-center">@blog.BlogCategory</td>
 
-                                        <td>@blog.Author</td>
+                                        <td class="text-center">@blog.Author</td>
 
-                                        <td>@blog.CreateDate</td>
+                                        <td class="text-center">@blog.CreateDate</td>
 
-                                        <td>@blog.PublishDate</td>
+                                        <td class="text-center">@blog.PublishDate</td>
 
                                         @if (blog.Status)
                                         {
-                                            <td class="text text-success">فعال</td>
+                                            <td class="text text-center text-success">فعال</td>
                                         }
                                         else
                                         {
-                                            <td class="text text-danger">غیر فعال</td>
+                                            <td class="text text-center text-danger">غیر فعال</td>
                                         }
 
                                         <td class="text-right">
@@ -91,53 +91,53 @@
 
 @section Scripts
 {
-    <script>
-        function Delete(Id) {
-            swal.fire({
-                title: 'حذف مقاله',
-                text: "مدیریت گرامی از حذف مقاله مطمئن هستید؟",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#7cacbe',
-                confirmButtonText: 'تایید',
-                cancelButtonText: 'انصراف'
-            }).then((result) => {
-                if (result.value) {
-                    var data = {};
-                    data["id"] = Number(Id);
-                    $.ajax({
-                        contentType: 'application/json; charset=utf-8',
-                        dataType: 'json',
-                        type: "POST",
-                        enctype: 'application/json',
-                        url: '/api/Blogs/RemoveBlog',
-                        data: JSON.stringify(data),
-                        success: function(data) {
-                            if (data.isSuccess === true) {
-                                swal.fire(
-                                    'موفق!',
-                                    data.message,
-                                    'success'
-                                ).then(function(isConfirm) {
-                                    location.reload();
-                                });
-                            } else {
-                                swal.fire(
-                                    'هشدار!',
-                                    data.message,
-                                    'warning'
-                                );
+<script>
+    function Delete(Id) {
+        swal.fire({
+            title: 'حذف مقاله',
+            text: "مدیریت گرامی از حذف مقاله مطمئن هستید؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'تایید',
+            cancelButtonText: 'انصراف'
+        }).then((result) => {
+            if (result.value) {
+                var data = {};
+                data["id"] = Number(Id);
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: "POST",
+                    enctype: 'application/json',
+                    url: '/api/Blogs/RemoveBlog',
+                    data: JSON.stringify(data),
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire(
+                                'موفق!',
+                                data.message,
+                                'success'
+                            ).then(function(isConfirm) {
+                                location.reload();
+                            });
+                        } else {
+                            swal.fire(
+                                'هشدار!',
+                                data.message,
+                                'warning'
+                            );
 
-                            }
-                        },
-                        error: function(request, status, error) {
-                            alert(request.responseText);
                         }
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
 
-                    });
-                }
-            });
-        }
-    </script>
+                });
+            }
+        });
+    }
+</script>
 }
