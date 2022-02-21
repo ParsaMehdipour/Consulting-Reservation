@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs;
@@ -8,7 +6,10 @@ using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.ExpertInformations;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Experts
 {
@@ -133,15 +134,72 @@ namespace CR.Core.Services.Implementations.Experts
                     expertInformation.IconSrc = iconSrc;
                     expert.IconSrc = iconSrc;
                 }
+
+                if (Convert.ToInt32(request.phoneCallPrice) != expertInformation.PhoneCallPrice)
+                {
+                    var notReservedTimeOfDays = _context.TimeOfDays
+                        .Include(_ => _.Day)
+                        .Where(_ =>
+                        _.ExpertInformationId == expertInformation.Id && _.IsReserved == false && _.Day.Date.Day >= DateTime.Now.Day).ToList();
+
+                    foreach (var timeOfDay in notReservedTimeOfDays)
+                    {
+                        if (timeOfDay.TimingType == TimingType.ShortSpan)
+                            timeOfDay.PhoneCallPrice = Convert.ToInt32(request.phoneCallPrice) * 30;
+                        else if (timeOfDay.TimingType == TimingType.MediumSpan)
+                            timeOfDay.PhoneCallPrice = Convert.ToInt32(request.phoneCallPrice) * 60;
+                        else
+                            timeOfDay.PhoneCallPrice = Convert.ToInt32(request.phoneCallPrice) * 90;
+                    }
+                }
+
+                if (Convert.ToInt32(request.voiceCallPrice) != expertInformation.VoiceCallPrice)
+                {
+                    var notReservedTimeOfDays = _context.TimeOfDays
+                        .Include(_ => _.Day)
+                        .Where(_ =>
+                            _.ExpertInformationId == expertInformation.Id && _.IsReserved == false && _.Day.Date.Day >= DateTime.Now.Day).ToList();
+
+                    foreach (var timeOfDay in notReservedTimeOfDays)
+                    {
+                        if (timeOfDay.TimingType == TimingType.ShortSpan)
+                            timeOfDay.VoiceCallPrice = Convert.ToInt32(request.voiceCallPrice) * 30;
+                        else if (timeOfDay.TimingType == TimingType.MediumSpan)
+                            timeOfDay.VoiceCallPrice = Convert.ToInt32(request.voiceCallPrice) * 60;
+                        else
+                            timeOfDay.VoiceCallPrice = Convert.ToInt32(request.voiceCallPrice) * 90;
+                    }
+                }
+
+                if (Convert.ToInt32(request.textCallPrice) != expertInformation.TextCallPrice)
+                {
+                    var notReservedTimeOfDays = _context.TimeOfDays
+                        .Include(_ => _.Day)
+                        .Where(_ =>
+                            _.ExpertInformationId == expertInformation.Id && _.IsReserved == false && _.Day.Date.Day >= DateTime.Now.Day).ToList();
+
+                    foreach (var timeOfDay in notReservedTimeOfDays)
+                    {
+                        if (timeOfDay.TimingType == TimingType.ShortSpan)
+                            timeOfDay.TextCallPrice = Convert.ToInt32(request.textCallPrice) * 30;
+                        else if (timeOfDay.TimingType == TimingType.MediumSpan)
+                            timeOfDay.TextCallPrice = Convert.ToInt32(request.textCallPrice) * 60;
+                        else
+                            timeOfDay.TextCallPrice = Convert.ToInt32(request.textCallPrice) * 90;
+                    }
+                }
+
+                _context.SaveChanges();
+
                 expertInformation.Province = request.province;
                 expertInformation.SpecificAddress = request.specificAddress;
                 expertInformation.PostalCode = request.postalCode;
                 expertInformation.UsePhoneCall = request.usePhoneCall;
                 expertInformation.UseTextCall = request.useTextCall;
                 expertInformation.UseVoiceCall = request.useVoiceCall;
-                expertInformation.PhoneCallPrice = request.usePhoneCall ? Convert.ToInt32(request.phoneCallPrice.ToEnglishNumber()) : 0;
-                expertInformation.VoiceCallPrice = request.useVoiceCall ? Convert.ToInt32(request.voiceCallPrice.ToEnglishNumber()) : 0;
-                expertInformation.TextCallPrice = request.useTextCall ? Convert.ToInt32(request.textCallPrice.ToEnglishNumber()) : 0;
+                expertInformation.PhoneCallPrice = (request.usePhoneCall && request.phoneCallPrice != null) ? Convert.ToInt32(request.phoneCallPrice.ToEnglishNumber()) : 0;
+                expertInformation.VoiceCallPrice = (request.useVoiceCall && request.voiceCallPrice != null) ? Convert.ToInt32(request.voiceCallPrice.ToEnglishNumber()) : 0;
+                expertInformation.TextCallPrice = (request.useTextCall && request.textCallPrice != null) ? Convert.ToInt32(request.textCallPrice.ToEnglishNumber()) : 0;
                 expert.IsActive = false;
                 expert.Email = request.email;
                 expert.PhoneNumber = request.phoneNumber;
