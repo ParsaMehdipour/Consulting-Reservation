@@ -1,0 +1,293 @@
+﻿@model CR.Presentation.Models.ViewModels.BlogDetailsViewModel
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">بلاگ</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">‌جزییات مقاله</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+                <div class="blog-view">
+                    <div class="blog blog-single-post">
+                        <div class="blog-image">
+                            <a href="javascript:void(0);"><img alt="" src="~/@Model.BlogDetailsForPresentationDto.pictureSrc" class="img-fluid"></a>
+                        </div>
+                        <h3 class="blog-title"> @Model.BlogDetailsForPresentationDto.title </h3>
+                        <div class="blog-info clearfix">
+                            <div class="post-left">
+                                <ul>
+                                    <li>
+                                        <div class="post-author">
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.BlogDetailsForPresentationDto.authorInformationId"><img src="~/@Model.BlogDetailsForPresentationDto.authorIconSrc" alt="Post Author"> <span>@Model.BlogDetailsForPresentationDto.author</span></a>
+                                        </div>
+                                    </li>
+                                    <li><i class="far fa-calendar"></i>4 مهر 1399</li>
+                                    <li><i class="far fa-comments"></i>12 نظر</li>
+                                    <li><i class="fa fa-tags"></i>@Model.BlogDetailsForPresentationDto.blogCategoryName</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="blog-content">
+                            @Model.BlogDetailsForPresentationDto.shortDescription
+                        </div>
+                        <hr/>
+                        <div class="blog-content">
+                            @Html.Raw(Model.BlogDetailsForPresentationDto.description)
+                        </div>
+                    </div>
+
+                    <div class="card blog-share clearfix">
+                        <div class="card-header">
+                            <h4 class="card-title">اشتراک پست</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="social-share">
+                                <li><a href="#" title="Facebook"><i class="fab fa-facebook"></i></a></li>
+                                <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                                <li><a href="#" title="Google Plus"><i class="fab fa-google-plus"></i></a></li>
+                                <li><a href="#" title="Youtube"><i class="fab fa-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card author-widget clearfix">
+                        <div class="card-header">
+                            <h4 class="card-title">درباره نویسنده</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="about-author">
+                                <div class="about-author-img">
+                                    <div class="author-img-wrap">
+                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.BlogDetailsForPresentationDto.authorInformationId"><img class="img-fluid rounded-circle" alt="" src="~/@Model.BlogDetailsForPresentationDto.authorIconSrc"></a>
+                                    </div>
+                                </div>
+                                <div class="author-details">
+                                    <a href="doctor-profile.html" class="blog-author-name">@Model.BlogDetailsForPresentationDto.author</a>
+                                    <p class="mb-0">@Model.BlogDetailsForPresentationDto.authorDescription</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card blog-comments clearfix">
+                        <div class="card-header">
+                            <h4 class="card-title">نظر (12)</h4>
+                        </div>
+                        <div class="card-body pb-0">
+                            <ul class="comments-list">
+                                <li>
+                                    <div class="comment">
+                                        <div class="comment-author">
+                                            <img class="avatar" alt="" src="~/assets/img/patients/patient4.jpg">
+                                        </div>
+                                        <div class="comment-block">
+                                            <span class="comment-by">
+                                                <span class="blog-author-name">میچل فایرفکس</span>
+                                            </span>
+                                            <p>برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
+                                            <p class="blog-date">6 مهر 1399</p>
+                                            <a class="comment-btn" href="#">
+                                                <i class="fas fa-reply"></i> پاسخ
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <ul class="comments-list reply">
+                                        <li>
+                                            <div class="comment">
+                                                <div class="comment-author">
+                                                    <img class="avatar" alt="" src="~/assets/img/patients/patient5.jpg">
+                                                </div>
+                                                <div class="comment-block">
+                                                    <span class="comment-by">
+                                                        <span class="blog-author-name">جینا مور</span>
+                                                    </span>
+                                                    <p>تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+                                                    <p class="blog-date">6 مهر 1399</p>
+                                                    <a class="comment-btn" href="#">
+                                                        <i class="fas fa-reply"></i> پاسخ
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="comment">
+                                                <div class="comment-author">
+                                                    <img class="avatar" alt="" src="~/assets/img/patients/patient3.jpg">
+                                                </div>
+                                                <div class="comment-block">
+                                                    <span class="comment-by">
+                                                        <span class="blog-author-name">کارل کلی</span>
+                                                    </span>
+                                                    <p>تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+                                                    <p class="blog-date">7 مهر 1399</p>
+                                                    <a class="comment-btn" href="#">
+                                                        <i class="fas fa-reply"></i> پاسخ
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <div class="comment">
+                                        <div class="comment-author">
+                                            <img class="avatar" alt="" src="~/assets/img/patients/patient6.jpg">
+                                        </div>
+                                        <div class="comment-block">
+                                            <span class="comment-by">
+                                                <span class="blog-author-name">ایلس گیلی</span>
+                                            </span>
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </p>
+                                            <p class="blog-date">11 مهر 1399</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="comment">
+                                        <div class="comment-author">
+                                            <img class="avatar" alt="" src="~/assets/img/patients/patient7.jpg">
+                                        </div>
+                                        <div class="comment-block">
+                                            <span class="comment-by">
+                                                <span class="blog-author-name">جوان گاردنر</span>
+                                            </span>
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </p>
+                                            <p class="blog-date">13 مهر 1399</p>
+                                            <a class="comment-btn" href="#">
+                                                <i class="fas fa-reply"></i> پاسخ
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card new-comment clearfix">
+                        <div class="card-header">
+                            <h4 class="card-title">ارسال نظر</h4>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label>نام <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label> ایمیل <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label> نظر </label>
+                                    <textarea rows="4" class="form-control"></textarea>
+                                </div>
+                                <div class="submit-section">
+                                    <button class="btn btn-primary submit-btn" type="submit"> ارسال</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Blog Sidebar -->
+            <div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar">
+
+                <!-- Search -->
+                <div class="card search-widget">
+                    <div class="card-body">
+                        <form class="search-form">
+                            <div class="input-group">
+                                <input type="text" placeholder="جستجو..." class="form-control">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /Search -->
+                <!-- Latest Posts -->
+                <div class="card post-widget">
+                    <div class="card-header">
+                        <h4 class="card-title">آخرین پست‌ها</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="latest-posts">
+                            @foreach (var blog in Model.LatestBlogsDto)
+                            {
+                                <li>
+                                    <div class="post-thumb">
+                                        <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug">
+                                            <img class="img-fluid" src="~/@blog.PictureSrc" alt="@blog.Title">
+                                        </a>
+                                    </div>
+                                    <div class="post-info">
+                                        <h4>
+                                            <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"> @blog.Title </a>
+                                        </h4>
+                                        <p>@blog.PublishDate</p>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <!-- /Latest Posts -->
+                <!-- Categories -->
+                <div class="card category-widget">
+                    <div class="card-header">
+                        <h4 class="card-title"> دسته‌بندی بلاگ </h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="categories">
+                            <li><a href="#">قلب و عروق <span>(62)</span></a></li>
+                            <li><a href="#">مراقبت های بهداشتی <span>(27)</span></a></li>
+                            <li><a href="#">تغذیه <span>(41)</span></a></li>
+                            <li><a href="#">نکات بهداشتی <span>(16)</span></a></li>
+                            <li><a href="#">تحقیقات پزشکی <span>(55)</span></a></li>
+                            <li><a href="#">درمان بهداشت <span>(07)</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /Categories -->
+                <!-- Tags -->
+                <div class="card tags-widget">
+                    <div class="card-header">
+                        <h4 class="card-title">برچسب‌ها</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="tags">
+                            @foreach (var keyWord in Model.BlogDetailsForPresentationDto.keyWords)
+                            {
+                                <li><a href="#" class="tag">@keyWord</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <!-- /Tags -->
+
+            </div>
+            <!-- /Blog Sidebar -->
+
+        </div>
+    </div>
+
+</div>
+<!-- /Page Content -->

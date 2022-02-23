@@ -1,15 +1,19 @@
 ﻿using CR.Core.Services.Interfaces.Blogs;
+using CR.Presentation.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CR.Presentation.Controllers.View
 {
     public class BlogsController : Controller
     {
-        private readonly IGetBlogDetailsService _getBlogDetailsService;
+        private readonly IGetBlogDetailsForPresentationService _getBlogDetailsForPresentationService;
+        private readonly IGetLatestBlogsForSiteService _getLatestBlogsForSiteService;
 
-        public BlogsController(IGetBlogDetailsService getBlogDetailsService)
+        public BlogsController(IGetBlogDetailsForPresentationService getBlogDetailsForPresentationService
+        , IGetLatestBlogsForSiteService getLatestBlogsForSiteService)
         {
-            _getBlogDetailsService = getBlogDetailsService;
+            _getBlogDetailsForPresentationService = getBlogDetailsForPresentationService;
+            _getLatestBlogsForSiteService = getLatestBlogsForSiteService;
         }
 
         public IActionResult Index()
@@ -17,9 +21,15 @@ namespace CR.Presentation.Controllers.View
             return View();
         }
 
-        public IActionResult GetBlogDetails(long id)
+        public IActionResult BlogDetails(string slug)
         {
+            var model = new BlogDetailsViewModel()
+            {
+                BlogDetailsForPresentationDto = _getBlogDetailsForPresentationService.Execute(slug).Data,
+                LatestBlogsDto = _getLatestBlogsForSiteService.Execute().Data
+            };
 
+            return View(model);
         }
     }
 }
