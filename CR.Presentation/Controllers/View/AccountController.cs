@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace CR.Presentation.Controllers
+namespace CR.Presentation.Controllers.View
 {
     public class AccountController : Controller
     {
@@ -15,20 +15,20 @@ namespace CR.Presentation.Controllers
 
         public AccountController(
             UserManager<User> userManager
-            ,SignInManager<User> signInManager
-            ,IRegisterAsExpertService registerAsExpertService)
+            , SignInManager<User> signInManager
+            , IRegisterAsExpertService registerAsExpertService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _registerAsExpertService = registerAsExpertService;
-        } 
-           
+        }
+
         [HttpGet]
         public IActionResult Signup()
         {
             if (_signInManager.IsSignedIn(User))
                 return RedirectToAction("Index", "Home");
-            return View(); 
+            return View();
         }
 
         [HttpPost]
@@ -89,7 +89,7 @@ namespace CR.Presentation.Controllers
                 {
                     var signedUser = await _userManager.FindByNameAsync(model.PhoneNumber);
 
-                    _registerAsExpertService.Execute(signedUser.Id,model.FirstName,model.LastName);
+                    _registerAsExpertService.Execute(signedUser.Id, model.FirstName, model.LastName);
 
                     return RedirectToAction("Login", "Account");
                 }
@@ -165,7 +165,7 @@ namespace CR.Presentation.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index" , "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

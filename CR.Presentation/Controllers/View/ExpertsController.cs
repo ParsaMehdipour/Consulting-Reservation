@@ -1,5 +1,4 @@
-﻿using System;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Specialites;
 using CR.DataAccess.Enums;
@@ -7,7 +6,7 @@ using CR.Presentation.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CR.Presentation.Controllers
+namespace CR.Presentation.Controllers.View
 {
     public class ExpertsController : Controller
     {

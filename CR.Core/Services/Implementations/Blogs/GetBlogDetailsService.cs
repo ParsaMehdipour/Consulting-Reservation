@@ -7,22 +7,22 @@ using System.Linq;
 
 namespace CR.Core.Services.Implementations.Blogs
 {
-    public class GetBlogDetailsForAdminPanelService : IGetBlogDetailsForAdminPanelService
+    public class GetBlogDetailsService : IGetBlogDetailsService
     {
         private readonly ApplicationContext _context;
 
-        public GetBlogDetailsForAdminPanelService(ApplicationContext context)
+        public GetBlogDetailsService(ApplicationContext context)
         {
             _context = context;
         }
 
-        public ResultDto<BlogDetailsForAdminDto> Execute(long id)
+        public ResultDto<BlogDetailsDto> Execute(long id)
         {
             var blogDetails = _context.Blogs.Find(id);
 
             if (blogDetails == null)
             {
-                return new ResultDto<BlogDetailsForAdminDto>()
+                return new ResultDto<BlogDetailsDto>()
                 {
                     Data = null,
                     IsSuccess = false,
@@ -30,7 +30,7 @@ namespace CR.Core.Services.Implementations.Blogs
                 };
             }
 
-            var blogDetailsForAdminPanel = new BlogDetailsForAdminDto
+            var blogDetailsForAdminPanel = new BlogDetailsDto
             {
                 id = blogDetails.Id,
                 status = blogDetails.Status,
@@ -51,7 +51,7 @@ namespace CR.Core.Services.Implementations.Blogs
                 slug = blogDetails.Slug,
             };
 
-            return new ResultDto<BlogDetailsForAdminDto>()
+            return new ResultDto<BlogDetailsDto>()
             {
                 Data = blogDetailsForAdminPanel,
                 IsSuccess = true,

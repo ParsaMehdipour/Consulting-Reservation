@@ -13,15 +13,15 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
     {
         private readonly IGetBlogsForAdminPanelService _getBlogsForAdminPanelService;
         private readonly IGetBlogCategoriesForDropdownService _getBlogCategoriesForDropdownService;
-        private readonly IGetBlogDetailsForAdminPanelService _getBlogDetailsForAdminPanelService;
+        private readonly IGetBlogDetailsService _getBlogDetailsService;
 
         public BlogsController(IGetBlogsForAdminPanelService getBlogsForAdminPanelService
         , IGetBlogCategoriesForDropdownService getBlogCategoriesForDropdownService
-        , IGetBlogDetailsForAdminPanelService getBlogDetailsForAdminPanelService)
+        , IGetBlogDetailsService getBlogDetailsService)
         {
             _getBlogsForAdminPanelService = getBlogsForAdminPanelService;
             _getBlogCategoriesForDropdownService = getBlogCategoriesForDropdownService;
-            _getBlogDetailsForAdminPanelService = getBlogDetailsForAdminPanelService;
+            _getBlogDetailsService = getBlogDetailsService;
         }
 
         public IActionResult Index(int page = 1, int pageSize = 20)
@@ -46,7 +46,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         {
             TempData["activemenu"] = ActiveMenu.Blogs;
 
-            var model = _getBlogDetailsForAdminPanelService.Execute(id).Data;
+            var model = _getBlogDetailsService.Execute(id).Data;
 
             ViewBag.Categories = new SelectList(_getBlogCategoriesForDropdownService.Execute(), "Id", "Name");
 
@@ -57,7 +57,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers
         {
             TempData["activemenu"] = ActiveMenu.Blogs;
 
-            var model = _getBlogDetailsForAdminPanelService.Execute(id).Data;
+            var model = _getBlogDetailsService.Execute(id).Data;
 
             return View(model);
         }
