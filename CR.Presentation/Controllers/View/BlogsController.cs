@@ -6,24 +6,33 @@ namespace CR.Presentation.Controllers.View
 {
     public class BlogsController : Controller
     {
+        private readonly IGetBlogsForPresentationService _getBlogsForPresentationService;
         private readonly IGetBlogDetailsForPresentationService _getBlogDetailsForPresentationService;
         private readonly IGetLatestBlogsForSiteService _getLatestBlogsForSiteService;
 
-        public BlogsController(IGetBlogDetailsForPresentationService getBlogDetailsForPresentationService
+        public BlogsController(IGetBlogsForPresentationService getBlogsForPresentationService
+            , IGetBlogDetailsForPresentationService getBlogDetailsForPresentationService
         , IGetLatestBlogsForSiteService getLatestBlogsForSiteService)
         {
+            _getBlogsForPresentationService = getBlogsForPresentationService;
             _getBlogDetailsForPresentationService = getBlogDetailsForPresentationService;
             _getLatestBlogsForSiteService = getLatestBlogsForSiteService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchKey, int page = 1, int pageSize = 20)
         {
-            return View();
+            var model = new BlogsIndexViewModel
+            {
+                ResultGetBlogsForPresentationDto = _getBlogsForPresentationService.Execute(searchKey, page, pageSize).Data,
+                LatestBlogsDto = _getLatestBlogsForSiteService.Execute().Data
+            };
+
+            return View(model);
         }
 
         public IActionResult BlogDetails(string slug)
         {
-            var model = new BlogDetailsViewModel()
+            var model = new BlogDetailsViewModel
             {
                 BlogDetailsForPresentationDto = _getBlogDetailsForPresentationService.Execute(slug).Data,
                 LatestBlogsDto = _getLatestBlogsForSiteService.Execute().Data

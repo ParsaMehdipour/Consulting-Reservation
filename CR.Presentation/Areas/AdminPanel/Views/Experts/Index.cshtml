@@ -43,7 +43,7 @@
                             <tr>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@expert.IconSrc" alt="User Image"></a>
+                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@expert.Id" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@expert.IconSrc" alt="User Image"></a>
                                         <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@expert.Id">@expert.FullName</a>
                                     </h2>
                                 </td>
