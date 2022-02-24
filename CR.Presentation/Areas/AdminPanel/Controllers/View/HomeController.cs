@@ -1,4 +1,5 @@
-﻿using CR.Common.ActiveMenus;
+﻿using System.Threading.Tasks;
+using CR.Common.ActiveMenus;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Account;
 using CR.Core.DTOs.Users;
@@ -13,9 +14,8 @@ using CR.Presentation.Areas.AdminPanel.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
-namespace CR.Presentation.Areas.AdminPanel.Controllers
+namespace CR.Presentation.Areas.AdminPanel.Controllers.View
 {
     [Authorize]
     [Area("AdminPanel")]

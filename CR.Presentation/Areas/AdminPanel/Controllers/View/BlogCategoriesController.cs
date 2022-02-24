@@ -1,12 +1,12 @@
-﻿using CR.Common.ActiveMenus;
+﻿using System.Linq;
+using CR.Common.ActiveMenus;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.BlogCategories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
 
-namespace CR.Presentation.Areas.AdminPanel.Controllers
+namespace CR.Presentation.Areas.AdminPanel.Controllers.View
 {
     [Authorize]
     [Area("AdminPanel")]

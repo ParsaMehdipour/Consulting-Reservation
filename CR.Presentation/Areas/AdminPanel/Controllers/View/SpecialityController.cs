@@ -4,7 +4,7 @@ using CR.Core.Services.Interfaces.Specialites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CR.Presentation.Areas.AdminPanel.Controllers
+namespace CR.Presentation.Areas.AdminPanel.Controllers.View
 {
     [Authorize]
     [Area("AdminPanel")]
