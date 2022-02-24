@@ -21,7 +21,7 @@ namespace CR.Core.Services.Implementations.Experts
             _context = context;
         }
 
-        public ResultDto<ResultGetExpertsForSiteDto> Execute(string searchKey, string speciality, GenderType gender, int Page = 1, int PageSize = 20)
+        public ResultDto<ResultGetExpertsForSiteDto> Execute(string searchKey, List<string> speciality, GenderType gender, int Page = 1, int PageSize = 20)
         {
 
             int rowCount = 0;
@@ -41,9 +41,12 @@ namespace CR.Core.Services.Implementations.Experts
                                || e.ExpertInformation.Tag.Contains(searchKey));
             }
 
-            if (!string.IsNullOrWhiteSpace(speciality))
+            if (speciality.Count > 0)
             {
-                expertsQuery = expertsQuery.Where(e => e.ExpertInformation.Specialty.Name.Contains(speciality));
+                foreach (var spec in speciality)
+                {
+                    expertsQuery = expertsQuery.Where(e => e.ExpertInformation.Specialty.Name.Contains(spec));
+                }
             }
 
             if (gender != 0)

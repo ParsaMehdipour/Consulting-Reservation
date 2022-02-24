@@ -5,6 +5,7 @@ using CR.DataAccess.Enums;
 using CR.Presentation.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CR.Presentation.Controllers.View
 {
@@ -20,7 +21,7 @@ namespace CR.Presentation.Controllers.View
         , IGetExpertDetailsForSiteService getExpertDetailsForSiteService
         , IGetSpecialitiesForSearchService getSpecialitiesForSearchService
         , IGetExpertDetailsForReservationService getExpertDetailsForReservationService
-        ,IGetThisDateExpertDetailsForReservationService getThisDateExpertDetailsForReservationService)
+        , IGetThisDateExpertDetailsForReservationService getThisDateExpertDetailsForReservationService)
         {
             _getExpertsForSiteService = getExpertsForSiteService;
             _getExpertDetailsForSiteService = getExpertDetailsForSiteService;
@@ -29,7 +30,7 @@ namespace CR.Presentation.Controllers.View
             _getThisDateExpertDetailsForReservationService = getThisDateExpertDetailsForReservationService;
         }
 
-        public IActionResult Index(string searchKey, string speciality, GenderType gender, int page = 1, int pageSize = 20)
+        public IActionResult Index(string searchKey, List<string> speciality, GenderType gender, int page = 1, int pageSize = 20)
         {
             var searchModel = new SearchViewModel()
             {
@@ -58,7 +59,7 @@ namespace CR.Presentation.Controllers.View
 
         [Authorize]
         [HttpPost]
-        public IActionResult Reservation(long expertInformationId,string passedDate)
+        public IActionResult Reservation(long expertInformationId, string passedDate)
         {
             var date = passedDate.ToGeorgianDateTime();
 
