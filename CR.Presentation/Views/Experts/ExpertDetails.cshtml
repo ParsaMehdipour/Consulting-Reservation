@@ -1,4 +1,5 @@
 ﻿@using CR.Common.Utilities
+@using CR.DataAccess.Enums
 @model CR.Core.DTOs.Experts.ExpertDetailsForSiteDto
 @{
 }
@@ -164,53 +165,53 @@
                                 @if (Model.experiences.Count > 0)
                                 {
                                     <div class="widget experience-widget">
-                                    <h4 class="widget-title"> کار و تجربه </h4>
-                                    <div class="experience-box">
-                                        <ul class="experience-list">
-                                           @foreach (var experience in Model.experiences)
-                                           {
-                                               <li>
-                                                   <div class="experience-user">
-                                                       <div class="before-circle"></div>
-                                                   </div>
-                                                   <div class="experience-content">
-                                                       <div class="timeline-content">
-                                                           <a href="#" class="name">@experience.clinicName - @experience.role</a>
-                                                           <span class="time">@experience.startYear - @experience.finishYear</span>
-                                                       </div>
-                                                   </div>
-                                               </li>
-                                           }
-                                        </ul>
+                                        <h4 class="widget-title"> کار و تجربه </h4>
+                                        <div class="experience-box">
+                                            <ul class="experience-list">
+                                                @foreach (var experience in Model.experiences)
+                                                {
+                                                    <li>
+                                                        <div class="experience-user">
+                                                            <div class="before-circle"></div>
+                                                        </div>
+                                                        <div class="experience-content">
+                                                            <div class="timeline-content">
+                                                                <a href="#" class="name">@experience.clinicName - @experience.role</a>
+                                                                <span class="time">@experience.startYear - @experience.finishYear</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
                                 }
                                 <!-- /Experience Details -->
                                 <!-- Awards Details -->
                                 @if (Model.prizes.Count > 0)
                                 {
                                     <div class="widget awards-widget">
-                                    <h4 class="widget-title">جایزه ها</h4>
-                                    <div class="experience-box">
-                                        <ul class="experience-list">
-                                            @foreach (var prize in Model.prizes)
-                                            {
-                                                <li>
-                                                    <div class="experience-user">
-                                                        <div class="before-circle"></div>
-                                                    </div>
-                                                    <div class="experience-content">
-                                                        <div class="timeline-content">
-                                                            <p class="exp-year">@prize.year</p>
-                                                            <h4 class="exp-title">@prize.prizeName</h4>
-                                                            @*<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>*@
+                                        <h4 class="widget-title">جایزه ها</h4>
+                                        <div class="experience-box">
+                                            <ul class="experience-list">
+                                                @foreach (var prize in Model.prizes)
+                                                {
+                                                    <li>
+                                                        <div class="experience-user">
+                                                            <div class="before-circle"></div>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                            }
-                                        </ul>
+                                                        <div class="experience-content">
+                                                            <div class="timeline-content">
+                                                                <p class="exp-year">@prize.year</p>
+                                                                <h4 class="exp-title">@prize.prizeName</h4>
+                                                                @*<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>*@
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
                                 }
                                 <!-- /Awards Details -->
                                 <!-- Services List -->
@@ -237,7 +238,6 @@
                         <!-- Review Listing -->
                         <div class="widget review-listing">
                             <ul class="comments-list">
-
                                 <!-- Comment List -->
                                 <li>
                                     <div class="comment">
@@ -317,44 +317,6 @@
 
                                 </li>
                                 <!-- /Comment List -->
-                                <!-- Comment List -->
-                                <li>
-                                    <div class="comment">
-                                        <img class="avatar avatar-sm rounded-circle" alt="User Image" src="~/assets/img/patients/patient2.jpg">
-                                        <div class="comment-body">
-                                            <div class="meta-data">
-                                                <span class="comment-author">تراویس تریمبل</span>
-                                                <span class="comment-date">نظر داده شده 4 روز پیش</span>
-                                                <div class="review-count rating">
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star"></i>
-                                                </div>
-                                            </div>
-                                            <p class="comment-content">
-                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
-                                            </p>
-                                            <div class="comment-reply">
-                                                <a class="comment-btn" href="#">
-                                                    <i class="fas fa-reply"></i> پاسخ
-                                                </a>
-                                                <p class="recommend-btn">
-                                                    <span>پیشنهاد؟</span>
-                                                    <a href="#" class="like-btn">
-                                                        <i class="far fa-thumbs-up"></i> بله
-                                                    </a>
-                                                    <a href="#" class="dislike-btn">
-                                                        <i class="far fa-thumbs-down"></i> نه
-                                                    </a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- /Comment List -->
-
                             </ul>
 
                             <!-- Show All -->
@@ -369,60 +331,51 @@
                         <!-- /Review Listing -->
                         <!-- Write Review -->
                         <div class="write-review">
-                            <h4>یک نظر بنویسید برای <strong>مشاور دارن الدر</strong></h4>
+                            <h4>یک نظر بنویسید برای <strong>مشاور @Model.FullName</strong></h4>
 
                             <!-- Write Review Form -->
-                            <form>
-                                <div class="form-group">
-                                    <label>نظر</label>
-                                    <div class="star-rating">
-                                        <input id="star-5" type="radio" name="rating" value="star-5">
-                                        <label for="star-5" title="5 stars">
-                                            <i class="active fa fa-star"></i>
-                                        </label>
-                                        <input id="star-4" type="radio" name="rating" value="star-4">
-                                        <label for="star-4" title="4 stars">
-                                            <i class="active fa fa-star"></i>
-                                        </label>
-                                        <input id="star-3" type="radio" name="rating" value="star-3">
-                                        <label for="star-3" title="3 stars">
-                                            <i class="active fa fa-star"></i>
-                                        </label>
-                                        <input id="star-2" type="radio" name="rating" value="star-2">
-                                        <label for="star-2" title="2 stars">
-                                            <i class="active fa fa-star"></i>
-                                        </label>
-                                        <input id="star-1" type="radio" name="rating" value="star-1">
-                                        <label for="star-1" title="1 star">
-                                            <i class="active fa fa-star"></i>
-                                        </label>
+                            <div class="form-group">
+                                <label>نظر</label>
+                                <div class="star-rating">
+                                    <input id="star-5" type="radio" name="rating" value="star-5">
+                                    <label for="star-5" title="5 stars">
+                                        <i class="active fa fa-star"></i>
+                                    </label>
+                                    <input id="star-4" type="radio" name="rating" value="star-4">
+                                    <label for="star-4" title="4 stars">
+                                        <i class="active fa fa-star"></i>
+                                    </label>
+                                    <input id="star-3" type="radio" name="rating" value="star-3">
+                                    <label for="star-3" title="3 stars">
+                                        <i class="active fa fa-star"></i>
+                                    </label>
+                                    <input id="star-2" type="radio" name="rating" value="star-2">
+                                    <label for="star-2" title="2 stars">
+                                        <i class="active fa fa-star"></i>
+                                    </label>
+                                    <input id="star-1" type="radio" name="rating" value="star-1">
+                                    <label for="star-1" title="1 star">
+                                        <i class="active fa fa-star"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>نظر شما</label>
+                                <textarea id="message" maxlength="100" class="form-control"></textarea>
+                                @*<div class="d-flex justify-content-between mt-3"><small class="text-muted"><span id="chars">100</span> کارکتر مانده</small></div>*@
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                                <div class="terms-accept">
+                                    <div class="custom-checkbox">
+                                        <input type="checkbox" id="terms_accept">
+                                        <label for="terms_accept">من با تمامی <a href="#">شرایط و مقررات موافقم</a></label>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>عنوان نظر</label>
-                                    <input class="form-control" type="text" placeholder="اگر می توانستید آن را در یک جمله بگویید ، چه می گویید؟">
-                                </div>
-                                <div class="form-group">
-                                    <label>نظر شما</label>
-                                    <textarea id="review_desc" maxlength="100" class="form-control"></textarea>
-
-
-
-                                    <div class="d-flex justify-content-between mt-3"><small class="text-muted"><span id="chars">100</span> کارکتر مانده</small></div>
-                                </div>
-                                <hr>
-                                <div class="form-group">
-                                    <div class="terms-accept">
-                                        <div class="custom-checkbox">
-                                            <input type="checkbox" id="terms_accept">
-                                            <label for="terms_accept">من با تمامی <a href="#">شرایط و مقررات موافقم</a></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="submit-section">
-                                    <button type="submit" class="btn btn-primary submit-btn">افزودن نظر</button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="submit-section">
+                                <button onclick="AddNewComment()" type="submit" class="btn btn-primary submit-btn">افزودن نظر</button>
+                            </div>
                             <!-- /Write Review Form -->
 
                         </div>
@@ -511,23 +464,80 @@
 </div>
 <!-- /Page Content -->
 
-<input type="hidden" value="@ClaimUtility.GetUserId(User).Value" id="userId" name="userId"/>
+<input type="hidden" value="@ClaimUtility.GetUserId(User).Value" id="userId" name="userId" />
 
 @section Scripts
 {
-    <script>
-        function AddToFavorites(Id) {
-            var addToFavoriteForm = new FormData();
+<script>
 
-            addToFavoriteForm.append("expertInformationId",Id);
-            addToFavoriteForm.append("userId",$("#userId").val());
+    var parentId = null;
+
+    function SetParentId(Id) {
+        parentId = Id;
+    }
+
+    function AddToFavorites(Id) {
+        var addToFavoriteForm = new FormData();
+
+        addToFavoriteForm.append("expertInformationId",Id);
+        addToFavoriteForm.append("userId",$("#userId").val());
+
+        $.ajax({
+            type: "POST",
+            url: '/api/Experts/AddToFavorites',
+            data: addToFavoriteForm,
+            processData: false,
+            contentType: false,
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
+            success: function(data) {
+                if (data.isSuccess === true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                }
+                else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function AddNewComment() {
+
+        if ($("#terms_accept").is(":checked")) {
+
+            var addNewCommentForm = new FormData();
+
+            var data = {};
+
+            data["message"] = $("#message").val();
+            data["typeId"] = 0;
+            data["ownerRecordId"] =  @Model.id;
+            data["parentId"] =  parentId;
 
             $.ajax({
                 type: "POST",
-                url: '/api/Experts/AddToFavorites',
-                data: addToFavoriteForm,
-                processData: false,
-                contentType: false,
+                url: '/api/Comments/AddNewComments',
+                data: JSON.stringify(data),
+                cache: false,
+                contentType: 'application/json; charset=utf-8',
+                enctype: 'application/json',
+                dataType: 'json',
                 beforeSend: function(x) {
                     $('#loading').show();
                 },
@@ -538,11 +548,6 @@
                             'success').then(function(isConfirm) {
                             location.reload();
                         });
-                    } 
-                    else {
-                        swal.fire('هشدار!',
-                            data.message,
-                            'warning');
                     }
                 },
                 complete: function() {
@@ -555,6 +560,14 @@
                     alert(request.responseText);
                 }
             });
+        } else {
+
+            swal.fire('هشدار!',
+                "لطفا تیک شرایط و مقررات را بزنید",
+                'warning');
+
+            return;
         }
-    </script>
+    }
+</script>
 }

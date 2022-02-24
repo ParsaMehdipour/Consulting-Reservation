@@ -1,6 +1,7 @@
 using CR.Core.Services.Implementations.Appointment;
 using CR.Core.Services.Implementations.BlogCategories;
 using CR.Core.Services.Implementations.Blogs;
+using CR.Core.Services.Implementations.Comments;
 using CR.Core.Services.Implementations.CommissionAndDiscounts;
 using CR.Core.Services.Implementations.Consumers;
 using CR.Core.Services.Implementations.ExpertAvailabilities;
@@ -17,6 +18,7 @@ using CR.Core.Services.Implementations.Users;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.Core.Services.Interfaces.BlogCategories;
 using CR.Core.Services.Interfaces.Blogs;
+using CR.Core.Services.Interfaces.Comments;
 using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
@@ -224,6 +226,8 @@ namespace CR.Presentation
             services.AddScoped<IAddNewFavoriteService, AddNewFavoriteService>();
             services.AddScoped<IGetConsumerFavoritesService, GetConsumerFavoritesService>();
             services.AddScoped<IRemoveFromFavoritesListService, RemoveFromFavoritesListService>();
+            //Comments
+            services.AddScoped<IAddNewCommentService, AddNewCommentService>();
 
             #endregion
 

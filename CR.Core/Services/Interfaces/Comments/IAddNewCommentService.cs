@@ -5,6 +5,6 @@ namespace CR.Core.Services.Interfaces.Comments
 {
     public interface IAddNewCommentService
     {
-        ResultDto Execute(RequestAddNewCommentDto request);
+        ResultDto Execute(RequestAddNewCommentDto request, long userId);
     }
 }
