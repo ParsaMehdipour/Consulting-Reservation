@@ -213,6 +213,7 @@ namespace CR.Presentation
             services.AddScoped<IGetBlogsForExpertPanelService, GetBlogsForExpertPanelService>();
             services.AddScoped<IGetLatestBlogsForSiteService, GetLatestBlogsForSiteService>();
             services.AddScoped<IGetBlogDetailsForPresentationService, GetBlogDetailsForPresentationService>();
+            services.AddScoped<IGetBlogsForPresentationService, GetBlogsForPresentationService>();
             //FinancialTransactions
             services.AddScoped<IGetFinancialTransactionsForAdminService, GetFinancialTransactionsForAdminService>();
             services.AddScoped<IGetConsumerFinancialTransactionsService, GetConsumerFinancialTransactionsService>();
@@ -228,6 +229,7 @@ namespace CR.Presentation
             services.AddScoped<IRemoveFromFavoritesListService, RemoveFromFavoritesListService>();
             //Comments
             services.AddScoped<IAddNewCommentService, AddNewCommentService>();
+            services.AddScoped<IGetExpertCommentsForAdminPanelService, GetExpertCommentsForAdminPanelService>();
 
             #endregion
 
