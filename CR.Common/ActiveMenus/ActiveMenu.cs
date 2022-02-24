@@ -24,5 +24,7 @@
 
         public const string Blogs = "blogs";
 
+        public const string ExpertComments = "expertscomments";
+
     }
 }

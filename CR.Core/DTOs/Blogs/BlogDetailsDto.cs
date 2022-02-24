@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CR.Core.DTOs.Blogs
 {
-    public class BlogDetailsForAdminDto
+    public class BlogDetailsDto
     {
 
         public long id { get; set; }

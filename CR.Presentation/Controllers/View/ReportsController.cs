@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Mvc;
-using System.IO;
 
-namespace CR.Presentation.Controllers
+namespace CR.Presentation.Controllers.View
 {
     public class ReportsController : Controller
     {

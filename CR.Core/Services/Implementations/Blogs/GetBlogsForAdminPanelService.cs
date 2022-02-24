@@ -29,7 +29,7 @@ namespace CR.Core.Services.Implementations.Blogs
                 {
                     Id = _.Id,
                     BlogPictureSrc = _.PictureSrc ?? "assets/img/img-pharmacy1.jpg",
-                    Title = (_.Title.Length > 15) ? _.Title.Substring(0, Math.Min(_.ShortDescription.Length, 15)) + "..." : _.Title,
+                    Title = (_.Title.Length > 15) ? _.Title.Substring(0, Math.Min(_.Title.Length, 15)) + "..." : _.Title,
                     Author = GetAuthorName(_.UserId, _context),
                     BlogCategory = _.BlogCategory.Name,
                     CreateDate = _.CreateDate.ToShamsi(),

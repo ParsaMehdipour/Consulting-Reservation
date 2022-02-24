@@ -1,0 +1,188 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@model CR.Presentation.Models.ViewModels.BlogsIndexViewModel
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">مقالات</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">‌لیست مقالات</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+
+                @if (Model.ResultGetBlogsForPresentationDto.BlogForPresentationDtos.Count > 0)
+                {
+                    <div class="row blog-grid-row">
+                        @foreach (var blog in Model.ResultGetBlogsForPresentationDto.BlogForPresentationDtos)
+                        {
+                            <div class="col-md-6 col-sm-12">
+
+                                <!-- Blog Post -->
+                                <div class="blog grid-blog">
+                                    <div class="blog-image">
+                                        <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"><img class="img-fluid" src="~/@blog.PictureSrc" alt="@blog.Title"></a>
+                                    </div>
+                                    <div class="blog-content">
+                                        <ul class="entry-meta meta-item">
+                                            <li>
+                                                <div class="post-author">
+                                                    @if (blog.AuthorInformationId != 0)
+                                                    {
+                                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@blog.AuthorInformationId"><img src="~/@blog.AuthorIconSrc" alt="@blog.AuthorFullName"> <span>@blog.AuthorFullName</span></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a><img src="~/@blog.AuthorIconSrc" alt="@blog.AuthorFullName"> <span>@blog.AuthorFullName</span></a>
+                                                    }
+                                                </div>
+                                            </li>
+                                            <li><i class="far fa-clock"></i> @blog.PublishDate</li>
+                                        </ul>
+                                        <h3 class="blog-title"><a href="blog-details.html"> @blog.Title </a></h3>
+                                        <p class="mb-0">@blog.ShortDescription</p>
+                                    </div>
+                                </div>
+                                <!-- /Blog Post -->
+
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Blog Pagination -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <paging total-records="Model.ResultGetBlogsForPresentationDto.RowCount"
+                                        page-no="Model.ResultGetBlogsForPresentationDto.CurrentPage"
+                                        page-size="Model.ResultGetBlogsForPresentationDto.PageSize"
+                                        show-prev-next="true"
+                                        show-total-pages="false"
+                                        show-total-records="false"
+                                        show-page-size-nav="true"
+                                        show-first-numbered-page="true"
+                                        show-last-numbered-page="true"
+                                        query-string-key-page-no="Page"
+                                        query-string-key-page-size="PageSize"
+                                        gap-size="2">
+                                </paging>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Blog Pagination -->
+                }
+            </div>
+
+            <!-- Blog Sidebar -->
+            <div class="col-lg-4 col-md-12 sidebar-right theiaStickySidebar">
+
+                <!-- Search -->
+                <div class="card search-widget">
+                    <div class="card-body">
+                        <form class="search-form">
+                            <div class="input-group">
+                                <input type="text" placeholder="جستجو..." class="form-control" name="searchKey" id="searchKey">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /Search -->
+                <!-- Latest Posts -->
+                <div class="card post-widget">
+                    <div class="card-header">
+                        <h4 class="card-title">آخرین پست‌ها</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="latest-posts">
+                           @foreach (var blog in Model.LatestBlogsDto)
+                           {
+                               <li>
+                                   <div class="post-thumb">
+                                       <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug">
+                                           <img class="img-fluid" src="~/@blog.PictureSrc" alt="@blog.Title">
+                                       </a>
+                                   </div>
+                                   <div class="post-info">
+                                       <h4>
+                                           <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"> @blog.Title </a>
+                                       </h4>
+                                       <p>@blog.PublishDate</p>
+                                   </div>
+                               </li>
+                           }
+                        </ul>
+                    </div>
+                </div>
+                <!-- /Latest Posts -->
+                <!-- Categories -->
+                <div class="card category-widget">
+                    <div class="card-header">
+                        <h4 class="card-title"> دسته‌بندی بلاگ </h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="categories">
+                            <li><a href="#">قلب و عروق <span>(62)</span></a></li>
+                            <li><a href="#">مراقبت های بهداشتی <span>(27)</span></a></li>
+                            <li><a href="#">تغذیه <span>(41)</span></a></li>
+                            <li><a href="#">نکات بهداشتی <span>(16)</span></a></li>
+                            <li><a href="#">تحقیقات پزشکی <span>(55)</span></a></li>
+                            <li><a href="#">درمان بهداشت <span>(07)</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /Categories -->
+                <!-- Tags -->
+                <div class="card tags-widget">
+                    <div class="card-header">
+                        <h4 class="card-title">برچسب‌ها</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="tags">
+                            <li><a href="#" class="tag">کودکان</a></li>
+                            <li><a href="#" class="tag">بیماری</a></li>
+                            <li><a href="#" class="tag">رزرو نوبت</a></li>
+                            <li><a href="#" class="tag">رزرو نوبت</a></li>
+                            <li><a href="#" class="tag">نوزادان</a></li>
+                            <li><a href="#" class="tag">سلامتی</a></li>
+                            <li><a href="#" class="tag">فامیل</a></li>
+                            <li><a href="#" class="tag">نکته‌ها</a></li>
+                            <li><a href="#" class="tag">زمان‌بندی</a></li>
+                            <li><a href="#" class="tag">درمان</a></li>
+                            <li><a href="#" class="tag">پزشک</a></li>
+                            <li><a href="#" class="tag">کلینیک</a></li>
+                            <li><a href="#" class="tag">آنلاین</a></li>
+                            <li><a href="#" class="tag">مراقبت های بهداشتی</a></li>
+                            <li><a href="#" class="tag">مشاوره</a></li>
+                            <li><a href="#" class="tag">پزشکان</a></li>
+                            <li><a href="#" class="tag">نئورولوژی</a></li>
+                            <li><a href="#" class="tag">دندان‌پزشک</a></li>
+                            <li><a href="#" class="tag">متخصص</a></li>
+                            <li><a href="#" class="tag">داک‌کیور</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /Tags -->
+
+            </div>
+            <!-- /Blog Sidebar -->
+
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->

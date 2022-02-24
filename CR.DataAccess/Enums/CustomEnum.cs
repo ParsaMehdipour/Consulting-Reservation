@@ -91,7 +91,9 @@ namespace CR.DataAccess.Enums
 
     public enum CommentType
     {
+        [Display(Name = "متخصص")]
         Expert = 0,
+        [Display(Name = "مقاله")]
         Blog = 1
     }
 }

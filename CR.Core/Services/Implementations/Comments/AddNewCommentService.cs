@@ -17,7 +17,7 @@ namespace CR.Core.Services.Implementations.Comments
             _context = context;
         }
 
-        public ResultDto Execute(RequestAddNewCommentDto request)
+        public ResultDto Execute(RequestAddNewCommentDto request, long userId)
         {
             using var transaction = _context.Database.BeginTransaction();
 
@@ -25,8 +25,8 @@ namespace CR.Core.Services.Implementations.Comments
             {
                 var comment = new Comment()
                 {
-                    UserId = request.userId,
-                    User = _context.Users.Find(request.userId),
+                    UserId = userId,
+                    User = _context.Users.Find(userId),
                     CommentStatus = CommentStatus.Waiting,
                     IsRead = false,
                     Message = request.message,

@@ -1,4 +1,5 @@
-﻿using CR.Common.DTOs;
+﻿using System.Collections.Generic;
+using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
@@ -8,9 +9,8 @@ using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
-namespace CR.Presentation.Controllers
+namespace CR.Presentation.Controllers.View
 {
     [Authorize]
     public class CheckoutController : Controller

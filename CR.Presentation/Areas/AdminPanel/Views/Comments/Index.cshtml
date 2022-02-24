@@ -1,0 +1,97 @@
+﻿@model CR.Core.DTOs.ResultDTOs.Comments.ResultGetAllExpertCommentsForAdminPanelDto
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">نظرات</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">داشبورد</a></li>
+                <li class="breadcrumb-item active">نظرات مشاورین</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="datatable table table-hover table-center mb-0">
+                        <thead>
+                        <tr>
+                            <th>نام مراجعه کننده</th>
+                            <th>نام مشاور</th>
+                            <th>نظر</th>
+                            <th> توضیحات </th>
+                            <th>تاریخ</th>
+                            <th class="text-right"> اقدامات </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (Model.ExpertCommentForAdminPanelDtos.Count > 0)
+                        {
+                            @foreach (var comment in Model.ExpertCommentForAdminPanelDtos)
+                            {
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@comment.CommenterId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.CommenterIconSrc" alt="@comment.CommenterFullName"></a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@comment.CommenterId">@comment.CommenterFullName </a>
+                                        </h2>
+                                    </td>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@comment.ExpertId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.ExpertIconSrc" alt="@comment.ExpertFullName"></a>
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@comment.ExpertId">@comment.ExpertFullName</a>
+                                        </h2>
+                                    </td>
+
+                                    <td>
+                                        <i class="fe fe-star text-warning"></i>
+                                        <i class="fe fe-star text-warning"></i>
+                                        <i class="fe fe-star text-warning"></i>
+                                        <i class="fe fe-star text-warning"></i>
+                                        <i class="fe fe-star-o text-secondary"></i>
+                                    </td>
+
+                                    <td>
+                                        @comment.Message
+                                    </td>
+
+                                    <td>@comment.CreateDate</td>
+
+                                    <td class="text-right">
+                                        <div class="actions">
+                                            <a class="btn btn-sm bg-danger-light" data-toggle="modal" href="#delete_modal">
+                                                <i class="fe fe-trash"></i> حذف
+                                            </a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    show-first-numbered-page="true"
+                    show-last-numbered-page="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize"
+                    gap-size="2">
+            </paging>
+        </div>
+    </div>
+</div>
