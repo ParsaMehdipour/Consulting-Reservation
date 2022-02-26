@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace CR.Presentation.Areas.ExpertPanel.Controllers
+namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 {
     [Authorize]
     [Area("ExpertPanel")]
@@ -13,12 +13,15 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
     {
         private readonly IGetBlogsForExpertPanelService _getBlogsForExpertPanelService;
         private readonly IGetBlogCategoriesForDropdownService _getBlogCategoriesForDropdownService;
+        private readonly IGetBlogDetailsService _getBlogDetailsService;
 
         public BlogsController(IGetBlogsForExpertPanelService getBlogsForExpertPanelService
-        , IGetBlogCategoriesForDropdownService getBlogCategoriesForDropdownService)
+        , IGetBlogCategoriesForDropdownService getBlogCategoriesForDropdownService
+        , IGetBlogDetailsService getBlogDetailsService)
         {
             _getBlogsForExpertPanelService = getBlogsForExpertPanelService;
             _getBlogCategoriesForDropdownService = getBlogCategoriesForDropdownService;
+            _getBlogDetailsService = getBlogDetailsService;
         }
 
         public IActionResult Index(int page = 1, int pageSize = 20)
@@ -35,6 +38,22 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
             ViewBag.Categories = new SelectList(_getBlogCategoriesForDropdownService.Execute(), "Id", "Name");
 
             return View();
+        }
+
+        public IActionResult EditBlogDetails(long id)
+        {
+            var model = _getBlogDetailsService.Execute(id).Data;
+
+            ViewBag.Categories = new SelectList(_getBlogCategoriesForDropdownService.Execute(), "Id", "Name");
+
+            return View(model);
+        }
+
+        public IActionResult BlogDetails(long id)
+        {
+            var model = _getBlogDetailsService.Execute(id).Data;
+
+            return View(model);
         }
     }
 }

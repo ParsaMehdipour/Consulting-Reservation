@@ -1,4 +1,4 @@
-﻿@model CR.Core.DTOs.RequestDTOs.Blogs.RequestAddNewBlogDto
+﻿@model CR.Core.DTOs.Blogs.BlogDetailsDto
 
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -7,11 +7,11 @@
             <div class="col-md-12 col-12">
                 <nav aria-label="breadcrumb" class="page-breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">افزودن مقاله جدید</li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">ویرایش مقاله</li>
                     </ol>
                 </nav>
-                <h2 class="breadcrumb-title">افزودن مقاله جدید </h2>
+                <h2 class="breadcrumb-title">ویرایش مقاله</h2>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-7 col-lg-8 col-xl-9">
                 <!-- Add Blog -->
-                <form id="addNewBlogForm">
+                <form id="EditBlogDetailsForm">
                     <div class="card">
                         <div class="card-body">
                             <div class="service-fields mb-3">
@@ -37,7 +37,7 @@
                                         <div class="form-group">
                                             <div class="change-avatar">
                                                 <div class="profile-img">
-                                                    <img src="~/assets/img/upload-icon-flat-vector-download-260nw-1378175036.jpg" alt="User Image">
+                                                    <img src="~/@Model.pictureSrc" alt="User Image">
                                                 </div>
                                                 <div class="upload-img">
                                                     <div class="change-photo-btn">
@@ -155,7 +155,7 @@
                         </div>
                     </div>
                     <div class="submit-section">
-                        <button onclick="AddBlog()" class="btn btn-primary submit-btn" type="submit" value="submit">افزودن</button>
+                        <button onclick="EditBlog(@Model.id)" class="btn btn-warning submit-btn" type="submit" value="submit">ویرایش</button>
                     </div><br/>
                 </form>
             </div>
@@ -205,31 +205,32 @@
         $('#' + dist).val(value);
     }
 
-    function AddBlog() {
+    function EditBlog(Id) {
 
-        if ($("#addNewBlogForm").valid()) {
+        if ($("#EditBlogDetailsForm").valid()) {
 
             var blogCategorySelect = document.getElementById('blogCategoryId');
 
             var data = new FormData();
 
-            data.append("title",$("#addNewBlogForm #title").val());
-            data.append("slug",$("#addNewBlogForm #slug").val());
+            data.append("title",$("#EditBlogDetailsForm #title").val());
+            data.append("slug",$("#EditBlogDetailsForm #slug").val());
             data.append("blogCategoryId",blogCategorySelect.options[blogCategorySelect.selectedIndex].value);
-            data.append("shortDescription",$("#addNewBlogForm #shortDescription").val());
+            data.append("shortDescription",$("#EditBlogDetailsForm #shortDescription").val());
             data.append("description",CKEDITOR.instances.description.getData());
-            data.append("shortDescription",$("#addNewBlogForm #shortDescription").val());
-            data.append("orderNumber",$("#addNewBlogForm #orderNumber").val());
-            data.append("keyWords",$("#addNewBlogForm #keyWords").val());
-            data.append("metaDescription",$("#addNewBlogForm #metaDescription").val());
-            data.append("publishDate",$("#addNewBlogForm #publishDate").val());
-            data.append("canonicalAddress",$("#addNewBlogForm #canonicalAddress").val());
-            data.append("file",$("#addNewBlogForm #fileImage").get(0).files[0]);
+            data.append("shortDescription",$("#EditBlogDetailsForm #shortDescription").val());
+            data.append("orderNumber",$("#EditBlogDetailsForm #orderNumber").val());
+            data.append("keyWords",$("#EditBlogDetailsForm #keyWords").val());
+            data.append("metaDescription",$("#EditBlogDetailsForm #metaDescription").val());
+            data.append("publishDate",$("#EditBlogDetailsForm #publishDate").val());
+            data.append("canonicalAddress",$("#EditBlogDetailsForm #canonicalAddress").val());
+            data.append("file",$("#EditBlogDetailsForm #fileImage").get(0).files[0]);
+            data.append("id",Id);
 
-            $( "#addNewBlogForm" ).submit(function( event ) {
+            $( "#EditBlogDetailsForm" ).submit(function( event ) {
                 $.ajax({
                     type: "POST",
-                    url: '/api/ExpertBlogs/AddNewBlog',
+                    url: '/api/ExpertBlogs/EditBlogDetails',
                     data: data,
                     processData: false,
                     contentType: false,

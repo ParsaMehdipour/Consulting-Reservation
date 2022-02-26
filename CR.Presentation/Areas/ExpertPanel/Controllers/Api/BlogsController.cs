@@ -25,6 +25,8 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
         [HttpPost]
         public IActionResult AddNewBlog([FromForm] RequestAddNewBlogDto model)
         {
+            model.status = false;
+
             var userId = ClaimUtility.GetUserId(User).Value;
 
             var result = _addNewBlogService.Execute(model, userId);

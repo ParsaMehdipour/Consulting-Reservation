@@ -11,5 +11,6 @@
         public long ExpertId { get; set; }
         public string Message { get; set; }
         public string CreateDate { get; set; }
+        public string Status { get; set; }
     }
 }
