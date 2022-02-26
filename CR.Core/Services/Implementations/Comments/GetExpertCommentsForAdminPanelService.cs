@@ -31,7 +31,7 @@ namespace CR.Core.Services.Implementations.Comments
                 .Select(_ => new ExpertCommentForAdminPanelDto
                 {
                     CommenterFullName = _.User.FirstName + " " + _.User.LastName,
-                    CommenterIconSrc = _.User.IconSrc,
+                    CommenterIconSrc = _.User.IconSrc ?? "assets/img/icon-256x256.png",
                     CommenterId = _.User.Id,
                     CreateDate = _.CreateDate.ToShamsi(),
                     ExpertFullName = expertInformations.FirstOrDefault(e => e.Id == _.OwnerRecordId).FirstName + " " +
@@ -41,7 +41,8 @@ namespace CR.Core.Services.Implementations.Comments
                     Id = _.Id,
                     Message = (_.Message.Length > 15)
                         ? _.Message.Substring(0, Math.Min(_.Message.Length, 15)) + "..."
-                        : _.Message
+                        : _.Message,
+                    Status = _.CommentStatus.GetDisplayName()
                 }).AsEnumerable()
                 .ToPaged(Page, PageSize, out var rowsCount)
                 .ToList();
