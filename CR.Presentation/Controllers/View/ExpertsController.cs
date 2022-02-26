@@ -1,4 +1,5 @@
 ﻿using CR.Common.Convertor;
+using CR.Core.Services.Interfaces.Comments;
 using CR.Core.Services.Interfaces.Experts;
 using CR.Core.Services.Interfaces.Specialites;
 using CR.DataAccess.Enums;
@@ -16,18 +17,21 @@ namespace CR.Presentation.Controllers.View
         private readonly IGetSpecialitiesForSearchService _getSpecialitiesForSearchService;
         private readonly IGetExpertDetailsForReservationService _getExpertDetailsForReservationService;
         private readonly IGetThisDateExpertDetailsForReservationService _getThisDateExpertDetailsForReservationService;
+        private readonly IGetExpertCommentsForPresentationService _getExpertCommentsForPresentationService;
 
         public ExpertsController(IGetExpertsForSiteService getExpertsForSiteService
         , IGetExpertDetailsForSiteService getExpertDetailsForSiteService
         , IGetSpecialitiesForSearchService getSpecialitiesForSearchService
         , IGetExpertDetailsForReservationService getExpertDetailsForReservationService
-        , IGetThisDateExpertDetailsForReservationService getThisDateExpertDetailsForReservationService)
+        , IGetThisDateExpertDetailsForReservationService getThisDateExpertDetailsForReservationService
+        , IGetExpertCommentsForPresentationService getExpertCommentsForPresentationService)
         {
             _getExpertsForSiteService = getExpertsForSiteService;
             _getExpertDetailsForSiteService = getExpertDetailsForSiteService;
             _getSpecialitiesForSearchService = getSpecialitiesForSearchService;
             _getExpertDetailsForReservationService = getExpertDetailsForReservationService;
             _getThisDateExpertDetailsForReservationService = getThisDateExpertDetailsForReservationService;
+            _getExpertCommentsForPresentationService = getExpertCommentsForPresentationService;
         }
 
         public IActionResult Index(string searchKey, List<string> speciality, GenderType gender, int page = 1, int pageSize = 20)
@@ -44,7 +48,15 @@ namespace CR.Presentation.Controllers.View
         [HttpGet]
         public IActionResult ExpertDetails(long expertInformationId)
         {
-            var model = _getExpertDetailsForSiteService.Execute(expertInformationId).Data;
+
+
+
+            var model = new ExpertProfileViewModel()
+            {
+                ExpertDetailsForSiteDto = _getExpertDetailsForSiteService.Execute(expertInformationId).Data,
+                ResultGetExpertCommentsForPresentationDto =
+                    _getExpertCommentsForPresentationService.Execute(expertInformationId).Data
+            };
 
             return View(model);
         }

@@ -1,6 +1,6 @@
 ﻿@using CR.Common.Utilities
 @using CR.DataAccess.Enums
-@model CR.Core.DTOs.Experts.ExpertDetailsForSiteDto
+@model CR.Presentation.Models.ViewModels.ExpertProfileViewModel
 @{
 }
 <!-- Breadcrumb -->
@@ -30,12 +30,12 @@
                 <div class="doctor-widget">
                     <div class="doc-info-left">
                         <div class="doctor-img">
-                            <img src="~/@Model.IconSrc" class="img-fluid" alt="User Image">
+                            <img src="~/@Model.ExpertDetailsForSiteDto.IconSrc" class="img-fluid" alt="User Image">
                         </div>
                         <div class="doc-info-cont">
-                            <h4 class="doc-name">مشاور @Model.FullName</h4>
-                            <p class="doc-speciality"> @Model.Tag </p>
-                            <p class="doc-department"><img src="~/@Model.SpecialityImage" class="img-fluid" alt="Speciality">‌@Model.Speciality</p>
+                            <h4 class="doc-name">مشاور @Model.ExpertDetailsForSiteDto.FullName</h4>
+                            <p class="doc-speciality"> @Model.ExpertDetailsForSiteDto.Tag </p>
+                            <p class="doc-department"><img src="~/@Model.ExpertDetailsForSiteDto.SpecialityImage" class="img-fluid" alt="Speciality">‌@Model.ExpertDetailsForSiteDto.Speciality</p>
                             <div class="rating">
                                 <i class="fas fa-star filled"></i>
                                 <i class="fas fa-star filled"></i>
@@ -44,10 +44,10 @@
                                 <i class="fas fa-star"></i>
                                 <span class="d-inline-block average-rating">(35)</span>
                             </div>
-                            @if (Model.Tags.Count > 0)
+                            @if (Model.ExpertDetailsForSiteDto.Tags.Count > 0)
                             {
                                 <div class="clinic-services">
-                                    @foreach (var service in Model.Tags)
+                                    @foreach (var service in Model.ExpertDetailsForSiteDto.Tags)
                                     {
                                         <span>@service</span>
                                     }
@@ -59,10 +59,10 @@
                         <div class="clini-infos">
                             <ul>
                                 <li><i class="far fa-thumbs-up"></i> 99%</li>
-                                <li><i class="far fa-comment"></i> @Model.RateCount فیدبک </li>
-                                @if (@Model.Price != 0)
+                                <li><i class="far fa-comment"></i> @Model.ExpertDetailsForSiteDto.RateCount فیدبک </li>
+                                @if (@Model.ExpertDetailsForSiteDto.Price != 0)
                                 {
-                                    <li><i class="far fa-money-bill-alt"></i> @Model.Price?.ToString("n0") تومان ساعتی </li>
+                                    <li><i class="far fa-money-bill-alt"></i> @Model.ExpertDetailsForSiteDto.Price?.ToString("n0") تومان ساعتی </li>
                                 }
                                 else
                                 {
@@ -71,7 +71,7 @@
                             </ul>
                         </div>
                         <div class="doctor-action">
-                            <a onclick="AddToFavorites(@Model.id)" class="btn btn-white fav-btn">
+                            <a onclick="AddToFavorites(@Model.ExpertDetailsForSiteDto.id)" class="btn btn-white fav-btn">
                                 <i class="far fa-bookmark"></i>
                             </a>
                             <a href="chat.html" class="btn btn-white msg-btn">
@@ -84,10 +84,10 @@
                                 <i class="fas fa-video"></i>
                             </a>
                         </div>
-                        @if (Model.DayDtos.Count > 0)
+                        @if (Model.ExpertDetailsForSiteDto.DayDtos.Count > 0)
                         {
                             <div class="clinic-booking">
-                                <a class="apt-btn" asp-controller="Experts" asp-action="Reservation" asp-route-expertInformationId="@Model.id">رزرو نوبت</a>
+                                <a class="apt-btn" asp-controller="Experts" asp-action="Reservation" asp-route-expertInformationId="@Model.ExpertDetailsForSiteDto.id">رزرو نوبت</a>
                             </div>
                         }
                         else
@@ -131,17 +131,17 @@
                                 <!-- About Details -->
                                 <div class="widget about-widget">
                                     <h4 class="widget-title"> درباره من </h4>
-                                    <p>@Model.Bio</p>
+                                    <p>@Model.ExpertDetailsForSiteDto.Bio</p>
                                 </div>
                                 <!-- /About Details -->
                                 <!-- Education Details -->
-                                @if (Model.studies.Count > 0)
+                                @if (Model.ExpertDetailsForSiteDto.studies.Count > 0)
                                 {
                                     <div class="widget education-widget">
                                         <h4 class="widget-title"> تحصیلات </h4>
                                         <div class="experience-box">
                                             <ul class="experience-list">
-                                                @foreach (var study in Model.studies)
+                                                @foreach (var study in Model.ExpertDetailsForSiteDto.studies)
                                                 {
                                                     <li>
                                                         <div class="experience-user">
@@ -162,13 +162,13 @@
                                 }
                                 <!-- /Education Details -->
                                 <!-- Experience Details -->
-                                @if (Model.experiences.Count > 0)
+                                @if (Model.ExpertDetailsForSiteDto.experiences.Count > 0)
                                 {
                                     <div class="widget experience-widget">
                                         <h4 class="widget-title"> کار و تجربه </h4>
                                         <div class="experience-box">
                                             <ul class="experience-list">
-                                                @foreach (var experience in Model.experiences)
+                                                @foreach (var experience in Model.ExpertDetailsForSiteDto.experiences)
                                                 {
                                                     <li>
                                                         <div class="experience-user">
@@ -188,13 +188,13 @@
                                 }
                                 <!-- /Experience Details -->
                                 <!-- Awards Details -->
-                                @if (Model.prizes.Count > 0)
+                                @if (Model.ExpertDetailsForSiteDto.prizes.Count > 0)
                                 {
                                     <div class="widget awards-widget">
                                         <h4 class="widget-title">جایزه ها</h4>
                                         <div class="experience-box">
                                             <ul class="experience-list">
-                                                @foreach (var prize in Model.prizes)
+                                                @foreach (var prize in Model.ExpertDetailsForSiteDto.prizes)
                                                 {
                                                     <li>
                                                         <div class="experience-user">
@@ -215,12 +215,12 @@
                                 }
                                 <!-- /Awards Details -->
                                 <!-- Services List -->
-                                @if (Model.Tags.Count > 0)
+                                @if (Model.ExpertDetailsForSiteDto.Tags.Count > 0)
                                 {
                                     <div class="service-list">
                                         <h4>خدمات</h4>
                                         <ul class="clearfix">
-                                            @foreach (var tag in Model.Tags)
+                                            @foreach (var tag in Model.ExpertDetailsForSiteDto.Tags)
                                             {
                                                 <li>@tag</li>
                                             }
@@ -238,52 +238,18 @@
                         <!-- Review Listing -->
                         <div class="widget review-listing">
                             <ul class="comments-list">
-                                <!-- Comment List -->
-                                <li>
-                                    <div class="comment">
-                                        <img class="avatar avatar-sm rounded-circle" alt="User Image" src="~/assets/img/patients/patient.jpg">
-                                        <div class="comment-body">
-                                            <div class="meta-data">
-                                                <span class="comment-author">ریچارد ویلسون</span>
-                                                <span class="comment-date">نظر داده شده 2 روز پیش</span>
-                                                <div class="review-count rating">
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star"></i>
-                                                </div>
-                                            </div>
-                                            <p class="recommended"><i class="far fa-thumbs-up"></i> این دکتر را پیشنهاد میکنم</p>
-                                            <p class="comment-content">
-                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
-                                            </p>
-                                            <div class="comment-reply">
-                                                <a class="comment-btn" href="#">
-                                                    <i class="fas fa-reply"></i> پاسخ
-                                                </a>
-                                                <p class="recommend-btn">
-                                                    <span>پیشنهاد؟</span>
-                                                    <a href="#" class="like-btn">
-                                                        <i class="far fa-thumbs-up"></i> بله
-                                                    </a>
-                                                    <a href="#" class="dislike-btn">
-                                                        <i class="far fa-thumbs-down"></i> نه
-                                                    </a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Comment Reply -->
-                                    <ul class="comments-reply">
+                                @if (Model.ResultGetExpertCommentsForPresentationDto.ExpertCommentForPresentationDtos.Count > 0)
+                                {
+                                    @foreach (var comment in Model.ResultGetExpertCommentsForPresentationDto.ExpertCommentForPresentationDtos)
+                                    {
+                                        <!-- Comment List -->
                                         <li>
                                             <div class="comment">
-                                                <img class="avatar avatar-sm rounded-circle" alt="User Image" src="~/assets/img/patients/patient1.jpg">
+                                                <img class="avatar avatar-sm rounded-circle" alt="@comment.CommenterFullName" src="~/@comment.CommenterIconSrc">
                                                 <div class="comment-body">
                                                     <div class="meta-data">
-                                                        <span class="comment-author">چارلوت راد</span>
-                                                        <span class="comment-date">نظر داده شده 3 روز پیش</span>
+                                                        <span class="comment-author">@comment.CommenterFullName</span>
+                                                        <span class="comment-date">نظر داده شده در تاریخ @comment.CreateDate</span>
                                                         <div class="review-count rating">
                                                             <i class="fas fa-star filled"></i>
                                                             <i class="fas fa-star filled"></i>
@@ -292,31 +258,77 @@
                                                             <i class="fas fa-star"></i>
                                                         </div>
                                                     </div>
+                                                    @*<p class="recommended"><i class="far fa-thumbs-up"></i> این دکتر را پیشنهاد میکنم</p>*@
                                                     <p class="comment-content">
-                                                        کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و مشاوران را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
+                                                        @comment.Message
                                                     </p>
                                                     <div class="comment-reply">
                                                         <a class="comment-btn" href="#">
                                                             <i class="fas fa-reply"></i> پاسخ
                                                         </a>
-                                                        <p class="recommend-btn">
+                                                        @*      <p class="recommend-btn">
                                                             <span>پیشنهاد؟</span>
                                                             <a href="#" class="like-btn">
-                                                                <i class="far fa-thumbs-up"></i> بله
+                                                            <i class="far fa-thumbs-up"></i> بله
                                                             </a>
                                                             <a href="#" class="dislike-btn">
-                                                                <i class="far fa-thumbs-down"></i> نه
+                                                            <i class="far fa-thumbs-down"></i> نه
                                                             </a>
-                                                        </p>
+                                                            </p>*@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </li>
-                                    </ul>
-                                    <!-- /Comment Reply -->
 
-                                </li>
-                                <!-- /Comment List -->
+                                            @if (comment.HasChildren)
+                                            {
+                                                @foreach (var reply in comment.Children)
+                                                {
+                                                    <!-- Comment Reply -->
+                                                    <ul class="comments-reply">
+                                                        <li>
+                                                            <div class="comment">
+                                                                <img class="avatar avatar-sm rounded-circle" alt="@reply.CommenterFullName" src="~/@reply.CommenterIconSrc">
+                                                                <div class="comment-body">
+                                                                    <div class="meta-data">
+                                                                        <span class="comment-author">@reply.CommenterFullName</span>
+                                                                        <span class="comment-date">پاسخ داده شده در تاریخ @reply.CreateDate</span>
+                                                                        <div class="review-count rating">
+                                                                            <i class="fas fa-star filled"></i>
+                                                                            <i class="fas fa-star filled"></i>
+                                                                            <i class="fas fa-star filled"></i>
+                                                                            <i class="fas fa-star filled"></i>
+                                                                            <i class="fas fa-star"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p class="comment-content">
+                                                                        @reply.Message
+                                                                    </p>
+                                                                    <div class="comment-reply">
+                                                                        <a class="comment-btn" href="#">
+                                                                            <i class="fas fa-reply"></i> پاسخ
+                                                                        </a>
+                                                                       @* <p class="recommend-btn">
+                                                                            <span>پیشنهاد؟</span>
+                                                                            <a href="#" class="like-btn">
+                                                                                <i class="far fa-thumbs-up"></i> بله
+                                                                            </a>
+                                                                            <a href="#" class="dislike-btn">
+                                                                                <i class="far fa-thumbs-down"></i> نه
+                                                                            </a>
+                                                                        </p>*@
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- /Comment Reply -->
+                                                }
+                                            }
+
+                                        </li>
+                                        <!-- /Comment List -->
+                                    }
+                                }
                             </ul>
 
                             <!-- Show All -->
@@ -331,7 +343,7 @@
                         <!-- /Review Listing -->
                         <!-- Write Review -->
                         <div class="write-review">
-                            <h4>یک نظر بنویسید برای <strong>مشاور @Model.FullName</strong></h4>
+                            <h4>یک نظر بنویسید برای <strong>مشاور @Model.ExpertDetailsForSiteDto.FullName</strong></h4>
 
                             <!-- Write Review Form -->
                             <div class="form-group">
@@ -361,7 +373,7 @@
                             </div>
                             <div class="form-group">
                                 <label>نظر شما</label>
-                                <textarea id="message" maxlength="100" class="form-control"></textarea>
+                                <textarea id="message" class="form-control"></textarea>
                                 @*<div class="d-flex justify-content-between mt-3"><small class="text-muted"><span id="chars">100</span> کارکتر مانده</small></div>*@
                             </div>
                             <hr>
@@ -388,16 +400,16 @@
                         <div class="row">
                             <div class="col-md-6 offset-md-3">
 
-                                @if (Model.DayDtos.Count > 0)
+                                @if (Model.ExpertDetailsForSiteDto.DayDtos.Count > 0)
                                 {
                                     <!-- Business Hours Widget -->
                                     <div class="widget business-widget">
                                         <div class="widget-content">
                                             <div class="listing-hours">
                                                 <div class="listing-day current">
-                                                    <div class="day">امروز<span>@Model.DayDtos.FirstOrDefault()?.date_String</span></div>
+                                                    <div class="day">امروز<span>@Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault()?.date_String</span></div>
                                                     <div class="time-items">
-                                                        @if (@Model.DayDtos.FirstOrDefault()?.timeOfDayDtos.Count > 0)
+                                                        @if (@Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault()?.timeOfDayDtos.Count > 0)
                                                         {
                                                             <span class="open-status"><span class="badge bg-success-light">باز</span></span>
                                                         }
@@ -405,13 +417,13 @@
                                                         {
                                                             <span class="open-status"><span class="badge bg-danger-light">بسته</span></span>
                                                         }
-                                                        @foreach (var timeOfDay in Model.DayDtos.FirstOrDefault()?.timeOfDayDtos!)
+                                                        @foreach (var timeOfDay in Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault()?.timeOfDayDtos!)
                                                         {
                                                             <span class="time">@timeOfDay.start - @timeOfDay.finish</span>
                                                         }
                                                     </div>
                                                 </div>
-                                                @foreach (var day in Model.DayDtos.Skip(1))
+                                                @foreach (var day in Model.ExpertDetailsForSiteDto.DayDtos.Skip(1))
                                                 {
                                                     @if (day.timeOfDayDtos.Count > 0)
                                                     {
@@ -527,7 +539,7 @@
 
             data["message"] = $("#message").val();
             data["typeId"] = 0;
-            data["ownerRecordId"] =  @Model.id;
+            data["ownerRecordId"] =  @Model.ExpertDetailsForSiteDto.id;
             data["parentId"] =  parentId;
 
             $.ajax({
