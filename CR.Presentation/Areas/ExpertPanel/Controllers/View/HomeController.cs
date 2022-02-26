@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CR.Common.Utilities;
+﻿using CR.Common.Utilities;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.Core.Services.Interfaces.Statistics;
@@ -9,9 +8,8 @@ using CR.Presentation.Areas.ExpertPanel.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
-namespace CR.Presentation.Areas.ExpertPanel.Controllers
+namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 {
     [Authorize]
     [Area("ExpertPanel")]

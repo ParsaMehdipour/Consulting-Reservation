@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CR.Common.Utilities;
+﻿using CR.Common.Utilities;
 using CR.Core.DTOs.Account;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Users;
@@ -9,8 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
-namespace CR.Presentation.Areas.ExpertPanel.Controllers
+namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 {
     [Authorize]
     [Area("ExpertPanel")]
@@ -21,7 +21,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers
         public ResultCheckUserFlagService ResultCheckUserFlag { get; set; }
 
         public AccountController(IHttpContextAccessor contextAccessor
-            ,IGetUserFlagService _getUserFlagService
+            , IGetUserFlagService _getUserFlagService
             , UserManager<User> userManager)
         {
             this._getUserFlagService = _getUserFlagService;

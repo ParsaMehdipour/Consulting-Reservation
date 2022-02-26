@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace CR.Presentation.Areas.ExpertPanel.Controllers
+namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 {
     [Authorize]
     [Area("ExpertPanel")]

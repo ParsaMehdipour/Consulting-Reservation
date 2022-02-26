@@ -1,5 +1,4 @@
 ﻿using CR.Common.Utilities;
-using CR.Core.DTOs.Experts;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.ExpertImages;
@@ -14,7 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace CR.Presentation.Areas.ExpertPanel.Controllers
+namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 {
     [Authorize]
     [Area("ExpertPanel")]
