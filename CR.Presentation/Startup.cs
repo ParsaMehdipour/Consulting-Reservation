@@ -230,6 +230,7 @@ namespace CR.Presentation
             //Comments
             services.AddScoped<IAddNewCommentService, AddNewCommentService>();
             services.AddScoped<IGetExpertCommentsForAdminPanelService, GetExpertCommentsForAdminPanelService>();
+            services.AddScoped<IChangeCommentStatusService, ChangeCommentStatusService>();
 
             #endregion
 
