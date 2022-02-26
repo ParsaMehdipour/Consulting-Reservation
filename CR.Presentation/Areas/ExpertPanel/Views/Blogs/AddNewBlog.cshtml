@@ -75,14 +75,6 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>وضعیت نمایش<span class="text-danger">*</span></label>
-                                            <input class="form-control" type="checkbox" asp-for="status" id="status" name="status">
-                                            <span asp-validation-for="status" class="text-danger"></span>
-
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -229,7 +221,6 @@
             data.append("shortDescription",$("#addNewBlogForm #shortDescription").val());
             data.append("orderNumber",$("#addNewBlogForm #orderNumber").val());
             data.append("keyWords",$("#addNewBlogForm #keyWords").val());
-            data.append("status",$("#addNewBlogForm #status").is(":checked"));
             data.append("metaDescription",$("#addNewBlogForm #metaDescription").val());
             data.append("publishDate",$("#addNewBlogForm #publishDate").val());
             data.append("canonicalAddress",$("#addNewBlogForm #canonicalAddress").val());
