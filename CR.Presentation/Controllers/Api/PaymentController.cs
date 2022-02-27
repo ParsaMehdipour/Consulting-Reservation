@@ -1,6 +1,7 @@
 ﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs.Payment;
 using CR.Core.Services.Interfaces.Factors;
+using CR.Core.Services.Interfaces.FinancialTransaction;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
 using System;
@@ -12,17 +13,20 @@ namespace CR.Presentation.Controllers.Api
     public class PaymentController : ControllerBase
     {
         private readonly IUpdateFactorRefIdService _updateFactorRefIdService;
+        private readonly IAddPaymentTransactionService _addPaymentTransactionService;
 
-        public PaymentController(IUpdateFactorRefIdService updateFactorRefIdService)
+        public PaymentController(IUpdateFactorRefIdService updateFactorRefIdService
+        , IAddPaymentTransactionService addPaymentTransactionService)
         {
             _updateFactorRefIdService = updateFactorRefIdService;
+            _addPaymentTransactionService = addPaymentTransactionService;
         }
 
         [Route("/api/Payment/RedirectToPayment")]
         [HttpPost]
         public IActionResult RedirectToPayment(RedirectToPaymentDto model)
         {
-            if (model.price == 0 || model.factorNumber == 0)
+            if (model.price == 0 || model.factorId == 0)
             {
                 return new JsonResult(new ResultDto<string>()
                 {
@@ -32,9 +36,31 @@ namespace CR.Presentation.Controllers.Api
                 });
             }
 
-            int price = model.price * 10;
+            var result = _addPaymentTransactionService.Execute(model.factorId, model.price);
 
-            var res = CallApi(price.ToString(), model.factorNumber.ToString());
+            if (result.IsSuccess == false)
+            {
+                return new JsonResult(new ResultDto<string>()
+                {
+                    Data = null,
+                    IsSuccess = false,
+                    Message = result.Message
+                });
+            }
+
+            if (result.Data.price == 0 || result.Data.transactionNumber == "0")
+            {
+                return new JsonResult(new ResultDto<string>()
+                {
+                    Data = null,
+                    IsSuccess = false,
+                    Message = "شماره تراکنش یا مبلغ قابل پرداخت نامعتبر است"
+                });
+            }
+
+            int price = result.Data.price * 10;
+
+            var res = CallApi(price.ToString(), result.Data.transactionNumber);
             res.Wait();
 
             var output = res.Result.Body.@return;
@@ -46,7 +72,7 @@ namespace CR.Presentation.Controllers.Api
 
                 if (status == "0")
                 {
-                    _updateFactorRefIdService.Execute(model.factorNumber.ToString(), refId);
+                    _updateFactorRefIdService.Execute(model.factorId, refId);
                     string url = "https://bpm.shaparak.ir/pgwchannel/payment.mellat?RefId=" + refId;
                     return new JsonResult(new ResultDto<string>()
                     {
