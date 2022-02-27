@@ -1,4 +1,5 @@
-﻿@model CR.Core.DTOs.Factors.FactorDetailsForSiteDto
+﻿@using CR.Common.Utilities
+@model CR.Core.DTOs.Factors.FactorDetailsForSiteDto
 
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
@@ -45,7 +46,8 @@
                                     <label class="payment-radio paypal-option">
                                         <input type="radio" name="radio">
                                         <span class="checkmark"></span>
-                                        کیف پول
+                                        کیف پول - موجودی :
+                                        <label id="balance"></label>
                                     </label>
                                 </div>
                                 <!-- /Paypal Payment -->
@@ -138,55 +140,95 @@
 <!-- /Page Content -->
 @section Scripts
 {
-<script>
-    function RedirectToPayment() {
+    <script>
 
-        var data = {};
-        data["factorId"] = @ViewData["factorId"];
-        data["price"] = @ViewData["price"];
+        $(document).ready(function () {
 
+            var data = {};
+            data["payerId"] = @Model.consumerId;
 
-        $.ajax({
-            type: "POST",
-            url: '/api/Payment/RedirectToPayment',
-            data: JSON.stringify(data),
-            dataType: "json",
-            cache: false,
-            contentType: "application/json; charset=utf-8",
-            enctype: 'application/json',
-            beforeSend: function(x) {
-                $('#loading').show();
-            },
-            success: function(response) {
-                if (response.isSuccess === true) {
-                    window.location = response.data;
+            $.ajax({
+                type: "POST",
+                url: '/api/Wallet/GetBalance',
+                data: JSON.stringify(data),
+                dataType: "json",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                enctype: 'application/json',
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
+                success: function(response) {
+                    if (response.isSuccess === true) {
+                        document.getElementById('balance').innerHTML = response.data;
+                    }
+                    else {
+                        swal.fire('هشدار!',
+                            data.message,
+                            'warning');
+                    }
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
                 }
-                else {
-                    swal.fire('هشدار!',
-                        data.message,
-                        'warning');
-                }
-            },
-            complete: function() {
-                $('#loading').hide();
-            },
-            fail: function() {
-                $('#loading').hide();
-            },
-            error: function(request, status, error) {
-                alert(request.responseText);
-            }
-        });
-    }
+            });
 
-    function addCommas(n){
-        var rx=  /(\d+)(\d{3})/;
-        return String(n).replace(/^\d+/, function(w){
-            while(rx.test(w)){
-                w= w.replace(rx, '$1,$2');
-            }
-            return w;
         });
-    }
-</script>
+
+        function RedirectToPayment() {
+
+            var data = {};
+            data["factorId"] = @ViewData["factorId"];
+            data["price"] = @ViewData["price"];
+
+
+            $.ajax({
+                type: "POST",
+                url: '/api/Payment/RedirectToPayment',
+                data: JSON.stringify(data),
+                dataType: "json",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                enctype: 'application/json',
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
+                success: function(response) {
+                    if (response.isSuccess === true) {
+                        window.location = response.data;
+                    }
+                    else {
+                        swal.fire('هشدار!',
+                            data.message,
+                            'warning');
+                    }
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
+        function addCommas(n){
+            var rx=  /(\d+)(\d{3})/;
+            return String(n).replace(/^\d+/, function(w){
+                while(rx.test(w)){
+                    w= w.replace(rx, '$1,$2');
+                }
+                return w;
+            });
+        }
+    </script>
 }
