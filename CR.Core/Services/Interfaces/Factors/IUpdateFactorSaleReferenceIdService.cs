@@ -4,6 +4,6 @@ namespace CR.Core.Services.Interfaces.Factors
 {
     public interface IUpdateFactorSaleReferenceIdService
     {
-        ResultDto Execute(string factorNumber, long saleReferenceId);
+        ResultDto Execute(long factorId, long saleReferenceId);
     }
 }

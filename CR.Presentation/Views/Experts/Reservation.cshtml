@@ -422,7 +422,7 @@
     function GetTimeOfDays() {
         var timeOfDayIds = [];
 
-        timeOfDayIds = $('a[name^=timeDay]').map(function(idx, elem) {
+        timeOfDayIds = $('button[name^=timeDay]').map(function(idx, elem) {
             if ($(elem).hasClass("selected") === true) {
                 return Number($(elem).attr("id").replace("timeOfDay_",""));
             }

@@ -4,6 +4,6 @@ namespace CR.Core.Services.Interfaces.Factors
 {
     public interface IUpdateFactorCartHolderPanService
     {
-        ResultDto Execute(string factorNumber, string cardHolderPAN);
+        ResultDto Execute(long factorId, string cardHolderPAN);
     }
 }

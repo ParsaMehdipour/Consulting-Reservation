@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
+using System;
 
 namespace CR.Core.Services.Implementations.Factors
 {
@@ -15,13 +14,13 @@ namespace CR.Core.Services.Implementations.Factors
             _context = context;
         }
 
-        public ResultDto Execute(string factorNumber, long saleReferenceId)
+        public ResultDto Execute(long factorId, long saleReferenceId)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-                var factor = _context.Factors.FirstOrDefault(_ => _.FactorNumber == factorNumber);
+                var factor = _context.Factors.Find(factorId);
 
                 if (factor == null)
                 {

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
 
@@ -14,9 +13,9 @@ namespace CR.Core.Services.Implementations.Factors
             _context = context;
         }
 
-        public ResultDto Execute(string factorNumber, string cardHolderPAN)
+        public ResultDto Execute(long factorId, string cardHolderPAN)
         {
-            var factor = _context.Factors.FirstOrDefault(_ => _.FactorNumber == factorNumber);
+            var factor = _context.Factors.Find(factorId);
 
             if (factor == null)
             {

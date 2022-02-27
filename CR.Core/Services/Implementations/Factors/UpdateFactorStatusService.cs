@@ -1,13 +1,10 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
-using CR.Common.DTOs;
-using CR.Common.Utilities;
+﻿using CR.Common.DTOs;
 using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
-using CR.DataAccess.Entities.FinancialTransactions;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Factors
 {
@@ -19,7 +16,7 @@ namespace CR.Core.Services.Implementations.Factors
         {
             _context = context;
         }
-        public ResultDto Execute(string factorNumber, FactorStatus factorStatus, TransactionStatus transactionStatus)
+        public ResultDto Execute(long factorId, FactorStatus factorStatus, TransactionStatus transactionStatus)
         {
             using var transaction = _context.Database.BeginTransaction();
 
@@ -30,7 +27,7 @@ namespace CR.Core.Services.Implementations.Factors
                     .ThenInclude(_ => _.TimeOfDay)
                     .Include(f => f.ConsumerInformation)
                     .Include(f => f.ExpertInformation)
-                    .First(_ => _.FactorNumber == factorNumber);
+                    .First(_ => _.Id == factorId);
 
                 if (factor == null)
                 {
@@ -41,18 +38,18 @@ namespace CR.Core.Services.Implementations.Factors
                     };
                 }
 
-                var financialTransaction = new FinancialTransaction()
+                var financialTransaction = _context.FinancialTransactions.FirstOrDefault(_ => _.FactorId == factorId);
+
+                if (financialTransaction == null)
                 {
-                    CreateDate_String = DateTime.Now.ToShamsi(),
-                    Factor = factor,
-                    FactorId = factor.Id,
-                    PayerId = factor.ConsumerInformation.ConsumerId,
-                    ReceiverId = factor.ExpertInformation.ExpertId,
-                    Price_Digit = factor.TotalPrice,
-                    Price_String = factor.TotalPrice.ToString().GetPersianNumber(),
-                    Status = transactionStatus,
-                    TransactionType = TransactionType.PayFromCreditCard
-                };
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "تراکنش یافت نشد!!"
+                    };
+                }
+
+                financialTransaction.Status = transactionStatus;
 
                 factor.FactorStatus = factorStatus;
 
@@ -64,7 +61,6 @@ namespace CR.Core.Services.Implementations.Factors
                     }
                 }
 
-                _context.FinancialTransactions.Add(financialTransaction);
 
                 _context.SaveChanges();
 

@@ -87,7 +87,6 @@ namespace CR.Core.Services.Implementations.Appointment
                     }
 
 
-
                     var appointment = new DataAccess.Entities.Appointments.Appointment()
                     {
                         ConsumerInformation = consumerInformation,
@@ -109,15 +108,8 @@ namespace CR.Core.Services.Implementations.Appointment
 
                     timeOfDay.Appointment = appointment;
                     timeOfDay.AppointmentId = appointment.Id;
-
-
-                    consumerInformation.ConsumerAppointments.Add(appointment);
-
-                    expertInformation.ExpertAppointments.Add(appointment);
-
                 }
 
-                factor.Appointments.AddRange(appointments);
                 factor.TotalPrice = appointments.Sum(a => a.Price) ?? 0;
                 factor.ExpertInformationId = expertInformation.Id;
                 factor.ExpertInformation = expertInformation;

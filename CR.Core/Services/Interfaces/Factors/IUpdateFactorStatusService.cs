@@ -5,6 +5,6 @@ namespace CR.Core.Services.Interfaces.Factors
 {
     public interface IUpdateFactorStatusService
     {
-        ResultDto Execute(string factorNumber, FactorStatus factorStatus, TransactionStatus transactionStatus);
+        ResultDto Execute(long factorId, FactorStatus factorStatus, TransactionStatus transactionStatus);
     }
 }

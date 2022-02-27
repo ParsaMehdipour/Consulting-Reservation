@@ -50,7 +50,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
                 });
             }
 
-            long price = model.price * 10;
+            int price = result.Data.price * 10;
 
             var res = CallApi(price.ToString(), result.Data.transactionNumber);
 

@@ -1,5 +1,6 @@
 ﻿using CR.Common.DTOs;
 using CR.Core.Services.Interfaces.Factors;
+using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
@@ -14,23 +15,26 @@ namespace CR.Presentation.Controllers.View
         private readonly IUpdateFactorSaleReferenceIdService _updateFactorSaleReferenceIdService;
         private readonly IUpdateFactorCartHolderPanService _updateFactorCartHolderPanService;
         private readonly IUpdateFactorStatusService _updateFactorStatusService;
+        private readonly IGetFinancialTransactionDetailsForVerifyService _getFinancialTransactionDetailsForVerifyService;
 
         public PaymentController(IGetFactorDetailsService getFactorDetailsService
         , IUpdateFactorSaleReferenceIdService updateFactorSaleReferenceIdService
         , IUpdateFactorCartHolderPanService updateFactorCartHolderPanService
-        , IUpdateFactorStatusService updateFactorStatusService)
+        , IUpdateFactorStatusService updateFactorStatusService
+        , IGetFinancialTransactionDetailsForVerifyService getFinancialTransactionDetailsForVerifyService)
         {
             _getFactorDetailsService = getFactorDetailsService;
             _updateFactorSaleReferenceIdService = updateFactorSaleReferenceIdService;
             _updateFactorCartHolderPanService = updateFactorCartHolderPanService;
             _updateFactorStatusService = updateFactorStatusService;
+            _getFinancialTransactionDetailsForVerifyService = getFinancialTransactionDetailsForVerifyService;
         }
 
         public IActionResult Index(string factorNumber)
         {
             var model = _getFactorDetailsService.Execute(factorNumber).Data;
 
-            ViewData["factorNumber"] = factorNumber;
+            ViewData["factorId"] = model.Id;
             ViewData["price"] = model.price;
 
             return View(model);
@@ -45,9 +49,10 @@ namespace CR.Presentation.Controllers.View
                 IsSuccess = false
             };
 
+            var factor = _getFinancialTransactionDetailsForVerifyService.Execute(SaleOrderId.ToString()).Data;
+
             if (ResCode == "0")
             {
-                var factor = _getFactorDetailsService.Execute(SaleOrderId.ToString()).Data;
 
                 if (factor == null)
                 {
@@ -67,7 +72,7 @@ namespace CR.Presentation.Controllers.View
                     return View(result);
                 }
 
-                _updateFactorSaleReferenceIdService.Execute(SaleOrderId.ToString(), SaleReferenceId);
+                _updateFactorSaleReferenceIdService.Execute(factor.Id, SaleReferenceId);
 
                 var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
 
@@ -77,9 +82,9 @@ namespace CR.Presentation.Controllers.View
 
                 if (resCode == "0")
                 {
-                    _updateFactorCartHolderPanService.Execute(SaleOrderId.ToString(), CardHolderPan);
+                    _updateFactorCartHolderPanService.Execute(factor.Id, CardHolderPan);
 
-                    _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.SuccessfulPayment, TransactionStatus.Successful);
+                    _updateFactorStatusService.Execute(factor.Id, FactorStatus.SuccessfulPayment, TransactionStatus.Successful);
 
                     ViewData["Description"] = "تراکنش با موفقیت انجام شد، کد رهگیری پرداخت شما : " + SaleReferenceId;
 
@@ -94,14 +99,14 @@ namespace CR.Presentation.Controllers.View
 
                 ViewData["ResCode"] = resCode;
 
-                _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment, TransactionStatus.Failed);
+                _updateFactorStatusService.Execute(factor.Id, FactorStatus.UnsuccessfulPayment, TransactionStatus.Failed);
 
                 return View(result);
             }
 
             ViewData["Description"] = "پرداخت ناموفق";
 
-            _updateFactorStatusService.Execute(SaleOrderId.ToString(), FactorStatus.UnsuccessfulPayment, TransactionStatus.Failed);
+            _updateFactorStatusService.Execute(factor.Id, FactorStatus.UnsuccessfulPayment, TransactionStatus.Failed);
 
             ViewData["ResCode"] = ResCode;
 

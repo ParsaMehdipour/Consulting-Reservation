@@ -2,7 +2,7 @@
 {
     public class RedirectToPaymentDto
     {
-        public int factorNumber { get; set; }
+        public int factorId { get; set; }
         public int price { get; set; }
     }
 }

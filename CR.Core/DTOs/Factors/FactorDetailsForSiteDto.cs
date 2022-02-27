@@ -5,6 +5,7 @@ namespace CR.Core.DTOs.Factors
 {
     public class FactorDetailsForSiteDto
     {
+        public long Id { get; set; }
         public long? expertInformationId { get; set; }
         public string expertIconSrc { get; set; }
         public string expertFullName { get; set; }
