@@ -3,6 +3,6 @@
     public class RedirectToPaymentForWalletChargeDto
     {
         public string transactionNumber { get; set; }
-        public long price { get; set; }
+        public int price { get; set; }
     }
 }
