@@ -90,7 +90,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             }
 
 
-            return Convert.ToInt32(financialTransactions.TransactionNumber + 1).ToString();
+            return (Convert.ToInt32(financialTransactions.TransactionNumber) + 1).ToString();
         }
     }
 }
