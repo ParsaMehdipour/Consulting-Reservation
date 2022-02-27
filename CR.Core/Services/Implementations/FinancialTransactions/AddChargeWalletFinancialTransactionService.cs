@@ -56,7 +56,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 {
                     Data = new RedirectToPaymentForWalletChargeDto()
                     {
-                        price = financialTransaction.Price_Digit,
+                        price = Convert.ToInt32(financialTransaction.Price_Digit),
                         transactionNumber = financialTransaction.TransactionNumber
                     },
                     IsSuccess = true,
@@ -82,15 +82,15 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
         private string GetLastTransactionNumber()
         {
-            var financialTransactions = _context.FinancialTransactions.Where(_ => _.Factor == null).OrderBy(f => f.Id).LastOrDefault();
+            var financialTransactions = _context.FinancialTransactions.OrderBy(f => f.Id).LastOrDefault();
 
             if (financialTransactions == null)
             {
-                return "T" + "1";
+                return "1";
             }
 
 
-            return "T" + (Convert.ToInt32(financialTransactions.TransactionNumber.Split("T")[1]) + 1);
+            return Convert.ToInt32(financialTransactions.TransactionNumber + 1).ToString();
         }
     }
 }
