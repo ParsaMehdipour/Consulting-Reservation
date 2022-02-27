@@ -16,6 +16,7 @@ using CR.Core.Services.Implementations.Specialites;
 using CR.Core.Services.Implementations.Statistics;
 using CR.Core.Services.Implementations.Timings;
 using CR.Core.Services.Implementations.Users;
+using CR.Core.Services.Implementations.Wallet;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.Core.Services.Interfaces.BlogCategories;
 using CR.Core.Services.Interfaces.Blogs;
@@ -33,6 +34,7 @@ using CR.Core.Services.Interfaces.Specialites;
 using CR.Core.Services.Interfaces.Statistics;
 using CR.Core.Services.Interfaces.Timings;
 using CR.Core.Services.Interfaces.Users;
+using CR.Core.Services.Interfaces.Wallet;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.Roles;
 using CR.DataAccess.Entities.Users;
@@ -235,6 +237,8 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertCommentsForAdminPanelService, GetExpertCommentsForAdminPanelService>();
             services.AddScoped<IChangeCommentStatusService, ChangeCommentStatusService>();
             services.AddScoped<IGetExpertCommentsForPresentationService, GetExpertCommentsForPresentationService>();
+            //Wallet
+            services.AddScoped<IGetWalletBalanceService, GetWalletBalanceService>();
 
             #endregion
 

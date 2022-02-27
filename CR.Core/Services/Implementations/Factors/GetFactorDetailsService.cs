@@ -21,6 +21,7 @@ namespace CR.Core.Services.Implementations.Factors
         public ResultDto<FactorDetailsForSiteDto> Execute(string factorNumber)
         {
             var factor = _context.Factors
+                .Include(f => f.ConsumerInformation)
                 .Include(f => f.Appointments)
                 .ThenInclude(a => a.ExpertInformation)
                 .Include(a => a.Appointments)
@@ -67,7 +68,8 @@ namespace CR.Core.Services.Implementations.Factors
                     expertFullName = factor.Appointments.FirstOrDefault()?.ExpertInformation.FirstName + " " + factor.Appointments.FirstOrDefault()?.ExpertInformation.LastName,
                     expertIconSrc = factor.Appointments.FirstOrDefault()?.ExpertInformation.IconSrc,
                     expertInformationId = factor.Appointments.FirstOrDefault()?.ExpertInformation.Id,
-                    refId = factor.RefId
+                    refId = factor.RefId,
+                    consumerId = factor.ConsumerInformation.ConsumerId
                 },
                 IsSuccess = true,
             };
