@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.Factors;
 using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Factors
 {
@@ -61,6 +61,7 @@ namespace CR.Core.Services.Implementations.Factors
             {
                 Data = new FactorDetailsForSiteDto()
                 {
+                    Id = factor.Id,
                     AppointmentDetailsForSiteDtos = appointments,
                     price = appointments.Sum(a => a.Price),
                     expertFullName = factor.Appointments.FirstOrDefault()?.ExpertInformation.FirstName + " " + factor.Appointments.FirstOrDefault()?.ExpertInformation.LastName,
