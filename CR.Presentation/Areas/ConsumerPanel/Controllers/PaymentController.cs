@@ -61,13 +61,11 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers
 
                 _updateFinancialTransactionSaleReferenceIdService.Execute(SaleOrderId.ToString(), SaleReferenceId);
 
-                //var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
+                var res = CallApi(SaleOrderId.ToString(), SaleReferenceId);
 
-                //res.Wait();
+                res.Wait();
 
-                //var resCode = res.Result.Body.@return;
-
-                var resCode = "0";
+                var resCode = res.Result.Body.@return;
 
                 if (resCode == "0")
                 {

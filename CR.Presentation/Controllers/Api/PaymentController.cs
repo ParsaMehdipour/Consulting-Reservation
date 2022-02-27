@@ -61,6 +61,7 @@ namespace CR.Presentation.Controllers.Api
             int price = result.Data.price * 10;
 
             var res = CallApi(price.ToString(), result.Data.transactionNumber);
+
             res.Wait();
 
             var output = res.Result.Body.@return;
@@ -130,5 +131,3 @@ namespace CR.Presentation.Controllers.Api
         }
     }
 }
-//(DateTime.Now.Date.ToString(CultureInfo.InvariantCulture).Replace("/" , "")).Substring(0,8);
-//var ipgUrl = "https://bpm.shaparak.ir/pgwchannel/startpay.mellat";
