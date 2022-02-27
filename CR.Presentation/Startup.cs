@@ -1,3 +1,4 @@
+using CR.Core.DTOs.FinancialTransactions;
 using CR.Core.Services.Implementations.Appointment;
 using CR.Core.Services.Implementations.BlogCategories;
 using CR.Core.Services.Implementations.Blogs;
@@ -223,6 +224,8 @@ namespace CR.Presentation
             services.AddScoped<IUpdateFinancialTransactionSaleReferenceIdService, UpdateFinancialTransactionSaleReferenceIdService>();
             services.AddScoped<IUpdateFinancialTransactionCarHolderPANService, UpdateFinancialTransactionCarHolderPAN>();
             services.AddScoped<IUpdateFinancialTransactionStatusService, UpdateFinancialTransactionStatusService>();
+            services.AddScoped<IAddPaymentTransactionService, AddPaymentTransactionService>();
+            services.AddScoped<IGetFinancialTransactionDetailsForVerifyService, GetFinancialTransactionDetailsForVerifyService>();
             //Favorites
             services.AddScoped<IAddNewFavoriteService, AddNewFavoriteService>();
             services.AddScoped<IGetConsumerFavoritesService, GetConsumerFavoritesService>();
