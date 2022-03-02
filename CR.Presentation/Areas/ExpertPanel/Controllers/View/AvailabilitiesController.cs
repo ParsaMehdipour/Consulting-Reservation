@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CR.Common.Utilities;
+﻿using CR.Common.Utilities;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.DTOs.Timings;
@@ -30,12 +29,12 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 
         public AvailabilitiesController(IHttpContextAccessor contextAccessor
             , IGetUserFlagService getUserFlagService
-            ,IAddDayService addDayService
-            ,IGetDaysService getDaysService
-            ,IAddTimeOfDayService addTimeOfDayService
-            ,IRemoveTimeOfDayService removeTimeOfDayService
-            ,IGetTimingsForDropDownService getTimingsForDropDownService
-            ,IGetDayDetailsService getDayDetailsService)
+            , IAddDayService addDayService
+            , IGetDaysService getDaysService
+            , IAddTimeOfDayService addTimeOfDayService
+            , IRemoveTimeOfDayService removeTimeOfDayService
+            , IGetTimingsForDropDownService getTimingsForDropDownService
+            , IGetDayDetailsService getDayDetailsService)
         {
             _getUserFlagService = getUserFlagService;
             _addDayService = addDayService;
@@ -76,7 +75,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
         }
 
         [HttpPost]
-        public List<TimingDto> GetTimings(TimingType timingType)
+        public TimingForDropDownDtos GetTimings(TimingType timingType)
         {
             var dropDownModel = _getTimingsForDropDownService.Execute(timingType).Data;
 
@@ -97,7 +96,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
         public IActionResult AddTimeOfDay(RequestAddNewTimeOfDayDto request)
         {
             var result = _addTimeOfDayService.Execute(request);
-        
+
             return new JsonResult(result);
         }
 
