@@ -8,5 +8,6 @@ namespace CR.Core.DTOs.Timings
         public string startTime { get; set; }
         public string endTime { get; set; }
         public TimingType timingType { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

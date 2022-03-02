@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
+using CR.Common.Utilities;
 using CR.Core.DTOs.Timings;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.ExpertAvailabilities
 {
@@ -17,15 +18,16 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
             _context = context;
         }
 
-        public ResultDto<List<TimingDto>> Execute(long dayId)
+        public ResultDto<List<TimingForEditDto>> Execute(long dayId, long expertId)
         {
             var day = _context.Days
                 .Include(d => d.TimeOfDays)
-                .FirstOrDefault(d=>d.Id == dayId);
+                .Include(d => d.ExpertInformation)
+                .FirstOrDefault(d => d.Id == dayId && d.ExpertInformation.ExpertId == expertId);
 
             if (day == null)
             {
-                return new ResultDto<List<TimingDto>>()
+                return new ResultDto<List<TimingForEditDto>>()
                 {
                     Data = null,
                     IsSuccess = false,
@@ -33,22 +35,27 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
                 };
             }
 
-            var timings = new List<TimingDto>();
+            var timings = new List<TimingForEditDto>();
 
             foreach (var timeOfDay in day.TimeOfDays)
             {
-                var timing = new TimingDto()
+                var timing = new TimingForEditDto()
                 {
-                    startTime = timeOfDay.StartHour,
-                    endTime = timeOfDay.FinishHour,
-                    id = timeOfDay.Id,
-                    timingType = timeOfDay.TimingType
+                    timingDtos = _context.Timings.Where(_ => _.TimingType == timeOfDay.TimingType).Select(_ => new TimingDto()
+                    {
+                        startTime = _.StartTime_String,
+                        endTime = _.EndTime_String,
+                        id = _.Id,
+                        timingType = _.TimingType,
+                        IsSelected = (timeOfDay.StartHour == _.StartTime_String && timeOfDay.FinishHour == _.EndTime_String)
+                    }).ToList(),
+                    timingTypName = timeOfDay.TimingType.GetDisplayName()
                 };
 
                 timings.Add(timing);
             }
 
-            return new ResultDto<List<TimingDto>>()
+            return new ResultDto<List<TimingForEditDto>>()
             {
                 Data = timings,
                 IsSuccess = true

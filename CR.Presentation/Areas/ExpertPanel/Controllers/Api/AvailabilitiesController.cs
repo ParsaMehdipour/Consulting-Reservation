@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using CR.Common.Utilities;
 using CR.Core.DTOs.Timings;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
 {
@@ -18,9 +18,11 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
 
         [Route("api/Availabilities/GetDayDetails")]
         [HttpGet]
-        public List<TimingDto> GetDayDetails(long id)
+        public List<TimingForEditDto> GetDayDetails(long id)
         {
-            return _getDayDetailsService.Execute(id).Data;
+            var expertId = ClaimUtility.GetUserId(User).Value;
+
+            return _getDayDetailsService.Execute(id, expertId).Data;
         }
     }
 }
