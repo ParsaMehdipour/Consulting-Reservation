@@ -1,4 +1,6 @@
 ﻿@addTagHelper *, LazZiya.TagHelpers
+@using CR.DataAccess.Enums
+@using CR.Common.Utilities
 @model CR.Core.DTOs.ResultDTOs.Appointments.ResultGetAllAppointmentsForAdminPanelDto
 @{
 }
@@ -28,7 +30,9 @@
                                 <th>تخصص</th>
                                 <th>نام مراجعه کننده</th>
                                 <th>وقت ویزیت</th>
-                                <th class="text-right">مقدار</th>
+                                <th class="text-center">هزینه مشاوره</th>
+                                <th class="text-center">وضعیت فاکتور</th>
+                                <th class="text-right">عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,42 +41,56 @@
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image"></a>
-                                            <a href="profile.html">مشاور @appointment.ExpertFullName</a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@appointment.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image"></a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@appointment.ConsumerId">مشاور @appointment.ExpertFullName</a>
                                         </h2>
                                     </td>
                                     <td>@appointment.Speciality</td>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ConsumerIconSrc" alt="User Image"></a>
-                                            <a href="profile.html">@appointment.ConsumerFullName </a>
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@appointment.ExpertId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ConsumerIconSrc" alt="User Image"></a>
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@appointment.ExpertId">@appointment.ConsumerFullName </a>
                                         </h2>
                                     </td>
                                     <td> @appointment.AppointmentDate <span class="text-primary d-block">@appointment.AppointmentTime</span></td>
-                                  @*  <td>
-                                        <div class="status-toggle">
-                                            @if (appointment.AppointmentStatus == true)
-                                            {
-                                                <input onchange="ChangeStatus(@appointment.Id)" type="checkbox" id="status_@appointment.Id" class="check" checked>
-                                                <label for="status_@appointment.Id" class="checktoggle">checkbox</label>
-                                            }
-                                            else
-                                            {
-                                                <input onchange="ChangeStatus(@appointment.Id)" type="checkbox" id="status_@appointment.Id" class="check">
-                                                <label for="status_@appointment.Id" class="checktoggle">checkbox</label>
-                                            }
-                                        </div>
-                                    </td>*@
                                     @if (appointment.AppointmentPrice == "0")
                                     {
-                                        <td class="text-right">
+                                        <td class="text-center">
                                             رایگان
                                         </td>
                                     }
                                     else
                                     {
-                                        <td class="text-right">
+                                        <td class="text-center">
                                             @appointment.AppointmentPrice تومان
+                                        </td>
+                                    }
+
+                                    <td class="text-center">
+                                        @if (appointment.FactorStatus == FactorStatus.Waiting.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-warning inv-badge">@appointment.FactorStatus</span>
+                                        }
+                                        else if (appointment.FactorStatus == FactorStatus.SuccessfulPayment.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-success inv-badge">@appointment.FactorStatus</span>
+                                        }
+                                        else if (appointment.FactorStatus == FactorStatus.Declined.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-primary inv-badge">@appointment.FactorStatus</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-pill bg-danger inv-badge">@appointment.FactorStatus</span>
+                                        }
+                                    </td>
+
+                                    @if (appointment.FactorStatus == FactorStatus.SuccessfulPayment.GetDisplayName())
+                                    {
+                                        <td class="text-center">
+                                            <a onclick="Decline(@appointment.FactorId,@appointment.AppointmentPrice,@appointment.ConsumerId)" class="btn btn-sm bg-danger-light">
+                                                <i class="fe fe-trash"></i> لغو تراکنش
+                                            </a>
                                         </td>
                                     }
                                 </tr>
@@ -103,65 +121,50 @@
 
 @section Scripts
 {
-<script>
+    <script>
 
-    //function ChangeStatus(id) {
+        function Decline(factorId,price,payerId) {
 
-    //    //var changeAppointmentStatusForm = new FormData();
+            var data = {};
 
-    //    //changeAppointmentStatusForm.append("appointmentId",id);
+            data["factorId"] = factorId;
+            data["price"] = Number(price);
+            data["payerId"] = payerId;
 
-    //    //if (document.getElementById("status_" + id).checked) {
-    //    //    changeAppointmentStatusForm.append("activeStatus",true);
-    //    //} else {
-    //    //    changeAppointmentStatusForm.append("activeStatus",false);
-    //    //}
-
-    //    var activateStatus = false;
-    //    var appointmentId = id;
-
-    //    if (document.getElementById("status_" + appointmentId).checked) {
-    //        activateStatus = true;
-    //    } else {
-    //        activateStatus = false;
-    //    }
-
-
-    //    var postData = {
-    //        'appointmentId': appointmentId,
-    //        'activeStatus': activateStatus
-    //    };
-
-    //    $.ajax({
-    //        contentType: 'application/x-www-form-urlencoded',
-    //        dataType: 'json',
-    //        type: "POST",
-    //        url: 'Url.Action("ChangeAppointmentStatus", "Appointments")',
-    //        data: postData,
-    //        success: function (data) {
-    //            if (data.isSuccess == true) {
-    //                swal.fire(
-    //                    'موفق!',
-    //                    data.message,
-    //                    'success'
-    //                ).then(function (isConfirm) {
-    //                    location.reload();
-    //                });
-    //            }
-    //            else {
-    //                swal.fire(
-    //                    'هشدار!',
-    //                    data.message,
-    //                    'warning'
-    //                );
-
-    //            }
-    //        },
-    //        error: function (request, status, error) {
-    //            alert(request.responseText);
-    //        }
-    //    });
-    //}
-
-</script>
+            $.ajax({
+                type: "POST",
+                url: '/api/FinancialTransactions/Decline',
+                data: JSON.stringify(data),
+                dataType: "json",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                enctype: 'application/json',
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
+                success: function(response) {
+                    if (response.isSuccess === true) {
+                        swal.fire('موفق!',
+                            response.message,
+                            'success').then(function(isConfirm) {
+                            location.reload();
+                        });
+                    }else {
+                        swal.fire('هشدار!',
+                            response.message,
+                            'warning');
+                    }
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        }
+    </script>
 }
