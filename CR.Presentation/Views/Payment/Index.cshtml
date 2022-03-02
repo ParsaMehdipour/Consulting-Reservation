@@ -35,7 +35,7 @@
                                 <!-- Credit Card Payment -->
                                 <div class="payment-list">
                                     <label class="payment-radio credit-card-option">
-                                        <input type="radio" name="radio" checked>
+                                        <input id="PayFromPortal" type="radio" name="radio" checked>
                                         <span class="checkmark"></span>
                                         کارت بانکی
                                     </label>
@@ -44,7 +44,7 @@
                                 <!-- Paypal Payment -->
                                 <div class="payment-list">
                                     <label class="payment-radio paypal-option">
-                                        <input type="radio" name="radio">
+                                        <input id="payFromWallet" type="radio" name="radio">
                                         <span class="checkmark"></span>
                                         کیف پول - موجودی :
                                         <label id="balance"></label>
@@ -61,7 +61,7 @@
                                 <!-- /Terms Accept -->
                                 <!-- Submit Section -->
                                 <div class="submit-section mt-4">
-                                    <button onclick="RedirectToPayment()" class="btn btn-primary submit-btn">تایید پرداخت</button>
+                                    <button onclick="Pay()" class="btn btn-primary submit-btn">تایید پرداخت</button>
                                 </div>
                                 <!-- /Submit Section -->
 
@@ -142,6 +142,29 @@
 {
     <script>
 
+        function Pay() {
+            if ($("#terms_accept").is(":checked")) {
+
+                if ($("#PayFromPortal").is(":checked")) {
+                    RedirectToPayment();
+                }
+
+                else if ($("#payFromWallet").is(":checked")) {
+                    PayFromWallet();
+                }
+
+            }
+            else {
+
+                swal.fire('هشدار!',
+                    "لطفا تیک شرایط و مقررات را بزنید",
+                    'warning');
+
+                return;
+            }
+
+        }
+
         $(document).ready(function () {
 
             var data = {};
@@ -178,7 +201,6 @@
                     alert(request.responseText);
                 }
             });
-
         });
 
         function RedirectToPayment() {
@@ -205,7 +227,49 @@
                     }
                     else {
                         swal.fire('هشدار!',
-                            data.message,
+                            response.message,
+                            'warning');
+                    }
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
+        function PayFromWallet() {
+            var data = {};
+            data["factorId"] = @ViewData["factorId"];
+            data["price"] = @ViewData["price"];
+
+
+            $.ajax({
+                type: "POST",
+                url: '/api/Wallet/Pay',
+                data: JSON.stringify(data),
+                dataType: "json",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                enctype: 'application/json',
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
+                success: function(response) {
+                    if (response.isSuccess === true) {
+                        swal.fire('موفق!',
+                            response.message,
+                            'success').then(function(isConfirm) {
+                            window.location = "/ConsumerPanel/Home/Index";
+                        });
+                    }else {
+                        swal.fire('هشدار!',
+                            response.message,
                             'warning');
                     }
                 },
