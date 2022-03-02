@@ -180,48 +180,49 @@
         return false;
     });
 
-    $(".add-newHours").on('click', function () {
-        var value = document.querySelector('input[name="timing"]:checked').value;
-        var body2 = "";
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("GetTimings", "Availabilities")',
-            data: {timingType : value},
-            dataType: "json",
-            success: function(response) {
-                var data = response;
+    //$(".add-newHours").on('click', function () {
+    //    var value = document.querySelector('input[name="timing"]:checked').value;
+    //    var body2 = "";
+    //    $.ajax({
+    //        type: "POST",
+    //        url: '@Url.Action("GetTimings", "Availabilities")',
+    //        data: {timingType : value},
+    //        dataType: "json",
+    //        success: function(response) {
+    //            var data = response;
 
-                for (var i in data) {
-                    if (Object.prototype.hasOwnProperty.call(data, i)) {
-                        body2 += '<option value=' + data[i].id + '>' + data[i].startTime + "-" + data[i].endTime + '</option>';
-                    }
-                }
-                var hourscontent = '<div class="row form-row hours-cont">' +
-                    '<div class="col-12 col-md-10">' +
-                    '<div class="row form-row">' +
-                    '<div class="col-12 col-md-11">' +
-                    '<div class="form-group">' +
-                    '<label>زمانبندی</label>' +
-                    '<select class="form-control timingSelect" id="timingSelect" name="timingSelect">'+
-                    '<option>انتخاب نمایید</option>'+
-                    body2 +
-                    '</select>'+
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
-                    '</div>';
+    //            for (var i in data) {
+    //                if (Object.prototype.hasOwnProperty.call(data, i)) {
+    //                    body2 += '<option value=' + data[i].id + '>' + data[i].startTime + "-" + data[i].endTime + '</option>';
+    //                }
+    //            }
 
-                $(".hours-info").append(hourscontent);
-            },
-            error: function(request, status, error) {
-                alert(request.responseText);
-            }
-        });
+    //            var hourscontent = '<div class="row form-row hours-cont">' +
+    //                '<div class="col-12 col-md-10">' +
+    //                '<div class="row form-row">' +
+    //                '<div class="col-12 col-md-11">' +
+    //                '<div class="form-group">' +
+    //                '<label>زمانبندی</label>' +
+    //                '<select class="form-control timingSelect" id="timingSelect" name="timingSelect">'+
+    //                '<option>انتخاب نمایید</option>'+
+    //                body2 +
+    //                '</select>'+
+    //                '</div>' +
+    //                '</div>' +
+    //                '</div>' +
+    //                '</div>' +
+    //                '<div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
+    //                '</div>';
 
-        return false;
-    });
+    //            $(".hours-info").append(hourscontent);
+    //        },
+    //        error: function(request, status, error) {
+    //            alert(request.responseText);
+    //        }
+    //    });
+
+    //    return false;
+    //});
 
     function SetId(id) {
         dayId = id;
@@ -325,8 +326,8 @@
                 })
     }
 
-    function GetTimings(timingType) {
-
+    function GetTimings(timingType,timingName) {
+        var body2 = "";
         $.ajax({
             type: "POST",
             url: '@Url.Action("GetTimings", "Availabilities")',
@@ -336,13 +337,31 @@
 
                 var data = response;
 
-                var select = document.getElementsByClassName("timingSelect");
-
-                $(select).empty();
-
-                for (var i in data) {
-                    $(select).append('<option value=' + data[i].id + '>' + data[i].startTime + "-" + data[i].endTime + '</option>');
+                for (var i in data.timingDtos) {
+                    if (Object.prototype.hasOwnProperty.call(data.timingDtos, i)) {
+                        console.log(data.timingDtos[i]);
+                        body2 += '<option value=' + data.timingDtos[i].id + '>' + data.timingDtos[i].startTime + "-" + data.timingDtos[i].endTime + '</option>';
+                    }
                 }
+
+                var hourscontent = '<div class="row form-row hours-cont">' +
+                    '<div class="col-12 col-md-10">' +
+                    '<div class="row form-row">' +
+                    '<div class="col-12 col-md-11">' +
+                    '<div class="form-group">' +
+                    '<label>زمانبندی - '+ data.label + '</label>' +
+                    '<select class="form-control timingSelect" id="timingSelect" name="timingSelect">'+
+                    '<option>انتخاب نمایید</option>'+
+                    body2 +
+                    '</select>'+
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
+                    '</div>';
+
+                $(".hours-info").append(hourscontent);
             },
             error: function(request, status, error) {
                 alert(request.responseText);
@@ -433,20 +452,20 @@
                         <div class="col-12 col-md-10">
                             <div class="row form-row">
                                 <div class="col-12 col-md-11">
-                                    <div class="form-group">
+                                   @* <div class="form-group">
                                         <label>زمانبندی</label>
                                         <select class="form-control timingSelect" id="timingSelect" name="timingSelect">
                                             <option>انتخاب نمایید</option>
                                         </select>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="add-more mb-3">
+             @*   <div class="add-more mb-3">
                     <a href="javascript:void(0);" class="add-newHours"><i class="fa fa-plus-circle"></i> افزودن</a>
-                </div>
+                </div>*@
                 <div class="submit-section text-center">
                     <button onclick="AddHours()" type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
                 </div>
