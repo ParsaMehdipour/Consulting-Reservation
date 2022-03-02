@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Consumers;
 using CR.Core.DTOs.ResultDTOs.Consumers;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Consumers
 {
@@ -29,7 +29,7 @@ namespace CR.Core.Services.Implementations.Consumers
                 .Include(a => a.ExpertInformation)
                 .Include(a => a.ConsumerInformation)
                 .ThenInclude(a => a.Consumer)
-                .Where(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.Day.Date.Date > DateTime.Now.Date)
+                .Where(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.Day.Date.Date > DateTime.Now.Date && a.TimeOfDay.IsReserved)
                 .Select(a => new ConsumerForExpertDashboardDto()
                 {
                     AppointmentId = a.Id,
