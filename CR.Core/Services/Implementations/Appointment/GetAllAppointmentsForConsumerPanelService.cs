@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Appointments;
@@ -7,6 +6,7 @@ using CR.Core.DTOs.ResultDTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Appointment
 {
@@ -19,17 +19,18 @@ namespace CR.Core.Services.Implementations.Appointment
             _context = context;
         }
 
-        public ResultDto<ResultGetAllAppointmentsForConsumerPanelDto> Execute(long consumerId,int Page = 1, int PageSize = 20)
+        public ResultDto<ResultGetAllAppointmentsForConsumerPanelDto> Execute(long consumerId, int Page = 1, int PageSize = 20)
         {
             int rowCount = 0;
             var appointmentsForConsumerPanel = _context.Appointments
                 .Include(a => a.ExpertInformation)
-                .ThenInclude(e=>e.Specialty)
+                .ThenInclude(e => e.Specialty)
                 .Include(a => a.ConsumerInformation)
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
-                .Where(a=>a.ConsumerInformation.ConsumerId == consumerId)
+                .Where(a => a.ConsumerInformation.ConsumerId == consumerId && a.TimeOfDay.IsReserved)
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
+                .ThenByDescending(a => a.TimeOfDay.StartTime.Hour)
                 .Select(a => new AppointmentForConsumerPanelDto
                 {
                     Id = a.Id,

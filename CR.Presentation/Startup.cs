@@ -228,6 +228,8 @@ namespace CR.Presentation
             services.AddScoped<IUpdateFinancialTransactionStatusService, UpdateFinancialTransactionStatusService>();
             services.AddScoped<IAddPaymentTransactionService, AddPaymentTransactionService>();
             services.AddScoped<IGetFinancialTransactionDetailsForVerifyService, GetFinancialTransactionDetailsForVerifyService>();
+            services.AddScoped<IAddPayFromWalletFinancialTransactionService, AddPayFromWalletFinancialTransactionService>();
+            services.AddScoped<IAddDeclineFinancialTransactionService, AddDeclineFinancialTransactionService>();
             //Favorites
             services.AddScoped<IAddNewFavoriteService, AddNewFavoriteService>();
             services.AddScoped<IGetConsumerFavoritesService, GetConsumerFavoritesService>();

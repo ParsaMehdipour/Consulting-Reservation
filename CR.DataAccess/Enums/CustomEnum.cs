@@ -36,6 +36,8 @@ namespace CR.DataAccess.Enums
         SuccessfulPayment = 1,
         [Display(Name = "پرداخت ناموفق")]
         UnsuccessfulPayment = 2,
+        [Display(Name = "مرجوع")]
+        Declined = 3,
     }
 
     public enum TimingType
@@ -77,6 +79,8 @@ namespace CR.DataAccess.Enums
         PayFromWallet = 1,
         [Display(Name = "شارژ کیف پول")]
         ChargeWallet = 2,
+        [Display(Name = "شارژ-لغو تراکنش")]
+        DeclineTransaction = 3
     }
 
     public enum CommentStatus

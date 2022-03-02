@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
+using CR.Common.Utilities;
 using CR.Core.DTOs.Timings;
 using CR.Core.Services.Interfaces.Timings;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Timings
 {
@@ -17,13 +18,13 @@ namespace CR.Core.Services.Implementations.Timings
             _context = context;
         }
 
-        public ResultDto<List<TimingDto>> Execute(TimingType timingType)
+        public ResultDto<TimingForDropDownDtos> Execute(TimingType timingType)
         {
             var data = new List<TimingDto>();
 
             if (timingType == TimingType.ShortSpan)
             {
-                data = _context.Timings.Where(t => t.TimingType == TimingType.ShortSpan).OrderBy(t=>t.EndTime)
+                data = _context.Timings.Where(t => t.TimingType == TimingType.ShortSpan).OrderBy(t => t.EndTime)
                     .Select(t => new TimingDto
                     {
                         id = t.Id,
@@ -55,9 +56,13 @@ namespace CR.Core.Services.Implementations.Timings
                     }).ToList();
             }
 
-            return new ResultDto<List<TimingDto>>()
+            return new ResultDto<TimingForDropDownDtos>()
             {
-                Data = data,
+                Data = new TimingForDropDownDtos()
+                {
+                    timingDtos = data,
+                    Label = timingType.GetDisplayName()
+                },
                 IsSuccess = true
             };
         }

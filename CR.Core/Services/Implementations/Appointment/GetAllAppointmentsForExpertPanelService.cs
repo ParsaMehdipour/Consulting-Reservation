@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Appointment
 {
@@ -18,10 +18,8 @@ namespace CR.Core.Services.Implementations.Appointment
             _context = context;
         }
 
-        public ResultDto<ResultGetAllAppointmentsForExpertPanelDto> Execute(long expertId,int Page = 1, int PageSize = 20)
+        public ResultDto<ResultGetAllAppointmentsForExpertPanelDto> Execute(long expertId, int Page = 1, int PageSize = 20)
         {
-            int rowCount = 0;
-
             var appointmentsForExpertPanel = _context.Appointments
                 .Include(a => a.ExpertInformation)
                 .ThenInclude(e => e.Specialty)
@@ -29,7 +27,7 @@ namespace CR.Core.Services.Implementations.Appointment
                 .ThenInclude(a => a.Consumer)
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
-                .Where(a => a.ExpertInformation.ExpertId == expertId)
+                .Where(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.IsReserved == true)
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
                 .Select(a => new AppointmentForExpertPanelDto
                 {
@@ -45,7 +43,7 @@ namespace CR.Core.Services.Implementations.Appointment
                     Email = a.ConsumerInformation.Consumer.Email,
                     PhoneNumber = a.ConsumerInformation.Consumer.PhoneNumber.ToString().GetPersianNumber()
                 }).AsEnumerable()
-                .ToPaged(Page,PageSize,out rowCount)
+                .ToPaged(Page, PageSize, out var rowCount)
                 .ToList();
 
             return new ResultDto<ResultGetAllAppointmentsForExpertPanelDto>()
