@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace CR.Core.DTOs.RequestDTOs
+namespace CR.Core.DTOs.Days
 {
-    public class RequestAddNewTimeOfDayDto
+    public class RequestEditDayDetaislDto
     {
         public long dayId { get; set; }
         public long expertInformationId { get; set; }

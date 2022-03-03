@@ -278,6 +278,53 @@
         });
     }
 
+    function EditHours() {
+        var timings = $('#edit_time_slot select').map(function() {
+            return $(this).val();
+        }).get();
+
+        if (timings[0] === "انتخاب نمایید") {
+            swal.fire(
+                'هشدار!',
+                "لطفا یک زمان را انتخاب کنید",
+                'warning'
+            );
+            return;
+        }
+
+        var postDataTimeOFDay = {
+            'dayId': dayId,
+            'expertInformationId': $("#expId").val(),
+            'timings': timings
+        };
+
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("EditDetails", "Availabilities")',
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            cache: false,
+            data: postDataTimeOFDay,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
     function RemoveTimeOfDay(id) {
 
         swal.fire({
@@ -403,7 +450,7 @@
                     body += '<div class="col-12 col-md-11">';
                     body += '<div class="form-group">';
                     body += '<label>زمانبندی - ' + data[i].timingTypName + '</label>';
-                    body += '<select class="form-control">';
+                    body += '<select class="form-control" id="timingSelect" name="timingSelect">';
                     body += '<option>انتخاب کنید</option>';
                     body += body2;
                     body += '</select>';
@@ -477,7 +524,7 @@
                     <a href="javascript:void(0);" class="add-newHours"><i class="fa fa-plus-circle"></i> افزودن</a>
                     </div>*@
                 <div class="submit-section text-center">
-                    <button onclick="AddHours()" type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                    <button onclick="AddHours()" type="submit" class="btn btn-primary submit-btn">افزودن زمانبندی ها</button>
                 </div>
             </div>
         </div>
@@ -519,7 +566,7 @@
                 </div>
 
                 <div class="submit-section text-center">
-                    <button type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                    <button onclick="EditHours()" type="submit" class="btn btn-warning submit-btn">ویرایش زمانبندی ها</button>
                 </div>
             </div>
         </div>

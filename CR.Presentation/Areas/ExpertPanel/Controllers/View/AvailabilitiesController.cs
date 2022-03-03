@@ -1,7 +1,9 @@
 ﻿using CR.Common.Utilities;
+using CR.Core.DTOs.Days;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.DTOs.Timings;
+using CR.Core.Services.Interfaces.Days;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.Timings;
 using CR.Core.Services.Interfaces.Users;
@@ -24,6 +26,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
         private readonly IRemoveTimeOfDayService _removeTimeOfDayService;
         private readonly IGetTimingsForDropDownService _getTimingsForDropDownService;
         private readonly IGetDayDetailsService _getDayDetailsService;
+        private readonly IEditDayDetailsService _editDayDetailsService;
         private ResultCheckUserFlagService ResultCheckUserFlag;
 
 
@@ -34,7 +37,8 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
             , IAddTimeOfDayService addTimeOfDayService
             , IRemoveTimeOfDayService removeTimeOfDayService
             , IGetTimingsForDropDownService getTimingsForDropDownService
-            , IGetDayDetailsService getDayDetailsService)
+            , IGetDayDetailsService getDayDetailsService
+            , IEditDayDetailsService editDayDetailsService)
         {
             _getUserFlagService = getUserFlagService;
             _addDayService = addDayService;
@@ -43,6 +47,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
             _removeTimeOfDayService = removeTimeOfDayService;
             _getTimingsForDropDownService = getTimingsForDropDownService;
             _getDayDetailsService = getDayDetailsService;
+            _editDayDetailsService = editDayDetailsService;
 
             var userId = ClaimUtility.GetUserId(contextAccessor.HttpContext?.User);
 
@@ -104,6 +109,14 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
         public IActionResult RemoveTimeOfDay(long id)
         {
             var result = _removeTimeOfDayService.Execute(id);
+
+            return new JsonResult(result);
+        }
+
+        [HttpPost]
+        public IActionResult EditDetails(RequestEditDayDetaislDto request)
+        {
+            var result = _editDayDetailsService.Execute(request);
 
             return new JsonResult(result);
         }
