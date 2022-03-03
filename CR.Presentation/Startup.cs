@@ -5,6 +5,7 @@ using CR.Core.Services.Implementations.Blogs;
 using CR.Core.Services.Implementations.Comments;
 using CR.Core.Services.Implementations.CommissionAndDiscounts;
 using CR.Core.Services.Implementations.Consumers;
+using CR.Core.Services.Implementations.Days;
 using CR.Core.Services.Implementations.ExpertAvailabilities;
 using CR.Core.Services.Implementations.ExpertImages;
 using CR.Core.Services.Implementations.Experts;
@@ -23,6 +24,7 @@ using CR.Core.Services.Interfaces.Blogs;
 using CR.Core.Services.Interfaces.Comments;
 using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.Consumers;
+using CR.Core.Services.Interfaces.Days;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.ExpertImages;
 using CR.Core.Services.Interfaces.Experts;
@@ -149,6 +151,7 @@ namespace CR.Presentation
             services.AddScoped<IGetThisDateExpertDetailsForReservationService, GetThisDateExpertDetailsForReservationService>();
             services.AddScoped<IGetExpertAvailabilitiesForReservationService, GetExpertAvailabilitiesForReservationService>();
             services.AddScoped<IGetTimeOfDayPriceForReservationService, GetTimeOfDayPriceForReservationService>();
+            services.AddScoped<IEditDayDetailsService, EditDayDetailsService>();
             //Consumers
             services.AddScoped<IGetAllConsumersService, GetAllConsumersService>();
             services.AddScoped<IGetConsumerDetailsForProfileService, GetConsumerDetailsForProfileService>();
