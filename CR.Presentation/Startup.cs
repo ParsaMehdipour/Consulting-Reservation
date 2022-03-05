@@ -141,6 +141,7 @@ namespace CR.Presentation
             services.AddScoped<IAddNewTimingService, AddNewTimingService>();
             services.AddScoped<IGetAllTimingsForAdminService, GetAllTimingsForAdminService>();
             services.AddScoped<IRemoveTimingService, RemoveTimingService>();
+            services.AddScoped<IGetAvailableTimingsService, GetAvailableTimingsService>();
             //ExpertAvailabilities
             services.AddScoped<IAddDayService, AddDayService>();
             services.AddScoped<IGetDaysService, GetDaysService>();
