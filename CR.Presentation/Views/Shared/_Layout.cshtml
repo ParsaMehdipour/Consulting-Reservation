@@ -39,7 +39,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css">
-    
+
     @RenderSection("Style",false)
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -81,49 +81,6 @@
                         <li class="active">
                             <a href="/">خانه</a>
                         </li>
-                        @*  <li class="has-submenu">
-                            <a href="#">‌داروخانه<i class="fas fa-chevron-down"></i></a>
-                            <ul class="submenu">
-                            <li><a href="pharmacy-index.html">‌داروخانه</a></li>
-                            <li><a href="pharmacy-details.html">‌جزییات داروخانه</a></li>
-                            <li><a href="pharmacy-search.html">‌جستجو داروخانه</a></li>
-                            <li><a href="product-all.html">‌محصولات</a></li>
-                            <li><a href="product-description.html">توضیحات محصول</a></li>
-                            <li><a href="cart.html">‌سبد خرید</a></li>
-                            <li><a href="product-checkout.html">‌خرید محصولات</a></li>
-                            <li><a href="payment-success.html">‌پرداخت موفق</a></li>
-                            </ul>
-                            </li>*@
-                        @*  <li class="has-submenu">
-                            <a href="#">‌صفحات<i class="fas fa-chevron-down"></i></a>
-                            <ul class="submenu">
-                            <li><a href="voice-call.html">‌تماس صوتی</a></li>
-                            <li><a href="video-call.html">‌تماس تصویری</a></li>
-                            <li><a href="search.html">‌جستجو مشاور</a></li>
-                            <li><a href="calendar.html">‌تقویم</a></li>
-
-                            <li><a href="components.html">‌کامپوننت‌ها</a></li>
-                            <li class="has-submenu">
-                            <a href="invoices.html">صورت‌حساب</a>
-                            <ul class="submenu">
-                            <li><a href="invoices.html">صورت‌حساب</a></li>
-                            <li><a href="invoice-view.html">‌مشاهده صورت‌حساب</a></li>
-                            </ul>
-                            </li>
-                            <li><a href="blank-page.html">‌صفحه شروع</a></li>
-                            <li><a href="login.html">‌ورود</a></li>
-                            <li><a href="register.html">‌ثبت‌نام</a></li>
-                            <li><a href="forgot-password.html">‌فراموشی رمزعبور</a></li>
-                            </ul>
-                            </li>*@
-                        @*  <li class="has-submenu">
-                            <a href="#">‌بلاگ<i class="fas fa-chevron-down"></i></a>
-                            <ul class="submenu">
-                            <li><a href="blog-list.html">‌لیست بلاگ</a></li>
-                            <li><a href="blog-grid.html">‌گرید بلاگ</a></li>
-                            <li><a href="blog-details.html">‌جزییات بلاگ</a></li>
-                            </ul>
-                            </li>*@
                         <li>
                             <a asp-area="AdminPanel" asp-controller="Home" asp-action="Index" target="_blank">ادمین<i class="fas"></i></a>
                         </li>
@@ -134,23 +91,13 @@
                     </ul>
                 </div>
                 <ul class="nav header-navbar-rht">
-                    @*      <li class="nav-item contact-item">
-                        <div class="header-contact-img">
-                        <i class="far fa-hospital"></i>
-                        </div>
-                        <div class="header-contact-detail">
-                        <p class="contact-header">‌تماس با ما</p>
-                        <p class="contact-info-header"> +1 315 369 5943</p>
-                        </div>
-                        </li>*@
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        @* <li class="nav-item">
-                            <a class="btn btn-block btn-outline-danger" asp-area="" asp-controller="Account" asp-action="Logout">خروج</a>
-                            </li>*@
+                        <!-- User Menu -->
                         <li class="nav-item dropdown has-arrow logged-item" id="userInfo">
 
                         </li>
+                        <!-- /User Menu -->
                     }
                     else
                     {
@@ -164,7 +111,6 @@
         </header>
         <!-- /Header -->
         @RenderBody()
-
 
         <div id="loading" style="background-color: #ffffff; background-color: rgba(255,255,255,0.5);">
             <div class="loadingio-spinner-double-ring-815lhh4qwva">
@@ -480,9 +426,6 @@
 
     <!-- Profile Settings JS -->
     <script src="~/assets/js/ExpertPanel/Profile/profile-settings.js"></script>
-
-    <!-- Circle Progress JS -->
-    <script src="~/assets/js/circle-progress.min.js"></script>
 
     <!-- Mask JS -->
     <script src="~/assets/js/jquery.maskedinput.min.js"></script>
