@@ -1,5 +1,6 @@
 ﻿using CR.DataAccess.Common.Entity;
 using CR.DataAccess.Entities.Appointments;
+using CR.DataAccess.Entities.ChatUsers;
 using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertAvailabilities;
 using CR.DataAccess.Entities.ExpertInformations;
@@ -63,6 +64,7 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public List<ExpertPrize> ExpertPrizes { get; set; }
         public List<ExpertSubscription> ExpertSubscriptions { get; set; }
         public ICollection<Favorite> Favorites { get; set; }
+        public ICollection<ChatUser> ChatUsers { get; set; }
 
         #endregion
 

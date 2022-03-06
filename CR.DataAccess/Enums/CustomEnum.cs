@@ -100,5 +100,13 @@ namespace CR.DataAccess.Enums
         [Display(Name = "مقاله")]
         Blog = 1
     }
+
+    public enum MessageFlag
+    {
+        [Display(Name = "پیام مراجعه کننده")]
+        ConsumerMessage = 0,
+        [Display(Name = "پیام متخصص")]
+        ExpertMessage = 1
+    }
 }
 

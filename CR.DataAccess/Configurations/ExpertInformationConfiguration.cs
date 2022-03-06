@@ -66,6 +66,10 @@ namespace CR.DataAccess.Configurations
                 .WithOne(e => e.ExpertInformation)
                 .HasForeignKey(e => e.ExpertInformationId);
 
+            builder.HasMany(_ => _.ChatUsers)
+                .WithOne(_ => _.ExpertInformation)
+                .HasForeignKey(_ => _.ExpertInformationId);
+
         }
     }
 }
