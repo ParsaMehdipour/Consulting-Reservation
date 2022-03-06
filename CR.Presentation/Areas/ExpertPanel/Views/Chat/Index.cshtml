@@ -1,0 +1,207 @@
+﻿@model List<CR.Core.DTOs.ChatUsers.ChatUserForExpertPanelDto>
+<style>
+    body.resources {
+        footer {
+            display: none
+        }
+    }
+</style>
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="chat-window">
+
+                    <!-- Chat Left -->
+                    <div class="chat-cont-left">
+                        <div class="chat-header">
+                            <span>چت </span>
+                            <a href="javascript:void(0)" class="chat-compose">
+                                <i class="material-icons">control_point</i>
+                            </a>
+                        </div>
+                        <form class="chat-search">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <input type="text" class="form-control" placeholder="جستجو" id="searchKey" name="searchKey">
+                            </div>
+                        </form>
+                        <div class="chat-users-list">
+                            <div id="chatUser-List" class="chat-scroll">
+                                @if (Model.Count > 0)
+                                {
+                                    @foreach (var chatUser in Model)
+                                    {
+                                        <a id="chatUser_@chatUser.Id" onclick="GetMessages(@chatUser.Id)" class="media read-chat">
+                                            <div class="media-img-wrap">
+                                                <div class="avatar avatar-online">
+                                                    <img src="~/@chatUser.ConsumerIconSrc" alt="@chatUser.ConsumerName" class="avatar-img rounded-circle">
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <div>
+                                                    <div class="user-name">@chatUser.ConsumerName</div>
+                                                    <div class="user-last-chat">@chatUser.LastMessage</div>
+                                                </div>
+                                                <div>
+                                                    <div class="last-chat-time block">@chatUser.LastChangeHour</div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Chat Left -->
+                    <!-- Chat Right -->
+                    <div class="chat-cont-right">
+                        <div class="chat-header">
+                            <a id="back_user_list" class="back-user-list">
+                                <i class="material-icons">chevron_left</i>
+                            </a>
+                            <div class="media">
+                                <div class="media-img-wrap">
+                                    <div class="avatar avatar-online">
+                                        <img id="consumerImage" src="~/assets/img/favicon-32x32.png" alt="User Image" class="avatar-img rounded-circle">
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <div id="consumerName" class="user-name"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-body">
+                            <div class="chat-scroll">
+                                <ul id="messages-Body" class="list-unstyled">
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="chat-footer">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="btn-file btn">
+                                        <i class="fa fa-paperclip"></i>
+                                        <input type="file">
+                                    </div>
+                                </div>
+                                <input type="text" class="input-msg-send form-control" placeholder="چیزی تایپ کنید ">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Chat Right -->
+
+                </div>
+            </div>
+        </div>
+        <!-- /Row -->
+
+    </div>
+
+</div>
+<!-- /Page Content -->
+@section Scripts
+{
+<script>
+    function GetMessages(chatUserId) {
+
+        $("#chatUser-List .active").removeClass("active");
+        $("#chatUser_" + chatUserId).addClass("active");
+
+        var data = {};
+
+        data["chatUserId"] = chatUserId;
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/api/Chat/GetMessages',
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            enctype: 'application/json',
+            data: JSON.stringify(data),
+            beforeSend: function(x) {
+                $('#loading').show(0);
+            },
+            success: function (response) {
+                if (response.isSuccess === true) {
+                    var model = response.data;
+                    var body = "";
+
+                    for (let i = 0; i < model.chatMessageDtos.length; i++) {
+                        if (model.chatMessageDtos[i].messageFlag === 0) {
+                            body += '<li class="media sent">';
+                            body += '<div class="media-body">';
+                            body += '<div class="msg-box">';
+                            body += '<div>';
+                            body += '<p>';
+                            body += model.chatMessageDtos[i].message;
+                            body += '</p>';
+                            body += '<ul class="chat-msg-info">';
+                            body += '<li>';
+                            body += '<div class="chat-time">';
+                            body += '<span>';
+                            body += model.chatMessageDtos[i].messageHour;
+                            body += '</span>';
+                            body += '</div>';
+                            body += '</li>';
+                            body += '</ul>';
+                            body += '</div>';
+                            body += '</div>';
+                        } else {
+                            body += '<li class="media received">';
+                            body += '<div class="media-body">';
+                            body += '<div class="msg-box">';
+                            body += '<div>';
+                            body += '<p>';
+                            body += model.chatMessageDtos[i].message;
+                            body += '</p>';
+                            body += '<ul class="chat-msg-info">';
+                            body += '<li>';
+                            body += '<div class="chat-time">';
+                            body += '<span>';
+                            body += model.chatMessageDtos[i].messageHour;
+                            body += '</span>';
+                            body += '</div>';
+                            body += '</li>';
+                            body += '</ul>';
+                            body += '</div>';
+                            body += '</div>';
+                            body += '</div>';
+                            body += '</li>';
+                        }
+                        document.getElementById("consumerName").innerHTML = model.consumerFullName;
+                        document.getElementById("consumerImage").src = "/" + model.consumerIconSrc;
+                        $("#messages-Body").html(body);
+                    }
+                }
+                else {
+
+                    swal.fire(
+                        'هشدار!',
+                        data.message,
+                        'warning'
+                    );
+
+                }
+            },
+            complete: function() {
+                $('#loading').hide(0);
+            },
+            fail: function() {
+                $('#loading').hide(0);
+            },
+            error: function (request, status, error) {
+                alert(request.responseText);
+            }
+
+        });
+    }
+</script>
+}
