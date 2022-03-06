@@ -2,9 +2,12 @@ using CR.Core.DTOs.FinancialTransactions;
 using CR.Core.Services.Implementations.Appointment;
 using CR.Core.Services.Implementations.BlogCategories;
 using CR.Core.Services.Implementations.Blogs;
+using CR.Core.Services.Implementations.ChatMessages;
+using CR.Core.Services.Implementations.ChatUsers;
 using CR.Core.Services.Implementations.Comments;
 using CR.Core.Services.Implementations.CommissionAndDiscounts;
 using CR.Core.Services.Implementations.Consumers;
+using CR.Core.Services.Implementations.Days;
 using CR.Core.Services.Implementations.ExpertAvailabilities;
 using CR.Core.Services.Implementations.ExpertImages;
 using CR.Core.Services.Implementations.Experts;
@@ -20,9 +23,12 @@ using CR.Core.Services.Implementations.Wallet;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.Core.Services.Interfaces.BlogCategories;
 using CR.Core.Services.Interfaces.Blogs;
+using CR.Core.Services.Interfaces.ChatMessages;
+using CR.Core.Services.Interfaces.ChatUsers;
 using CR.Core.Services.Interfaces.Comments;
 using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.Consumers;
+using CR.Core.Services.Interfaces.Days;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.ExpertImages;
 using CR.Core.Services.Interfaces.Experts;
@@ -38,6 +44,7 @@ using CR.Core.Services.Interfaces.Wallet;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.Roles;
 using CR.DataAccess.Entities.Users;
+using CR.Presentation.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,6 +71,8 @@ namespace CR.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddSignalR();
 
             services.AddDbContext<ApplicationContext>(options =>
             {
@@ -139,6 +148,7 @@ namespace CR.Presentation
             services.AddScoped<IAddNewTimingService, AddNewTimingService>();
             services.AddScoped<IGetAllTimingsForAdminService, GetAllTimingsForAdminService>();
             services.AddScoped<IRemoveTimingService, RemoveTimingService>();
+            services.AddScoped<IGetAvailableTimingsService, GetAvailableTimingsService>();
             //ExpertAvailabilities
             services.AddScoped<IAddDayService, AddDayService>();
             services.AddScoped<IGetDaysService, GetDaysService>();
@@ -149,6 +159,7 @@ namespace CR.Presentation
             services.AddScoped<IGetThisDateExpertDetailsForReservationService, GetThisDateExpertDetailsForReservationService>();
             services.AddScoped<IGetExpertAvailabilitiesForReservationService, GetExpertAvailabilitiesForReservationService>();
             services.AddScoped<IGetTimeOfDayPriceForReservationService, GetTimeOfDayPriceForReservationService>();
+            services.AddScoped<IEditDayDetailsService, EditDayDetailsService>();
             //Consumers
             services.AddScoped<IGetAllConsumersService, GetAllConsumersService>();
             services.AddScoped<IGetConsumerDetailsForProfileService, GetConsumerDetailsForProfileService>();
@@ -241,6 +252,10 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertCommentsForPresentationService, GetExpertCommentsForPresentationService>();
             //Wallet
             services.AddScoped<IGetWalletBalanceService, GetWalletBalanceService>();
+            //ChatUsers
+            services.AddScoped<IGetExpertChatUsersService, GetExpertChatUsersService>();
+            //ChatMessages
+            services.AddScoped<IGetChatMessagesService, GetChatMessagesService>();
 
             #endregion
 
@@ -280,6 +295,8 @@ namespace CR.Presentation
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<SiteChatHub>("/chathub");
             });
         }
     }

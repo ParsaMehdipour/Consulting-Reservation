@@ -1,5 +1,7 @@
 ﻿using CR.DataAccess.Entities.Appointments;
 using CR.DataAccess.Entities.Blogs;
+using CR.DataAccess.Entities.ChatUserMessages;
+using CR.DataAccess.Entities.ChatUsers;
 using CR.DataAccess.Entities.Comments;
 using CR.DataAccess.Entities.CommissionAndDiscounts;
 using CR.DataAccess.Entities.ExpertAvailabilities;
@@ -45,6 +47,8 @@ namespace CR.DataAccess.Context
         public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<ChatUser> ChatUsers { get; set; }
+        public DbSet<ChatUserMessage> ChatUserMessages { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

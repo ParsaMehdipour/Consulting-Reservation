@@ -158,6 +158,66 @@ namespace CR.DataAccess.Migrations
                     b.ToTable("TBL_BlogCategories");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUserMessages.ChatUserMessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("ChatUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("File")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MessageFlag")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatUserId");
+
+                    b.ToTable("TBL_ChatUserMessages");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUsers.ChatUser", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("ConsumerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ExpertInformationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("lastChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsumerId");
+
+                    b.HasIndex("ExpertInformationId");
+
+                    b.ToTable("TBL_ChatUsers");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
                 {
                     b.Property<long>("Id")
@@ -1068,6 +1128,36 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("ParentCategory");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUserMessages.ChatUserMessage", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.ChatUsers.ChatUser", "ChatUser")
+                        .WithMany("ChatUserMessages")
+                        .HasForeignKey("ChatUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChatUser");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUsers.ChatUser", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Users.User", "Consumer")
+                        .WithMany("ChatUsers")
+                        .HasForeignKey("ConsumerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
+                        .WithMany("ChatUsers")
+                        .HasForeignKey("ExpertInformationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Consumer");
+
+                    b.Navigation("ExpertInformation");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
                 {
                     b.HasOne("CR.DataAccess.Entities.Comments.Comment", "Parent")
@@ -1323,6 +1413,11 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("SubCategories");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUsers.ChatUser", b =>
+                {
+                    b.Navigation("ChatUserMessages");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
                 {
                     b.Navigation("Children");
@@ -1356,6 +1451,8 @@ namespace CR.DataAccess.Migrations
 
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", b =>
                 {
+                    b.Navigation("ChatUsers");
+
                     b.Navigation("Days");
 
                     b.Navigation("Expert");
@@ -1388,6 +1485,8 @@ namespace CR.DataAccess.Migrations
 
             modelBuilder.Entity("CR.DataAccess.Entities.Users.User", b =>
                 {
+                    b.Navigation("ChatUsers");
+
                     b.Navigation("Comments");
 
                     b.Navigation("Favorites");

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Timings;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.Timings;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Timings
 {

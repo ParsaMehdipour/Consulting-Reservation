@@ -78,5 +78,11 @@ namespace CR.Presentation.Controllers.View
             var model = _getThisDateExpertDetailsForReservationService.Execute(expertInformationId, date).Data;
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult Chat()
+        {
+            return View();
+        }
     }
 }

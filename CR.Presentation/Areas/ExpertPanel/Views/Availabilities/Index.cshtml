@@ -143,6 +143,59 @@
     var startMatches = [];
     var finishMatches = [];
 
+    $(document).ready(function() {
+
+        var data = {};
+
+        $.ajax({
+            type: "POST",
+            url: '/api/Availabilities/GetAvailableTimings',
+            data: JSON.stringify(data),
+            dataType: "json",
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            enctype: 'application/json',
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
+            success: function(response) {
+
+                var data = response.data;
+                var body3 = "";
+
+                if (data.isShortSpan === true) {
+                    body3 += '<input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0" />';
+                    body3 += '<label for="option-1" class="option option-1">';
+                    body3 += '<span>کوتاه مدت</span>';
+                    body3 += '</label>';
+                }
+                if (data.isMediumSpan === true) {
+                    body3 += '<input onclick="GetTimings(1)" type="radio" name="timing" id="option-2" value="1" />';
+                    body3 += '<label for="option-2" class="option option-2">';
+                    body3 += '<span>میان مدت</span>';
+                    body3 += '</label>';
+                }
+                if (data.isLongSpan === true) {
+                    body3 += '<input onclick="GetTimings(2)" type="radio" name="timing" id="option-3" value="2" />';
+                    body3 += '<label for="option-3" class="option option-3">';
+                    body3 += '<span>بلند مدت</span>';
+                    body3 += '</label>';
+                }
+                $("#timingWrapper_Add").html(body3);
+                $("#timingWrapper_Edit").html(body3);
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    });
+
     function AddDay() {
         var addDayData = new FormData();
 
@@ -255,6 +308,53 @@
         $.ajax({
             type: 'POST',
             url: '@Url.Action("AddTimeOfDay", "Availabilities")',
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            cache: false,
+            data: postDataTimeOFDay,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function EditHours() {
+        var timings = $('#edit_time_slot select').map(function() {
+            return $(this).val();
+        }).get();
+
+        if (timings[0] === "انتخاب نمایید") {
+            swal.fire(
+                'هشدار!',
+                "لطفا یک زمان را انتخاب کنید",
+                'warning'
+            );
+            return;
+        }
+
+        var postDataTimeOFDay = {
+            'dayId': dayId,
+            'expertInformationId': $("#expId").val(),
+            'timings': timings
+        };
+
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("EditDetails", "Availabilities")',
             contentType: 'application/x-www-form-urlencoded',
             dataType: 'json',
             cache: false,
@@ -403,7 +503,7 @@
                     body += '<div class="col-12 col-md-11">';
                     body += '<div class="form-group">';
                     body += '<label>زمانبندی - ' + data[i].timingTypName + '</label>';
-                    body += '<select class="form-control">';
+                    body += '<select class="form-control" id="timingSelect" name="timingSelect">';
                     body += '<option>انتخاب کنید</option>';
                     body += body2;
                     body += '</select>';
@@ -427,6 +527,8 @@
         });
     }
 
+
+
 </script>
 }
 @section AddModal{
@@ -441,10 +543,10 @@
                 </button>
             </div>
             <br />
-            <div class="wrapper" style="margin-right: 17px">
-                <input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0">
-                <input onclick="GetTimings(1)" type="radio" name="timing" id="option-2" value="1">
-                <input onclick="GetTimings(2)" type="radio" name="timing" id="option-3" value="2">
+            <div id="timingWrapper_Add" class="wrapper" style="margin-right: 17px">
+             @*   <input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0" />
+                <input onclick="GetTimings(1)" type="radio" name="timing" id="option-2" value="1" />
+                <input onclick="GetTimings(2)" type="radio" name="timing" id="option-3" value="2" />
                 <label for="option-1" class="option option-1">
                     <span>کوتاه مدت</span>
                 </label>
@@ -453,7 +555,7 @@
                 </label>
                 <label for="option-3" class="option option-3">
                     <span>بلند مدت</span>
-                </label>
+                </label>*@
             </div>
             <br />
             <div class="modal-body">
@@ -477,7 +579,7 @@
                     <a href="javascript:void(0);" class="add-newHours"><i class="fa fa-plus-circle"></i> افزودن</a>
                     </div>*@
                 <div class="submit-section text-center">
-                    <button onclick="AddHours()" type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                    <button onclick="AddHours()" type="submit" class="btn btn-primary submit-btn">افزودن زمانبندی ها</button>
                 </div>
             </div>
         </div>
@@ -498,10 +600,10 @@
                 </button>
             </div>
             <br />
-            <div class="wrapper" style="margin-right: 17px">
-                <input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0">
-                <input onclick="GetTimings(1)" type="radio" name="timing" id="option-2" value="1">
-                <input onclick="GetTimings(2)" type="radio" name="timing" id="option-3" value="2">
+            <div id="timingWrapper_Edit" class="wrapper" style="margin-right: 17px">
+               @* <input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0" />
+                <input onclick="GetTimings(1)" type="radio" name="timing" id="option-2" value="1" />
+                <input onclick="GetTimings(2)" type="radio" name="timing" id="option-3" value="2" />
                 <label for="option-1" class="option option-1">
                     <span>کوتاه مدت</span>
                 </label>
@@ -510,7 +612,7 @@
                 </label>
                 <label for="option-3" class="option option-3">
                     <span>بلند مدت</span>
-                </label>
+                </label>*@
             </div>
             <br />
             <div class="modal-body">
@@ -519,7 +621,7 @@
                 </div>
 
                 <div class="submit-section text-center">
-                    <button type="submit" class="btn btn-primary submit-btn">ذخیره تغییرات</button>
+                    <button onclick="EditHours()" type="submit" class="btn btn-warning submit-btn">ویرایش زمانبندی ها</button>
                 </div>
             </div>
         </div>

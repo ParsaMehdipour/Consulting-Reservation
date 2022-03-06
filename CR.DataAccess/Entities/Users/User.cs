@@ -1,4 +1,5 @@
-﻿using CR.DataAccess.Entities.Comments;
+﻿using CR.DataAccess.Entities.ChatUsers;
+using CR.DataAccess.Entities.Comments;
 using CR.DataAccess.Entities.Favorites;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
@@ -35,6 +36,8 @@ namespace CR.DataAccess.Entities.Users
         public ICollection<Favorite> Favorites { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<ChatUser> ChatUsers { get; set; }
 
         #endregion
 

@@ -20,6 +20,10 @@ namespace CR.DataAccess.Configurations
                 .WithOne(p => p.User)
                 .HasForeignKey(p => p.UserId);
 
+            builder.HasMany(_ => _.ChatUsers)
+                .WithOne(_ => _.Consumer)
+                .HasForeignKey(_ => _.ConsumerId);
+
         }
     }
 }
