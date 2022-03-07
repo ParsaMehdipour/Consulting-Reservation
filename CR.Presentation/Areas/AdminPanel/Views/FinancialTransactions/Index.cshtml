@@ -59,6 +59,10 @@
                                         {
                                             <span class="badge badge-pill bg-success inv-badge">@transaction.TransactionType</span>
                                         }
+                                        else if (transaction.TransactionType == TransactionType.PayFromWallet.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-purple inv-badge">@transaction.TransactionType</span>
+                                        }
                                         else
                                         {
                                             <span class="badge badge-pill bg-danger inv-badge">@transaction.TransactionType</span>
