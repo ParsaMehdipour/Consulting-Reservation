@@ -66,7 +66,7 @@ namespace CR.Core.Services.Implementations.Experts
                 Rate = 5,
                 RateCount = 10,
                 Speciality = e.ExpertInformation.Specialty.Name,
-                HasTimeOfDays = e.ExpertInformation.TimeOfDays.Any(_ => _.StartTime.Date >= DateTime.Now && (e.ExpertInformation.UsePhoneCall || e.ExpertInformation.UseVoiceCall || e.ExpertInformation.UseTextCall)),
+                HasTimeOfDays = e.ExpertInformation.TimeOfDays.Any(_ => _.StartTime.Date >= DateTime.Now.Date && (e.ExpertInformation.UsePhoneCall || e.ExpertInformation.UseVoiceCall || e.ExpertInformation.UseTextCall)),
                 SpecialitySrc = e.ExpertInformation.Specialty.ImageSrc,
                 Tags = e.ExpertInformation.Tag.Split(",", System.StringSplitOptions.None).ToList()
             }).AsEnumerable()
