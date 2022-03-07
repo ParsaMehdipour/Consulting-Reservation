@@ -1,6 +1,7 @@
 ﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
+using CR.Core.DTOs.ResultDTOs.Wallet;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.FinancialTransactions;
@@ -20,7 +21,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             _context = context;
         }
 
-        public ResultDto Execute(long payerId, long factorId, int price)
+        public ResultDto<ResultAddPayFromWalletDto> Execute(long payerId, long factorId, int price)
         {
             using var transaction = _context.Database.BeginTransaction();
 
@@ -29,10 +30,11 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 if (factorId == 0 || price == 0)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultAddPayFromWalletDto>()
                     {
                         IsSuccess = false,
-                        Message = "لطفا مبلغ را وارد کنید"
+                        Message = "لطفا مبلغ را وارد کنید",
+                        Data = new ResultAddPayFromWalletDto()
                     };
                 }
 
@@ -48,24 +50,28 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 if (balance < price)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultAddPayFromWalletDto>()
                     {
                         IsSuccess = false,
-                        Message = "موجودی کیف پول شما کافی نیست"
+                        Message = "موجودی کیف پول شما کافی نیست",
+                        Data = new ResultAddPayFromWalletDto()
                     };
                 }
 
                 var factor = _context.Factors
+                    .Include(_ => _.ConsumerInformation)
+                    .Include(_ => _.ExpertInformation)
                     .Include(_ => _.Appointments)
                     .ThenInclude(_ => _.TimeOfDay)
                     .FirstOrDefault(_ => _.Id == factorId);
 
                 if (factor == null)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultAddPayFromWalletDto>()
                     {
                         IsSuccess = false,
-                        Message = "فاکتور یافت نشد!!"
+                        Message = "فاکتور یافت نشد!!",
+                        Data = new ResultAddPayFromWalletDto()
                     };
                 }
 
@@ -95,20 +101,27 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 transaction.Commit();
 
-                return new ResultDto()
+                return new ResultDto<ResultAddPayFromWalletDto>()
                 {
                     IsSuccess = true,
-                    Message = "تراکنش با موفقیت انجام شد"
+                    Message = (factor.Appointments.Any(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall)) ? "تراکنش با موفقیت انجام شد مشاور به لیست کاربران برای ارسال پیام شما اضافه شد" : "تراکنش با موفقیت انجام شد",
+                    Data = new ResultAddPayFromWalletDto()
+                    {
+                        ConsumerId = factor.ConsumerInformation.ConsumerId,
+                        ExpertInformationId = factor.ExpertInformation.Id,
+                        IsChat = factor.Appointments.Any(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall)
+                    }
                 };
             }
             catch (Exception)
             {
                 transaction.Rollback();
 
-                return new ResultDto()
+                return new ResultDto<ResultAddPayFromWalletDto>()
                 {
                     IsSuccess = false,
-                    Message = "خطا!"
+                    Message = "خطا!",
+                    Data = new ResultAddPayFromWalletDto()
                 };
             }
             finally
