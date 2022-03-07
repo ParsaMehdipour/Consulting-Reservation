@@ -254,6 +254,8 @@ namespace CR.Presentation
             services.AddScoped<IGetWalletBalanceService, GetWalletBalanceService>();
             //ChatUsers
             services.AddScoped<IGetExpertChatUsersService, GetExpertChatUsersService>();
+            services.AddScoped<IAddNewChatUserService, AddNewChatUserService>();
+            services.AddScoped<IGetConsumerChatUsersService, GetConsumerChatUsersService>();
             //ChatMessages
             services.AddScoped<IGetChatMessagesService, GetChatMessagesService>();
 
