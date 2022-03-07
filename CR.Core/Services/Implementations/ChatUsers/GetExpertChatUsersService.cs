@@ -18,7 +18,7 @@ namespace CR.Core.Services.Implementations.ChatUsers
             _context = context;
         }
 
-        public ResultDto<List<ChatUserForExpertPanelDto>> Execute(long expertId, string searchkey)
+        public ResultDto<List<ChatUserForExpertPanelDto>> Execute(long expertId, string searchKey)
         {
             var expert = _context.Users.Find(expertId);
 
@@ -27,9 +27,9 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 .Include(_ => _.ChatUserMessages)
                 .Where(_ => _.ExpertInformationId == expert.ExpertInformationId);
 
-            if (!string.IsNullOrWhiteSpace(searchkey))
+            if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                chatUsers = chatUsers.Where(_ => _.Consumer.FirstName.Contains(searchkey) || _.Consumer.LastName.Contains(searchkey));
+                chatUsers = chatUsers.Where(_ => _.Consumer.FirstName.Contains(searchKey) || _.Consumer.LastName.Contains(searchKey));
             }
 
             var finalResult = chatUsers.Select(_ => new ChatUserForExpertPanelDto()

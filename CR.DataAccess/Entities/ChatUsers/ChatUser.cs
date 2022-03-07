@@ -10,7 +10,7 @@ namespace CR.DataAccess.Entities.ChatUsers
     public class ChatUser : BaseEntity
     {
 
-        public DateTime lastChangeDate { get; set; }
+        public DateTime lastChangeDate { get; set; } = DateTime.Now;
 
         #region Foreign Keys
 
