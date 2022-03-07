@@ -5,6 +5,6 @@ namespace CR.Core.Services.Interfaces.ChatMessages
 {
     public interface IGetChatMessagesService
     {
-        ResultDto<ResultGetChatMessagesDto> Execute(long chatUserId);
+        ResultDto<ResultGetChatMessagesDto> Execute(long chatUserId, bool isExpert);
     }
 }
