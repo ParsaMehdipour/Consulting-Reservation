@@ -1,11 +1,4 @@
 ﻿@model List<CR.Core.DTOs.ChatUsers.ChatUserForExpertPanelDto>
-<style>
-    body.resources {
-        footer {
-            display: none
-        }
-    }
-</style>
 <!-- Page Content -->
 <div class="content">
     <div class="container-fluid">
@@ -176,8 +169,8 @@
                             body += '</div>';
                             body += '</li>';
                         }
-                        document.getElementById("consumerName").innerHTML = model.consumerFullName;
-                        document.getElementById("consumerImage").src = "/" + model.consumerIconSrc;
+                        document.getElementById("consumerName").innerHTML = model.receiverFullName;
+                        document.getElementById("consumerImage").src = "/" + model.receiverIconSrc;
                         $("#messages-Body").html(body);
                     }
                 }

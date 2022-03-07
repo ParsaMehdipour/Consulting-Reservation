@@ -18,7 +18,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
         [HttpPost]
         public IActionResult GetMessages([FromBody] RequestGetChatMessagesDto request)
         {
-            var result = _getChatMessagesService.Execute(request.chatUserId);
+            var result = _getChatMessagesService.Execute(request.chatUserId, true);
 
             return new JsonResult(result);
         }
