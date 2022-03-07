@@ -1,9 +1,6 @@
-﻿using CR.Common.Convertor;
-using CR.Common.Utilities;
-using CR.Core.DTOs.RequestDTOs;
+﻿using CR.Common.Utilities;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Appointment;
-using CR.Core.Services.Interfaces.Consumers;
 using CR.Core.Services.Interfaces.Users;
 using CR.DataAccess.Enums;
 using CR.Presentation.Areas.ConsumerPanel.Models.ViewModels;
@@ -11,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CR.Presentation.Areas.ConsumerPanel.Controllers
+namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
 {
     [Authorize]
     [Area("ConsumerPanel")]

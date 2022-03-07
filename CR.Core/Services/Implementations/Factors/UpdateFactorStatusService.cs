@@ -1,4 +1,5 @@
 ﻿using CR.Common.DTOs;
+using CR.Core.DTOs.ResultDTOs.Factors;
 using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
@@ -16,7 +17,7 @@ namespace CR.Core.Services.Implementations.Factors
         {
             _context = context;
         }
-        public ResultDto Execute(long factorId, FactorStatus factorStatus, TransactionStatus transactionStatus)
+        public ResultDto<ResultUpdateFactorStatusDto> Execute(long factorId, FactorStatus factorStatus, TransactionStatus transactionStatus)
         {
             using var transaction = _context.Database.BeginTransaction();
 
@@ -31,10 +32,11 @@ namespace CR.Core.Services.Implementations.Factors
 
                 if (factor == null)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultUpdateFactorStatusDto>()
                     {
                         IsSuccess = false,
-                        Message = string.Empty
+                        Message = string.Empty,
+                        Data = new ResultUpdateFactorStatusDto()
                     };
                 }
 
@@ -42,10 +44,11 @@ namespace CR.Core.Services.Implementations.Factors
 
                 if (financialTransaction == null)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultUpdateFactorStatusDto>()
                     {
                         IsSuccess = false,
-                        Message = "تراکنش یافت نشد!!"
+                        Message = "تراکنش یافت نشد!!",
+                        Data = new ResultUpdateFactorStatusDto()
                     };
                 }
 
@@ -66,20 +69,27 @@ namespace CR.Core.Services.Implementations.Factors
 
                 transaction.Commit();
 
-                return new ResultDto()
+                return new ResultDto<ResultUpdateFactorStatusDto>()
                 {
                     IsSuccess = true,
-                    Message = string.Empty
+                    Message = string.Empty,
+                    Data = new ResultUpdateFactorStatusDto()
+                    {
+                        ConsumerId = factor.ConsumerInformation.ConsumerId,
+                        ExpertInformationId = factor.ExpertInformation.Id,
+                        IsChat = factor.Appointments.Any(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall)
+                    }
                 };
             }
             catch (Exception)
             {
                 transaction.Rollback();
 
-                return new ResultDto()
+                return new ResultDto<ResultUpdateFactorStatusDto>()
                 {
                     IsSuccess = false,
-                    Message = string.Empty
+                    Message = string.Empty,
+                    Data = new ResultUpdateFactorStatusDto()
                 };
             }
             finally

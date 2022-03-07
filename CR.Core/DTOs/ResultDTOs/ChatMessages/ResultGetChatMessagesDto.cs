@@ -6,7 +6,7 @@ namespace CR.Core.DTOs.ResultDTOs.ChatMessages
     public class ResultGetChatMessagesDto
     {
         public List<ChatMessageDto> chatMessageDtos { get; set; }
-        public string consumerIconSrc { get; set; }
-        public string consumerFullName { get; set; }
+        public string receiverIconSrc { get; set; }
+        public string receiverFullName { get; set; }
     }
 }

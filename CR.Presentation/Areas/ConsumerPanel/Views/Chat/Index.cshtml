@@ -1,4 +1,4 @@
-﻿@model List<CR.Core.DTOs.ChatUsers.ChatUserForExpertPanelDto>
+﻿@model List<CR.Core.DTOs.ChatUsers.ChatUserForConsumerDto>
 <!-- Page Content -->
 <div class="content">
     <div class="container-fluid">
@@ -31,12 +31,12 @@
                                         <a id="chatUser_@chatUser.Id" onclick="GetMessages(@chatUser.Id)" class="media read-chat">
                                             <div class="media-img-wrap">
                                                 <div class="avatar avatar-online">
-                                                    <img src="~/@chatUser.ConsumerIconSrc" alt="@chatUser.ConsumerName" class="avatar-img rounded-circle">
+                                                    <img src="~/@chatUser.ExpertIconSrc" alt="@chatUser.ExpertIconSrc" class="avatar-img rounded-circle">
                                                 </div>
                                             </div>
                                             <div class="media-body">
                                                 <div>
-                                                    <div class="user-name">@chatUser.ConsumerName</div>
+                                                    <div class="user-name">@chatUser.ExpertName</div>
                                                     <div class="user-last-chat">@chatUser.LastMessage</div>
                                                 </div>
                                                 <div>
@@ -114,7 +114,7 @@
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/api/Chat/GetMessages',
+            url: '/api/Chat/GetConsumerMessages',
             cache: false,
             contentType: "application/json; charset=utf-8",
             enctype: 'application/json',
@@ -128,7 +128,7 @@
                     var body = "";
 
                     for (let i = 0; i < model.chatMessageDtos.length; i++) {
-                        if (model.chatMessageDtos[i].messageFlag === 0) {
+                        if (model.chatMessageDtos[i].messageFlag === 1) {
                             body += '<li class="media sent">';
                             body += '<div class="media-body">';
                             body += '<div class="msg-box">';

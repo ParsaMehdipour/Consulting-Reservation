@@ -1,5 +1,4 @@
-﻿using CR.Common.Convertor;
-using CR.Common.Utilities;
+﻿using CR.Common.Utilities;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Consumers;
@@ -9,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CR.Presentation.Areas.ConsumerPanel.Controllers
+namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
 {
     [Authorize]
     [Area("ConsumerPanel")]

@@ -2,8 +2,9 @@
 using CR.Core.Services.Interfaces.ChatMessages;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
+namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class ChatController : ControllerBase
     {
@@ -14,11 +15,11 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
             _getChatMessagesService = getChatMessagesService;
         }
 
-        [Route("/api/Chat/GetMessages")]
+        [Route("/api/Chat/GetConsumerMessages")]
         [HttpPost]
         public IActionResult GetMessages([FromBody] RequestGetChatMessagesDto request)
         {
-            var result = _getChatMessagesService.Execute(request.chatUserId, true);
+            var result = _getChatMessagesService.Execute(request.chatUserId, false);
 
             return new JsonResult(result);
         }

@@ -1,12 +1,12 @@
-﻿using CR.Common.DTOs;
+﻿using System;
+using System.Threading.Tasks;
+using CR.Common.DTOs;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
-using System;
-using System.Threading.Tasks;
 
-namespace CR.Presentation.Areas.ConsumerPanel.Controllers
+namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
 {
     [Area("ConsumerPanel")]
     public class PaymentController : Controller

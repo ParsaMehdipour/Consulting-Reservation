@@ -9,40 +9,38 @@ using System.Linq;
 
 namespace CR.Core.Services.Implementations.ChatUsers
 {
-    public class GetExpertChatUsersService : IGetExpertChatUsersService
+    public class GetConsumerChatUsersService : IGetConsumerChatUsersService
     {
         private readonly ApplicationContext _context;
 
-        public GetExpertChatUsersService(ApplicationContext context)
+        public GetConsumerChatUsersService(ApplicationContext context)
         {
             _context = context;
         }
-
-        public ResultDto<List<ChatUserForExpertPanelDto>> Execute(long expertId, string searchKey)
+        public ResultDto<List<ChatUserForConsumerDto>> Execute(long consumerId, string searchKey)
         {
-            var expert = _context.Users.Find(expertId);
-
             var chatUsers = _context.ChatUsers
+                .Include(_ => _.ExpertInformation)
                 .Include(_ => _.Consumer)
                 .Include(_ => _.ChatUserMessages)
-                .Where(_ => _.ExpertInformationId == expert.ExpertInformationId);
+                .Where(_ => _.ConsumerId == consumerId);
 
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
                 chatUsers = chatUsers.Where(_ => _.Consumer.FirstName.Contains(searchKey) || _.Consumer.LastName.Contains(searchKey));
             }
 
-            var finalResult = chatUsers.Select(_ => new ChatUserForExpertPanelDto()
+            var finalResult = chatUsers.Select(_ => new ChatUserForConsumerDto()
             {
                 Id = _.Id,
-                ConsumerIconSrc = _.Consumer.IconSrc,
-                ConsumerName = _.Consumer.FirstName + " " + _.Consumer.LastName,
+                ExpertIconSrc = _.ExpertInformation.IconSrc,
+                ExpertName = _.ExpertInformation.FirstName + " " + _.ExpertInformation.LastName,
                 LastChangeHour = $"{_.ChatUserMessages.OrderByDescending(message => message.CreateDate).LastOrDefault().CreateDate.Minute.ToString().GetPersianNumber()} : {_.ChatUserMessages.OrderByDescending(message => message.CreateDate).LastOrDefault().CreateDate.Hour.ToString().GetPersianNumber()}",
                 LastMessage = _.ChatUserMessages.OrderByDescending(message => message.CreateDate).LastOrDefault().Message,
                 NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false),
             }).ToList();
 
-            return new ResultDto<List<ChatUserForExpertPanelDto>>()
+            return new ResultDto<List<ChatUserForConsumerDto>>()
             {
                 IsSuccess = true,
                 Data = finalResult

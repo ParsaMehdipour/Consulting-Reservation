@@ -18,9 +18,9 @@ namespace CR.Core.Services.Implementations.ChatMessages
             _context = context;
         }
 
-        public ResultDto<ResultGetChatMessagesDto> Execute(long chatUserId)
+        public ResultDto<ResultGetChatMessagesDto> Execute(long chatUserId, bool isExpert)
         {
-            var chatUser = _context.ChatUsers.Include(_ => _.Consumer).FirstOrDefault(_ => _.Id == chatUserId);
+            var chatUser = _context.ChatUsers.Include(_ => _.Consumer).Include(_ => _.ExpertInformation).FirstOrDefault(_ => _.Id == chatUserId);
 
             if (chatUser == null)
             {
@@ -51,8 +51,8 @@ namespace CR.Core.Services.Implementations.ChatMessages
                 Data = new ResultGetChatMessagesDto()
                 {
                     chatMessageDtos = chatMessages,
-                    consumerFullName = chatUser.Consumer.FirstName + " " + chatUser.Consumer.LastName,
-                    consumerIconSrc = chatUser.Consumer.IconSrc
+                    receiverFullName = (isExpert) ? chatUser.Consumer.FirstName + " " + chatUser.Consumer.LastName : chatUser.ExpertInformation.FirstName + " " + chatUser.ExpertInformation.LastName,
+                    receiverIconSrc = (isExpert) ? chatUser.Consumer.IconSrc : chatUser.ExpertInformation.IconSrc
                 },
                 IsSuccess = true
             };

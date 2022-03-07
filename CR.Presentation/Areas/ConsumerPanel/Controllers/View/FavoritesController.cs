@@ -3,7 +3,7 @@ using CR.Core.Services.Interfaces.Favorites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CR.Presentation.Areas.ConsumerPanel.Controllers
+namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
 {
     [Authorize]
     [Area("ConsumerPanel")]
