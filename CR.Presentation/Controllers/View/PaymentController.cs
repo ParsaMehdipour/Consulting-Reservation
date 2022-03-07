@@ -1,4 +1,6 @@
 ﻿using CR.Common.DTOs;
+using CR.Core.DTOs.RequestDTOs.ChatUser;
+using CR.Core.Services.Interfaces.ChatUsers;
 using CR.Core.Services.Interfaces.Factors;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Enums;
@@ -16,18 +18,21 @@ namespace CR.Presentation.Controllers.View
         private readonly IUpdateFactorCartHolderPanService _updateFactorCartHolderPanService;
         private readonly IUpdateFactorStatusService _updateFactorStatusService;
         private readonly IGetFinancialTransactionDetailsForVerifyService _getFinancialTransactionDetailsForVerifyService;
+        private readonly IAddNewChatUserService _addNewChatUserService;
 
         public PaymentController(IGetFactorDetailsService getFactorDetailsService
         , IUpdateFactorSaleReferenceIdService updateFactorSaleReferenceIdService
         , IUpdateFactorCartHolderPanService updateFactorCartHolderPanService
         , IUpdateFactorStatusService updateFactorStatusService
-        , IGetFinancialTransactionDetailsForVerifyService getFinancialTransactionDetailsForVerifyService)
+        , IGetFinancialTransactionDetailsForVerifyService getFinancialTransactionDetailsForVerifyService
+        , IAddNewChatUserService addNewChatUserService)
         {
             _getFactorDetailsService = getFactorDetailsService;
             _updateFactorSaleReferenceIdService = updateFactorSaleReferenceIdService;
             _updateFactorCartHolderPanService = updateFactorCartHolderPanService;
             _updateFactorStatusService = updateFactorStatusService;
             _getFinancialTransactionDetailsForVerifyService = getFinancialTransactionDetailsForVerifyService;
+            _addNewChatUserService = addNewChatUserService;
         }
 
         public IActionResult Index(string factorNumber)
@@ -84,9 +89,28 @@ namespace CR.Presentation.Controllers.View
                 {
                     _updateFactorCartHolderPanService.Execute(factor.Id, CardHolderPan);
 
-                    _updateFactorStatusService.Execute(factor.Id, FactorStatus.SuccessfulPayment, TransactionStatus.Successful);
+                    var updateStatusResult = _updateFactorStatusService.Execute(factor.Id, FactorStatus.SuccessfulPayment, TransactionStatus.Successful);
 
-                    ViewData["Description"] = "تراکنش با موفقیت انجام شد، کد رهگیری پرداخت شما : " + SaleReferenceId;
+                    if (updateStatusResult.IsSuccess)
+                    {
+                        if (updateStatusResult.Data.IsChat)
+                        {
+                            _addNewChatUserService.Execute(new RequestAddNewChatUserDto()
+                            {
+                                consumerId = updateStatusResult.Data.ConsumerId,
+                                expertInformationId = updateStatusResult.Data.ExpertInformationId
+                            });
+                        }
+                    }
+
+                    if (updateStatusResult.Data.IsChat)
+                    {
+                        ViewData["Description"] = "تراکنش با موفقیت انجام شد ، مشاور به لیست کاربران برای ارسال پیام شما اضافه شد ، کد رهگیری پرداخت شما : " + SaleReferenceId;
+                    }
+                    else
+                    {
+                        ViewData["Description"] = "تراکنش با موفقیت انجام شد، کد رهگیری پرداخت شما : " + SaleReferenceId;
+                    }
 
                     var temp = ViewData["Description"];
 
