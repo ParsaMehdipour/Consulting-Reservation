@@ -1,13 +1,12 @@
-﻿using System.Threading.Tasks;
-using CR.Common.Utilities;
+﻿using CR.Common.Utilities;
 using CR.Core.DTOs.Account;
-using CR.Core.Services.Interfaces.Users;
 using CR.DataAccess.Entities.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
-namespace CR.Presentation.Areas.ConsumerPanel.Controllers
+namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
 {
     [Authorize]
     [Area("ConsumerPanel")]
@@ -48,7 +47,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers
                 }
             }
 
-            return View("Index",request);
+            return View("Index", request);
         }
     }
 }
