@@ -28,7 +28,7 @@
                                 {
                                     @foreach (var chatUser in Model)
                                     {
-                                        <a id="chatUser_@chatUser.Id" onclick="GetMessages(@chatUser.Id)" class="media read-chat">
+                                        <a id="chatUser_@chatUser.Id" onclick="SetChatUserId(@chatUser.Id)" class="media read-chat">
                                             <div class="media-img-wrap">
                                                 <div class="avatar avatar-online">
                                                     <img src="~/@chatUser.ConsumerIconSrc" alt="@chatUser.ConsumerName" class="avatar-img rounded-circle">
@@ -78,12 +78,12 @@
                                 <div class="input-group-prepend">
                                     <div class="btn-file btn">
                                         <i class="fa fa-paperclip"></i>
-                                        <input type="file">
+                                        <input type="file" id="image">
                                     </div>
                                 </div>
-                                <input type="text" class="input-msg-send form-control" placeholder="چیزی تایپ کنید ">
+                                <input id="message" type="text" class="input-msg-send form-control" placeholder="چیزی تایپ کنید ">
                                 <div class="input-group-append">
-                                    <button type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
+                                    <button onclick="AddNewMessage()" type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -102,6 +102,15 @@
 @section Scripts
 {
 <script>
+
+    var ChatUserId = 0;
+
+    function SetChatUserId(chatUserId) {
+        ChatUserId = chatUserId;
+
+        GetMessages(chatUserId);
+    }
+
     function GetMessages(chatUserId) {
 
         $("#chatUser-List .active").removeClass("active");
@@ -127,45 +136,97 @@
                     var model = response.data;
                     var body = "";
 
+                    console.log(model);
+
                     for (let i = 0; i < model.chatMessageDtos.length; i++) {
                         if (model.chatMessageDtos[i].messageFlag === 0) {
                             body += '<li class="media sent">';
                             body += '<div class="media-body">';
-                            body += '<div class="msg-box">';
-                            body += '<div>';
-                            body += '<p>';
-                            body += model.chatMessageDtos[i].message;
-                            body += '</p>';
-                            body += '<ul class="chat-msg-info">';
-                            body += '<li>';
-                            body += '<div class="chat-time">';
-                            body += '<span>';
-                            body += model.chatMessageDtos[i].messageHour;
-                            body += '</span>';
+                            if (model.chatMessageDtos[i].message !== null) {
+                                body += '<div class="msg-box">';
+                                body += '<div>';
+                                body += '<p>';
+                                body += model.chatMessageDtos[i].message;
+                                body += '</p>';
+                                body += '<ul class="chat-msg-info">';
+                                body += '<li>';
+                                body += '<div class="chat-time">';
+                                body += '<span>';
+                                body += model.chatMessageDtos[i].messageHour;
+                                body += '</span>';
+                                body += '</div>';
+                                body += '</li>';
+                                body += '</ul>';
+                                body += '</div>';
+                                body += '</div>';
+                            }
+                            if (model.chatMessageDtos[i].hasFile) {
+                                body += '<div class="msg-box">';
+                                body += '<div>';
+                                body += '<div class="chat-msg-attachments">';
+                                body += '<div class="chat-attachment">';
+                                body += '<img src="/' + model.chatMessageDtos[i].file + '" alt="Attachment">';
+                                body += '<div class="chat-attach-caption"></div>';
+                                body += '<a href="#" class="chat-attach-download">';
+                                body += '<i class="fas fa-download"></i>';
+                                body += '</a>';
+                                body += '</div>';
+                                body += '</div>';
+                                body += '<ul class="chat-msg-info">';
+                                body += '<li>';
+                                body += '<div class="chat-time">';
+                                body += '<span>' + model.chatMessageDtos[i].messageHour + '</span>';
+                                body += '</div>';
+                                body += '</li>';
+                                body += '</ul>';
+                                body += '</div>';
+                                body += '</div>';
+                            }
                             body += '</div>';
                             body += '</li>';
-                            body += '</ul>';
-                            body += '</div>';
-                            body += '</div>';
                         } else {
                             body += '<li class="media received">';
                             body += '<div class="media-body">';
-                            body += '<div class="msg-box">';
-                            body += '<div>';
-                            body += '<p>';
-                            body += model.chatMessageDtos[i].message;
-                            body += '</p>';
-                            body += '<ul class="chat-msg-info">';
-                            body += '<li>';
-                            body += '<div class="chat-time">';
-                            body += '<span>';
-                            body += model.chatMessageDtos[i].messageHour;
-                            body += '</span>';
-                            body += '</div>';
-                            body += '</li>';
-                            body += '</ul>';
-                            body += '</div>';
-                            body += '</div>';
+                            if (model.chatMessageDtos[i].message !== null) {
+                                body += '<div class="msg-box">';
+                                body += '<div>';
+                                body += '<p>';
+                                body += model.chatMessageDtos[i].message;
+                                body += '</p>';
+                                body += '<ul class="chat-msg-info">';
+                                body += '<li>';
+                                body += '<div class="chat-time">';
+                                body += '<span>';
+                                body += model.chatMessageDtos[i].messageHour;
+                                body += '</span>';
+                                body += '</div>';
+                                body += '</li>';
+                                body += '</ul>';
+                                body += '</div>';
+                                body += '</div>';
+                            }
+                            if (model.chatMessageDtos[i].hasFile) {
+                                body += '<div class="msg-box">';
+                                body += '<div>';
+                                body += '<div class="chat-msg-attachments">';
+                                body += '<div class="chat-attachment">';
+                                body += '<img src="/' + model.chatMessageDtos[i].file + '" alt="Attachment">';
+                                body += '<div class="chat-attach-caption"></div>';
+                                body += '<a href="#" class="chat-attach-download">';
+                                body += '<i class="fas fa-download"></i>';
+                                body += '</a>';
+                                body += '</div>';
+                                body += '</div>';
+                                body += '<ul class="chat-msg-info">';
+                                body += '<li>';
+                                body += '<div class="chat-time">';
+                                body += '<span>' + model.chatMessageDtos[i].messageHour + '</span>';
+                                body += '</div>';
+                                body += '</li>';
+                                body += '</ul>';
+                                body += '</div>';
+                                body += '</div>';
+                            }
                             body += '</div>';
                             body += '</li>';
                         }
@@ -194,6 +255,49 @@
                 alert(request.responseText);
             }
 
+        });
+    }
+
+    function AddNewMessage() {
+
+        var addNewMessageForm = new FormData();
+
+        addNewMessageForm.append("chatUserId",ChatUserId);
+        addNewMessageForm.append("message",$("#message").val());
+        addNewMessageForm.append("file",$("#image").get(0).files[0]);
+        addNewMessageForm.append("messageFlag",1);
+
+        $.ajax({
+            type: "POST",
+            url: '/api/Chat/AddNewMessage',
+            data: addNewMessageForm,
+            processData: false,
+            contentType: false,
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
+            success: function(data) {
+                if (data.isSuccess === true) {
+                    location.reload();
+                }
+                else {
+                    swal.fire(
+                        'هشدار!',
+                        data.message,
+                        'warning'
+                    );
+
+                }
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
         });
     }
 </script>

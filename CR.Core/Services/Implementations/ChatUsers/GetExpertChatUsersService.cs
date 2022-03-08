@@ -37,8 +37,8 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 Id = _.Id,
                 ConsumerIconSrc = _.Consumer.IconSrc,
                 ConsumerName = _.Consumer.FirstName + " " + _.Consumer.LastName,
-                LastChangeHour = $"{_.ChatUserMessages.OrderByDescending(message => message.CreateDate).LastOrDefault().CreateDate.Minute.ToString().GetPersianNumber()} : {_.ChatUserMessages.OrderByDescending(message => message.CreateDate).LastOrDefault().CreateDate.Hour.ToString().GetPersianNumber()}",
-                LastMessage = _.ChatUserMessages.OrderByDescending(message => message.CreateDate).LastOrDefault().Message,
+                LastChangeHour = $"{_.ChatUserMessages.OrderBy(c => c.CreateDate).Last().CreateDate.Minute.ToString().GetPersianNumber()} : {_.ChatUserMessages.OrderBy(c => c.CreateDate).Last().CreateDate.Hour.ToString().GetPersianNumber()}",
+                LastMessage = _.ChatUserMessages.OrderBy(c => c.CreateDate).Last().Message,
                 NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false),
             }).ToList();
 
