@@ -43,7 +43,9 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     expertIconSrc = _.ChatUser.ExpertInformation.IconSrc,
                     message = _.Message,
                     messageFlag = _.MessageFlag,
-                    messageHour = $"{_.CreateDate.Minute} : {_.CreateDate.Hour} - {_.CreateDate.ToShamsi()}"
+                    messageHour = $"{_.CreateDate.Minute} : {_.CreateDate.Hour} - {_.CreateDate.ToShamsi()}",
+                    hasFile = (!string.IsNullOrWhiteSpace(_.File)),
+                    file = _.File
                 }).ToList();
 
             return new ResultDto<ResultGetChatMessagesDto>()

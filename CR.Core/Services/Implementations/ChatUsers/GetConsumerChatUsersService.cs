@@ -30,13 +30,14 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 chatUsers = chatUsers.Where(_ => _.Consumer.FirstName.Contains(searchKey) || _.Consumer.LastName.Contains(searchKey));
             }
 
+
             var finalResult = chatUsers.Select(_ => new ChatUserForConsumerDto()
             {
                 Id = _.Id,
                 ExpertIconSrc = _.ExpertInformation.IconSrc,
                 ExpertName = _.ExpertInformation.FirstName + " " + _.ExpertInformation.LastName,
-                LastChangeHour = $"{_.ChatUserMessages.OrderByDescending(message => message.CreateDate).LastOrDefault().CreateDate.Minute.ToString().GetPersianNumber()} : {_.ChatUserMessages.OrderByDescending(message => message.CreateDate).LastOrDefault().CreateDate.Hour.ToString().GetPersianNumber()}",
-                LastMessage = _.ChatUserMessages.OrderByDescending(message => message.CreateDate).LastOrDefault().Message,
+                LastChangeHour = $"{_.ChatUserMessages.OrderBy(_ => _.CreateDate).Last().CreateDate.Minute.ToString().GetPersianNumber()} : {_.ChatUserMessages.OrderBy(_ => _.CreateDate).Last().CreateDate.Hour.ToString().GetPersianNumber()}",
+                LastMessage = _.ChatUserMessages.OrderBy(_ => _.CreateDate).Last().Message,
                 NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false),
             }).ToList();
 
