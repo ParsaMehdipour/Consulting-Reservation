@@ -9,6 +9,7 @@ namespace CR.DataAccess.Entities.ChatUserMessages
 
         public string Message { get; set; }
         public string File { get; set; }
+        public string Audio { get; set; }
         public MessageFlag MessageFlag { get; set; }
         public bool IsRead { get; set; }
 

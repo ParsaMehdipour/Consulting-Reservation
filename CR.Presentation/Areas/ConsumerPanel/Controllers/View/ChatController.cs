@@ -24,5 +24,10 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
 
             return View(model);
         }
+
+        public IActionResult VoiceRecord()
+        {
+            return View();
+        }
     }
 }
