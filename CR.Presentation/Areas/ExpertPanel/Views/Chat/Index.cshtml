@@ -75,6 +75,16 @@
                         </div>
                         <div class="chat-footer">
                             <div class="input-group">
+                                <div id="controls">
+                                    <button id="recordButton">شروع</button>
+                                    <button id="pauseButton" disabled>توقف</button>
+                                    <button id="stopButton" disabled>پایان</button>
+                                </div>
+                                <div id="formats"></div>
+                                <p><strong>پیام ها:</strong></p>
+                                <ol id="recordingsList"></ol>
+                            </div>
+                            <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="btn-file btn">
                                         <i class="fa fa-paperclip"></i>
@@ -101,6 +111,10 @@
 <!-- /Page Content -->
 @section Scripts
 {
+
+<script src="~/assets/js/RecorderForExpert/recorder.js"></script>
+<script src="~/assets/js/RecorderForExpert/app.js"></script>
+
 <script>
 
     var ChatUserId = 0;
@@ -182,6 +196,24 @@
                                 body += '</div>';
                                 body += '</div>';
                             }
+                            if (model.chatMessageDtos[i].hasAudio) {
+                                body += '<div class="msg-box">';
+                                body += '<div>';
+                                body += '<div class="chat-msg-attachments">';
+                                body += '<audio controls>';
+                                body += '<source src="/' + model.chatMessageDtos[i].audio + '" type="audio/ogg">';
+                                body += '</audio>';
+                                body += '</div>';
+                                body += '<ul class="chat-msg-info">';
+                                body += '<li>';
+                                body += '<div class="chat-time">';
+                                body += '<span>' + model.chatMessageDtos[i].messageHour + '</span>';
+                                body += '</div>';
+                                body += '</li>';
+                                body += '</ul>';
+                                body += '</div>';
+                                body += '</div>';
+                            }
                             body += '</div>';
                             body += '</li>';
                         } else {
@@ -216,6 +248,24 @@
                                 body += '<i class="fas fa-download"></i>';
                                 body += '</a>';
                                 body += '</div>';
+                                body += '</div>';
+                                body += '<ul class="chat-msg-info">';
+                                body += '<li>';
+                                body += '<div class="chat-time">';
+                                body += '<span>' + model.chatMessageDtos[i].messageHour + '</span>';
+                                body += '</div>';
+                                body += '</li>';
+                                body += '</ul>';
+                                body += '</div>';
+                                body += '</div>';
+                            }
+                            if (model.chatMessageDtos[i].hasAudio) {
+                                body += '<div class="msg-box">';
+                                body += '<div>';
+                                body += '<div class="chat-msg-attachments">';
+                                body += '<audio controls>';
+                                body += '<source src="/' + model.chatMessageDtos[i].audio + '" type="audio/ogg">';
+                                body += '</audio>';
                                 body += '</div>';
                                 body += '<ul class="chat-msg-info">';
                                 body += '<li>';

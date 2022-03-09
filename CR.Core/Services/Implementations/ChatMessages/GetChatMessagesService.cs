@@ -45,7 +45,9 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     messageFlag = _.MessageFlag,
                     messageHour = $"{_.CreateDate.Minute} : {_.CreateDate.Hour} - {_.CreateDate.ToShamsi()}",
                     hasFile = (!string.IsNullOrWhiteSpace(_.File)),
-                    file = _.File
+                    file = _.File,
+                    hasAudio = (!string.IsNullOrWhiteSpace(_.Audio)),
+                    audio = _.Audio
                 }).ToList();
 
             return new ResultDto<ResultGetChatMessagesDto>()

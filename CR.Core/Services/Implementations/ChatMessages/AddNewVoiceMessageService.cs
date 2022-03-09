@@ -9,25 +9,24 @@ using System;
 
 namespace CR.Core.Services.Implementations.ChatMessages
 {
-    public class AddNewChatMessageService : IAddNewChatMessageService
+    public class AddNewVoiceMessageService : IAddNewVoiceMessageService
     {
         private readonly ApplicationContext _context;
         private readonly IImageUploaderService _imageUploaderService;
 
-        public AddNewChatMessageService(ApplicationContext context,
-            IImageUploaderService imageUploaderService)
+        public AddNewVoiceMessageService(ApplicationContext context
+        , IImageUploaderService imageUploaderService)
         {
             _context = context;
             _imageUploaderService = imageUploaderService;
         }
 
-        public ResultDto Execute(RequestAddNewChatMessageDto request)
+        public ResultDto Execute(RequestAddNewVoiceMessageDto request)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-
                 var chatMessage = new ChatUserMessage()
                 {
                     ChatUserId = request.chatUserId,
@@ -35,37 +34,15 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     MessageFlag = request.messageFlag,
                 };
 
-                if (string.IsNullOrWhiteSpace(request.message) && request.file == null)
-                {
-                    return new ResultDto()
-                    {
-                        IsSuccess = false,
-                        Message = "لطفا مطلبی جهت ارسال وارد کنید"
-                    };
-                }
-
-                if (!string.IsNullOrWhiteSpace(request.message))
-                {
-                    chatMessage.Message = request.message;
-                }
 
                 if (request.file != null)
                 {
-                    chatMessage.File = _imageUploaderService.Execute(new UploadImageDto()
+                    chatMessage.Audio = _imageUploaderService.Execute(new UploadImageDto()
                     {
                         File = request.file,
-                        Folder = "ChatImages"
+                        Folder = "ChatVoices"
                     });
                 }
-
-                //if (request.Audio != null)
-                //{
-                //    chatMessage.File = _imageUploaderService.Execute(new UploadImageDto()
-                //    {
-                //        File = request.file,
-                //        Folder = "ChatVoices"
-                //    });
-                //}
 
                 _context.ChatUserMessages.Add(chatMessage);
 
@@ -78,6 +55,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     IsSuccess = true,
                     Message = string.Empty
                 };
+
             }
             catch (Exception)
             {
@@ -85,13 +63,9 @@ namespace CR.Core.Services.Implementations.ChatMessages
 
                 return new ResultDto()
                 {
-                    Message = "پیام شما با موفقیت ارسال نشد!!",
-                    IsSuccess = false
+                    IsSuccess = false,
+                    Message = "خطا!!"
                 };
-            }
-            finally
-            {
-                transaction.Dispose();
             }
         }
     }

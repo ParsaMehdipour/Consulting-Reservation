@@ -9,7 +9,9 @@ namespace CR.Core.DTOs.ChatMessages
         public string consumerIconSrc { get; set; }
         public string messageHour { get; set; }
         public bool hasFile { get; set; }
+        public bool hasAudio { get; set; }
         public string file { get; set; }
+        public string audio { get; set; }
         public MessageFlag messageFlag { get; set; }
     }
 }

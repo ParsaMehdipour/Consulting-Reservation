@@ -259,6 +259,7 @@ namespace CR.Presentation
             //ChatMessages
             services.AddScoped<IGetChatMessagesService, GetChatMessagesService>();
             services.AddScoped<IAddNewChatMessageService, AddNewChatMessageService>();
+            services.AddScoped<IAddNewVoiceMessageService, AddNewVoiceMessageService>();
 
             #endregion
 
