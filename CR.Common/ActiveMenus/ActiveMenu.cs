@@ -26,5 +26,7 @@
 
         public const string ExpertComments = "expertscomments";
 
+        public const string AboutUs = "aboutus";
+
     }
 }
