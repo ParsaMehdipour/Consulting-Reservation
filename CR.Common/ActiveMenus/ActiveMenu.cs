@@ -28,5 +28,7 @@
 
         public const string AboutUs = "aboutus";
 
+        public const string Rules = "rules";
+
     }
 }

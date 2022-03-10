@@ -169,6 +169,9 @@
                         <li @(TempData["activemenu"].ToString() == ActiveMenu.Blogs ? @"class=active" : "")>
                             <a asp-controller="AboutUs" asp-action="Index"><i class="fe fe-user"></i> <span>درباره ما</span></a>
                         </li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.Rules ? @"class=active" : "")>
+                            <a asp-controller="Rules" asp-action="Index"><i class="fe fe-user"></i> <span>قوانین و مقررات</span></a>
+                        </li>
                     </ul>
                 </div>
             </div>
