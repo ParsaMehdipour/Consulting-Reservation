@@ -1,32 +1,38 @@
 ﻿using CR.Common.DTOs;
-using CR.Core.DTOs.RequestDTOs.AboutUs;
-using CR.Core.Services.Interfaces.AboutUs;
+using CR.Core.DTOs.RequestDTOs.Rule;
+using CR.Core.Services.Interfaces.Rules;
 using CR.DataAccess.Context;
 using System;
 
-namespace CR.Core.Services.Implementations.AboutUs
+namespace CR.Core.Services.Implementations.Rules
 {
-    public class AddAboutUsService : IAddAboutUsService
+    public class EditRuleService : IEditRuleService
     {
         private readonly ApplicationContext _context;
 
-        public AddAboutUsService(ApplicationContext context)
+        public EditRuleService(ApplicationContext context)
         {
             _context = context;
         }
 
-        public ResultDto Execute(RequestAddAboutUsDto request)
+        public ResultDto Execute(RequestEditRuleDto request)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-                var aboutUs = new DataAccess.Entities.AboutUs.AboutUs()
-                {
-                    FullContent = request.fullContent
-                };
+                var rule = _context.Rules.Find(request.id);
 
-                _context.AboutUs.Add(aboutUs);
+                if (rule == null)
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "اطلاعات یافت نشد!!"
+                    };
+                }
+
+                rule.FullContent = request.fullContent;
 
                 _context.SaveChanges();
 
@@ -35,7 +41,7 @@ namespace CR.Core.Services.Implementations.AboutUs
                 return new ResultDto()
                 {
                     IsSuccess = true,
-                    Message = "درباره ما افزوده شد"
+                    Message = "قوانین و مقررات با موفقیت ویرایش شد"
                 };
             }
             catch (Exception)

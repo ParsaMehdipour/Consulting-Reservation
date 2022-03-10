@@ -54,6 +54,10 @@ namespace CR.Core.Services.Implementations.AboutUs
                     Message = "خطا!!"
                 };
             }
+            finally
+            {
+                transaction.Dispose();
+            }
         }
     }
 }

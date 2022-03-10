@@ -1,32 +1,32 @@
 ﻿using CR.Common.DTOs;
-using CR.Core.DTOs.RequestDTOs.AboutUs;
-using CR.Core.Services.Interfaces.AboutUs;
+using CR.Core.DTOs.RequestDTOs.Rule;
+using CR.Core.Services.Interfaces.Rules;
 using CR.DataAccess.Context;
 using System;
 
-namespace CR.Core.Services.Implementations.AboutUs
+namespace CR.Core.Services.Implementations.Rules
 {
-    public class AddAboutUsService : IAddAboutUsService
+    public class CreateRuleService : ICreateRuleService
     {
         private readonly ApplicationContext _context;
 
-        public AddAboutUsService(ApplicationContext context)
+        public CreateRuleService(ApplicationContext context)
         {
             _context = context;
         }
 
-        public ResultDto Execute(RequestAddAboutUsDto request)
+        public ResultDto Execute(RequestCreateRuleDto request)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-                var aboutUs = new DataAccess.Entities.AboutUs.AboutUs()
+                var rule = new DataAccess.Entities.Rules.Rule()
                 {
                     FullContent = request.fullContent
                 };
 
-                _context.AboutUs.Add(aboutUs);
+                _context.Rules.Add(rule);
 
                 _context.SaveChanges();
 
@@ -35,7 +35,7 @@ namespace CR.Core.Services.Implementations.AboutUs
                 return new ResultDto()
                 {
                     IsSuccess = true,
-                    Message = "درباره ما افزوده شد"
+                    Message = "قوانین و مقررات افزوده شد"
                 };
             }
             catch (Exception)
@@ -47,10 +47,6 @@ namespace CR.Core.Services.Implementations.AboutUs
                     IsSuccess = false,
                     Message = "خطا!!"
                 };
-            }
-            finally
-            {
-                transaction.Dispose();
             }
         }
     }
