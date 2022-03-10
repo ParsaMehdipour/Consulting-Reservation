@@ -16,6 +16,7 @@ using CR.Core.Services.Implementations.Factors;
 using CR.Core.Services.Implementations.Favorites;
 using CR.Core.Services.Implementations.FinancialTransactions;
 using CR.Core.Services.Implementations.Images;
+using CR.Core.Services.Implementations.Rules;
 using CR.Core.Services.Implementations.Specialites;
 using CR.Core.Services.Implementations.Statistics;
 using CR.Core.Services.Implementations.Timings;
@@ -38,6 +39,7 @@ using CR.Core.Services.Interfaces.Factors;
 using CR.Core.Services.Interfaces.Favorites;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.Core.Services.Interfaces.Images;
+using CR.Core.Services.Interfaces.Rules;
 using CR.Core.Services.Interfaces.Specialites;
 using CR.Core.Services.Interfaces.Statistics;
 using CR.Core.Services.Interfaces.Timings;
@@ -266,6 +268,10 @@ namespace CR.Presentation
             services.AddScoped<IGetAboutUsContentService, GetAboutUsContentService>();
             services.AddScoped<IAddAboutUsService, AddAboutUsService>();
             services.AddScoped<IEditAboutUsService, EditAboutUsService>();
+            //Rules
+            services.AddScoped<IGetRulesContentService, GetRulesContentService>();
+            services.AddScoped<ICreateRuleService, CreateRuleService>();
+            services.AddScoped<IEditRuleService, EditRuleService>();
 
             #endregion
 
