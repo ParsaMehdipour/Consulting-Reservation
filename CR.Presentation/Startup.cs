@@ -1,4 +1,5 @@
 using CR.Core.DTOs.FinancialTransactions;
+using CR.Core.Services.Implementations.AboutUs;
 using CR.Core.Services.Implementations.Appointment;
 using CR.Core.Services.Implementations.BlogCategories;
 using CR.Core.Services.Implementations.Blogs;
@@ -20,6 +21,7 @@ using CR.Core.Services.Implementations.Statistics;
 using CR.Core.Services.Implementations.Timings;
 using CR.Core.Services.Implementations.Users;
 using CR.Core.Services.Implementations.Wallet;
+using CR.Core.Services.Interfaces.AboutUs;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.Core.Services.Interfaces.BlogCategories;
 using CR.Core.Services.Interfaces.Blogs;
@@ -260,6 +262,10 @@ namespace CR.Presentation
             services.AddScoped<IGetChatMessagesService, GetChatMessagesService>();
             services.AddScoped<IAddNewChatMessageService, AddNewChatMessageService>();
             services.AddScoped<IAddNewVoiceMessageService, AddNewVoiceMessageService>();
+            //AboutUs
+            services.AddScoped<IGetAboutUsContentService, GetAboutUsContentService>();
+            services.AddScoped<IAddAboutUsService, AddAboutUsService>();
+            services.AddScoped<IEditAboutUsService, EditAboutUsService>();
 
             #endregion
 
