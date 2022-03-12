@@ -1,0 +1,112 @@
+﻿@model CR.Core.DTOs.ResultDTOs.ContactUs.ResultGetContactUsDto
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">پیام های کاربران</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item active">پیام های کاربران </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="datatable table table-hover table-center mb-0">
+                        <thead>
+                        <tr>
+                            <th class="text-center">نام و نام خانوادگی</th>
+                            <th class="text-center">پست الکترونیکی</th>
+                            <th class="text-center">پیام</th>
+                            <th class="text-center">تاریخ ثبت</th>
+                            <th class="text-center">وضعیت</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (Model.ContactUsDtos.Count > 0)
+                        {
+                            @foreach (var contactUs in Model.ContactUsDtos)
+                            {
+                                <tr>
+                                    <td>
+                                        @contactUs.FullName
+                                    </td>
+                                    <td class="text-center">
+                                        @contactUs.Email
+                                    </td>
+
+                                    <td class="text-center">
+                                        @contactUs.Message
+                                    </td>
+
+                                    <td class="text-center">
+                                        @contactUs.CreateDate
+                                    </td>
+                                    @if (contactUs.IsRead)
+                                    {
+                                        <td class="text text-center text-success">خوانده شده</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text text-center text-danger">خوانده نشده</td>
+                                    }
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    show-first-numbered-page="true"
+                    show-last-numbered-page="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize"
+                    gap-size="2">
+            </paging>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Details Modal -->
+<div class="modal fade" id="change_comment_status" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تغیر وضعیت نظر</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-row">
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <button onclick="ChangeStatus(1)" id="accepted" type="button" class="btn btn-block btn-outline-success active">تایید</button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <button onclick="ChangeStatus(2)" id="denied" type="button" class="btn btn-block btn-outline-danger active">رد</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Edit Details Modal -->

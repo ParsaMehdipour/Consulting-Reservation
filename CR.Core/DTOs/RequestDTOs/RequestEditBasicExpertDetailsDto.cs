@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using CR.DataAccess.Enums;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using CR.DataAccess.Enums;
-using Microsoft.AspNetCore.Http;
 
 namespace CR.Core.DTOs.RequestDTOs
 {
     public class RequestEditBasicExpertDetailsDto
     {
         public long id { get; set; }
+
         [Required(ErrorMessage = "پست الکترونیکی خود را وارد کنید")]
         public string email { get; set; }
 

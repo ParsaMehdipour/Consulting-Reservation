@@ -32,5 +32,7 @@
 
         public const string ContactUsContent = "contactuscontent";
 
+        public const string ContactUs = "contactus";
+
     }
 }
