@@ -224,6 +224,7 @@ namespace CR.Presentation
             services.AddScoped<IGetBlogCategoryDetailsService, GetBlogCategoryDetailsService>();
             services.AddScoped<IEditBlogCategoryDetailsService, EditBlogCategoryDetailsService>();
             services.AddScoped<IGetBlogCategoriesForDropdownService, GetBlogCategoriesForDropdownService>();
+            services.AddScoped<IGetBlogCategoriesForSideBarService, GetBlogCategoriesForSideBarService>();
             //Blogs
             services.AddScoped<IGetBlogsForAdminPanelService, GetBlogsForAdminPanelService>();
             services.AddScoped<IAddNewBlogService, AddNewBlogService>();
