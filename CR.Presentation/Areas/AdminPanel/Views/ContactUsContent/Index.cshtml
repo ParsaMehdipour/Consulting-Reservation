@@ -1,0 +1,142 @@
+﻿@model CR.Core.DTOs.ContactUs.ContactUsContentDto
+
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col">
+            <h3 class="page-title">درباره ما </h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item active">متن تماس با ما </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">متن تماس با ما </h4>
+            </div>
+            <div class="card-body">
+                <form id="contactUsContentForm">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <textarea asp-for="FullContent" rows="20" cols="20" class="form-control" placeholder="متن مورد نظر خود را اینجا بنویسید" id="description" name="description"></textarea>
+                            <span asp-validation-for="FullContent" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        @if (Model != null)
+                        {
+                            <button onclick="Edit(@Model.Id)" class="btn btn-warning submit-btn" type="submit" name="form_submit"> ویرایش</button>
+                        }
+                        else
+                        {
+                            <button onclick="Add()" class="btn btn-primary submit-btn" type="submit" name="form_submit"> ذخیره</button>
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+
+<script src="~/assets/js/ckeditor/ckeditor.js"></script>
+
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace('description');
+    });
+
+    function Add() {
+        if ($("#contactUsContentForm").valid()) {
+                        
+            var data = new FormData();
+
+            data.append("fullContent",CKEDITOR.instances.description.getData());
+
+            $("#contactUsContentForm").submit(function( event ) {
+                $.ajax({    
+                    type: " POST",
+                    url: '/api/ContactUsContent/Create',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                          $('#loading').hide();
+                    },  
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                }); 
+                event.preventDefault();
+            }); 
+        }   
+    }
+
+    function Edit(id) {
+        if ($("#contactUsContentForm").valid()) {
+                        
+            var data = new FormData();
+
+            data.append("id",id);
+            data.append("fullContent",CKEDITOR.instances.description.getData());
+
+            $("#contactUsContentForm").submit(function( event ) {
+                $.ajax({
+                    type: "POST",
+                    url: '/api/ContactUsContent/Edit',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                event.preventDefault();
+            }); 
+        }   
+    }
+</script>
+}

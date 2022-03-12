@@ -30,5 +30,9 @@
 
         public const string Rules = "rules";
 
+        public const string ContactUsContent = "contactuscontent";
+
+        public const string ContactUs = "contactus";
+
     }
 }

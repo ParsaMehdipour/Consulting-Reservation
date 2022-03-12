@@ -255,16 +255,17 @@
                     <div class="card-header">
                         <h4 class="card-title"> دسته‌بندی بلاگ </h4>
                     </div>
-                    <div class="card-body">
-                        <ul class="categories">
-                            <li><a href="#">قلب و عروق <span>(62)</span></a></li>
-                            <li><a href="#">مراقبت های بهداشتی <span>(27)</span></a></li>
-                            <li><a href="#">تغذیه <span>(41)</span></a></li>
-                            <li><a href="#">نکات بهداشتی <span>(16)</span></a></li>
-                            <li><a href="#">تحقیقات پزشکی <span>(55)</span></a></li>
-                            <li><a href="#">درمان بهداشت <span>(07)</span></a></li>
-                        </ul>
-                    </div>
+                    @if (Model.BlogCategoryForSideBarDtos.Count > 0)
+                    {
+                        <div class="card-body">
+                            <ul class="categories">
+                                @foreach (var blogCategory in Model.BlogCategoryForSideBarDtos)
+                                {
+                                    <li><a asp-controller="Blogs" asp-action="Index" asp-route-searchKey="@blogCategory.Name">@blogCategory.Name <span>(@blogCategory.BlogsCount)</span></a></li>
+                                }
+                            </ul>
+                        </div>
+                    }
                 </div>
                 <!-- /Categories -->
                 <!-- Tags -->

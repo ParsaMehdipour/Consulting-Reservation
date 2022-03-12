@@ -1,4 +1,5 @@
-﻿using CR.Core.Services.Interfaces.Blogs;
+﻿using CR.Core.Services.Interfaces.BlogCategories;
+using CR.Core.Services.Interfaces.Blogs;
 using CR.Presentation.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,14 +10,17 @@ namespace CR.Presentation.Controllers.View
         private readonly IGetBlogsForPresentationService _getBlogsForPresentationService;
         private readonly IGetBlogDetailsForPresentationService _getBlogDetailsForPresentationService;
         private readonly IGetLatestBlogsForSiteService _getLatestBlogsForSiteService;
+        private readonly IGetBlogCategoriesForSideBarService _getBlogCategoriesForSideBarService;
 
         public BlogsController(IGetBlogsForPresentationService getBlogsForPresentationService
             , IGetBlogDetailsForPresentationService getBlogDetailsForPresentationService
-        , IGetLatestBlogsForSiteService getLatestBlogsForSiteService)
+            , IGetLatestBlogsForSiteService getLatestBlogsForSiteService
+            , IGetBlogCategoriesForSideBarService getBlogCategoriesForSideBarService)
         {
             _getBlogsForPresentationService = getBlogsForPresentationService;
             _getBlogDetailsForPresentationService = getBlogDetailsForPresentationService;
             _getLatestBlogsForSiteService = getLatestBlogsForSiteService;
+            _getBlogCategoriesForSideBarService = getBlogCategoriesForSideBarService;
         }
 
         public IActionResult Index(string searchKey, int page = 1, int pageSize = 20)
@@ -24,7 +28,8 @@ namespace CR.Presentation.Controllers.View
             var model = new BlogsIndexViewModel
             {
                 ResultGetBlogsForPresentationDto = _getBlogsForPresentationService.Execute(searchKey, page, pageSize).Data,
-                LatestBlogsDto = _getLatestBlogsForSiteService.Execute().Data
+                LatestBlogsDto = _getLatestBlogsForSiteService.Execute().Data,
+                BlogCategoryForSideBarDtos = _getBlogCategoriesForSideBarService.Execute().Data
             };
 
             return View(model);
@@ -35,7 +40,8 @@ namespace CR.Presentation.Controllers.View
             var model = new BlogDetailsViewModel
             {
                 BlogDetailsForPresentationDto = _getBlogDetailsForPresentationService.Execute(slug).Data,
-                LatestBlogsDto = _getLatestBlogsForSiteService.Execute().Data
+                LatestBlogsDto = _getLatestBlogsForSiteService.Execute().Data,
+                BlogCategoryForSideBarDtos = _getBlogCategoriesForSideBarService.Execute().Data
             };
 
             return View(model);

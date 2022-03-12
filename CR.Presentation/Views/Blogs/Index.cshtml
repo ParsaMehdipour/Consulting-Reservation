@@ -32,7 +32,7 @@
                             <div class="col-md-6 col-sm-12">
 
                                 <!-- Blog Post -->
-                                <div class="blog grid-blog">
+                        <div class="blog grid-blog">
                                     <div class="blog-image">
                                         <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"><img class="img-fluid" src="~/@blog.PictureSrc" alt="@blog.Title"></a>
                                     </div>
@@ -58,7 +58,7 @@
                                 </div>
                                 <!-- /Blog Post -->
 
-                            </div>
+                    </div>
                         }
                     </div>
 
@@ -67,17 +67,17 @@
                         <div class="col-md-12">
                             <div class="text-center">
                                 <paging total-records="Model.ResultGetBlogsForPresentationDto.RowCount"
-                                        page-no="Model.ResultGetBlogsForPresentationDto.CurrentPage"
-                                        page-size="Model.ResultGetBlogsForPresentationDto.PageSize"
-                                        show-prev-next="true"
-                                        show-total-pages="false"
-                                        show-total-records="false"
-                                        show-page-size-nav="true"
-                                        show-first-numbered-page="true"
-                                        show-last-numbered-page="true"
-                                        query-string-key-page-no="Page"
-                                        query-string-key-page-size="PageSize"
-                                        gap-size="2">
+                                    page-no="Model.ResultGetBlogsForPresentationDto.CurrentPage"
+                                    page-size="Model.ResultGetBlogsForPresentationDto.PageSize"
+                                    show-prev-next="true"
+                                    show-total-pages="false"
+                                    show-total-records="false"
+                                    show-page-size-nav="true"
+                                    show-first-numbered-page="true"
+                                    show-last-numbered-page="true"
+                                    query-string-key-page-no="Page"
+                                    query-string-key-page-size="PageSize"
+                                    gap-size="2">
                                 </paging>
                             </div>
                         </div>
@@ -110,22 +110,22 @@
                     </div>
                     <div class="card-body">
                         <ul class="latest-posts">
-                           @foreach (var blog in Model.LatestBlogsDto)
-                           {
-                               <li>
-                                   <div class="post-thumb">
-                                       <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug">
-                                           <img class="img-fluid" src="~/@blog.PictureSrc" alt="@blog.Title">
-                                       </a>
-                                   </div>
-                                   <div class="post-info">
-                                       <h4>
-                                           <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"> @blog.Title </a>
-                                       </h4>
-                                       <p>@blog.PublishDate</p>
-                                   </div>
-                               </li>
-                           }
+                            @foreach (var blog in Model.LatestBlogsDto)
+                            {
+                                <li>
+                                    <div class="post-thumb">
+                                        <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug">
+                                            <img class="img-fluid" src="~/@blog.PictureSrc" alt="@blog.Title">
+                                        </a>
+                                    </div>
+                                    <div class="post-info">
+                                        <h4>
+                                            <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"> @blog.Title </a>
+                                        </h4>
+                                        <p>@blog.PublishDate</p>
+                                    </div>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -135,16 +135,17 @@
                     <div class="card-header">
                         <h4 class="card-title"> دسته‌بندی بلاگ </h4>
                     </div>
-                    <div class="card-body">
-                        <ul class="categories">
-                            <li><a href="#">قلب و عروق <span>(62)</span></a></li>
-                            <li><a href="#">مراقبت های بهداشتی <span>(27)</span></a></li>
-                            <li><a href="#">تغذیه <span>(41)</span></a></li>
-                            <li><a href="#">نکات بهداشتی <span>(16)</span></a></li>
-                            <li><a href="#">تحقیقات پزشکی <span>(55)</span></a></li>
-                            <li><a href="#">درمان بهداشت <span>(07)</span></a></li>
-                        </ul>
-                    </div>
+                    @if (Model.BlogCategoryForSideBarDtos.Count > 0)
+                    {
+                        <div class="card-body">
+                            <ul class="categories">
+                                @foreach (var blogCategory in Model.BlogCategoryForSideBarDtos)
+                                {
+                                    <li><a asp-controller="Blogs" asp-action="Index" asp-route-searchKey="@blogCategory.Name">@blogCategory.Name <span>(@blogCategory.BlogsCount)</span></a></li>
+                                }
+                            </ul>
+                        </div>
+                    }
                 </div>
                 <!-- /Categories -->
                 <!-- Tags -->
