@@ -8,6 +8,7 @@ using CR.Core.Services.Implementations.ChatUsers;
 using CR.Core.Services.Implementations.Comments;
 using CR.Core.Services.Implementations.CommissionAndDiscounts;
 using CR.Core.Services.Implementations.Consumers;
+using CR.Core.Services.Implementations.ContactUs;
 using CR.Core.Services.Implementations.Days;
 using CR.Core.Services.Implementations.ExpertAvailabilities;
 using CR.Core.Services.Implementations.ExpertImages;
@@ -31,6 +32,7 @@ using CR.Core.Services.Interfaces.ChatUsers;
 using CR.Core.Services.Interfaces.Comments;
 using CR.Core.Services.Interfaces.CommissionAndDiscounts;
 using CR.Core.Services.Interfaces.Consumers;
+using CR.Core.Services.Interfaces.ContactUs;
 using CR.Core.Services.Interfaces.Days;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.ExpertImages;
@@ -272,6 +274,10 @@ namespace CR.Presentation
             services.AddScoped<IGetRulesContentService, GetRulesContentService>();
             services.AddScoped<ICreateRuleService, CreateRuleService>();
             services.AddScoped<IEditRuleService, EditRuleService>();
+            //ContactUs
+            services.AddScoped<IGetContactUsContentService, GetContactUsContentService>();
+            services.AddScoped<IAddContactUsContentService, AddContactUsContentService>();
+            services.AddScoped<IEditContactUsContentService, EditContactUsContentService>();
 
             #endregion
 
