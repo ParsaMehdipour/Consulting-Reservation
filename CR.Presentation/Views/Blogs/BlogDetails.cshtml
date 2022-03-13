@@ -46,7 +46,7 @@
                         <div class="blog-content">
                             @Model.BlogDetailsForPresentationDto.shortDescription
                         </div>
-                        <hr/>
+                        <hr />
                         <div class="blog-content">
                             @Html.Raw(Model.BlogDetailsForPresentationDto.description)
                         </div>
@@ -183,23 +183,21 @@
                             <h4 class="card-title">ارسال نظر</h4>
                         </div>
                         <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <label>نام <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control">
+                            <div class="form-group">
+                                <label> نظر </label>
+                                <textarea id="message" rows="4" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="terms-accept">
+                                    <div class="custom-checkbox">
+                                        <input type="checkbox" id="terms_accept">
+                                        <label for="terms_accept">من با تمامی <a href="#">شرایط و مقررات موافقم</a></label>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label> ایمیل <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label> نظر </label>
-                                    <textarea rows="4" class="form-control"></textarea>
-                                </div>
-                                <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn" type="submit"> ارسال</button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="submit-section">
+                                <button onclick="AddNewComment()" class="btn btn-primary submit-btn" type="submit"> ارسال</button>
+                            </div>
                         </div>
                     </div>
 
@@ -292,3 +290,76 @@
 
 </div>
 <!-- /Page Content -->
+
+@section Scripts
+{
+    <script>
+
+        var parentId = null;
+
+        function SetParentId(Id) {
+
+            parentId = Id;
+
+            var name = $("#commenterName_" + Id)[0].innerText;
+
+            document.getElementById("nameForComment").innerHTML = name;
+        }
+
+        function AddNewComment() {
+
+            if ($("#terms_accept").is(":checked")) {
+
+                var data = {};
+
+                data["message"] = $("#message").val();
+                data["typeId"] = 1;
+                data["ownerRecordId"] =  @Model.BlogDetailsForPresentationDto.id;
+                data["parentId"] =  parentId;
+
+                $.ajax({
+                    type: "POST",
+                    url: '/api/Comments/AddNewComments',
+                    data: JSON.stringify(data),
+                    cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    enctype: 'application/json',
+                    dataType: 'json',
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning');
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            } else {
+
+                swal.fire('هشدار!',
+                    "لطفا تیک شرایط و مقررات را بزنید",
+                    'warning');
+
+                return;
+            }
+        }
+    </script>
+}
