@@ -58,14 +58,14 @@
 
     function Add() {
         if ($("#contactUsContentForm").valid()) {
-                        
+
             var data = new FormData();
 
             data.append("fullContent",CKEDITOR.instances.description.getData());
 
             $("#contactUsContentForm").submit(function( event ) {
-                $.ajax({    
-                    type: " POST",
+                $.ajax({
+                    type: "POST",
                     url: '/api/ContactUsContent/Create',
                     data: data,
                     processData: false,
@@ -86,15 +86,15 @@
                         $('#loading').hide();
                     },
                     fail: function() {
-                          $('#loading').hide();
-                    },  
+                        $('#loading').hide();
+                    },
                     error: function(request, status, error) {
                         alert(request.responseText);
                     }
-                }); 
+                });
                 event.preventDefault();
-            }); 
-        }   
+            });
+        }
     }
 
     function Edit(id) {
