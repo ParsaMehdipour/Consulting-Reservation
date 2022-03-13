@@ -1,0 +1,207 @@
+﻿@using CR.Common.Utilities
+@using CR.DataAccess.Enums
+@model CR.Core.DTOs.ResultDTOs.Comments.ResultGetAllBlogCommentsForAdminPanelDto
+@addTagHelper *, LazZiya.TagHelpers
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">نظرات</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">داشبورد</a></li>
+                <li class="breadcrumb-item active">نظرات مقالات</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="datatable table table-hover table-center mb-0">
+                        <thead>
+                        <tr>
+                            <th class="text-center">نام نظر دهنده</th>
+                            <th class="text-center">نام مقاله</th>
+                            <th class="text-center">نظر</th>
+                            <th class="text-center"> توضیحات </th>
+                            <th class="text-center">تاریخ</th>
+                            <th class="text-center">وضعیت</th>
+                            <th class="text-center"> اقدامات </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (Model.BlogCommentForAdminPanelDtos.Count > 0)
+                        {
+                            @foreach (var comment in Model.BlogCommentForAdminPanelDtos)
+                            {
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@comment.CommenterId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.CommenterIconSrc" alt="@comment.CommenterFullName"></a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@comment.CommenterId">@comment.CommenterFullName </a>
+                                        </h2>
+                                    </td>
+                                    <td class="text-center">
+                                        <h2 class="table-avatar">
+                                            <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-id="@comment.BlogId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.BlogIconSrc" alt="@comment.BlogName"></a>
+                                            <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-id="@comment.BlogId">@comment.BlogName</a>
+                                        </h2>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <i class="fe fe-star text-warning"></i>
+                                        <i class="fe fe-star text-warning"></i>
+                                        <i class="fe fe-star text-warning"></i>
+                                        <i class="fe fe-star text-warning"></i>
+                                        <i class="fe fe-star-o text-secondary"></i>
+                                    </td>
+
+                                    <td class="text-center">
+                                        @comment.Message
+                                    </td>
+
+                                    <td class="text-center">
+                                        @comment.CreateDate
+                                    </td>
+
+                                    <td class="text-center">
+                                        @if (comment.Status == CommentStatus.Waiting.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-warning inv-badge">@comment.Status</span>
+                                        }
+                                        else if (comment.Status == CommentStatus.Accepted.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-success inv-badge">@comment.Status</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-pill bg-danger inv-badge">@comment.Status</span>
+                                        }
+                                    </td>
+
+                                    <td class="text-right">
+                                        <div class="actions">
+                                            <a onclick="SetId(@comment.Id)" class="btn btn-sm bg-success-light" data-toggle="modal" href="#change_comment_status">
+                                                <i class="fe fe-check-verified"></i> تغیر وضعیت
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    show-first-numbered-page="true"
+                    show-last-numbered-page="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize"
+                    gap-size="2">
+            </paging>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Details Modal -->
+<div class="modal fade" id="change_comment_status" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تغیر وضعیت نظر</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-row">
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <button onclick="ChangeStatus(1)" id="accepted" type="button" class="btn btn-block btn-outline-success active">تایید</button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <button onclick="ChangeStatus(2)" id="denied" type="button" class="btn btn-block btn-outline-danger active">رد</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Edit Details Modal -->
+
+@section Scripts
+{
+    <script>
+        var id = 0;
+
+        function SetId(Id) {
+            id = Id;
+        }
+
+        function ChangeStatus(Status) {
+            swal.fire({
+                title: 'تغیر وضعیت نظر',
+                text: "مدیریت گرامی از تغیر وضعیت نظر مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'تایید',
+                cancelButtonText: 'انصراف'
+            }).then((result) => {
+                if (result.value) {
+                    var data = {};
+                    data["id"] = id;
+                    data["status"] = Status;
+                    $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: "POST",
+                        enctype: 'application/json',
+                        url: '/api/Comments/ChangeStatus',
+                        data: JSON.stringify(data),
+                        success: function(data) {
+                            if (data.isSuccess === true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function(isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+                }
+            });
+        }
+    </script>
+}

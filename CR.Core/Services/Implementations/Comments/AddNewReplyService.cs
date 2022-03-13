@@ -5,24 +5,36 @@ using CR.DataAccess.Context;
 using CR.DataAccess.Entities.Comments;
 using CR.DataAccess.Enums;
 using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Comments
 {
-    public class AddNewCommentService : IAddNewCommentService
+    public class AddNewReplyService : IAddNewReplyService
     {
         private readonly ApplicationContext _context;
 
-        public AddNewCommentService(ApplicationContext context)
+        public AddNewReplyService(ApplicationContext context)
         {
             _context = context;
         }
 
-        public ResultDto Execute(RequestAddNewCommentDto request, long userId)
+        public ResultDto Execute(RequestAddNewReplyDto request, long userId)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
+                var expertInformation = _context.ExpertInformations.FirstOrDefault(_ => _.ExpertId == userId);
+
+                if (expertInformation == null)
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "اطلاعات شما یافت نشد!!"
+                    };
+                }
+
                 var comment = new Comment()
                 {
                     UserId = userId,
@@ -30,24 +42,21 @@ namespace CR.Core.Services.Implementations.Comments
                     CommentStatus = CommentStatus.Waiting,
                     IsRead = false,
                     Message = request.message,
-                    OwnerRecordId = request.ownerRecordId,
+                    OwnerRecordId = expertInformation.Id,
                     TypeId = request.typeId,
                 };
 
                 _context.Comments.Add(comment);
 
-                if (request.parentId is > 0)
-                {
-                    var parentComment = GetParentComment(request.parentId);
+                var parentComment = GetParentComment(request.parentId);
 
-                    comment.Parent = parentComment;
-                    comment.ParentId = request.parentId;
+                comment.Parent = parentComment;
+                comment.ParentId = request.parentId;
 
-                    _context.SaveChanges();
+                _context.SaveChanges();
 
-                    parentComment.Children.Add(comment);
+                parentComment.Children.Add(comment);
 
-                }
 
                 _context.SaveChanges();
 
@@ -74,8 +83,7 @@ namespace CR.Core.Services.Implementations.Comments
                 transaction.Dispose();
             }
         }
-
-        private Comment GetParentComment(long? parentId)
+        private Comment GetParentComment(long parentId)
         {
             return _context.Comments.Find(parentId);
         }

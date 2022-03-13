@@ -256,7 +256,10 @@ namespace CR.Presentation
             services.AddScoped<IAddNewCommentService, AddNewCommentService>();
             services.AddScoped<IGetExpertCommentsForAdminPanelService, GetExpertCommentsForAdminPanelService>();
             services.AddScoped<IChangeCommentStatusService, ChangeCommentStatusService>();
-            services.AddScoped<IGetExpertCommentsForPresentationService, GetExpertCommentsForPresentationService>();
+            services.AddScoped<IGetExpertCommentsService, GetExpertCommentsService>();
+            services.AddScoped<IGetExpertCommentsForExpertPanelService, GetExpertCommentsForExpertPanelService>();
+            services.AddScoped<IAddNewReplyService, AddNewReplyService>();
+            services.AddScoped<IGetBlogCommentsForAdminService, GetBlogCommentsForAdminService>();
             //Wallet
             services.AddScoped<IGetWalletBalanceService, GetWalletBalanceService>();
             //ChatUsers

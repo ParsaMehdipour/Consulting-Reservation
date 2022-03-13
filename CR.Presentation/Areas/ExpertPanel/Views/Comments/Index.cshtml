@@ -1,0 +1,192 @@
+﻿@model CR.Core.DTOs.ResultDTOs.Comments.ResultGetExpertCommentsForExpertPanelDto
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">نظرات</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">نظرات</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+
+                <partial name="ExpertPnelSideBarMenu" />
+
+            </div>
+            <div class="col-md-7 col-lg-8 col-xl-9">
+                <div class="doc-review review-listing">
+
+                    @if (Model.ExpertCommentDtos.Count > 0)
+                    {
+                        <!-- Review Listing -->
+                        <ul class="comments-list">
+
+                            @foreach (var comment in Model.ExpertCommentDtos)
+                            {
+                                <!-- Comment List -->
+                                <li>
+                                    <div class="comment">
+                                        <img class="avatar rounded-circle" alt="User Image" src="~/@comment.CommenterIconSrc">
+                                        <div class="comment-body">
+                                            <div class="meta-data">
+                                                <span class="comment-author">@comment.CommenterFullName</span>
+                                                <span class="comment-date">نظر داده شده @comment.CreateDate</span>
+                                                <div class="review-count rating">
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p class="comment-content">
+                                                @comment.Message
+                                            </p>
+                                            <div class="comment-reply">
+                                                <a onclick="SetParentId(@comment.Id)" class="comment-btn"  data-toggle="modal" data-target="#ReplyModal">
+                                                    <i class="fas fa-reply"></i> پاسخ
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @if (comment.HasChildren)
+                                    {
+                                        @foreach (var reply in comment.Children)
+                                        {
+                                            <!-- Comment Reply -->
+                                            <ul class="comments-reply" style="margin-right: 50px">
+
+                                                <!-- Comment Reply List -->
+                                                <li>
+                                                    <div class="comment">
+                                                        <img class="avatar rounded-circle" alt="User Image" src="~/@reply.CommenterIconSrc">
+                                                        <div class="comment-body">
+                                                            <div class="meta-data">
+                                                                <span class="comment-author">@reply.CommenterFullName</span>
+                                                                <span class="comment-date">پاسخ داده شده @reply.CreateDate</span>
+                                                            </div>
+                                                            <p class="comment-content">
+                                                                @reply.Message
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <!-- /Comment Reply List -->
+                                                </ul>
+                                            <!-- /Comment Reply -->
+                                        }
+                                    }
+
+                                </li>
+                                <!-- /Comment List -->
+                            }
+
+                        </ul>
+                        <!-- /Review List -->
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /Page Content -->
+@section Scripts
+{
+<script src="~/assets/js/ExpertPanel/Comments/Comments.js"></script>
+<script src="~/assets/js/ExpertPanel/layout.js"></script>
+
+<script>
+    var parentId = null;
+
+
+    function SetParentId(Id) {
+
+            parentId = Id;
+
+            var name = $("#commenterName_" + Id)[0].innerText;
+
+            document.getElementById("nameForComment").innerHTML = name;
+    }
+
+    function Reply() {
+
+        var data = {};
+
+        data["message"] = $("#message").val();
+        data["typeId"] = 0;
+        data["parentId"] =  parentId;
+
+        $.ajax({
+               type: "POST",
+               url: '/api/Comments/Reply',
+               data: JSON.stringify(data),
+               cache: false,
+               contentType: 'application/json; charset=utf-8',
+               enctype: 'application/json',
+               dataType: 'json',
+               beforeSend: function(x) {
+                   $('#loading').show();
+               },
+               success: function(data) {
+                   if (data.isSuccess === true) {
+                       swal.fire('موفق!',
+                           data.message,
+                           'success').then(function(isConfirm) {
+                           location.reload();
+                       });
+                   }
+               },
+               complete: function() {
+                   $('#loading').hide();
+               },
+               fail: function() {
+                   $('#loading').hide();
+               },
+               error: function(request, status, error) {
+                   alert(request.responseText);
+               }
+        });
+    }
+</script>
+}
+
+@section Modal{
+<!-- NotDoneAppointmentModal -->
+<div class="modal fade" id="ReplyModal" tabindex="-1" role="dialog" aria-labelledby="NotDoneModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">پاسخ برای <strong id="nameForReply"></strong></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-form-label" for="message-text">پیام :</label>
+                    <textarea id="message" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal" data-original-title="" title="">بستن</button>
+                <button onclick="Reply()" class="btn btn-success" type="button" data-original-title="" title="">ارسال</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /NotDoneAppointmentModal -->
+}

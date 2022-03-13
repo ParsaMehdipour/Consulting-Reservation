@@ -26,6 +26,8 @@
 
         public const string ExpertComments = "expertscomments";
 
+        public const string BlogComments = "blogcomments";
+
         public const string AboutUs = "aboutus";
 
         public const string Rules = "rules";

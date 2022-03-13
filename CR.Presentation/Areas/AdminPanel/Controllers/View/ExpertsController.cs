@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CR.Common.ActiveMenus;
+﻿using CR.Common.ActiveMenus;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.Users;
 using CR.Core.Services.Interfaces.ExpertImages;
@@ -9,6 +8,7 @@ using CR.Core.Services.Interfaces.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading.Tasks;
 
 namespace CR.Presentation.Areas.AdminPanel.Controllers.View
 {
@@ -53,7 +53,6 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
         public IActionResult Index(int page = 1, int pageSize = 20)
         {
             TempData["activemenu"] = ActiveMenu.Experts;
-
 
             var model = _getAllExpertsService.Execute(page, pageSize).Data;
 

@@ -160,6 +160,9 @@
                         <li @(TempData["activemenu"].ToString() == ActiveMenu.ExpertComments ? @"class=active" : "")>
                             <a asp-controller="Comments" asp-action="Index"><i class="fe fe-user"></i> <span>نظرات متخصصین</span></a>
                         </li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.BlogComments ? @"class=active" : "")>
+                            <a asp-controller="BlogComments" asp-action="Index"><i class="fe fe-user"></i> <span>نظرات مقالات</span></a>
+                        </li>
                         <li @(TempData["activemenu"].ToString() == ActiveMenu.BlogCategories ? @"class=active" : "")>
                             <a asp-controller="BlogCategories" asp-action="Index"><i class="fe fe-user"></i> <span>گروه مقالات</span></a>
                         </li>
