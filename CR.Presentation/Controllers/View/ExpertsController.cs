@@ -17,14 +17,14 @@ namespace CR.Presentation.Controllers.View
         private readonly IGetSpecialitiesForSearchService _getSpecialitiesForSearchService;
         private readonly IGetExpertDetailsForReservationService _getExpertDetailsForReservationService;
         private readonly IGetThisDateExpertDetailsForReservationService _getThisDateExpertDetailsForReservationService;
-        private readonly IGetExpertCommentsForPresentationService _getExpertCommentsForPresentationService;
+        private readonly IGetExpertCommentsService _getExpertCommentsForPresentationService;
 
         public ExpertsController(IGetExpertsForSiteService getExpertsForSiteService
         , IGetExpertDetailsForSiteService getExpertDetailsForSiteService
         , IGetSpecialitiesForSearchService getSpecialitiesForSearchService
         , IGetExpertDetailsForReservationService getExpertDetailsForReservationService
         , IGetThisDateExpertDetailsForReservationService getThisDateExpertDetailsForReservationService
-        , IGetExpertCommentsForPresentationService getExpertCommentsForPresentationService)
+        , IGetExpertCommentsService getExpertCommentsForPresentationService)
         {
             _getExpertsForSiteService = getExpertsForSiteService;
             _getExpertDetailsForSiteService = getExpertDetailsForSiteService;

@@ -10,22 +10,23 @@ using System.Linq;
 
 namespace CR.Core.Services.Implementations.Comments
 {
-    public class GetExpertCommentsForPresentationService : IGetExpertCommentsForPresentationService
+    public class GetExpertCommentsService : IGetExpertCommentsService
     {
         private readonly ApplicationContext _context;
 
-        public GetExpertCommentsForPresentationService(ApplicationContext context)
+        public GetExpertCommentsService(ApplicationContext context)
         {
             _context = context;
         }
 
-        public ResultDto<ResultGetExpertCommentsForPresentationDto> Execute(long expertInformationId)
+        public ResultDto<ResultGetExpertCommentsDto> Execute(long expertInformationId)
         {
             var expertComments = _context.Comments
                 .Where(_ => _.TypeId == CommentType.Expert
                             && _.OwnerRecordId == expertInformationId
-                            && _.CommentStatus == CommentStatus.Accepted)
-                .Select(_ => new ExpertCommentForPresentationDto
+                            && _.CommentStatus == CommentStatus.Accepted
+                            && _.ParentId == null)
+                .Select(_ => new ExpertCommentDto
                 {
                     CommenterFullName = (_.User.FirstName != null) ? _.User.FirstName + " " + _.User.LastName : "بی نام",
                     CommenterIconSrc = _.User.IconSrc ?? "assets/img/icon-256x256.png",
@@ -33,7 +34,7 @@ namespace CR.Core.Services.Implementations.Comments
                     Id = _.Id,
                     Message = _.Message,
                     HasChildren = _.Children.Any(c => c.CommentStatus == CommentStatus.Accepted),
-                    Children = _.Children.Any(c => c.CommentStatus == CommentStatus.Accepted) ? _.Children.Select(c => new ExpertCommentForPresentationDto
+                    Children = _.Children.Any(c => c.CommentStatus == CommentStatus.Accepted) ? _.Children.Select(c => new ExpertCommentDto
                     {
                         ParentId = c.ParentId.Value,
                         CommenterFullName = c.User.FirstName + " " + c.User.LastName,
@@ -41,14 +42,14 @@ namespace CR.Core.Services.Implementations.Comments
                         CreateDate = c.CreateDate.ToShamsi(),
                         Id = c.Id,
                         Message = c.Message
-                    }).ToList() : new List<ExpertCommentForPresentationDto>()
+                    }).ToList() : new List<ExpertCommentDto>()
                 }).ToList();
 
-            return new ResultDto<ResultGetExpertCommentsForPresentationDto>()
+            return new ResultDto<ResultGetExpertCommentsDto>()
             {
-                Data = new ResultGetExpertCommentsForPresentationDto()
+                Data = new ResultGetExpertCommentsDto()
                 {
-                    ExpertCommentForPresentationDtos = expertComments
+                    ExpertCommentDtos = expertComments
                 },
                 IsSuccess = true
             };

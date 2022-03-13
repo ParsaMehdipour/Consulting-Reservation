@@ -43,7 +43,10 @@ namespace CR.Core.Services.Implementations.Comments
                     comment.Parent = parentComment;
                     comment.ParentId = request.parentId;
 
+                    _context.SaveChanges();
+
                     parentComment.Children.Add(comment);
+
                 }
 
                 _context.SaveChanges();

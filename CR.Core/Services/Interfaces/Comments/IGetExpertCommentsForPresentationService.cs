@@ -3,8 +3,8 @@ using CR.Core.DTOs.ResultDTOs.Comments;
 
 namespace CR.Core.Services.Interfaces.Comments
 {
-    public interface IGetExpertCommentsForPresentationService
+    public interface IGetExpertCommentsService
     {
-        ResultDto<ResultGetExpertCommentsForPresentationDto> Execute(long expertInformationId);
+        ResultDto<ResultGetExpertCommentsDto> Execute(long expertInformationId);
     }
 }

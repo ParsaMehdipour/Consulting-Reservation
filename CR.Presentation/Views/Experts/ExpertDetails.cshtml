@@ -73,7 +73,7 @@
                             <a onclick="AddToFavorites(@Model.ExpertDetailsForSiteDto.id)" class="btn btn-white fav-btn">
                                 <i class="far fa-bookmark"></i>
                             </a>
-                            <a asp-action="Chat" class="btn btn-white msg-btn">
+                        @*    <a class="btn btn-white msg-btn">
                                 <i class="far fa-comment-alt"></i>
                             </a>
                             <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#voice_call">
@@ -81,7 +81,7 @@
                             </a>
                             <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#video_call">
                                 <i class="fas fa-video"></i>
-                            </a>
+                            </a>*@
                         </div>
                         @if (Model.ExpertDetailsForSiteDto.DayDtos.Count > 0)
                         {
@@ -237,9 +237,9 @@
                         <!-- Review Listing -->
                         <div class="widget review-listing">
                             <ul class="comments-list">
-                                @if (Model.ResultGetExpertCommentsForPresentationDto.ExpertCommentForPresentationDtos.Count > 0)
+                                @if (Model.ResultGetExpertCommentsForPresentationDto.ExpertCommentDtos.Count > 0)
                                 {
-                                    @foreach (var comment in Model.ResultGetExpertCommentsForPresentationDto.ExpertCommentForPresentationDtos)
+                                    @foreach (var comment in Model.ResultGetExpertCommentsForPresentationDto.ExpertCommentDtos)
                                     {
                                         <!-- Comment List -->
                                         <li>
@@ -247,7 +247,7 @@
                                                 <img class="avatar avatar-sm rounded-circle" alt="@comment.CommenterFullName" src="~/@comment.CommenterIconSrc">
                                                 <div class="comment-body">
                                                     <div class="meta-data">
-                                                        <span class="comment-author">@comment.CommenterFullName</span>
+                                                        <span id="commenterName_@comment.Id" class="comment-author">@comment.CommenterFullName</span>
                                                         <span class="comment-date">نظر داده شده در تاریخ @comment.CreateDate</span>
                                                         <div class="review-count rating">
                                                             <i class="fas fa-star filled"></i>
@@ -262,7 +262,7 @@
                                                         @comment.Message
                                                     </p>
                                                     <div class="comment-reply">
-                                                        <a class="comment-btn" href="#">
+                                                        <a class="comment-btn" onclick="SetParentId(@comment.Id)">
                                                             <i class="fas fa-reply"></i> پاسخ
                                                         </a>
                                                         @*      <p class="recommend-btn">
@@ -283,7 +283,7 @@
                                                 @foreach (var reply in comment.Children)
                                                 {
                                                     <!-- Comment Reply -->
-                                                    <ul class="comments-reply">
+                                                    <ul class="comments-reply" style="margin-right: 50px">
                                                         <li>
                                                             <div class="comment">
                                                                 <img class="avatar avatar-sm rounded-circle" alt="@reply.CommenterFullName" src="~/@reply.CommenterIconSrc">
@@ -302,20 +302,6 @@
                                                                     <p class="comment-content">
                                                                         @reply.Message
                                                                     </p>
-                                                                    <div class="comment-reply">
-                                                                        <a class="comment-btn" href="#">
-                                                                            <i class="fas fa-reply"></i> پاسخ
-                                                                        </a>
-                                                                       @* <p class="recommend-btn">
-                                                                            <span>پیشنهاد؟</span>
-                                                                            <a href="#" class="like-btn">
-                                                                                <i class="far fa-thumbs-up"></i> بله
-                                                                            </a>
-                                                                            <a href="#" class="dislike-btn">
-                                                                                <i class="far fa-thumbs-down"></i> نه
-                                                                            </a>
-                                                                        </p>*@
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -323,7 +309,6 @@
                                                     <!-- /Comment Reply -->
                                                 }
                                             }
-
                                         </li>
                                         <!-- /Comment List -->
                                     }
@@ -333,7 +318,7 @@
                             <!-- Show All -->
                             <div class="all-feedback text-center">
                                 <a href="#" class="btn btn-primary btn-sm">
-                                    نمایش همگی فیدبک ها <strong>(167)</strong>
+                                    نمایش همگی فیدبک ها <strong>(@Model.ResultGetExpertCommentsForPresentationDto.ExpertCommentDtos.Count)</strong>
                                 </a>
                             </div>
                             <!-- /Show All -->
@@ -342,7 +327,7 @@
                         <!-- /Review Listing -->
                         <!-- Write Review -->
                         <div class="write-review">
-                            <h4>یک نظر بنویسید برای <strong>مشاور @Model.ExpertDetailsForSiteDto.FullName</strong></h4>
+                            <h4>یک نظر بنویسید برای <strong id="nameForComment">مشاور @Model.ExpertDetailsForSiteDto.FullName</strong></h4>
 
                             <!-- Write Review Form -->
                             <div class="form-group">
@@ -484,7 +469,12 @@
     var parentId = null;
 
     function SetParentId(Id) {
+
         parentId = Id;
+
+        var name = $("#commenterName_" + Id)[0].innerText;
+
+        document.getElementById("nameForComment").innerHTML = name;
     }
 
     function AddToFavorites(Id) {
@@ -580,5 +570,7 @@
             return;
         }
     }
+
+
 </script>
 }
