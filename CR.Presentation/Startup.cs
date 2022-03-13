@@ -259,6 +259,7 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertCommentsService, GetExpertCommentsService>();
             services.AddScoped<IGetExpertCommentsForExpertPanelService, GetExpertCommentsForExpertPanelService>();
             services.AddScoped<IAddNewReplyService, AddNewReplyService>();
+            services.AddScoped<IGetBlogCommentsForAdminService, GetBlogCommentsForAdminService>();
             //Wallet
             services.AddScoped<IGetWalletBalanceService, GetWalletBalanceService>();
             //ChatUsers
