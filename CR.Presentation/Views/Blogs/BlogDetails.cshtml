@@ -236,7 +236,7 @@
                         <ul class="tags">
                             @foreach (var keyWord in Model.BlogDetailsForPresentationDto.keyWords)
                             {
-                                <li><a href="#" class="tag">@keyWord</a></li>
+                                <li><a asp-controller="Blogs" asp-action="Index" asp-route-searchKey="@keyWord" class="tag">@keyWord</a></li>
                             }
                         </ul>
                     </div>
