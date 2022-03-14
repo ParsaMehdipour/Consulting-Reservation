@@ -23,7 +23,7 @@
                     <table class="datatable table table-hover table-center mb-0">
                         <thead>
                         <tr>
-                            <th class="text-center">نام مراجعه کننده</th>
+                            <th class="text-center">نام نظر دهنده</th>
                             <th class="text-center">نام مشاور</th>
                             <th class="text-center">نظر</th>
                             <th class="text-center"> توضیحات </th>
@@ -40,8 +40,8 @@
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@comment.CommenterId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.CommenterIconSrc" alt="@comment.CommenterFullName"></a>
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@comment.CommenterId">@comment.CommenterFullName </a>
+                                            <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.CommenterIconSrc" alt="@comment.CommenterFullName"></a>
+                                            <a>@comment.CommenterFullName </a>
                                         </h2>
                                     </td>
                                     <td class="text-center">

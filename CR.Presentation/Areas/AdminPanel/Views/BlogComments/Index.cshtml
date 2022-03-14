@@ -28,7 +28,6 @@
                             <th class="text-center">نام نظر دهنده</th>
                             <th class="text-center">نام مقاله</th>
                             <th class="text-center">نظر</th>
-                            <th class="text-center"> توضیحات </th>
                             <th class="text-center">تاریخ</th>
                             <th class="text-center">وضعیت</th>
                             <th class="text-center"> اقدامات </th>
@@ -42,23 +41,16 @@
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@comment.CommenterId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.CommenterIconSrc" alt="@comment.CommenterFullName"></a>
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@comment.CommenterId">@comment.CommenterFullName </a>
+                                            <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.CommenterIconSrc" alt="@comment.CommenterFullName"></a>
+                                            <a>@comment.CommenterFullName </a>
                                         </h2>
                                     </td>
+
                                     <td class="text-center">
                                         <h2 class="table-avatar">
                                             <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-id="@comment.BlogId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.BlogIconSrc" alt="@comment.BlogName"></a>
                                             <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-id="@comment.BlogId">@comment.BlogName</a>
                                         </h2>
-                                    </td>
-
-                                    <td class="text-center">
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star-o text-secondary"></i>
                                     </td>
 
                                     <td class="text-center">

@@ -86,101 +86,62 @@
                     </div>
                     <div class="card blog-comments clearfix">
                         <div class="card-header">
-                            <h4 class="card-title">نظر (12)</h4>
+                            <h4 class="card-title">نظر (@Model.BlogCommentsDto.Count)</h4>
                         </div>
-                        <div class="card-body pb-0">
-                            <ul class="comments-list">
-                                <li>
-                                    <div class="comment">
-                                        <div class="comment-author">
-                                            <img class="avatar" alt="" src="~/assets/img/patients/patient4.jpg">
-                                        </div>
-                                        <div class="comment-block">
-                                            <span class="comment-by">
-                                                <span class="blog-author-name">میچل فایرفکس</span>
-                                            </span>
-                                            <p>برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد</p>
-                                            <p class="blog-date">6 مهر 1399</p>
-                                            <a class="comment-btn" href="#">
-                                                <i class="fas fa-reply"></i> پاسخ
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <ul class="comments-list reply">
+                        @if (Model.BlogCommentsDto.Count > 0)
+                        {
+                            <div class="card-body pb-0">
+                                <ul class="comments-list">
+                                    @foreach (var comment in Model.BlogCommentsDto)
+                                    {
                                         <li>
                                             <div class="comment">
                                                 <div class="comment-author">
-                                                    <img class="avatar" alt="" src="~/assets/img/patients/patient5.jpg">
+                                                    <img class="avatar" alt="@comment.CommenterFullName" src="~/@comment.CommenterIconSrc">
                                                 </div>
                                                 <div class="comment-block">
                                                     <span class="comment-by">
-                                                        <span class="blog-author-name">جینا مور</span>
+                                                        <span id="commenterName_@comment.Id" class="blog-author-name">@comment.CommenterFullName</span>
                                                     </span>
-                                                    <p>تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
-                                                    <p class="blog-date">6 مهر 1399</p>
-                                                    <a class="comment-btn" href="#">
+                                                    <p>@comment.Message </p>
+                                                    <p class="blog-date">@comment.CreateDate</p>
+                                                    <a class="comment-btn" onclick="SetParentId(@comment.Id)">
                                                         <i class="fas fa-reply"></i> پاسخ
                                                     </a>
                                                 </div>
                                             </div>
+                                            @if (comment.HasChildren)
+                                            {
+                                                @foreach (var reply in comment.Children)
+                                                {
+                                                    <ul class="comments-list reply">
+                                                        <li>
+                                                            <div class="comment">
+                                                                <div class="comment-author">
+                                                                    <img class="avatar" alt="@reply.CommenterFullName" src="~/@reply.CommenterIconSrc">
+                                                                </div>
+                                                                <div class="comment-block">
+                                                                    <span class="comment-by">
+                                                                        <span class="blog-author-name">@comment.CommenterFullName</span>
+                                                                    </span>
+                                                                    <p>@reply.Message</p>
+                                                                    <p class="blog-date">@reply.CreateDate</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                }
+                                            }
                                         </li>
-                                        <li>
-                                            <div class="comment">
-                                                <div class="comment-author">
-                                                    <img class="avatar" alt="" src="~/assets/img/patients/patient3.jpg">
-                                                </div>
-                                                <div class="comment-block">
-                                                    <span class="comment-by">
-                                                        <span class="blog-author-name">کارل کلی</span>
-                                                    </span>
-                                                    <p>تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
-                                                    <p class="blog-date">7 مهر 1399</p>
-                                                    <a class="comment-btn" href="#">
-                                                        <i class="fas fa-reply"></i> پاسخ
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <div class="comment">
-                                        <div class="comment-author">
-                                            <img class="avatar" alt="" src="~/assets/img/patients/patient6.jpg">
-                                        </div>
-                                        <div class="comment-block">
-                                            <span class="comment-by">
-                                                <span class="blog-author-name">ایلس گیلی</span>
-                                            </span>
-                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </p>
-                                            <p class="blog-date">11 مهر 1399</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="comment">
-                                        <div class="comment-author">
-                                            <img class="avatar" alt="" src="~/assets/img/patients/patient7.jpg">
-                                        </div>
-                                        <div class="comment-block">
-                                            <span class="comment-by">
-                                                <span class="blog-author-name">جوان گاردنر</span>
-                                            </span>
-                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </p>
-                                            <p class="blog-date">13 مهر 1399</p>
-                                            <a class="comment-btn" href="#">
-                                                <i class="fas fa-reply"></i> پاسخ
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                                    }
+                                </ul>
+                            </div>
+                        }
                     </div>
 
                     <div class="card new-comment clearfix">
                         <div class="card-header">
-                            <h4 class="card-title">ارسال نظر</h4>
+                            <h4 id="nameForComment" class="card-title">ارسال نظر</h4>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
@@ -290,76 +251,75 @@
 
 </div>
 <!-- /Page Content -->
-
 @section Scripts
 {
-    <script>
+<script>
 
-        var parentId = null;
+    var parentId = null;
 
-        function SetParentId(Id) {
+    function SetParentId(Id) {
 
-            parentId = Id;
+        parentId = Id;
 
-            var name = $("#commenterName_" + Id)[0].innerText;
+        var name = $("#commenterName_" + Id)[0].innerText;
 
-            document.getElementById("nameForComment").innerHTML = name;
-        }
+        document.getElementById("nameForComment").innerHTML = "پاسخ به " + name;
+    }
 
-        function AddNewComment() {
+    function AddNewComment() {
 
-            if ($("#terms_accept").is(":checked")) {
+        if ($("#terms_accept").is(":checked")) {
 
-                var data = {};
+            var data = {};
 
-                data["message"] = $("#message").val();
-                data["typeId"] = 1;
-                data["ownerRecordId"] =  @Model.BlogDetailsForPresentationDto.id;
-                data["parentId"] =  parentId;
+            data["message"] = $("#message").val();
+            data["typeId"] = 1;
+            data["ownerRecordId"] =  @Model.BlogDetailsForPresentationDto.id;
+            data["parentId"] =  parentId;
 
-                $.ajax({
-                    type: "POST",
-                    url: '/api/Comments/AddNewComments',
-                    data: JSON.stringify(data),
-                    cache: false,
-                    contentType: 'application/json; charset=utf-8',
-                    enctype: 'application/json',
-                    dataType: 'json',
-                    beforeSend: function(x) {
-                        $('#loading').show();
-                    },
-                    success: function(data) {
-                        if (data.isSuccess === true) {
-                            swal.fire('موفق!',
-                                data.message,
-                                'success').then(function(isConfirm) {
-                                location.reload();
-                            });
-                        }
-                        else {
-                            swal.fire('هشدار!',
-                                data.message,
-                                'warning');
-                        }
-                    },
-                    complete: function() {
-                        $('#loading').hide();
-                    },
-                    fail: function() {
-                        $('#loading').hide();
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
+            $.ajax({
+                type: "POST",
+                url: '/api/Comments/AddNewComments',
+                data: JSON.stringify(data),
+                cache: false,
+                contentType: 'application/json; charset=utf-8',
+                enctype: 'application/json',
+                dataType: 'json',
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
+                success: function(data) {
+                    if (data.isSuccess === true) {
+                        swal.fire('موفق!',
+                            data.message,
+                            'success').then(function(isConfirm) {
+                            location.reload();
+                        });
                     }
-                });
-            } else {
+                    else {
+                        swal.fire('هشدار!',
+                            data.message,
+                            'warning');
+                    }
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        } else {
 
-                swal.fire('هشدار!',
-                    "لطفا تیک شرایط و مقررات را بزنید",
-                    'warning');
+            swal.fire('هشدار!',
+                "لطفا تیک شرایط و مقررات را بزنید",
+                'warning');
 
-                return;
-            }
+            return;
         }
-    </script>
+    }
+</script>
 }
