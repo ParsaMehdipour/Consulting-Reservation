@@ -271,6 +271,7 @@ namespace CR.Presentation
             services.AddScoped<IGetChatMessagesService, GetChatMessagesService>();
             services.AddScoped<IAddNewChatMessageService, AddNewChatMessageService>();
             services.AddScoped<IAddNewVoiceMessageService, AddNewVoiceMessageService>();
+            services.AddScoped<IGetBlogCommentsForAdminBlogDetailsService, GetBlogCommentsForAdminBlogDetailsService>();
             //AboutUs
             services.AddScoped<IGetAboutUsContentService, GetAboutUsContentService>();
             services.AddScoped<IAddAboutUsService, AddAboutUsService>();
