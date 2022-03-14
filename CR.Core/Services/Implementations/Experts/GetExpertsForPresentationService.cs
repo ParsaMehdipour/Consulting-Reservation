@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.Experts;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Experts
 {
@@ -23,7 +23,10 @@ namespace CR.Core.Services.Implementations.Experts
             var experts = _context.Users
                 .Include(e => e.ExpertInformation)
                 .ThenInclude(e => e.Specialty)
-                .Where(e => e.UserFlag == UserFlag.Expert && e.IsActive == true)
+                .Include(e => e.ExpertInformation)
+                .ThenInclude(_ => _.Favorites)
+                .Where(e => e.UserFlag == UserFlag.Expert && e.IsActive == true && e.ExpertInformation.Favorites.Count > 0)
+                .OrderByDescending(e => e.Favorites.Count)
                 .Select(e => new ExpertForPresentationDto
                 {
                     FirstAvailability = "HardCode",
@@ -33,8 +36,9 @@ namespace CR.Core.Services.Implementations.Experts
                     Speciality = e.ExpertInformation.Specialty.Name,
                     SpecialitySrc = e.ExpertInformation.Specialty.ImageSrc,
                     Tags = e.ExpertInformation.Tag,
-                    ExpertInformationId = e.ExpertInformation.Id
-                }).OrderByDescending(e => e.Id).Take(10).ToList();
+                    ExpertInformationId = e.ExpertInformation.Id,
+                    HasStar = (e.ExpertInformation.Favorites.Count >= 2)
+                }).Take(10).ToList();
 
             return new ResultDto<List<ExpertForPresentationDto>>()
             {

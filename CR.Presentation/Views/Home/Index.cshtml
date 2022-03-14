@@ -130,7 +130,7 @@
                     <div class="profile-widget">
                         <div class="doc-img">
                             <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId">
-                                <img class="img-fluid" alt="User Image" src="~/@expert.IconSrc">
+                                <img class="img-fluid" alt="@expert.FullName" src="~/@expert.IconSrc">
                             </a>
                             <a href="javascript:void(0)" class="fav-btn">
                                 <i class="far fa-bookmark"></i>
@@ -139,7 +139,10 @@
                         <div class="pro-content">
                             <h3 class="title">
                                 <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId">@expert.FullName</a>
-                                <i class="fas fa-check-circle verified"></i>
+                                @if (expert.HasStar)
+                                {
+                                    <i class="fas fa-check-circle verified"></i>
+                                }
                             </h3>
                             <p class="speciality"> @expert.Tags </p>
                             <div class="rating">

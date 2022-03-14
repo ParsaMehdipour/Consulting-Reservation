@@ -11,5 +11,6 @@
         public string Speciality { get; set; }
         public string FirstAvailability { get; set; }
         public string Price { get; set; }
+        public bool HasStar { get; set; }
     }
 }

@@ -28,7 +28,6 @@
                             <th class="text-center">نام نظر دهنده</th>
                             <th class="text-center">نام مقاله</th>
                             <th class="text-center">نظر</th>
-                            <th class="text-center"> توضیحات </th>
                             <th class="text-center">تاریخ</th>
                             <th class="text-center">وضعیت</th>
                             <th class="text-center"> اقدامات </th>
@@ -42,10 +41,11 @@
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@comment.CommenterId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.CommenterIconSrc" alt="@comment.CommenterFullName"></a>
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@comment.CommenterId">@comment.CommenterFullName </a>
+                                            <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.CommenterIconSrc" alt="@comment.CommenterFullName"></a>
+                                            <a>@comment.CommenterFullName </a>
                                         </h2>
                                     </td>
+
                                     <td class="text-center">
                                         <h2 class="table-avatar">
                                             <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-id="@comment.BlogId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.BlogIconSrc" alt="@comment.BlogName"></a>
@@ -54,15 +54,7 @@
                                     </td>
 
                                     <td class="text-center">
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star-o text-secondary"></i>
-                                    </td>
-
-                                    <td class="text-center">
-                                        @comment.Message
+                                        <button class="tag" onclick="ShowDetails(@comment.Id)">@comment.Message</button>
                                     </td>
 
                                     <td class="text-center">
@@ -146,6 +138,24 @@
 </div>
 <!-- /Edit Details Modal -->
 
+<!-- Comment Details Modal -->
+<div class="modal fade custom-modal" id="comment_details">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">جزییات نظر</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="detailsBody">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Comment Details Modal -->
+
+
 @section Scripts
 {
     <script>
@@ -203,5 +213,67 @@
                 }
             });
         }
+
+        function ShowDetails(id) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetDetails","Comments")',
+            data: {id:id},
+            dataType: "json",
+            success: function(response) {
+                var data = response;
+
+                var body = '';
+
+                body += '<ul class="info-details">';
+                body += '<li>';
+                body += '<div class="details-header">';
+                body += '<div class="row">';
+                body +='<div class="col-md-6">';
+                body += '<span class="title">تاریخ ثبت نظر : </span>';
+                body += '<span class="text">' + data.createDate + '</span>';
+                body += '</div>';
+                body += '<div class="col-md-6">';
+                body += '<div class="text-right">';
+                if (data.status === "در انتظار") {
+                    body += '<button type="button" class="btn bg-warning-light btn-sm">' + data.status + '</button>';
+                }
+                else if (data.status === "کنسل شده") {
+                    body += '<button type="button" class="btn bg-danger-light btn-sm">' + data.status + '</button>';
+                }
+                else {
+                    body += '<button type="button" class="btn bg-success-light btn-sm">' + data.status + '</button>';
+                }
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</li>';
+                body += '<br/>';
+                body += '<li>';
+                body += '<span class="title">نظر برای : </span>';
+                if (data.commentType === 0) {
+                    body += '<button type="button" class="btn bg-warning-light btn-sm">' + "متخصص" + '</button>';
+                }
+                else {
+                    body += '<button type="button" class="btn bg-purple-light btn-sm">' + "مقاله" + '</button>';
+                }
+                body += '</li>';
+                body += '<br/>';
+                body += '<li>';
+                body += '<span class="title">متن نظر : </span>';
+                body += '<span class="text">' + data.message + '</span>';
+                body += '</li>';
+                body += '</ul>';
+
+                $("#comment_details #detailsBody").html(body);
+                $("#comment_details").modal("show");
+
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
     </script>
 }

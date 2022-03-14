@@ -9,10 +9,13 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
     public class CommentsController : ControllerBase
     {
         private readonly IAddNewReplyService _addNewReplyService;
+        private readonly IAddNewCommentService _addNewCommentService;
 
-        public CommentsController(IAddNewReplyService addNewReplyService)
+        public CommentsController(IAddNewReplyService addNewReplyService
+        , IAddNewCommentService addNewCommentService)
         {
             _addNewReplyService = addNewReplyService;
+            _addNewCommentService = addNewCommentService;
         }
 
         [Route("/api/Comments/Reply")]
@@ -24,6 +27,18 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
             var result = _addNewReplyService.Execute(request, userId);
 
             return new JsonResult(result);
+        }
+
+        [Route("/api/Comments/AddNewCommentFromExpert")]
+        [HttpPost]
+        public IActionResult AddNewComments([FromBody] RequestAddNewCommentDto request)
+        {
+            var userId = ClaimUtility.GetUserId(User).Value;
+
+            var result = _addNewCommentService.Execute(request, userId);
+
+            return new JsonResult(result);
+
         }
     }
 }

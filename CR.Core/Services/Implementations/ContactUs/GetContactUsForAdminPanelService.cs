@@ -22,6 +22,7 @@ namespace CR.Core.Services.Implementations.ContactUs
         {
             var contactUs = _context.ContactUs.Select(_ => new ContactUsDto()
             {
+                id = _.Id,
                 FullName = _.FullName,
                 Email = _.Email,
                 IsRead = _.IsRead,

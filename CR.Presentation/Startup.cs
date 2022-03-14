@@ -260,6 +260,8 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertCommentsForExpertPanelService, GetExpertCommentsForExpertPanelService>();
             services.AddScoped<IAddNewReplyService, AddNewReplyService>();
             services.AddScoped<IGetBlogCommentsForAdminService, GetBlogCommentsForAdminService>();
+            services.AddScoped<IGetBlogCommentsForBlogDetailsService, GetBlogCommentsForBlogDetailsService>();
+            services.AddScoped<IGetCommentDetailsForAdminPanelService, GetCommentDetailsForAdminPanelService>();
             //Wallet
             services.AddScoped<IGetWalletBalanceService, GetWalletBalanceService>();
             //ChatUsers
@@ -270,6 +272,7 @@ namespace CR.Presentation
             services.AddScoped<IGetChatMessagesService, GetChatMessagesService>();
             services.AddScoped<IAddNewChatMessageService, AddNewChatMessageService>();
             services.AddScoped<IAddNewVoiceMessageService, AddNewVoiceMessageService>();
+            services.AddScoped<IGetBlogCommentsForBlogDetailsByIdService, GetBlogCommentsForBlogDetailsByIdService>();
             //AboutUs
             services.AddScoped<IGetAboutUsContentService, GetAboutUsContentService>();
             services.AddScoped<IAddAboutUsService, AddAboutUsService>();
@@ -284,6 +287,7 @@ namespace CR.Presentation
             services.AddScoped<IEditContactUsContentService, EditContactUsContentService>();
             services.AddScoped<IGetContactUsForAdminPanelService, GetContactUsForAdminPanelService>();
             services.AddScoped<IAddNewContactUsService, AddNewContactUsService>();
+            services.AddScoped<IGetContactUsDetailsService, GetContactUsDetailsService>();
 
             #endregion
 

@@ -1,6 +1,8 @@
 ﻿using CR.Common.ActiveMenus;
 using CR.Core.Services.Interfaces.BlogCategories;
 using CR.Core.Services.Interfaces.Blogs;
+using CR.Core.Services.Interfaces.Comments;
+using CR.Presentation.Areas.AdminPanel.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,14 +16,17 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
         private readonly IGetBlogsForAdminPanelService _getBlogsForAdminPanelService;
         private readonly IGetBlogCategoriesForDropdownService _getBlogCategoriesForDropdownService;
         private readonly IGetBlogDetailsService _getBlogDetailsService;
+        private readonly IGetBlogCommentsForBlogDetailsByIdService _getBlogCommentsForBlogDetailsByIdService;
 
         public BlogsController(IGetBlogsForAdminPanelService getBlogsForAdminPanelService
         , IGetBlogCategoriesForDropdownService getBlogCategoriesForDropdownService
-        , IGetBlogDetailsService getBlogDetailsService)
+        , IGetBlogDetailsService getBlogDetailsService
+        , IGetBlogCommentsForBlogDetailsByIdService getBlogCommentsForBlogDetailsByIdService)
         {
             _getBlogsForAdminPanelService = getBlogsForAdminPanelService;
             _getBlogCategoriesForDropdownService = getBlogCategoriesForDropdownService;
             _getBlogDetailsService = getBlogDetailsService;
+            _getBlogCommentsForBlogDetailsByIdService = getBlogCommentsForBlogDetailsByIdService;
         }
 
         public IActionResult Index(int page = 1, int pageSize = 20)
@@ -57,7 +62,11 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
         {
             TempData["activemenu"] = ActiveMenu.Blogs;
 
-            var model = _getBlogDetailsService.Execute(id).Data;
+            var model = new AdminBlogDetailsViewModel()
+            {
+                BlogDetailsDto = _getBlogDetailsService.Execute(id).Data,
+                BlogCommentDtos = _getBlogCommentsForBlogDetailsByIdService.Execute(id).Data
+            };
 
             return View(model);
         }

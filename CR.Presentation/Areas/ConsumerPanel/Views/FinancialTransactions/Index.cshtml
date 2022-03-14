@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">موجودی کیف پول</h4>
+                            <h4 class="card-title">موجودی کیف پول : @Model.WalletBalance.ToString("n0") تومان</h4>
                         </div>
                         <div class="card-body btn-showcase">
                             <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#ChargeWallet" data-original-title="" title="">افزودن موجودی</button>
@@ -88,6 +88,10 @@
                                                                 else if (transaction.TransactionType == TransactionType.PayFromCreditCard.GetDisplayName())
                                                                 {
                                                                     <span class="badge badge-pill bg-success-light">@transaction.TransactionType</span>
+                                                                }
+                                                                else if (transaction.TransactionType == TransactionType.PayFromWallet.GetDisplayName())
+                                                                {
+                                                                    <span class="badge badge-pill bg-purple-light">@transaction.TransactionType</span>
                                                                 }
                                                                 else
                                                                 {
