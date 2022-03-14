@@ -48,9 +48,6 @@ namespace CR.Presentation.Controllers.View
         [HttpGet]
         public IActionResult ExpertDetails(long expertInformationId)
         {
-
-
-
             var model = new ExpertProfileViewModel()
             {
                 ExpertDetailsForSiteDto = _getExpertDetailsForSiteService.Execute(expertInformationId).Data,
