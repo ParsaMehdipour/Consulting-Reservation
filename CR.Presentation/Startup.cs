@@ -287,6 +287,7 @@ namespace CR.Presentation
             services.AddScoped<IEditContactUsContentService, EditContactUsContentService>();
             services.AddScoped<IGetContactUsForAdminPanelService, GetContactUsForAdminPanelService>();
             services.AddScoped<IAddNewContactUsService, AddNewContactUsService>();
+            services.AddScoped<IGetContactUsDetailsService, GetContactUsDetailsService>();
 
             #endregion
 
