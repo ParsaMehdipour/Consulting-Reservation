@@ -13,18 +13,21 @@ namespace CR.Presentation.Controllers.View
         private readonly IGetLatestBlogsForSiteService _getLatestBlogsForSiteService;
         private readonly IGetBlogCategoriesForSideBarService _getBlogCategoriesForSideBarService;
         private readonly IGetBlogCommentsForBlogDetailsService _getBlogCommentsForBlogDetailsService;
+        private readonly IGetBlogsKeywordsForPresentationService _getBlogsKeywordsForPresentationService;
 
         public BlogsController(IGetBlogsForPresentationService getBlogsForPresentationService
             , IGetBlogDetailsForPresentationService getBlogDetailsForPresentationService
             , IGetLatestBlogsForSiteService getLatestBlogsForSiteService
             , IGetBlogCategoriesForSideBarService getBlogCategoriesForSideBarService
-            , IGetBlogCommentsForBlogDetailsService getBlogCommentsForBlogDetailsService)
+            , IGetBlogCommentsForBlogDetailsService getBlogCommentsForBlogDetailsService
+            , IGetBlogsKeywordsForPresentationService getBlogsKeywordsForPresentationService)
         {
             _getBlogsForPresentationService = getBlogsForPresentationService;
             _getBlogDetailsForPresentationService = getBlogDetailsForPresentationService;
             _getLatestBlogsForSiteService = getLatestBlogsForSiteService;
             _getBlogCategoriesForSideBarService = getBlogCategoriesForSideBarService;
             _getBlogCommentsForBlogDetailsService = getBlogCommentsForBlogDetailsService;
+            _getBlogsKeywordsForPresentationService = getBlogsKeywordsForPresentationService;
         }
 
         public IActionResult Index(string searchKey, int page = 1, int pageSize = 20)
@@ -33,7 +36,8 @@ namespace CR.Presentation.Controllers.View
             {
                 ResultGetBlogsForPresentationDto = _getBlogsForPresentationService.Execute(searchKey, page, pageSize).Data,
                 LatestBlogsDto = _getLatestBlogsForSiteService.Execute().Data,
-                BlogCategoryForSideBarDtos = _getBlogCategoriesForSideBarService.Execute().Data
+                BlogCategoryForSideBarDtos = _getBlogCategoriesForSideBarService.Execute().Data,
+                KeyWords = _getBlogsKeywordsForPresentationService.Execute().Data
             };
 
             return View(model);

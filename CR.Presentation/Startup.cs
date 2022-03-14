@@ -235,6 +235,7 @@ namespace CR.Presentation
             services.AddScoped<IGetLatestBlogsForSiteService, GetLatestBlogsForSiteService>();
             services.AddScoped<IGetBlogDetailsForPresentationService, GetBlogDetailsForPresentationService>();
             services.AddScoped<IGetBlogsForPresentationService, GetBlogsForPresentationService>();
+            services.AddScoped<IGetBlogsKeywordsForPresentationService, GetBlogsKeywordsForPresentationService>();
             //FinancialTransactions
             services.AddScoped<IGetFinancialTransactionsForAdminService, GetFinancialTransactionsForAdminService>();
             services.AddScoped<IGetConsumerFinancialTransactionsService, GetConsumerFinancialTransactionsService>();

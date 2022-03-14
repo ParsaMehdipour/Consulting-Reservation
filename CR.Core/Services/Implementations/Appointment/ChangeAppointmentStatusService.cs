@@ -1,9 +1,10 @@
-﻿using System;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Appointment
 {
@@ -22,7 +23,7 @@ namespace CR.Core.Services.Implementations.Appointment
 
             try
             {
-                var appointment = _context.Appointments.FirstOrDefault(a => a.Id == request.AppointmentId);
+                var appointment = _context.Appointments.Include(a => a.TimeOfDay).FirstOrDefault(a => a.Id == request.AppointmentId);
 
                 if (appointment == null)
                 {
@@ -30,6 +31,16 @@ namespace CR.Core.Services.Implementations.Appointment
                     {
                         IsSuccess = false,
                         Message = "نوبت پیدا نشد!!"
+                    };
+                }
+
+                if (appointment.TimeOfDay.FinishTime > DateTime.Now)
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message =
+                            "به دلیل عدم اتمام زمان یا نرسیدن زمان نوبت قابلیت تغیر وضعیت برای شما امکان پذیر نیست"
                     };
                 }
 

@@ -121,50 +121,64 @@
 
 @section Scripts
 {
-    <script>
+<script>
 
-        function Decline(factorId,price,payerId) {
+    function Decline(factorId,price,payerId) {
 
-            var data = {};
+        swal.fire({
+            title: 'بازگشت وجه',
+            text: "مدیریت گرامی از بازگشت وجه مطمئن هستید؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'تایید',
+            cancelButtonText: 'انصراف'
+        }).then((result) => {
+            if (result.value) {
+                var data = {};
 
-            data["factorId"] = factorId;
-            data["price"] = Number(price);
-            data["payerId"] = payerId;
+                data["factorId"] = factorId;
+                data["price"] = Number(price);
+                data["payerId"] = payerId;
 
-            $.ajax({
-                type: "POST",
-                url: '/api/FinancialTransactions/Decline',
-                data: JSON.stringify(data),
-                dataType: "json",
-                cache: false,
-                contentType: "application/json; charset=utf-8",
-                enctype: 'application/json',
-                beforeSend: function(x) {
-                    $('#loading').show();
-                },
-                success: function(response) {
-                    if (response.isSuccess === true) {
-                        swal.fire('موفق!',
-                            response.message,
-                            'success').then(function(isConfirm) {
-                            location.reload();
-                        });
-                    }else {
-                        swal.fire('هشدار!',
-                            response.message,
-                            'warning');
+                $.ajax({
+                    type: "POST",
+                    url: '/api/FinancialTransactions/Decline',
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    enctype: 'application/json',
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(response) {
+                        if (response.isSuccess === true) {
+                            swal.fire('موفق!',
+                                response.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }else {
+                            swal.fire('هشدار!',
+                                response.message,
+                                'warning');
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
                     }
-                },
-                complete: function() {
-                    $('#loading').hide();
-                },
-                fail: function() {
-                    $('#loading').hide();
-                },
-                error: function(request, status, error) {
-                    alert(request.responseText);
-                }
-            });
-        }
-    </script>
+                });
+            }
+        });
+
+    }
+</script>
 }

@@ -7,8 +7,8 @@
     <div class="container-fluid">
         <div class="banner-wrapper">
             <div class="banner-header text-center">
-                <h1>جستجو مشاور و رزرو نوبت</h1>
-                <p>جستجو و کشف بهترین مشاورین</p>
+                <h1>چاله چوله، مسیر را برایتان هموار می کند</h1>
+                <p>هر زمان و در هر مکان از مشاوران تحصیلی ، گسب و کار ، شغلی ما کمک بخواهید</p>
             </div>
 
             <!-- Search -->
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-md-9 m-auto">
                 <div class="section-header text-center">
-                    <h2>دنبال چه چیزی می‌گردید؟</h2>
+                    <h2>در چه زمینه ای نیاز به مشاوره دارید؟</h2>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 mb-3">
@@ -42,8 +42,8 @@
                             <img src="~/assets/img/doctors/doctor-07.jpg" alt="" class="img-fluid">
                             <div class="doctor-book-card-content tile-card-content-1">
                                 <div>
-                                    <h3 class="card-title mb-0">ویزیت مشاور</h3>
-                                    <a href="search.html" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">رزرو کنید</a>
+                                    <h3 class="card-title mb-0">مشاوره تحصیلی</h3>
+                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="تحصیلی" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">پیدا کن</a>
                                 </div>
                             </div>
                         </div>
@@ -53,19 +53,19 @@
                             <img src="~/assets/img/img-pharmacy1.jpg" alt="" class="img-fluid">
                             <div class="doctor-book-card-content tile-card-content-1">
                                 <div>
-                                    <h3 class="card-title mb-0">جستجو داروخانه</h3>
-                                    <a href="pharmacy-search.html" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">پیدا کن</a>
+                                    <h3 class="card-title mb-0">مشاوره کسب و کار</h3>
+                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="کسب و کار" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">پیدا کن</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-3">
                         <div class="card text-center doctor-book-card">
-                            <img src="assets/img/lab-image.jpg" alt="" class="img-fluid">
+                            <img src="~/assets/img/lab-image.jpg" alt="" class="img-fluid">
                             <div class="doctor-book-card-content tile-card-content-1">
                                 <div>
-                                    <h3 class="card-title mb-0">پیدا کردن آزمایشگاه</h3>
-                                    <a href="javascript:void(0);" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">به زودی</a>
+                                    <h3 class="card-title mb-0">مشاوره شغلی</h3>
+                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="شغلی" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">پیدا کن</a>
                                 </div>
                             </div>
                         </div>
@@ -80,8 +80,8 @@
 <section class="section section-specialities">
     <div class="container-fluid">
         <div class="section-header text-center">
-            <h2>تخصص‌ها</h2>
-            <p class="sub-title">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+            <h2>دسته بندی تخصص ها</h2>
+            <p class="sub-title">در هر حوزه ای که نیاز به مشاوره دارید، می توانید از تجارب ارزشمند مشاوران ما بهرمند شوید</p>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-9">
@@ -114,7 +114,7 @@
             <div class="col-lg-4">
                 <div class="section-header ">
                     <h2> مشاور خود را رزرو کنید </h2>
-                    <p> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم </p>
+                    <p> مشاوران آماده همراهی شما </p>
                 </div>
                 <div class="about-content">
                     <p>  برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و مشاوران را می طلبد</p>

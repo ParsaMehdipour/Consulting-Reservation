@@ -10,5 +10,6 @@ namespace CR.Presentation.Models.ViewModels
         public ResultGetBlogsForPresentationDto ResultGetBlogsForPresentationDto { get; set; }
         public List<BlogForPresentationDto> LatestBlogsDto { get; set; }
         public List<BlogCategoryForSideBarDto> BlogCategoryForSideBarDtos { get; set; }
+        public List<string> KeyWords { get; set; }
     }
 }
