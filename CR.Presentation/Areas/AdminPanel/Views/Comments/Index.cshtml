@@ -22,76 +22,76 @@
                 <div class="table-responsive">
                     <table class="datatable table table-hover table-center mb-0">
                         <thead>
-                        <tr>
-                            <th class="text-center">نام نظر دهنده</th>
-                            <th class="text-center">نام مشاور</th>
-                            <th class="text-center">نظر</th>
-                            <th class="text-center"> توضیحات </th>
-                            <th class="text-center">تاریخ</th>
-                            <th class="text-center">وضعیت</th>
-                            <th class="text-center"> اقدامات </th>
-                        </tr>
+                            <tr>
+                                <th class="text-center">نام نظر دهنده</th>
+                                <th class="text-center">نام مشاور</th>
+                                <th class="text-center">نظر</th>
+                                <th class="text-center"> توضیحات </th>
+                                <th class="text-center">تاریخ</th>
+                                <th class="text-center">وضعیت</th>
+                                <th class="text-center"> اقدامات </th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @if (Model.ExpertCommentForAdminPanelDtos.Count > 0)
-                        {
-                            @foreach (var comment in Model.ExpertCommentForAdminPanelDtos)
+                            @if (Model.ExpertCommentForAdminPanelDtos.Count > 0)
                             {
-                                <tr>
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.CommenterIconSrc" alt="@comment.CommenterFullName"></a>
-                                            <a>@comment.CommenterFullName </a>
-                                        </h2>
-                                    </td>
-                                    <td class="text-center">
-                                        <h2 class="table-avatar">
-                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@comment.ExpertId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.ExpertIconSrc" alt="@comment.ExpertFullName"></a>
-                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@comment.ExpertId">@comment.ExpertFullName</a>
-                                        </h2>
-                                    </td>
+                                @foreach (var comment in Model.ExpertCommentForAdminPanelDtos)
+                                {
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.CommenterIconSrc" alt="@comment.CommenterFullName"></a>
+                                                <a>@comment.CommenterFullName </a>
+                                            </h2>
+                                        </td>
+                                        <td class="text-center">
+                                            <h2 class="table-avatar">
+                                                <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@comment.ExpertId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@comment.ExpertIconSrc" alt="@comment.ExpertFullName"></a>
+                                                <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@comment.ExpertId">@comment.ExpertFullName</a>
+                                            </h2>
+                                        </td>
 
-                                    <td class="text-center">
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star-o text-secondary"></i>
-                                    </td>
+                                        <td class="text-center">
+                                            <i class="fe fe-star text-warning"></i>
+                                            <i class="fe fe-star text-warning"></i>
+                                            <i class="fe fe-star text-warning"></i>
+                                            <i class="fe fe-star text-warning"></i>
+                                            <i class="fe fe-star-o text-secondary"></i>
+                                        </td>
 
-                                    <td class="text-center">
-                                        @comment.Message
-                                    </td>
+                                        <td class="text-center">
+                                            <button class="tag" onclick="ShowDetails(@comment.Id)">@comment.Message</button>
+                                        </td>
 
-                                    <td class="text-center">
-                                        @comment.CreateDate
-                                    </td>
+                                        <td class="text-center">
+                                            @comment.CreateDate
+                                        </td>
 
-                                    <td class="text-center">
-                                        @if (comment.Status == CommentStatus.Waiting.GetDisplayName())
-                                        {
-                                            <span class="badge badge-pill bg-warning inv-badge">@comment.Status</span>
-                                        }
-                                        else if (comment.Status == CommentStatus.Accepted.GetDisplayName())
-                                        {
-                                            <span class="badge badge-pill bg-success inv-badge">@comment.Status</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-pill bg-danger inv-badge">@comment.Status</span>
-                                        }
-                                    </td>
+                                        <td class="text-center">
+                                            @if (comment.Status == CommentStatus.Waiting.GetDisplayName())
+                                            {
+                                                <span class="badge badge-pill bg-warning inv-badge">@comment.Status</span>
+                                            }
+                                            else if (comment.Status == CommentStatus.Accepted.GetDisplayName())
+                                            {
+                                                <span class="badge badge-pill bg-success inv-badge">@comment.Status</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-pill bg-danger inv-badge">@comment.Status</span>
+                                            }
+                                        </td>
 
-                                    <td class="text-right">
-                                        <div class="actions">
-                                            <a onclick="SetId(@comment.Id)" class="btn btn-sm bg-success-light" data-toggle="modal" href="#change_comment_status">
-                                                <i class="fe fe-check-verified"></i> تغیر وضعیت
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a onclick="SetId(@comment.Id)" class="btn btn-sm bg-success-light" data-toggle="modal" href="#change_comment_status">
+                                                    <i class="fe fe-check-verified"></i> تغیر وضعیت
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
                             }
-                        }
                         </tbody>
                     </table>
                 </div>
@@ -115,7 +115,7 @@
     </div>
 </div>
 
-<!-- Edit Details Modal -->
+<!-- Change Status Modal -->
 <div class="modal fade" id="change_comment_status" aria-hidden="true" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -142,64 +142,142 @@
         </div>
     </div>
 </div>
-<!-- /Edit Details Modal -->
+<!-- /Change Status Modal -->
 
+<!-- Comment Details Modal -->
+<div class="modal fade custom-modal" id="comment_details">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">جزییات نظر</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="detailsBody">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Comment Details Modal -->
 @section Scripts
 {
-    <script>
-        var id = 0;
+<script>
+    var id = 0;
 
-        function SetId(Id) {
-            id = Id;
-        }
+    function SetId(Id) {
+        id = Id;
+    }
 
-        function ChangeStatus(Status) {
-            swal.fire({
-                title: 'تغیر وضعیت نظر',
-                text: "مدیریت گرامی از تغیر وضعیت نظر مطمئن هستید؟",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#7cacbe',
-                confirmButtonText: 'تایید',
-                cancelButtonText: 'انصراف'
-            }).then((result) => {
-                if (result.value) {
-                    var data = {};
-                    data["id"] = id;
-                    data["status"] = Status;
-                    $.ajax({
-                        contentType: 'application/json; charset=utf-8',
-                        dataType: 'json',
-                        type: "POST",
-                        enctype: 'application/json',
-                        url: '/api/Comments/ChangeStatus',
-                        data: JSON.stringify(data),
-                        success: function(data) {
-                            if (data.isSuccess === true) {
-                                swal.fire(
-                                    'موفق!',
-                                    data.message,
-                                    'success'
-                                ).then(function(isConfirm) {
-                                    location.reload();
-                                });
-                            } else {
-                                swal.fire(
-                                    'هشدار!',
-                                    data.message,
-                                    'warning'
-                                );
+    function ChangeStatus(Status) {
+        swal.fire({
+            title: 'تغیر وضعیت نظر',
+            text: "مدیریت گرامی از تغیر وضعیت نظر مطمئن هستید؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'تایید',
+            cancelButtonText: 'انصراف'
+        }).then((result) => {
+            if (result.value) {
+                var data = {};
+                data["id"] = id;
+                data["status"] = Status;
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: "POST",
+                    enctype: 'application/json',
+                    url: '/api/Comments/ChangeStatus',
+                    data: JSON.stringify(data),
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire(
+                                'موفق!',
+                                data.message,
+                                'success'
+                            ).then(function(isConfirm) {
+                                location.reload();
+                            });
+                        } else {
+                            swal.fire(
+                                'هشدار!',
+                                data.message,
+                                'warning'
+                            );
 
-                            }
-                        },
-                        error: function(request, status, error) {
-                            alert(request.responseText);
                         }
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
 
-                    });
+                });
+            }
+        });
+    }
+
+    function ShowDetails(id) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetDetails","Comments")',
+            data: {id:id},
+            dataType: "json",
+            success: function(response) {
+                var data = response;
+
+                var body = '';
+
+                body += '<ul class="info-details">';
+                body += '<li>';
+                body += '<div class="details-header">';
+                body += '<div class="row">';
+                body +='<div class="col-md-6">';
+                body += '<span class="title">تاریخ ثبت نظر : </span>';
+                body += '<span class="text">' + data.createDate + '</span>';
+                body += '</div>';
+                body += '<div class="col-md-6">';
+                body += '<div class="text-right">';
+                if (data.status === "در انتظار") {
+                    body += '<button type="button" class="btn bg-warning-light btn-sm">' + data.status + '</button>';
                 }
-            });
-        }
-    </script>
+                else if (data.status === "کنسل شده") {
+                    body += '<button type="button" class="btn bg-danger-light btn-sm">' + data.status + '</button>';
+                }
+                else {
+                    body += '<button type="button" class="btn bg-success-light btn-sm">' + data.status + '</button>';
+                }
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</div>';
+                body += '</li>';
+                body += '<br/>';
+                body += '<li>';
+                body += '<span class="title">نظر برای : </span>';
+                if (data.commentType === 0) {
+                    body += '<button type="button" class="btn bg-warning-light btn-sm">' + "متخصص" + '</button>';
+                }
+                else {
+                    body += '<button type="button" class="btn bg-success-light btn-sm">' + "مقاله" + '</button>';
+                }
+                body += '</li>';
+                body += '<br/>';
+                body += '<li>';
+                body += '<span class="title">متن نظر : </span>';
+                body += '<span class="text">' + data.message + '</span>';
+                body += '</li>';
+                body += '</ul>';
+
+                $("#comment_details #detailsBody").html(body);
+                $("#comment_details").modal("show");
+
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+</script>
 }

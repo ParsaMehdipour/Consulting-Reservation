@@ -16,17 +16,17 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
         private readonly IGetBlogsForAdminPanelService _getBlogsForAdminPanelService;
         private readonly IGetBlogCategoriesForDropdownService _getBlogCategoriesForDropdownService;
         private readonly IGetBlogDetailsService _getBlogDetailsService;
-        private readonly IGetBlogCommentsForAdminBlogDetailsService _getBlogCommentsForAdminBlogDetailsService;
+        private readonly IGetBlogCommentsForBlogDetailsByIdService _getBlogCommentsForBlogDetailsByIdService;
 
         public BlogsController(IGetBlogsForAdminPanelService getBlogsForAdminPanelService
         , IGetBlogCategoriesForDropdownService getBlogCategoriesForDropdownService
         , IGetBlogDetailsService getBlogDetailsService
-        , IGetBlogCommentsForAdminBlogDetailsService getBlogCommentsForAdminBlogDetailsService)
+        , IGetBlogCommentsForBlogDetailsByIdService getBlogCommentsForBlogDetailsByIdService)
         {
             _getBlogsForAdminPanelService = getBlogsForAdminPanelService;
             _getBlogCategoriesForDropdownService = getBlogCategoriesForDropdownService;
             _getBlogDetailsService = getBlogDetailsService;
-            _getBlogCommentsForAdminBlogDetailsService = getBlogCommentsForAdminBlogDetailsService;
+            _getBlogCommentsForBlogDetailsByIdService = getBlogCommentsForBlogDetailsByIdService;
         }
 
         public IActionResult Index(int page = 1, int pageSize = 20)
@@ -65,7 +65,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
             var model = new AdminBlogDetailsViewModel()
             {
                 BlogDetailsDto = _getBlogDetailsService.Execute(id).Data,
-                BlogCommentDtos = _getBlogCommentsForAdminBlogDetailsService.Execute(id).Data
+                BlogCommentDtos = _getBlogCommentsForBlogDetailsByIdService.Execute(id).Data
             };
 
             return View(model);

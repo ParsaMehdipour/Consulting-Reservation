@@ -9,11 +9,11 @@ using System.Linq;
 
 namespace CR.Core.Services.Implementations.Comments
 {
-    public class GetBlogCommentsForAdminBlogDetailsService : IGetBlogCommentsForAdminBlogDetailsService
+    public class GetBlogCommentsForBlogDetailsByIdService : IGetBlogCommentsForBlogDetailsByIdService
     {
         private readonly ApplicationContext _context;
 
-        public GetBlogCommentsForAdminBlogDetailsService(ApplicationContext context)
+        public GetBlogCommentsForBlogDetailsByIdService(ApplicationContext context)
         {
             _context = context;
         }

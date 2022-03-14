@@ -165,6 +165,10 @@
                            'success').then(function(isConfirm) {
                            location.reload();
                        });
+                   }else {
+                       swal.fire('هشدار!',
+                           data.message,
+                           'warning');
                    }
                },
                complete: function() {

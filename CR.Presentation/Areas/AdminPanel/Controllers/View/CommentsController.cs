@@ -10,10 +10,13 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
     public class CommentsController : Controller
     {
         private readonly IGetExpertCommentsForAdminPanelService _getExpertCommentsForAdminPanelService;
+        private readonly IGetCommentDetailsForAdminPanelService _getCommentDetailsForAdminPanelService;
 
-        public CommentsController(IGetExpertCommentsForAdminPanelService getExpertCommentsForAdminPanelService)
+        public CommentsController(IGetExpertCommentsForAdminPanelService getExpertCommentsForAdminPanelService
+        , IGetCommentDetailsForAdminPanelService getCommentDetailsForAdminPanelService)
         {
             _getExpertCommentsForAdminPanelService = getExpertCommentsForAdminPanelService;
+            _getCommentDetailsForAdminPanelService = getCommentDetailsForAdminPanelService;
         }
 
         public IActionResult Index(int Page = 1, int PageSize = 20)
@@ -23,6 +26,14 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
             var model = _getExpertCommentsForAdminPanelService.Execute(Page, PageSize).Data;
 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult GetDetails(long id)
+        {
+            var result = _getCommentDetailsForAdminPanelService.Execute(id).Data;
+
+            return new JsonResult(result);
         }
     }
 }

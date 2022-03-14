@@ -35,6 +35,15 @@ namespace CR.Core.Services.Implementations.Comments
                     };
                 }
 
+                if (string.IsNullOrWhiteSpace(request.message))
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "لطفا متن پیام را وارد کنید"
+                    };
+                }
+
                 var comment = new Comment()
                 {
                     UserId = userId,

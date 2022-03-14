@@ -10,12 +10,15 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.Api
     {
         private readonly IChangeCommentStatusService _changeCommentStatusService;
         private readonly IAddNewCommentService _addNewCommentService;
+        private readonly IGetCommentDetailsForAdminPanelService _getCommentDetailsForAdminPanelService;
 
         public CommentsController(IChangeCommentStatusService changeCommentStatusService
-        , IAddNewCommentService addNewCommentService)
+        , IAddNewCommentService addNewCommentService
+        , IGetCommentDetailsForAdminPanelService getCommentDetailsForAdminPanelService)
         {
             _changeCommentStatusService = changeCommentStatusService;
             _addNewCommentService = addNewCommentService;
+            _getCommentDetailsForAdminPanelService = getCommentDetailsForAdminPanelService;
         }
 
         [Route("/api/Comments/ChangeStatus")]
@@ -38,5 +41,14 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.Api
             return new JsonResult(result);
 
         }
+
+        //[Route("/api/Comments/GetDetails")]
+        //[HttpPost]
+        //public IActionResult GetDetails([FromBody] RequestGetCommentDetailsDto request)
+        //{
+        //    var result = _getCommentDetailsForAdminPanelService.Execute(request.id).Data;
+
+        //    return new JsonResult(result);
+        //}
     }
 }
