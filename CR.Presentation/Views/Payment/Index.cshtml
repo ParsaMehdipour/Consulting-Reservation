@@ -183,7 +183,7 @@
                 },
                 success: function(response) {
                     if (response.isSuccess === true) {
-                        document.getElementById('balance').innerHTML = response.data;
+                        document.getElementById('balance').innerHTML = response.data + " تومان ";
                     }
                     else {
                         swal.fire('هشدار!',
