@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.ExpertInformations;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Experts
 {
@@ -19,7 +19,7 @@ namespace CR.Core.Services.Implementations.Experts
             _context = context;
         }
 
-        public ResultDto Execute(RequestEditAdvancedExpertDetailsDto request)
+        public ResultDto Execute(RequestEditAdvancedExpertDetailsDto request, bool diActive)
         {
 
             using var transaction = _context.Database.BeginTransaction();
@@ -183,17 +183,31 @@ namespace CR.Core.Services.Implementations.Experts
                     _context.ExpertSubscriptions.AddRange(expertSubscriptions);
                 }
 
-                expert.IsActive = false;
+                if (diActive)
+                {
+                    expert.IsActive = false;
+                }
 
                 _context.SaveChanges();
 
                 transaction.Commit();
 
-                return new ResultDto()
+                if (diActive)
                 {
-                    IsSuccess = true,
-                    Message = "ویرایش با موفقیت انجام شد پس از تایید مدیریت اکانت شما فعال می شود"
-                };
+                    return new ResultDto()
+                    {
+                        IsSuccess = true,
+                        Message = "ویرایش با موفقیت انجام شد پس از تایید مدیریت اکانت شما فعال می شود"
+                    };
+                }
+                else
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = true,
+                        Message = "ویرایش با موفقیت انجام شد"
+                    };
+                }
             }
             catch (Exception)
             {

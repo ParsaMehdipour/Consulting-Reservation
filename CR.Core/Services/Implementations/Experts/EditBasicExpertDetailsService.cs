@@ -25,7 +25,7 @@ namespace CR.Core.Services.Implementations.Experts
             _imageUploaderService = imageUploaderService;
         }
 
-        public ResultDto Execute(RequestEditBasicExpertDetailsDto request)
+        public ResultDto Execute(RequestEditBasicExpertDetailsDto request, bool diActive)
         {
             using var transaction = _context.Database.BeginTransaction();
 
@@ -200,21 +200,36 @@ namespace CR.Core.Services.Implementations.Experts
                 expertInformation.PhoneCallPrice = (request.usePhoneCall && request.phoneCallPrice != null) ? Convert.ToInt32(request.phoneCallPrice.ToEnglishNumber()) : 0;
                 expertInformation.VoiceCallPrice = (request.useVoiceCall && request.voiceCallPrice != null) ? Convert.ToInt32(request.voiceCallPrice.ToEnglishNumber()) : 0;
                 expertInformation.TextCallPrice = (request.useTextCall && request.textCallPrice != null) ? Convert.ToInt32(request.textCallPrice.ToEnglishNumber()) : 0;
-                expert.IsActive = false;
                 expert.Email = request.email;
                 expert.PhoneNumber = request.phoneNumber;
                 expert.FirstName = request.firstName;
                 expert.LastName = request.lastName;
 
+                if (diActive)
+                {
+                    expert.IsActive = false;
+                }
+
                 _context.SaveChanges();
 
                 transaction.Commit();
 
-                return new ResultDto()
+                if (diActive)
                 {
-                    IsSuccess = true,
-                    Message = "ویرایش با موفقیت انجام شد پس از تایید مدیریت اکانت شما فعال می شود"
-                };
+                    return new ResultDto()
+                    {
+                        IsSuccess = true,
+                        Message = "ویرایش با موفقیت انجام شد پس از تایید مدیریت اکانت شما فعال می شود"
+                    };
+                }
+                else
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = true,
+                        Message = "ویرایش با موفقیت انجام شد"
+                    };
+                }
             }
             catch (Exception)
             {

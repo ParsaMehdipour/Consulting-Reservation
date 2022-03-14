@@ -98,7 +98,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
         [HttpPost]
         public IActionResult EditBasicInformation(RequestEditBasicExpertDetailsDto request)
         {
-            var result = _editBasicExpertDetailsService.Execute(request);
+            var result = _editBasicExpertDetailsService.Execute(request, false);
 
             return new JsonResult(result);
         }
@@ -106,7 +106,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
         [HttpPost]
         public IActionResult EditAdvancedInformation(RequestEditAdvancedExpertDetailsDto request)
         {
-            var result = _editAdvancedExpertDetailsService.Execute(request);
+            var result = _editAdvancedExpertDetailsService.Execute(request, false);
 
             return new JsonResult(result);
         }

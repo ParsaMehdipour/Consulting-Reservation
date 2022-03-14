@@ -30,12 +30,12 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 
         public ProfileController(IHttpContextAccessor contextAccessor
             , IGetUserFlagService getUserFlagService
-            ,IGetExpertDetailsForProfileService getExpertDetailsForProfileService
-            ,UserManager<User> userManager
-            ,IGetSpecialtiesForExpertProfileDropDownService getSpecialtiesForExpertProfileDropDownService
-            ,IEditBasicExpertDetailsService editBasicExpertDetailsService
-            ,IEditAdvancedExpertDetailsService editAdvancedExpertDetailsService
-            ,IRemoveExpertImagesService removeExpertImagesService)
+            , IGetExpertDetailsForProfileService getExpertDetailsForProfileService
+            , UserManager<User> userManager
+            , IGetSpecialtiesForExpertProfileDropDownService getSpecialtiesForExpertProfileDropDownService
+            , IEditBasicExpertDetailsService editBasicExpertDetailsService
+            , IEditAdvancedExpertDetailsService editAdvancedExpertDetailsService
+            , IRemoveExpertImagesService removeExpertImagesService)
         {
             _getExpertDetailsForProfileService = getExpertDetailsForProfileService;
             _userManager = userManager;
@@ -71,7 +71,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
         [HttpPost]
         public IActionResult EditBasicInformation(RequestEditBasicExpertDetailsDto request)
         {
-            var result = _editBasicExpertDetailsService.Execute(request);
+            var result = _editBasicExpertDetailsService.Execute(request, true);
 
             return new JsonResult(result);
         }
@@ -79,7 +79,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
         [HttpPost]
         public IActionResult EditAdvancedInformation(RequestEditAdvancedExpertDetailsDto request)
         {
-            var result = _editAdvancedExpertDetailsService.Execute(request);
+            var result = _editAdvancedExpertDetailsService.Execute(request, true);
 
             return new JsonResult(result);
         }

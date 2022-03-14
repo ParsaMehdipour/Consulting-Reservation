@@ -5,6 +5,6 @@ namespace CR.Core.Services.Interfaces.Experts
 {
     public interface IEditBasicExpertDetailsService
     {
-        ResultDto Execute(RequestEditBasicExpertDetailsDto request);
+        ResultDto Execute(RequestEditBasicExpertDetailsDto request, bool diActive);
     }
 }
