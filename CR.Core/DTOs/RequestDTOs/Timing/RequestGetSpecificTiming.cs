@@ -6,5 +6,6 @@ namespace CR.Core.DTOs.RequestDTOs.Timing
     {
         public TimingType timingType { get; set; }
         public long expertInformationId { get; set; }
+        public string date_String { get; set; }
     }
 }

@@ -1,12 +1,13 @@
-﻿using CR.Common.DTOs;
+﻿using CR.Common.Convertor;
+using CR.Common.DTOs;
 using CR.Core.DTOs.ExpertAvailabilities;
 using CR.Core.DTOs.RequestDTOs.Expert;
 using CR.Core.DTOs.RequestDTOs.TimeOfDay;
 using CR.Core.DTOs.RequestDTOs.Timing;
+using CR.Core.DTOs.ResultDTOs.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.Experts;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace CR.Presentation.Controllers.Api
 {
@@ -28,9 +29,11 @@ namespace CR.Presentation.Controllers.Api
 
         [Route("/api/Reservation/GetDetails")]
         [HttpPost]
-        public ResultDto<List<DayDto>> GetDetails(RequestGetSpecificTiming model)
+        public ResultDto<ResultGetExpertAvailabilitiesDetailsDto> GetDetails(RequestGetSpecificTiming model)
         {
-            var outPut = _getExpertAvailabilitiesForReservationService.Execute(model.expertInformationId, model.timingType);
+            var date = model.date_String.ToGeorgianDateTime();
+
+            var outPut = _getExpertAvailabilitiesForReservationService.Execute(model.expertInformationId, model.timingType, date);
 
             return outPut;
         }
