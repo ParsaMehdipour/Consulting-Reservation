@@ -33,7 +33,7 @@ namespace CR.Core.Services.Implementations.Appointment
                 .Select(a => new AppointmentForAdminDto
                 {
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
-                    AppointmentPrice = a.Price.Value.ToString(),
+                    AppointmentPrice = a.Price.Value.ToString("n0"),
                     FactorStatus = a.Factor.FactorStatus.GetDisplayName(),
                     FactorId = a.FactorId.Value,
                     ConsumerId = a.ConsumerInformation.ConsumerId,

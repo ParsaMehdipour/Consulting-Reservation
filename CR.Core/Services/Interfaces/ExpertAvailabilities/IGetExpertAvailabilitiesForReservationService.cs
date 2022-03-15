@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using CR.Common.DTOs;
-using CR.Core.DTOs.ExpertAvailabilities;
+﻿using CR.Common.DTOs;
+using CR.Core.DTOs.ResultDTOs.ExpertAvailabilities;
 using CR.DataAccess.Enums;
+using System;
 
 namespace CR.Core.Services.Interfaces.ExpertAvailabilities
 {
     public interface IGetExpertAvailabilitiesForReservationService
     {
-        ResultDto<List<DayDto>> Execute(long expertInformationId , TimingType timingType);
+        ResultDto<ResultGetExpertAvailabilitiesDetailsDto> Execute(long expertInformationId, TimingType timingType, DateTime date);
     }
 }
