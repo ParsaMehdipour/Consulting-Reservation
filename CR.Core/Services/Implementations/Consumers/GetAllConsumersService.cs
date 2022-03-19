@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Consumers;
@@ -8,6 +7,7 @@ using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Consumers
 {
@@ -25,9 +25,8 @@ namespace CR.Core.Services.Implementations.Consumers
             int rowCount = 0;
             var consumers = _context.Users
                 .Include(u => u.ConsumerInfromation)
-                //.Where(u => u.ConsumerInfromation != null)
                 .Where(u => u.UserFlag == UserFlag.Consumer)
-                .OrderByDescending(c=>c.Id)
+                .OrderByDescending(c => c.Id)
                 .AsNoTracking()
                 .AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)

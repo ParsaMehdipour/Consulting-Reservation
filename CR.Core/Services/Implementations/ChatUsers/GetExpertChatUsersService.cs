@@ -35,7 +35,7 @@ namespace CR.Core.Services.Implementations.ChatUsers
             var finalResult = chatUsers.Select(_ => new ChatUserForExpertPanelDto()
             {
                 Id = _.Id,
-                ConsumerIconSrc = _.Consumer.IconSrc,
+                ConsumerIconSrc = (string.IsNullOrWhiteSpace(_.Consumer.IconSrc)) ? "assets/img/icon-256x256.png" : _.Consumer.IconSrc,
                 ConsumerName = _.Consumer.FirstName + " " + _.Consumer.LastName,
                 LastChangeHour = $"{_.ChatUserMessages.OrderBy(c => c.CreateDate).Last().CreateDate.Minute.ToString().GetPersianNumber()} : {_.ChatUserMessages.OrderBy(c => c.CreateDate).Last().CreateDate.Hour.ToString().GetPersianNumber()}",
                 LastMessage = _.ChatUserMessages.OrderBy(c => c.CreateDate).Last().Message,
