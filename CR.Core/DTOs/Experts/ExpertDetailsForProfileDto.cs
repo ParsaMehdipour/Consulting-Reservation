@@ -1,8 +1,8 @@
-﻿using System;
+﻿using CR.DataAccess.Enums;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using CR.DataAccess.Enums;
-using Microsoft.AspNetCore.Http;
 
 // ReSharper disable All
 
@@ -88,6 +88,8 @@ namespace CR.Core.DTOs.Experts
         public List<ExpertPrizeDto> prizes { get; set; }
         public List<ExpertStudyDto> studies { get; set; }
         public List<ExpertSubscriptionDto> subscriptions { get; set; }
-        public List<ExpertImageDto> images { get; set; }
+        public List<ExpertImageDto> resumeImages { get; set; }
+        public List<ExpertImageDto> degreeImages { get; set; }
+        public List<ExpertImageDto> otherImages { get; set; }
     }
 }

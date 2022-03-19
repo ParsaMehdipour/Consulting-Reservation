@@ -38,7 +38,8 @@ namespace CR.Core.Services.Implementations.ContactUs
                 fullName = contactUs.FullName,
                 message = contactUs.Message,
                 createDate = contactUs.CreateDate.ToShamsi(),
-                email = contactUs.Email
+                email = contactUs.Email,
+                phoneNumber = contactUs.PhoneNumber
             };
 
             return new ResultDto<ContactUsDetailsForAdminPanel>()

@@ -22,10 +22,35 @@
             </div>
             <div class="card-body">
                 <form id="ruleForm">
+                    <h5 class="card-title">قوانین و مقررات کلی </h5>
                     <div class="form-group row">
                         <div class="col-md-12">
                             <textarea asp-for="FullContent" rows="20" cols="20" class="form-control" placeholder="متن مورد نظر خود را اینجا بنویسید" id="description" name="description"></textarea>
                             <span asp-validation-for="FullContent" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <hr/>
+                    <h5 class="card-title">قوانین و مقررات پرداخت </h5>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <textarea asp-for="PaymentContent" rows="20" cols="20" class="form-control" placeholder="متن مورد نظر خود را اینجا بنویسید" id="paymentDescription" name="paymentDescription"></textarea>
+                            <span asp-validation-for="PaymentContent" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <hr/>
+                    <h5 class="card-title">قوانین و مقررات نظرات </h5>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <textarea asp-for="CommentContent" rows="20" cols="20" class="form-control" placeholder="متن مورد نظر خود را اینجا بنویسید" id="commentDescription" name="commentDescription"></textarea>
+                            <span asp-validation-for="CommentContent" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <hr/>
+                    <h5 class="card-title">قوانین و مقررات سایر </h5>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <textarea asp-for="OtherContent" rows="20" cols="20" class="form-control" placeholder="متن مورد نظر خود را اینجا بنویسید" id="otherDescription" name="otherDescription"></textarea>
+                            <span asp-validation-for="OtherContent" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="submit-section">
@@ -54,6 +79,9 @@
 
     $(document).ready(function () {
         CKEDITOR.replace('description');
+        CKEDITOR.replace('paymentDescription');
+        CKEDITOR.replace('commentDescription');
+        CKEDITOR.replace('otherDescription');
     });
 
     function Add() {
@@ -105,6 +133,9 @@
 
             data.append("id",id);
             data.append("fullContent",CKEDITOR.instances.description.getData());
+            data.append("paymentContent",CKEDITOR.instances.description.getData());
+            data.append("commentContent",CKEDITOR.instances.description.getData());
+            data.append("otherContent",CKEDITOR.instances.description.getData());
 
             $("#ruleForm").submit(function( event ) {
                 $.ajax({

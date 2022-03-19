@@ -140,11 +140,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    @if (Model.images.Count > 0)
+                                    @if (Model.otherImages.Count > 0)
                                     {
-                                        <label>تصاویر محل کار</label>
+                                        <label>سایر تصاویر</label>
                                         <div class="upload-wrap">
-                                            @foreach (var image in Model.images)
+                                            @foreach (var image in Model.otherImages)
                                             {
                                                 <div class="upload-images">
                                                     <a href="~/@image.Src" data-fancybox="gallery">
@@ -157,13 +157,75 @@
                                         <br />
                                     }
                                     <div class="form-group">
-                                        <label>بارگذاری تصویر</label>
-                                        <span id="imageUploadContainer" style="width: 100%">
+                                        <label>بارگذاری سایر تصاویر</label>
+                                        <span id="otherImageUploadContainer" style="width: 100%">
                                             <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box l-center-box">
+                                                <div class="uploader__box js-uploader__box_other l-center-box">
                                                     <div class="uploader__contents">
-                                                        <label class="button button--secondary" for="fileinput">انتخاب تصویر</label>
-                                                        <input id="fileinput" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
+                                                        <label class="button button--secondary" for="fileinputOther">انتخاب تصویر</label>
+                                                        <input id="fileinputOther" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div><br/>
+                                <div class="col-md-12">
+                                    @if (Model.resumeImages.Count > 0)
+                                    {
+                                        <label>تصاویر رزومه</label>
+                                        <div class="upload-wrap">
+                                            @foreach (var image in Model.resumeImages)
+                                            {
+                                                <div class="upload-images">
+                                                    <a href="~/@image.Src" data-fancybox="gallery">
+                                                        <img src="~/@image.Src" alt="Upload Image">
+                                                    </a>
+                                                    <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                                                </div>
+                                            }
+                                        </div>
+                                        <br />
+                                    }
+                                    <div class="form-group">
+                                        <label>بارگذاری تصاویر رزومه</label>
+                                        <span id="rseumeImageUploadContainer" style="width: 100%">
+                                            <div class="col-lg-12 ">
+                                                <div class="uploader__box js-uploader__box_Resume l-center-box">
+                                                    <div class="uploader__contents">
+                                                        <label class="button button--secondary" for="fileinputResume">انتخاب تصویر</label>
+                                                        <input id="fileinputResume" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div><br/>
+                                <div class="col-md-12">
+                                    @if (Model.degreeImages.Count > 0)
+                                    {
+                                        <label>تصاویر مدرک</label>
+                                        <div class="upload-wrap">
+                                            @foreach (var image in Model.degreeImages)
+                                            {
+                                                <div class="upload-images">
+                                                    <a href="~/@image.Src" data-fancybox="gallery">
+                                                        <img src="~/@image.Src" alt="Upload Image">
+                                                    </a>
+                                                    <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                                                </div>
+                                            }
+                                        </div>
+                                        <br />
+                                    }
+                                    <div class="form-group">
+                                        <label>بارگذاری تصاویر مدرک</label>
+                                        <span id="degreeImageUploadContainer" style="width: 100%">
+                                            <div class="col-lg-12 ">
+                                                <div class="uploader__box js-uploader__box_Degree l-center-box">
+                                                    <div class="uploader__contents">
+                                                        <label class="button button--secondary" for="fileinputDegree">انتخاب تصویر</label>
+                                                        <input id="fileinputDegree" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
                                                     </div>
                                                 </div>
                                             </div>
@@ -665,16 +727,44 @@
 <script src="~/assets/js/ExpertPanel/layout.js"></script>
 
 <script>
-    var imageFileList = [];
+    var otherImageFileList = [];
+    var resumeImageFileList = [];
+    var degreeImageFileList = [];
 
-    function addFileToList(file) {
-        imageFileList.push(file);
+    function addOtherFileToList(file) {
+        otherImageFileList.push(file);
     }
 
-    function removeFileFromList(id) {
-        for (var i = 0; i < imageFileList.length; i++) {
+    function removeOtherFileFromList(id) {
+        for (var i = 0; i < otherImageFileList.length; i++) {
             if (i === parseInt(id)) {
-                imageFileList.splice(i, 1);
+                otherImageFileList.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    function addResumeFileToList(file) {
+        resumeImageFileList.push(file);
+    }
+
+    function removeResumeFileFromList(id) {
+        for (var i = 0; i < resumeImageFileList.length; i++) {
+            if (i === parseInt(id)) {
+                resumeImageFileList.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    function addDegreeFileToList(file) {
+        degreeImageFileList.push(file);
+    }
+
+    function removeDegreeFileFromList(id) {
+        for (var i = 0; i < degreeImageFileList.length; i++) {
+            if (i === parseInt(id)) {
+                degreeImageFileList.splice(i, 1);
                 break;
             }
         }
@@ -707,8 +797,16 @@
             expertProfileData.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
             expertProfileData.append("id", id);
 
-            for (var i = 0; i < imageFileList.length; i++) {
-                expertProfileData.append("image",imageFileList[i]);
+            for (var i = 0; i < otherImageFileList.length; i++) {
+                expertProfileData.append("otherImage",otherImageFileList[i]);
+            }
+
+            for (var j = 0; j < resumeImageFileList.length; j++) {
+                expertProfileData.append("resumeImage",resumeImageFileList[j]);
+            }
+
+            for (var k = 0; k < degreeImageFileList.length; k++) {
+                expertProfileData.append("degreeImage",degreeImageFileList[k]);
             }
 
             if (document.getElementById('price_free_phoneCallPrice').checked) {

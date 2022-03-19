@@ -19,13 +19,13 @@ body .fc {
 }
 
 .fc-day-number {
-	font-family: iransans !important;
+	font-family: Vazir !important;
 }
 
 .fc .fc-toolbar>*> :first-child {
 	margin-left: 0;
 	direction: rtl;
-	font-family: iransans !important;
+	font-family: Vazir !important;
 }
 
 /* Colors

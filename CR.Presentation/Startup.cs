@@ -282,6 +282,7 @@ namespace CR.Presentation
             services.AddScoped<IGetRulesContentService, GetRulesContentService>();
             services.AddScoped<ICreateRuleService, CreateRuleService>();
             services.AddScoped<IEditRuleService, EditRuleService>();
+            services.AddScoped<IGetRuleForPresentationService, GetRuleForPresentationService>();
             //ContactUs
             services.AddScoped<IGetContactUsContentService, GetContactUsContentService>();
             services.AddScoped<IAddContactUsContentService, AddContactUsContentService>();

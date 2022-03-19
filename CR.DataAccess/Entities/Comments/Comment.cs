@@ -13,6 +13,7 @@ namespace CR.DataAccess.Entities.Comments
         public CommentType TypeId { get; set; }
         public long OwnerRecordId { get; set; }
         public bool IsRead { get; set; }
+        public bool ShowInMainPage { get; set; }
         public long? ParentId { get; set; }
 
         #region Navigation Properties

@@ -25,6 +25,7 @@ namespace CR.Core.Services.Implementations.ContactUs
                 id = _.Id,
                 FullName = _.FullName,
                 Email = _.Email,
+                PhoneNumber = _.PhoneNumber,
                 IsRead = _.IsRead,
                 Message = _.Message,
                 CreateDate = _.CreateDate.ToShamsi()

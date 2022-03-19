@@ -80,7 +80,9 @@ namespace CR.DataAccess.Enums
         [Display(Name = "شارژ کیف پول")]
         ChargeWallet = 2,
         [Display(Name = "شارژ-لغو تراکنش")]
-        DeclineTransaction = 3
+        DeclineTransaction = 3,
+        [Display(Name = "تسویه حساب")]
+        Checkout = 4
     }
 
     public enum CommentStatus
@@ -107,6 +109,23 @@ namespace CR.DataAccess.Enums
         ConsumerMessage = 0,
         [Display(Name = "پیام متخصص")]
         ExpertMessage = 1
+    }
+
+    public enum ImageType
+    {
+        [Display(Name = "رزومه")]
+        Resume = 0,
+        [Display(Name = "مدرک")]
+        Degree = 1,
+        [Display(Name = "سایر")]
+        Other = 2,
+    }
+    public enum RuleType
+    {
+        Full = 0,
+        Payment = 1,
+        Comment = 2,
+        Other = 3,
     }
 }
 

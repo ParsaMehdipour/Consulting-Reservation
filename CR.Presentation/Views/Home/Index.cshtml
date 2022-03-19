@@ -2,13 +2,14 @@
 @{
     Layout = "_Layout";
 }
+
 <!-- Home Banner -->
 <section class="section section-search">
     <div class="container-fluid">
         <div class="banner-wrapper">
             <div class="banner-header text-center">
                 <h1>چاله چوله، مسیر را برایتان هموار می کند</h1>
-                <p>هر زمان و در هر مکان از مشاوران تحصیلی ، گسب و کار ، شغلی ما کمک بخواهید</p>
+                <p>هر زمان و در هر مکان از مشاوران تحصیلی ، کسب و کار ، شغلی ما کمک بخواهید</p>
             </div>
 
             <!-- Search -->
@@ -27,7 +28,6 @@
     </div>
 </section>
 <!-- /Home Banner -->
-
 
 <section class="section home-tile-section">
     <div class="container-fluid">
@@ -108,189 +108,364 @@
 </section>
 <!-- Clinic and Specialities -->
 <!-- Popular Section -->
-<section class="section section-doctor">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="section-header ">
-                    <h2> مشاور خود را رزرو کنید </h2>
-                    <p> مشاوران آماده همراهی شما </p>
-                </div>
-                <div class="about-content">
-                    <p>  برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و مشاوران را می طلبد</p>
-                    <p>تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد</p>
-                    <a href="javascript:;">بیشتر بخوانید...</a>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="doctor-slider slider" dir="rtl">
-                   @foreach (var expert in Model.ExpertForPresentationDtos)
-                   {
-                        <!-- Doctor Widget -->
-                    <div class="profile-widget">
-                        <div class="doc-img">
-                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId">
-                                <img class="img-fluid" alt="@expert.FullName" src="~/@expert.IconSrc">
-                            </a>
-                            <a href="javascript:void(0)" class="fav-btn">
-                                <i class="far fa-bookmark"></i>
-                            </a>
-                        </div>
-                        <div class="pro-content">
-                            <h3 class="title">
-                                <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId">@expert.FullName</a>
-                                @if (expert.HasStar)
-                                {
-                                    <i class="fas fa-check-circle verified"></i>
-                                }
-                            </h3>
-                            <p class="speciality"> @expert.Tags </p>
-                            <div class="rating">
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <span class="d-inline-block average-rating">(17)</span>
-                            </div>
-                            <ul class="available-info">
-                                <li>
-                                    <p class="doc-department"><img src="~/@expert.SpecialitySrc" class="img-fluid" alt="Speciality">‌@expert.Speciality</p>
-                                </li>
-                             @*   <li>
-                                    <i class="far fa-clock"></i> @expert.FirstAvailability
-                                </li>
-                                <li>
-                                    @if (expert.Price != "0")
-                                    {
-                                        <i class="far fa-money-bill-alt"></i>@expert.Price
-                                    }
-                                    else
-                                    {
-                                        <i class="far fa-money-bill-alt">رایگان </i>
-                                    }
-                                    <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>
-                                </li>*@
-                            </ul>
-                            <div class="row row-sm">
-                                <div class="col-6">
-                                    <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId" class="btn view-btn">مشاهده پروفایل</a>
-                                </div>
-                                <div class="col-6">
-                                    <a asp-controller="Experts" asp-action="Reservation" asp-route-expertInformationId="@expert.ExpertInformationId" class="btn book-btn">رزرو کنید</a>
-                                </div>
-                            </div>
-                        </div>
+@if (Model.ExpertForPresentationDtos.Count > 0)
+{
+    <section class="section section-doctor">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="section-header ">
+                        <h2> مشاور خود را رزرو کنید </h2>
+                        <p> مشاوران آماده همراهی شما </p>
                     </div>
-                    <!-- /Doctor Widget -->
-                   }
+                    <div class="about-content">
+                        <p>  برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و مشاوران را می طلبد</p>
+                        <p>تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد</p>
+                        <a href="javascript:;">بیشتر بخوانید...</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="doctor-slider slider" dir="rtl">
+                        @foreach (var expert in Model.ExpertForPresentationDtos)
+                        {
+                            <!-- Doctor Widget -->
+                            <div class="profile-widget">
+                                <div class="doc-img">
+                                    <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId">
+                                        <img class="img-fluid" alt="@expert.FullName" src="~/@expert.IconSrc">
+                                    </a>
+                                    <a href="javascript:void(0)" class="fav-btn">
+                                        <i class="far fa-bookmark"></i>
+                                    </a>
+                                </div>
+                                <div class="pro-content">
+                                    <h3 class="title">
+                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId">@expert.FullName</a>
+                                        @if (expert.HasStar)
+                                        {
+                                            <i class="fas fa-check-circle verified"></i>
+                                        }
+                                    </h3>
+                                    <p class="speciality"> @expert.Tags </p>
+                                    <div class="rating">
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <span class="d-inline-block average-rating">(17)</span>
+                                    </div>
+                                    <ul class="available-info">
+                                        <li>
+                                            <p class="doc-department"><img src="~/@expert.SpecialitySrc" class="img-fluid" alt="Speciality">‌@expert.Speciality</p>
+                                        </li>
+                                        @*   <li>
+                                            <i class="far fa-clock"></i> @expert.FirstAvailability
+                                            </li>
+                                            <li>
+                                            @if (expert.Price != "0")
+                                            {
+                                            <i class="far fa-money-bill-alt"></i>@expert.Price
+                                            }
+                                            else
+                                            {
+                                            <i class="far fa-money-bill-alt">رایگان </i>
+                                            }
+                                            <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>
+                                            </li>*@
+                                    </ul>
+                                    <div class="row row-sm">
+                                        <div class="col-6">
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId" class="btn view-btn">مشاهده پروفایل</a>
+                                        </div>
+                                        <div class="col-6">
+                                            <a asp-controller="Experts" asp-action="Reservation" asp-route-expertInformationId="@expert.ExpertInformationId" class="btn book-btn">رزرو کنید</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Doctor Widget -->
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+}
 <!-- /Popular Section -->
 <!-- Availabe Features -->
-<section class="section section-features">
+@*<section class="section section-features">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-5 features-img">
-                <img src="assets/img/features/feature.png" class="img-fluid" alt="Feature">
-            </div>
-            <div class="col-md-7">
-                <div class="section-header">
-                    <h2 class="mt-2"> امکانات موجود در کلینیک ما </h2>
-                    <p>کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. </p>
+    <div class="row">
+    <div class="col-md-5 features-img">
+    <img src="assets/img/features/feature.png" class="img-fluid" alt="Feature">
+    </div>
+    <div class="col-md-7">
+    <div class="section-header">
+    <h2 class="mt-2"> امکانات موجود در کلینیک ما </h2>
+    <p>کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. </p>
+    </div>
+    <div class="features-slider slider" dir="rtl">
+    <!-- Slider Item -->
+    <div class="feature-item text-center">
+    <img src="assets/img/features/feature-01.jpg" class="img-fluid" alt="Feature">
+    <p>پیشنت وارد</p>
+    </div>
+    <!-- /Slider Item -->
+    <!-- Slider Item -->
+    <div class="feature-item text-center">
+    <img src="assets/img/features/feature-02.jpg" class="img-fluid" alt="Feature">
+    <p>تست روم</p>
+    </div>
+    <!-- /Slider Item -->
+    <!-- Slider Item -->
+    <div class="feature-item text-center">
+    <img src="assets/img/features/feature-03.jpg" class="img-fluid" alt="Feature">
+    <p>ای سو یو</p>
+    </div>
+    <!-- /Slider Item -->
+    <!-- Slider Item -->
+    <div class="feature-item text-center">
+    <img src="assets/img/features/feature-04.jpg" class="img-fluid" alt="Feature">
+    <p>لابراتوری</p>
+    </div>
+    <!-- /Slider Item -->
+    <!-- Slider Item -->
+    <div class="feature-item text-center">
+    <img src="assets/img/features/feature-05.jpg" class="img-fluid" alt="Feature">
+    <p>اوپریشن</p>
+    </div>
+    <!-- /Slider Item -->
+    <!-- Slider Item -->
+    <div class="feature-item text-center">
+    <img src="assets/img/features/feature-06.jpg" class="img-fluid" alt="Feature">
+    <p>مدیکال</p>
+    </div>
+    <!-- /Slider Item -->
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>*@
+
+@*<section id="registration" class="section">
+    <div class="container">
+    <div class="row">
+    <div class="section-body">
+    <div class="registration-body doctor-registration">
+    <span class="registration-message-type registration-message-img img-bg"></span>
+    <figure class="registration-img doctor-registration-img img-bg float-right"></figure>
+    <nav class="registration-text-nav registration-text-doctor-nav float-left">
+    <ul class="registration-text">
+    <li>
+    <label class="registratoin-caption doctor-registration-caption">پزشک هستید؟</label>
+    </li>
+    <li>
+    <p class="registrtion-explain doctor-registrtion-explain">شما هم با پیوستن به جمع بزرگ پزشکان دکترساینا حس خوب همدلی با کاربران را تجربه کنید</p>
+    </li>
+    <li>
+    <a class="registrtion-link doctor-registrtion-link lg-drsaina-btn corner-btn green-primary-btn top-interaction-btn-transform" href="/DoctorContracts/Home/Index" target="_blank" title="ثبت نام پزشک"> ثبت نام پزشک </a>
+    </li>
+    </ul>
+    </nav>
+    </div>
+    <div class="registration-body doctor-registration">
+    <span class="registration-message-type registration-text-img img-bg"></span>
+    <figure class="registration-img user-registration-img img-bg float-left"></figure>
+    <nav class="registration-text-nav registration-text-user-nav float-right">
+    <ul class="registration-text float-left">
+    <li>
+    <label class="registratoin-caption user-registration-caption">کاربر هستید؟</label>
+    </li>
+    <li>
+    <p class="registrtion-explain user-registrtion-explain">شما هم با عضویت در دکترساینا از دریافت آنلاین خدمات سلامت لذت ببراید</p>
+    </li>
+    <li>
+    <a class="registrtion-link user-registrtion-link lg-drsaina-btn corner-btn red-primary-btn top-interaction-btn-transform" href="/RegisterLogin" title="ثبت نام کاربر"> ثبت نام کاربر </a>
+    </li>
+    </ul>
+    </nav>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+*@
+
+@*<section class="section section-specialities">
+    <h5 class="text-center bt-color">نظرات کاربران ما</h5>
+    <div id="owl-topblog" class="owl-carousel owl-theme text-right ">
+        <div class="mx-2">
+            <a href="Blogdetails.html">
+                <img src="~/assets/img/patient8.jpg" class="img-fluid rad25 bigpic" />
+                <div class="d-flex flex-column blogdiv">
+                    <div>
+                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <img src="~/assets/img/patient8.jpg" class="img-fluid rounded-circle ml-3 pic55" />
+
+                        <div>
+                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p"> سیما محمدی</p>
+                            <span class="text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="features-slider slider" dir="rtl">
-                    <!-- Slider Item -->
-                    <div class="feature-item text-center">
-                        <img src="assets/img/features/feature-01.jpg" class="img-fluid" alt="Feature">
-                        <p>پیشنت وارد</p>
+
+            </a>
+
+        </div>
+        <div class="mx-2">
+            <a href="Blogdetails.html">
+                <img src="Images/topblog5.jpg" class="img-fluid rad25 bigpic" />
+                <div class="d-flex flex-column blogdiv">
+                    <div>
+                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
+
                     </div>
-                    <!-- /Slider Item -->
-                    <!-- Slider Item -->
-                    <div class="feature-item text-center">
-                        <img src="assets/img/features/feature-02.jpg" class="img-fluid" alt="Feature">
-                        <p>تست روم</p>
+                    <div class="d-flex flex-row">
+                        <img src="Images/11.jpg" class="img-fluid rounded-circle ml-3 pic55" />
+
+                        <div>
+                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p"> مبین حیدری</p>
+                            <span class="IRANSansWeb_Medium text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
+                        </div>
                     </div>
-                    <!-- /Slider Item -->
-                    <!-- Slider Item -->
-                    <div class="feature-item text-center">
-                        <img src="assets/img/features/feature-03.jpg" class="img-fluid" alt="Feature">
-                        <p>ای سو یو</p>
-                    </div>
-                    <!-- /Slider Item -->
-                    <!-- Slider Item -->
-                    <div class="feature-item text-center">
-                        <img src="assets/img/features/feature-04.jpg" class="img-fluid" alt="Feature">
-                        <p>لابراتوری</p>
-                    </div>
-                    <!-- /Slider Item -->
-                    <!-- Slider Item -->
-                    <div class="feature-item text-center">
-                        <img src="assets/img/features/feature-05.jpg" class="img-fluid" alt="Feature">
-                        <p>اوپریشن</p>
-                    </div>
-                    <!-- /Slider Item -->
-                    <!-- Slider Item -->
-                    <div class="feature-item text-center">
-                        <img src="assets/img/features/feature-06.jpg" class="img-fluid" alt="Feature">
-                        <p>مدیکال</p>
-                    </div>
-                    <!-- /Slider Item -->
                 </div>
-            </div>
+
+            </a>
+
+        </div>
+        <div class="mx-2">
+            <a href="Blogdetails.html">
+                <img src="Images/topblog6.jpg" class="img-fluid rad25 bigpic" />
+                <div class="d-flex flex-column blogdiv">
+                    <div>
+                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
+
+                    </div>
+                    <div class="d-flex flex-row">
+                        <img src="Images/10.jpg" class="img-fluid rounded-circle ml-3 pic55" />
+
+                        <div>
+                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p"> سیما محمدی</p>
+                            <span class="IRANSansWeb_Medium text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
+                        </div>
+                    </div>
+                </div>
+
+            </a>
+
+        </div>
+        <div class="mx-2">
+            <a href="Blogdetails.html">
+                <img src="Images/topblog12.jpg" class="img-fluid rad25 bigpic" />
+                <div class="d-flex flex-column blogdiv">
+                    <div>
+                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
+
+                    </div>
+                    <div class="d-flex flex-row">
+                        <img src="Images/12.jpg" class="img-fluid rounded-circle ml-3 pic55" />
+
+                        <div>
+                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p"> عاطف محمدی</p>
+                            <span class="IRANSansWeb_Medium text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
+                        </div>
+                    </div>
+                </div>
+
+            </a>
+
+        </div><div class="mx-2">
+            <a href="Blogdetails.html">
+                <img src="Images/topblog1.jpg" class="img-fluid rad25 bigpic" />
+                <div class="d-flex flex-column blogdiv">
+                    <div>
+                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
+
+                    </div>
+                    <div class="d-flex flex-row">
+                        <img src="Images/11.jpg" class="img-fluid rounded-circle ml-3 pic55" />
+
+                        <div>
+                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p"> سیما محمدی</p>
+                            <span class="IRANSansWeb_Medium text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
+                        </div>
+                    </div>
+                </div>
+
+            </a>
+
+        </div>
+        <div class="mx-2">
+            <a href="Blogdetails.html">
+                <img src="Images/topblog9.jpg" class="img-fluid rad25 bigpic" />
+                <div class="d-flex flex-column blogdiv">
+                    <div>
+                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
+
+                    </div>
+                    <div class="d-flex flex-row">
+                        <img src="Images/12.jpg" class="img-fluid rounded-circle ml-3 pic55" />
+
+                        <div>
+                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p">دکتر سیما محمدی</p>
+                            <span class="IRANSansWeb_Medium text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
+                        </div>
+                    </div>
+                </div>
+
+            </a>
+
         </div>
     </div>
-</section>
+</section>*@
 <!-- /Availabe Features -->
-
+<!-- Blog Section -->
 @if (Model.BlogForPresentationDtos.Count > 0)
 {
-<!-- Blog Section -->
-<section class="section section-blogs">
-    <div class="container-fluid">
+    <section class="section section-blogs">
+        <div class="container-fluid">
 
-        <!-- Section Header -->
+            <!-- Section Header -->
         <div class="section-header text-center">
-            <h2>بلاگ و اخبار</h2>
-            <p class="sub-title">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
-        </div>
-        <!-- /Section Header -->
+                <h2>بلاگ و اخبار</h2>
+                <p class="sub-title">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+            </div>
+            <!-- /Section Header -->
 
         <div class="row blog-grid-row">
-            @foreach (var blog in Model.BlogForPresentationDtos)
-            {
-                <div class="col-md-6 col-lg-3 col-sm-12">
+                @foreach (var blog in Model.BlogForPresentationDtos)
+                {
+                    <div class="col-md-6 col-lg-3 col-sm-12">
 
-                    <!-- Blog Post -->
-                    <div class="blog grid-blog">
-                        <div class="blog-image">
-                            <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"><img class="img-fluid" src="~/@blog.PictureSrc" alt="@blog.Title"></a>
+                        <!-- Blog Post -->
+                <div class="blog grid-blog">
+                            <div class="blog-image">
+                                <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"><img class="img-fluid" src="~/@blog.PictureSrc" alt="@blog.Title"></a>
+                            </div>
+                            <div class="blog-content">
+                                <ul class="entry-meta meta-item">
+                                    <li>
+                                        <div class="post-author">
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@blog.AuthorInformationId"><img src="~/@blog.AuthorIconSrc" alt="نویسنده"> <span>@blog.AuthorFullName</span></a>
+                                        </div>
+                                    </li>
+                                    <li><i class="far fa-clock"></i> @blog.PublishDate</li>
+                                </ul>
+                                <h3 class="blog-title"><a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"> @blog.Title </a></h3>
+                                <p class="mb-0">@blog.ShortDescription</p>
+                            </div>
                         </div>
-                        <div class="blog-content">
-                            <ul class="entry-meta meta-item">
-                                <li>
-                                    <div class="post-author">
-                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@blog.AuthorInformationId"><img src="~/@blog.AuthorIconSrc" alt="نویسنده"> <span>@blog.AuthorFullName</span></a>
-                                    </div>
-                                </li>
-                                <li><i class="far fa-clock"></i> @blog.PublishDate</li>
-                            </ul>
-                            <h3 class="blog-title"><a href="blog-details.html"> @blog.Title </a></h3>
-                            <p class="mb-0">@blog.ShortDescription</p>
-                        </div>
-                    </div>
-                    <!-- /Blog Post -->
-                </div>
-            }
+                        <!-- /Blog Post -->
+            </div>
+                }
+            </div>
+            <div class="view-all text-center">
+                <a asp-area="" asp-controller="Blogs" asp-action="Index" class="btn btn-primary">مشاهده همه</a>
+            </div>
         </div>
-        <div class="view-all text-center">
-            <a href="blog-list.html" class="btn btn-primary">مشاهده همه</a>
-        </div>
-    </div>
-</section>
-<!-- /Blog Section -->
+    </section>
 }
-
+<!-- /Blog Section -->

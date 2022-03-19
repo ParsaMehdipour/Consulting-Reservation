@@ -6,8 +6,18 @@ namespace CR.Core.DTOs.Rules
     {
         public long Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "لطفا متن را وارد کنید")]
         public string FullContent { get; set; }
+
+        [Required(ErrorMessage = "لطفا متن را وارد کنید")]
+        public string PaymentContent { get; set; }
+
+        [Required(ErrorMessage = "لطفا متن را وارد کنید")]
+        public string CommentContent { get; set; }
+
+        [Required(ErrorMessage = "لطفا متن را وارد کنید")]
+        public string OtherContent { get; set; }
+
 
     }
 }
