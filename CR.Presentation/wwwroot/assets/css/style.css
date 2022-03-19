@@ -54,39 +54,47 @@ Version      : 1.3
 45. Responsive
 
 ========================================*/
-
 @font-face {
-    font-family: iransans-light;
-    font-style: normal;
-    font-weight: normal;
-    src: url("../../../assets/webfonts/IRANSansWeb_Light.eot");
-    src: url("../../../assets/webfonts/IRANSansWeb_Light.eot?#iefix") format("embedded-opentype"), url("../../../assets/webfonts/IRANSansWeb_Light.woff2") format("woff2"), url("../../../assets/webfonts/IRANSansWeb_Light.woff") format("woff"), url("../../../assets/webfonts/IRANSansWeb_Light.ttf") format("truetype");
+    font-family: "Vazir";
+    src: url('../../fonts/eot/Vazir_Black.eot?#') format('embedded-opentype'), url('../../fonts/woff2/Vazir_Black.woff2') format('woff2'), url('../../fonts/woff/Vazir_Black.woff') format('woff'), url('../../fonts/ttf/Vazir_Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal
 }
 
 @font-face {
-    font-family: iransans-ulight;
-    font-style: normal;
-    font-weight: normal;
-    src: url("../../../assets/webfonts/IRANSansWeb_UltraLight.eot");
-    src: url("../../../assets/webfonts/IRANSansWeb_UltraLight.eot#iefix") format("embedded-opentype"), url("../../../assets/webfonts/IRANSansWeb_UltraLight.woff2") format("woff2"), url("../../../assets/webfonts/IRANSansWeb_UltraLight.woff") format("woff"), url("../../../assets/webfonts/IRANSansWeb_UltraLight.ttf") format("truetype");
+    font-family: "Vazir";
+    src: url('../../fonts/eot/Vazir_Bold.eot?#') format('embedded-opentype'), url('../../fonts/woff2/Vazir_Bold.woff2') format('woff2'), url('../../fonts/woff/Vazir_Bold.woff') format('woff'), url('../../fonts/ttf/Vazir_Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal
 }
 
 @font-face {
-    font-family: iransans-medium;
-    font-style: normal;
-    font-weight: normal;
-    src: url("../../../assets/webfonts/IRANSansWeb_Medium.eot");
-    src: url("../../../assets/webfonts/IRANSansWeb_Medium.eot?#iefix") format("embedded-opentype"), url("../../../assets/webfonts/IRANSansWeb_Medium.woff2") format("woff2"), url("../../../assets/webfonts/IRANSansWeb_Medium.woff") format("woff"), url("../../../assets/webfonts/IRANSansWeb_Medium.ttf") format("truetype");
+    font-family: "Vazir";
+    src: url('../../fonts/eot/Vazir_Medium.eot?#') format('embedded-opentype'), url('../../fonts/woff2/Vazir_Medium.woff2') format('woff2'), url('../../fonts/woff/Vazir_Medium.woff') format('woff'), url('../../fonts/ttf/Vazir_Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal
 }
 
 @font-face {
-    font-family: iransans-bold;
-    font-style: normal;
-    font-weight: normal;
-    src: url("../../../assets/webfonts/IRANSansWeb_Bold.eot");
-    src: url("../../../assets/webfonts/IRANSansWeb_Bold.eot?#iefix") format("embedded-opentype"), url("../../../assets/webfonts/IRANSansWeb_Bold.woff2") format("woff2"), url("../../../assets/webfonts/IRANSansWeb_Bold.woff") format("woff"), url("../../../assets/webfonts/IRANSansWeb_Bold.ttf") format("truetype");
+    font-family: "Vazir";
+    src: url('../../fonts/eot/Vazir_Light.eot?#') format('embedded-opentype'), url('../../fonts/woff2/Vazir_Light.woff2') format('woff2'), url('../../fonts/woff/Vazir_Light.woff') format('woff'), url('../../fonts/ttf/Vazir_Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal
 }
 
+@font-face {
+    font-family: "Vazir";
+    src: url('../../fonts/eot/Vazir_Thin.eot?#') format('embedded-opentype'), url('../../fonts/woff2/Vazir_Thin.woff2') format('woff2'), url('../../fonts/woff/Vazir_Thin.woff') format('woff'), url('../../fonts/ttf/Vazir_Thin.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal
+}
+
+@font-face {
+    font-family: "Vazir";
+    src: url('../../fonts/eot/Vazir.eot?#') format('embedded-opentype'), url('../../fonts/woff2/Vazir.woff2') format('woff2'), url('../../fonts/woff/Vazir.woff') format('woff'), url('../../fonts/ttf/Vazir.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal
+}
 /*-----------------
 	1. General
 -----------------------*/
@@ -129,7 +137,7 @@ body {
     background-color: #f8f9fa;
     color: #272b41;
     direction: rtl;
-    font-family: iransans-ulight, sans-serif;
+    font-family: Vazir, sans-serif;
     font-size: 0.9375rem;
     height: 100%;
     overflow-x: hidden;
@@ -7492,7 +7500,7 @@ html.menu-opened body {
         border: 0;
         margin-bottom: 0;
         padding-right: 25px !important;
-        font-family: iransans-light;
+        font-family: Vazir_Light;
     }
 
 .map-right .available-info {
@@ -9201,11 +9209,11 @@ ul.benifits-col li i {
 
 .daterangepicker .ranges li {
     text-align: right;
-    font-family: iransans;
+    font-family: Vazir;
 }
 
 .map-listing > * {
-    font-family: iransans;
+    font-family: Vazir;
 }
 
 .gm-style-iw-d {
