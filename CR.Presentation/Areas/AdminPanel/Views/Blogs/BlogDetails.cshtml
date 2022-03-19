@@ -7,7 +7,7 @@
         <div class="col-sm-12">
             <h3 class="page-title">‌جزییات بلاگ</h3>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">دشبرد</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">دشبرد</a></li>
                 <li class="breadcrumb-item"><a href="javascript:(0);">صفحات</a></li>
                 <li class="breadcrumb-item active">‌جزییات بلاگ</li>
             </ul>
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <div class="author-details">
-                            <a href="doctor-profile.html" class="blog-author-name">@Model.BlogDetailsDto.author</a>
+                            <p class="blog-author-name">@Model.BlogDetailsDto.author</p>
                             <p class="mb-0">@Model.BlogDetailsDto.authorDescription</p>
                         </div>
                     </div>

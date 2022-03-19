@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                                 <div class="author-details">
-                                    <a href="doctor-profile.html" class="blog-author-name">@Model.BlogDetailsForPresentationDto.author</a>
+                                    <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.BlogDetailsForPresentationDto.authorInformationId"  class="blog-author-name">@Model.BlogDetailsForPresentationDto.author</a>
                                     <p class="mb-0">@Model.BlogDetailsForPresentationDto.authorDescription</p>
                                 </div>
                             </div>

@@ -70,7 +70,7 @@
                 </div>
                 <div class="main-menu-wrapper">
                     <div class="menu-header">
-                        <a href="index.html" class="menu-logo">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="menu-logo">
                             <img src="~/assets/img/لوگوی هدر چاله چوله.png" class="img-fluid" alt="Logo">
                         </a>
                         <a id="menu_close" class="menu-close" href="javascript:void(0);">
@@ -85,16 +85,16 @@
                             <a asp-area="AdminPanel" asp-controller="Home" asp-action="Index" target="_blank">ادمین<i class="fas"></i></a>
                         </li>
                         <li>
-                            <a asp-controller="Blogs" asp-action="Index" target="_blank">مقالات<i class="fas"></i></a>
+                            <a asp-area="" asp-controller="Blogs" asp-action="Index" target="_blank">مقالات<i class="fas"></i></a>
                         </li>
                         <li>
-                            <a asp-controller="AboutUs" asp-action="Index" target="_blank">درباره ما<i class="fas"></i></a>
+                            <a asp-area="" asp-controller="AboutUs" asp-action="Index" target="_blank">درباره ما<i class="fas"></i></a>
                         </li>
                         <li>
-                            <a asp-controller="Rules" asp-action="Index" target="_blank">قوانین و مقررات<i class="fas"></i></a>
+                            <a asp-area="" asp-controller="Rules" asp-action="Index" target="_blank">قوانین و مقررات<i class="fas"></i></a>
                         </li>
                         <li>
-                            <a asp-controller="ContactUs" asp-action="Index" target="_blank">تماس با ما<i class="fas"></i></a>
+                            <a asp-area="" asp-controller="ContactUs" asp-action="Index" target="_blank">تماس با ما<i class="fas"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -209,11 +209,11 @@
                                     <div class="footer-contact-info">
                                         <div class="footer-address">
                                             <span><i class="fas fa-map-marker-alt"></i></span>
-                                            <p> خیابان مطهری، برج مینا<br> طبقه 5 واحد 54 </p>
+                                            <p> مازندران<br> ساری </p>
                                         </div>
                                         <p>
                                             <i class="fas fa-phone-alt"></i>
-                                            09119007106
+                                            0911-897-5064
                                         </p>
                                         <p class="mb-0">
                                             <i class="fas fa-envelope"></i>
@@ -246,8 +246,8 @@
                                     <!-- Copyright Menu -->
                                     <div class="copyright-menu">
                                         <ul class="policy-menu">
-                                            <li><a href="term-condition.html">شرایط و مقررات</a></li>
-                                            <li><a href="privacy-policy.html">حریم شخصی</a></li>
+                                            <li><a asp-controller="Rules" asp-action="Index" asp-area="">شرایط و مقررات</a></li>
+                                            <li><a asp-controller="ContactUs" asp-action="Index" asp-area="">تماس با ما</a></li>
                                         </ul>
                                     </div>
                                     <!-- /Copyright Menu -->
@@ -380,8 +380,8 @@
                                 <!-- Copyright Menu -->
                                 <div class="copyright-menu">
                                     <ul class="policy-menu">
-                                        <li><a href="term-condition.html">شرایط و مقررات</a></li>
-                                        <li><a href="privacy-policy.html">حریم شخصی</a></li>
+                                        <li><a asp-area="" asp-controller="Rules" asp-action="Index">شرایط و مقررات</a></li>
+                                        <li><a asp-area="" asp-controller="ContactUs" asp-action="Index">تماس با ما</a></li>
                                     </ul>
                                 </div>
                                 <!-- /Copyright Menu -->

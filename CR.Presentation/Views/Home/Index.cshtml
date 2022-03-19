@@ -278,7 +278,7 @@
                                 </li>
                                 <li><i class="far fa-clock"></i> @blog.PublishDate</li>
                             </ul>
-                            <h3 class="blog-title"><a href="blog-details.html"> @blog.Title </a></h3>
+                            <h3 class="blog-title"><a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"> @blog.Title </a></h3>
                             <p class="mb-0">@blog.ShortDescription</p>
                         </div>
                     </div>
@@ -287,7 +287,7 @@
             }
         </div>
         <div class="view-all text-center">
-            <a href="blog-list.html" class="btn btn-primary">مشاهده همه</a>
+            <a asp-area="" asp-controller="Blogs" asp-action="Index" class="btn btn-primary">مشاهده همه</a>
         </div>
     </div>
 </section>
