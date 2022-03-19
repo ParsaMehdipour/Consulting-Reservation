@@ -31,7 +31,10 @@ namespace CR.Core.Services.Implementations.Rules
             var data = new RuleDto()
             {
                 Id = rule.Id,
-                FullContent = rule.FullContent
+                FullContent = rule.FullContent,
+                PaymentContent = rule.PaymentContent,
+                CommentContent = rule.CommentContent,
+                OtherContent = rule.OtherContent
             };
 
             return new ResultDto<RuleDto>()

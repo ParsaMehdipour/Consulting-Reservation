@@ -3,6 +3,7 @@ using CR.Common.Utilities;
 using CR.Core.DTOs.Experts;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,16 @@ namespace CR.Core.Services.Implementations.Experts
         public ResultDto<ExpertDetailsForProfileDto> Execute(long expertId)
         {
             var expert = _context.Users.FirstOrDefault(u => u.Id == expertId);
+
+            if (expert == null)
+            {
+                return new ResultDto<ExpertDetailsForProfileDto>()
+                {
+                    Data = new ExpertDetailsForProfileDto(),
+                    IsSuccess = false,
+                    Message = "اطلاعات شما یافت نشد!!"
+                };
+            }
 
             var expertInformation = _context.ExpertInformations
                 .Include(e => e.Specialty)
@@ -73,12 +84,30 @@ namespace CR.Core.Services.Implementations.Experts
                     textCallPrice = expertInformation.UseTextCall ? expertInformation.TextCallPrice.ToString() : 0.ToString().GetPersianNumber(),
                     tag = expertInformation.Tag,
                     Tags = (string.IsNullOrEmpty(expertInformation.Tag)) ? new List<string>() : expertInformation.Tag.Split(",").ToList(),
-                    images = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages.Select(i => new ExpertImageDto
-                    {
-                        Id = i.Id,
-                        Src = i.Src
-                    }
+                    otherImages = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages
+                        .Where(i => i.ImageType == ImageType.Other)
+                        .Select(i => new ExpertImageDto
+                        {
+                            Id = i.Id,
+                            Src = i.Src
+                        }
                     ).ToList(),
+                    degreeImages = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages
+                        .Where(i => i.ImageType == ImageType.Degree)
+                        .Select(i => new ExpertImageDto
+                        {
+                            Id = i.Id,
+                            Src = i.Src
+                        }
+                        ).ToList(),
+                    resumeImages = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages
+                        .Where(i => i.ImageType == ImageType.Resume)
+                        .Select(i => new ExpertImageDto
+                        {
+                            Id = i.Id,
+                            Src = i.Src
+                        }
+                        ).ToList(),
                     experiences = (expertInformation.ExpertExperiences == null) ? new List<ExpertExperienceDto>() : expertInformation.ExpertExperiences.Select(e => new ExpertExperienceDto
                     {
                         clinicName = e.ClinicName,

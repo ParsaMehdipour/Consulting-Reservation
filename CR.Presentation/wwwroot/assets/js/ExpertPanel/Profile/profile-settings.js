@@ -6,11 +6,11 @@ Version      : 1.0
 
 $(document).ready(function () {
 
-	var optionsOther = {};
-	var otherUploader = $('.js-uploader__box_other').uploader(optionsOther);
-
 	var optionsResume = {};
 	var resumeUploader = $('.js-uploader__box_Resume').uploader(optionsResume);
+
+	var optionsOther = {};
+	var otherUploader = $('.js-uploader__box_other').uploader(optionsOther);
 
 	var optionsDegree = {};
 	var degreeUploader = $('.js-uploader__box_Degree').uploader(optionsDegree);

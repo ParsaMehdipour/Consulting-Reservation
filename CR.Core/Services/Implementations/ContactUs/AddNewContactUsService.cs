@@ -24,6 +24,7 @@ namespace CR.Core.Services.Implementations.ContactUs
                 var contactUs = new DataAccess.Entities.ContactUs.ContactUs()
                 {
                     FullName = request.fullName,
+                    PhoneNumber = request.phone,
                     Email = request.email,
                     Message = request.message
                 };

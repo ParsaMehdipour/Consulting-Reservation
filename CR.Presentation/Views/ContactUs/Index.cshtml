@@ -35,14 +35,20 @@
                                         <label>نام:</label>
                                         <input type="text" class="form-control" asp-for="RequestAddNewContactUsDto.fullName" id="fullName">
                                         <span asp-validation-for="RequestAddNewContactUsDto.fullName" class="text-danger"></span>
-
                                     </div>
+
+                                    <div class="form-group">
+                                        <label>شماره تماس:</label>
+                                        <input type="text" class="form-control" asp-for="RequestAddNewContactUsDto.phone" id="phone">
+                                        <span asp-validation-for="RequestAddNewContactUsDto.phone" class="text-danger"></span>
+                                    </div>
+
                                     <div class="form-group">
                                         <label>پست الکترونیکی:</label>
                                         <input type="email" class="form-control" asp-for="RequestAddNewContactUsDto.email" id="email">
                                         <span asp-validation-for="RequestAddNewContactUsDto.email" class="text-danger"></span>
-
                                     </div>
+
                                     <div class="form-group">
                                         <label>پیام شما:</label>
                                         <textarea rows="5" cols="5" class="form-control" placeholder="متن موردنظر شما" asp-for="RequestAddNewContactUsDto.message" id="message"></textarea>
@@ -79,6 +85,7 @@
 
                 data.append("fullName",$("#contactUsForm #fullName").val());
                 data.append("email",$("#contactUsForm #email").val());
+                data.append("phone",$("#contactUsForm #phone").val());
                 data.append("message",$("#contactUsForm #message").val());
 
                 $("#contactUsForm").submit(function( event ) {

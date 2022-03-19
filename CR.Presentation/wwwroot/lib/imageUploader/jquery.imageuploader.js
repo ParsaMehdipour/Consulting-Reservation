@@ -104,7 +104,9 @@
 
             function addItem(file) {
 
-                addFileToList(file);
+               /* addOtherFileToList(file);*/
+                addResumeFileToList(file);
+                //addDegreeFileToList(file);
 
                 var fileName = cleanName(file.name);
                 var fileSize = file.size;

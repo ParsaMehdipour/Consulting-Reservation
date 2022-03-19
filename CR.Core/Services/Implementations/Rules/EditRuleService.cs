@@ -33,6 +33,9 @@ namespace CR.Core.Services.Implementations.Rules
                 }
 
                 rule.FullContent = request.fullContent;
+                rule.PaymentContent = request.paymentContent;
+                rule.CommentContent = request.commentContent;
+                rule.OtherContent = request.otherContent;
 
                 _context.SaveChanges();
 

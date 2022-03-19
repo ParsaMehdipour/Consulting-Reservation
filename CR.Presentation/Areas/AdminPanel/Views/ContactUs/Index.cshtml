@@ -22,6 +22,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">نام و نام خانوادگی</th>
+                                <th class="text-center">شماره تماس</th>
                                 <th class="text-center">پست الکترونیکی</th>
                                 <th class="text-center">پیام</th>
                                 <th class="text-center">تاریخ ثبت</th>
@@ -37,6 +38,11 @@
                                         <td>
                                             @contactUs.FullName
                                         </td>
+                                        
+                                        <td class="text-center">
+                                            @contactUs.PhoneNumber
+                                        </td>
+
                                         <td class="text-center">
                                             @contactUs.Email
                                         </td>
@@ -48,6 +54,7 @@
                                         <td class="text-center">
                                             @contactUs.CreateDate
                                         </td>
+
                                         @if (contactUs.IsRead)
                                         {
                                             <td class="text text-center text-success">خوانده شده</td>
@@ -56,6 +63,7 @@
                                         {
                                             <td class="text text-center text-danger">خوانده نشده</td>
                                         }
+
                                     </tr>
                                 }
                             }
@@ -128,6 +136,10 @@
                 body += '<li>';
                 body += '<span class="title">تاریخ ارسال پیام : </span>';
                 body += '<span class="text">' + data.createDate + '</span>';
+                body += '</li>';
+                body += '<li>';
+                body += '<span class="title">شماره تماس :  : </span>';
+                body += '<span class="text">' + data.phoneNumber + '</span>';
                 body += '</li>';
                 body += '<li>';
                 body += '<span class="title">پست الکترونیکی : </span>';

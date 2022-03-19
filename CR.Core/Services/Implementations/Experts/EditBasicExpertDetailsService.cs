@@ -89,14 +89,57 @@ namespace CR.Core.Services.Implementations.Experts
                 //    };
                 //}
 
-                if (request.image != null)
+                if (request.otherImage != null)
                 {
-                    foreach (var file in request.image)
+                    foreach (var file in request.otherImage)
                     {
                         var expertImage = new ExpertImage()
                         {
                             ExpertInformationId = expertInformation.Id,
                             ExpertInformation = expertInformation,
+                            ImageType = ImageType.Other,
+                            Src = _imageUploaderService.Execute(new UploadImageDto()
+                            {
+                                File = file,
+                                Folder = "ExpertImages"
+                            })
+                        };
+
+                        _context.ExpertImages.Add(expertImage);
+                    }
+                }
+
+
+                if (request.resumeImage != null)
+                {
+                    foreach (var file in request.resumeImage)
+                    {
+                        var expertImage = new ExpertImage()
+                        {
+                            ExpertInformationId = expertInformation.Id,
+                            ExpertInformation = expertInformation,
+                            ImageType = ImageType.Resume,
+                            Src = _imageUploaderService.Execute(new UploadImageDto()
+                            {
+                                File = file,
+                                Folder = "ExpertImages"
+                            })
+                        };
+
+                        _context.ExpertImages.Add(expertImage);
+                    }
+                }
+
+
+                if (request.degreeImage != null)
+                {
+                    foreach (var file in request.degreeImage)
+                    {
+                        var expertImage = new ExpertImage()
+                        {
+                            ExpertInformationId = expertInformation.Id,
+                            ExpertInformation = expertInformation,
+                            ImageType = ImageType.Degree,
                             Src = _imageUploaderService.Execute(new UploadImageDto()
                             {
                                 File = file,

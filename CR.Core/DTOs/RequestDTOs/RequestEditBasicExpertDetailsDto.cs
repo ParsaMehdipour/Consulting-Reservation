@@ -71,7 +71,14 @@ namespace CR.Core.DTOs.RequestDTOs
         public string instagram { get; set; }
 
         public long? specialtyId { get; set; }
-        [DisplayName("image")]
-        public List<IFormFile> image { get; set; }
+
+        [DisplayName("otherImage")]
+        public List<IFormFile> otherImage { get; set; }
+
+        [DisplayName("resumeImage")]
+        public List<IFormFile> resumeImage { get; set; }
+
+        [DisplayName("degreeImage")]
+        public List<IFormFile> degreeImage { get; set; }
     }
 }

@@ -23,7 +23,10 @@ namespace CR.Core.Services.Implementations.Rules
             {
                 var rule = new DataAccess.Entities.Rules.Rule()
                 {
-                    FullContent = request.fullContent
+                    FullContent = request.fullContent,
+                    PaymentContent = request.paymentContent,
+                    OtherContent = request.otherContent,
+                    CommentContent = request.commentContent
                 };
 
                 _context.Rules.Add(rule);
