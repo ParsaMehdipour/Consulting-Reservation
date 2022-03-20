@@ -95,11 +95,16 @@ namespace CR.Presentation.Controllers.View
                     {
                         if (updateStatusResult.Data.IsChat)
                         {
-                            _addNewChatUserService.Execute(new RequestAddNewChatUserDto()
+                            foreach (var chatAppointment in updateStatusResult.Data.chatAppointments)
                             {
-                                consumerId = updateStatusResult.Data.ConsumerId,
-                                expertInformationId = updateStatusResult.Data.ExpertInformationId
-                            });
+                                _addNewChatUserService.Execute(new RequestAddNewChatUserDto()
+                                {
+                                    consumerId = updateStatusResult.Data.ConsumerId,
+                                    expertInformationId = updateStatusResult.Data.ExpertInformationId,
+                                    messageType = chatAppointment.CallingType,
+                                    appointmentDate = chatAppointment.AppointmentDate
+                                });
+                            }
                         }
                     }
 
