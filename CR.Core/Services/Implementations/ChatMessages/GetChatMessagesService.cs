@@ -39,7 +39,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
                 .Where(_ => _.ChatUserId == chatUserId)
                 .Select(_ => new ChatMessageDto()
                 {
-                    consumerIconSrc = _.ChatUser.Consumer.IconSrc,
+                    consumerIconSrc = string.IsNullOrWhiteSpace(_.ChatUser.Consumer.IconSrc) ? "assets/img/icon-256x256.png" : _.ChatUser.Consumer.IconSrc,
                     expertIconSrc = _.ChatUser.ExpertInformation.IconSrc,
                     message = _.Message,
                     messageFlag = _.MessageFlag,
@@ -56,7 +56,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
                 {
                     chatMessageDtos = chatMessages,
                     receiverFullName = (isExpert) ? chatUser.Consumer.FirstName + " " + chatUser.Consumer.LastName : chatUser.ExpertInformation.FirstName + " " + chatUser.ExpertInformation.LastName,
-                    receiverIconSrc = (isExpert) ? chatUser.Consumer.IconSrc : chatUser.ExpertInformation.IconSrc
+                    receiverIconSrc = (isExpert) ? (string.IsNullOrWhiteSpace(chatUser.Consumer.IconSrc) ? "assets/img/icon-256x256.png" : chatUser.Consumer.IconSrc) : (string.IsNullOrWhiteSpace(chatUser.ExpertInformation.IconSrc) ? "assets/img/icon-256x256.png" : chatUser.ExpertInformation.IconSrc)
                 },
                 IsSuccess = true
             };

@@ -30,7 +30,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 {
                     CreateDate = _.CreateDate_String,
                     PayerId = _.PayerId,
-                    PayerIconSrc = GetPayer(_.PayerId, _context).IconSrc,
+                    PayerIconSrc = GetPayer(_.PayerId, _context).IconSrc ?? "assets/img/icon-256x256.png",
                     PayerFullName = GetPayer(_.PayerId, _context).FirstName + " " + GetPayer(_.PayerId, _context).LastName,
                     ReceiverId = _.ReceiverId ?? 0,
                     ReceiverIconSrc = (_.Factor.ExpertInformation != null) ? _.Factor.ExpertInformation.IconSrc : "assets/img/favicon-32x32.png",
