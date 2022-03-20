@@ -88,7 +88,7 @@
                                     @if (appointment.FactorStatus == FactorStatus.SuccessfulPayment.GetDisplayName())
                                     {
                                         <td class="text-center">
-                                            <a onclick="Decline(@appointment.FactorId,@appointment.AppointmentPrice,@appointment.ConsumerId)" class="btn btn-sm bg-danger-light">
+                                            <a onclick="Decline(@appointment.FactorId,@appointment.AppointmentPrice.Replace(",",""),@appointment.ConsumerId)" class="btn btn-sm bg-danger-light">
                                                 <i class="fe fe-trash"></i> لغو تراکنش
                                             </a>
                                         </td>

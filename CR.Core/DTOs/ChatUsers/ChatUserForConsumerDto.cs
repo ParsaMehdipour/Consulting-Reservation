@@ -7,6 +7,7 @@
         public string ExpertIconSrc { get; set; }
         public string LastMessage { get; set; }
         public int NotReadMessagesCount { get; set; }
-        public string LastChangeHour { get; set; }
+        public string AppointmentDate { get; set; }
+        public string MessageType { get; set; }
     }
 }

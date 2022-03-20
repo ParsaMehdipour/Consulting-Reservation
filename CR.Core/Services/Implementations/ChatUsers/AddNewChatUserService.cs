@@ -1,4 +1,5 @@
-﻿using CR.Common.DTOs;
+﻿using CR.Common.Convertor;
+using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs.ChatUser;
 using CR.Core.Services.Interfaces.ChatUsers;
 using CR.DataAccess.Context;
@@ -28,6 +29,9 @@ namespace CR.Core.Services.Implementations.ChatUsers
                     ConsumerId = request.consumerId,
                     ExpertInformation = _context.ExpertInformations.Find(request.expertInformationId),
                     ExpertInformationId = request.expertInformationId,
+                    MessageType = request.messageType,
+                    AppointmentDate = request.appointmentDate,
+                    AppointmentDate_String = request.appointmentDate.ToShamsi()
                 };
 
                 _context.ChatUsers.Add(chatUser);

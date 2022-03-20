@@ -52,11 +52,11 @@ namespace CR.DataAccess.Enums
 
     public enum CallingType
     {
-        [Display(Name = "تلفنی")]
+        [Display(Name = "مشاوره تلفنی")]
         PhoneCall = 0,
-        [Display(Name = "صوتی")]
+        [Display(Name = "مشاوره صوتی")]
         VoiceCall = 1,
-        [Display(Name = "متنی")]
+        [Display(Name = "مشاوره متنی")]
         TextCall = 2,
     }
 
@@ -126,6 +126,14 @@ namespace CR.DataAccess.Enums
         Payment = 1,
         Comment = 2,
         Other = 3,
+    }
+
+    public enum MessageType
+    {
+        [Display(Name = "مشاوره متنی")]
+        Text = 0,
+        [Display(Name = "مشاوره صوتی")]
+        Voice = 1
     }
 }
 

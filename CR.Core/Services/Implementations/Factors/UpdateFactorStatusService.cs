@@ -1,4 +1,5 @@
 ﻿using CR.Common.DTOs;
+using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs.Factors;
 using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
@@ -26,6 +27,7 @@ namespace CR.Core.Services.Implementations.Factors
                 var factor = _context.Factors
                     .Include(_ => _.Appointments)
                     .ThenInclude(_ => _.TimeOfDay)
+                    .ThenInclude(f => f.Day)
                     .Include(f => f.ConsumerInformation)
                     .Include(f => f.ExpertInformation)
                     .First(_ => _.Id == factorId);
@@ -77,7 +79,12 @@ namespace CR.Core.Services.Implementations.Factors
                     {
                         ConsumerId = factor.ConsumerInformation.ConsumerId,
                         ExpertInformationId = factor.ExpertInformation.Id,
-                        IsChat = factor.Appointments.Any(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall)
+                        IsChat = factor.Appointments.Any(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall),
+                        chatAppointments = factor.Appointments.Where(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall).Select(_ => new ChatAppointmentDto()
+                        {
+                            CallingType = _.CallingType,
+                            AppointmentDate = _.TimeOfDay.Day.Date
+                        }).ToList()
                     }
                 };
             }

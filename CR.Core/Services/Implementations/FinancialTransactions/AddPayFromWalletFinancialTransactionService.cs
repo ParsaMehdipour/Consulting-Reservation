@@ -1,6 +1,7 @@
 ﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
+using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs.Wallet;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Context;
@@ -63,6 +64,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     .Include(_ => _.ExpertInformation)
                     .Include(_ => _.Appointments)
                     .ThenInclude(_ => _.TimeOfDay)
+                    .ThenInclude(_ => _.Day)
                     .FirstOrDefault(_ => _.Id == factorId);
 
                 if (factor == null)
@@ -109,7 +111,12 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     {
                         ConsumerId = factor.ConsumerInformation.ConsumerId,
                         ExpertInformationId = factor.ExpertInformation.Id,
-                        IsChat = factor.Appointments.Any(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall)
+                        IsChat = factor.Appointments.Any(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall),
+                        chatAppointments = factor.Appointments.Where(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall).Select(_ => new ChatAppointmentDto()
+                        {
+                            CallingType = _.CallingType,
+                            AppointmentDate = _.TimeOfDay.Day.Date
+                        }).ToList()
                     }
                 };
             }
