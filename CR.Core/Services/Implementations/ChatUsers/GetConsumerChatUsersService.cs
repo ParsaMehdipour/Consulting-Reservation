@@ -36,9 +36,10 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 Id = _.Id,
                 ExpertIconSrc = (string.IsNullOrWhiteSpace(_.ExpertInformation.IconSrc)) ? "assets/img/icon-256x256.png" : _.ExpertInformation.IconSrc,
                 ExpertName = _.ExpertInformation.FirstName + " " + _.ExpertInformation.LastName,
-                LastChangeHour = $"{_.ChatUserMessages.OrderBy(_ => _.CreateDate).Last().CreateDate.Minute.ToString().GetPersianNumber()} : {_.ChatUserMessages.OrderBy(_ => _.CreateDate).Last().CreateDate.Hour.ToString().GetPersianNumber()}",
+                AppointmentDate = _.AppointmentDate_String,
                 LastMessage = _.ChatUserMessages.OrderBy(_ => _.CreateDate).Last().Message,
                 NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false),
+                MessageType = _.MessageType.GetDisplayName()
             }).ToList();
 
             return new ResultDto<List<ChatUserForConsumerDto>>()

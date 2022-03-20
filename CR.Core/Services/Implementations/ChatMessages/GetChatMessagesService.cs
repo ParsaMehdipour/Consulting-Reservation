@@ -1,5 +1,4 @@
-﻿using CR.Common.Convertor;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.ChatMessages;
 using CR.Core.DTOs.ResultDTOs.ChatMessages;
 using CR.Core.Services.Interfaces.ChatMessages;
@@ -43,7 +42,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     expertIconSrc = _.ChatUser.ExpertInformation.IconSrc,
                     message = _.Message,
                     messageFlag = _.MessageFlag,
-                    messageHour = $"{_.CreateDate.Minute} : {_.CreateDate.Hour} - {_.CreateDate.ToShamsi()}",
+                    messageHour = $"{_.CreateDate.Minute} : {_.CreateDate.Hour}",
                     hasFile = (!string.IsNullOrWhiteSpace(_.File)),
                     file = _.File,
                     hasAudio = (!string.IsNullOrWhiteSpace(_.Audio)),
