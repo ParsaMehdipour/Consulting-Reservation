@@ -53,6 +53,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 {
                     PayerId = factor.ConsumerInformation.ConsumerId,
                     Price_Digit = price,
+                    ReceiverId = _context.Users.FirstOrDefault(_ => _.UserFlag == UserFlag.Admin)?.Id,
                     Factor = factor,
                     FactorId = factor.Id,
                     CreateDate_String = DateTime.Now.ToShamsi(),

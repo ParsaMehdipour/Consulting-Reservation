@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Consumers;
 using CR.Core.DTOs.ResultDTOs.Consumers;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Consumers
 {
@@ -21,8 +21,6 @@ namespace CR.Core.Services.Implementations.Consumers
 
         public ResultDto<ResultGetConsumersForExpertDashboardDto> Execute(long expertId, int Page = 1, int PageSize = 20)
         {
-            int rowCount = 0;
-
             var consumers = _context.Appointments
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
@@ -43,7 +41,7 @@ namespace CR.Core.Services.Implementations.Consumers
                     ConsumerType = (_context.Appointments.Any(c => c.ConsumerInformationId == a.ConsumerInformationId && a.TimeOfDay.Day.Date.Date < DateTime.Now.Date)) ? "مراجع قدیمی" : "مراجع جدید"
                 }).OrderByDescending(a => a.AppointmentDate)
                 .AsEnumerable()
-                .ToPaged(Page, PageSize, out rowCount)
+                .ToPaged(Page, PageSize, out var rowCount)
                 .ToList();
 
 
