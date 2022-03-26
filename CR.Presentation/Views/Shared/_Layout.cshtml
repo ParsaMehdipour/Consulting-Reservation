@@ -269,10 +269,6 @@
                                 <li><a asp-area="" asp-controller="Rules" asp-action="Other">سایر قوانین و مقررات</a></li>
                             </ul>
                         </li>
-
-                        <li>
-                            <a asp-area="AdminPanel" asp-controller="Home" asp-action="Index" target="_blank">ادمین<i class="fas"></i></a>
-                        </li>
                         <li>
                             <a asp-area="" asp-controller="Blogs" asp-action="Index" target="_blank">مقالات<i class="fas"></i></a>
                         </li>
@@ -552,10 +548,12 @@
 
                     var userFlag = response;
 
-                    if (userFlag === 1) {
+                    if (userFlag === 0) {
+                        GetConsumerDetails();
+                    } else if(userFlag === 1) {
                         GetExpertDetails();
                     } else {
-                        GetConsumerDetails();
+                        GetAdminDetails();
                     }
 
                 }
@@ -647,6 +645,52 @@
                             '</div>' +
                             '<a class="dropdown-item" href="/ConsumerPanel/Home/">داشبورد</a>' +
                             '<a class="dropdown-item" href="/ConsumerPanel/Profile/">تنظیمات پروفایل</a>' +
+                            '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
+                            '</div>';
+
+                    $("#userInfo").html(body);
+
+                }
+            });
+        }
+
+         function GetAdminDetails() {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/api/AdminDetails/GetDetails',
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                enctype: 'application/json',
+                success: function(response) {
+
+                    var model = response.data;
+
+                    var body =
+                        '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
+                            '<span class="user-img">' +
+                            '<img class="rounded-circle" src="/' +
+                            model.iconSrc +
+                            '" width="31" alt="' +
+                            model.fullName +
+                            '">' +
+                            '</span>' +
+                            '</a>' +
+                            '<div class="dropdown-menu dropdown-menu-right">' +
+                            '<div class="user-header">' +
+                            '<div class="avatar avatar-sm">' +
+                            '<img id="Image" src="/' +
+                            model.iconSrc +
+                            '" alt="User Image" class="avatar-img rounded-circle">' +
+                            '</div>' +
+                            '<div class="user-text">' +
+                            '<h6 id="FullName">' +
+                            model.fullName +
+                            '</h6>' +
+                            '<p class="text-muted mb-0">مدیریت</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '<a class="dropdown-item" href="/AdminPanel/Home/">پنل مدیریت</a>' +
                             '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
                             '</div>';
 
