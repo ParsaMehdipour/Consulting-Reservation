@@ -135,6 +135,7 @@ namespace CR.Presentation
             services.AddScoped<IRegisterExpertFromAdminService, RegisterExpertFromAdminService>();
             services.AddScoped<IGetAdminDetailsService, GetAdminDetailsService>();
             services.AddScoped<IEditAdminDetailsService, EditAdminDetailsService>();
+            services.AddScoped<IGetAdminDetailsForPartialService, GetAdminDetailsForPartialService>();
             //Experts
             services.AddScoped<IGetAllExpertsService, GetAllExpertsService>();
             services.AddScoped<IChangeExpertStatusService, ChangeExpertStatusService>();
@@ -249,6 +250,9 @@ namespace CR.Presentation
             services.AddScoped<IGetFinancialTransactionDetailsForVerifyService, GetFinancialTransactionDetailsForVerifyService>();
             services.AddScoped<IAddPayFromWalletFinancialTransactionService, AddPayFromWalletFinancialTransactionService>();
             services.AddScoped<IAddDeclineFinancialTransactionService, AddDeclineFinancialTransactionService>();
+            services.AddScoped<IAddChargeExpertWalletService, AddChargeExpertWalletService>();
+            services.AddScoped<IGetExpertFinancialTransactionService, GetExpertFinancialTransactionService>();
+            services.AddScoped<IGetExpertWalletBalanceService, GetExpertWalletBalanceService>();
             //Favorites
             services.AddScoped<IAddNewFavoriteService, AddNewFavoriteService>();
             services.AddScoped<IGetConsumerFavoritesService, GetConsumerFavoritesService>();
