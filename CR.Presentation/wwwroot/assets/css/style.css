@@ -424,7 +424,7 @@ table.table td h2 {
 }
 
 .bg-primary, .badge-primary {
-    background-color: #079299 !important;
+    background-color: #147ba6 !important;
 }
 
 a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover {
@@ -472,7 +472,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .text-primary, .dropdown-menu > li > a.text-primary {
-    color: #079299 !important;
+    color: #147ba6 !important;
 }
 
 .text-success, .dropdown-menu > li > a.text-success {
@@ -500,8 +500,8 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .btn-primary {
-    background-color: #079299;
-    border: 1px solid #079299;
+    background-color: #147ba6;
+    border: 1px solid #147ba6;
 }
 
     .btn-primary:hover, .btn-primary:focus, .btn-primary.active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
@@ -525,8 +525,8 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
             }
 
     .btn-primary.disabled, .btn-primary:disabled {
-        background-color: #079299;
-        border-color: #079299;
+        background-color: #147ba6;
+        border-color: #147ba6;
         color: #fff;
     }
 
@@ -668,13 +668,13 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .btn-outline-primary {
-    color: #079299;
-    border-color: #079299;
+    color: #147ba6;
+    border-color: #147ba6;
 }
 
     .btn-outline-primary:hover {
-        background-color: #079299;
-        border-color: #079299;
+        background-color: #147ba6;
+        border-color: #147ba6;
     }
 
     .btn-outline-primary:focus, .btn-outline-primary.focus {
@@ -682,13 +682,13 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
     }
 
     .btn-outline-primary.disabled, .btn-outline-primary:disabled {
-        color: #079299;
+        color: #147ba6;
         background-color: transparent;
     }
 
     .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
-        background-color: #079299;
-        border-color: #079299;
+        background-color: #147ba6;
+        border-color: #147ba6;
     }
 
         .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
@@ -852,7 +852,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .dropdown-item.active, .dropdown-item:active {
-    background-color: #079299;
+    background-color: #147ba6;
 }
 
 .navbar-nav .open .dropdown-menu {
@@ -1660,7 +1660,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
     .slick-prev:hover, .slick-prev:focus, .slick-next:hover, .slick-next:focus {
-        background-color: #079299;
+        background-color: #147ba6;
         color: #fff;
         opacity: 1;
     }
@@ -2003,8 +2003,8 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
         }
 
     .header-navbar-rht li a.header-login:hover {
-        background-color: #079299;
-        border-color: #079299;
+        background-color: #147ba6;
+        border-color: #147ba6;
         color: #fff;
     }
 
@@ -2016,12 +2016,12 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
     }
 
     .header-navbar-rht li a.header-login {
-        border: 2px solid #079299;
+        border: 2px solid #147ba6;
         border-radius: 4px;
         padding: 10px 15px !important;
         text-align: center;
         font-size: 15px;
-        color: #079299;
+        color: #147ba6;
         text-transform: uppercase;
         font-weight: 500;
     }
@@ -2154,7 +2154,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .unread-msg1 {
-    background-color: #079299;
+    background-color: #147ba6;
     border-radius: 2px;
     color: #272b41;
     font-size: 10px;
@@ -2215,7 +2215,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
     .bar-icon span {
-        background-color: #079299;
+        background-color: #147ba6;
         display: block;
         float: right;
         height: 3px;
@@ -2347,7 +2347,7 @@ html.menu-opened body {
 }
 
     .footer .footer-bottom .copyright-text p a {
-        color: #079299;
+        color: #147ba6;
         -webkit-transition: all 0.4s ease 0s;
         -o-transition: all 0.4s ease 0s;
         transition: all 0.4s ease 0s;
@@ -2389,7 +2389,7 @@ html.menu-opened body {
         }
 
             .footer .social-icon ul li a:hover {
-                color: #079299;
+                color: #147ba6;
             }
 
 .policy-menu {
@@ -2413,7 +2413,7 @@ html.menu-opened body {
         }
 
             .policy-menu li a:hover, .policy-menu li a:focus {
-                color: #079299;
+                color: #147ba6;
             }
 
         .policy-menu li::after {
@@ -2461,7 +2461,7 @@ html.menu-opened body {
     }
 
         .login-header h3 a {
-            color: #079299;
+            color: #147ba6;
             float: left;
             font-size: 15px;
             margin-top: 2px;
@@ -2716,12 +2716,12 @@ html.menu-opened body {
             }
 
         .slick-dots li.slick-active button {
-            background-color: #079299;
+            background-color: #147ba6;
         }
 
             .slick-dots li.slick-active button:before {
                 opacity: 1;
-                color: #079299;
+                color: #147ba6;
             }
 
 .slick-slide {
@@ -2781,7 +2781,7 @@ html.menu-opened body {
 
         .speicality-img span i {
             font-size: 15px;
-            color: #079299;
+            color: #147ba6;
         }
 
 .speicality-item p {
@@ -2967,9 +2967,9 @@ html.menu-opened body {
     }
 
 .view-btn {
-    color: #079299;
+    color: #147ba6;
     font-size: 13px;
-    border: 2px solid #079299;
+    border: 2px solid #147ba6;
     text-align: center;
     display: block;
     font-weight: 500;
@@ -2977,13 +2977,13 @@ html.menu-opened body {
 }
 
     .view-btn:hover, .view-btn:focus {
-        background-color: #079299;
+        background-color: #147ba6;
         color: #fff;
     }
 
 .book-btn {
-    background-color: #079299;
-    border: 2px solid #079299;
+    background-color: #147ba6;
+    border: 2px solid #147ba6;
     color: #fff;
     font-size: 13px;
     text-align: center;
@@ -3015,7 +3015,7 @@ html.menu-opened body {
     }
 
 .about-content a {
-    background-color: #079299;
+    background-color: #147ba6;
     border-radius: 4px;
     color: #fff;
     display: inline-block;
@@ -3123,8 +3123,8 @@ html.menu-opened body {
 }
 
 .book-btn1 {
-    background-color: #079299;
-    border: 2px solid #079299;
+    background-color: #147ba6;
+    border: 2px solid #147ba6;
     color: #fff;
     font-size: 16px;
     text-align: center;
@@ -3450,7 +3450,7 @@ html.menu-opened body {
             display: none;
             left: 4px;
             top: 0;
-            color: #079299;
+            color: #147ba6;
             font-size: 11px;
         }
 
@@ -3529,8 +3529,8 @@ html.menu-opened body {
     }
 
 .btn-search .btn {
-    background-color: #079299;
-    border: 1px solid #079299;
+    background-color: #147ba6;
+    border: 1px solid #147ba6;
     color: #fff;
     height: 46px;
     font-weight: 500;
@@ -3590,7 +3590,7 @@ html.menu-opened body {
 }
 
 .doc-location a {
-    color: #079299;
+    color: #147ba6;
     font-weight: 500;
 }
 
@@ -3704,9 +3704,9 @@ html.menu-opened body {
 
 .clinic-booking a {
     background-color: #fff;
-    border: 2px solid #079299;
+    border: 2px solid #147ba6;
     border-radius: 4px;
-    color: #079299;
+    color: #147ba6;
     display: block;
     font-size: 14px;
     font-weight: 500;
@@ -3718,12 +3718,12 @@ html.menu-opened body {
 }
 
     .clinic-booking a.view-pro-btn:hover, .clinic-booking a.view-pro-btn:focus {
-        background: #079299;
+        background: #147ba6;
         color: #fff;
     }
 
     .clinic-booking a.apt-btn {
-        background-color: #079299;
+        background-color: #147ba6;
         color: #fff;
     }
 
@@ -3756,7 +3756,7 @@ html.menu-opened body {
 }
 
     .clinic-direction a {
-        color: #079299;
+        color: #147ba6;
         font-weight: 500;
     }
 
@@ -3780,14 +3780,14 @@ html.menu-opened body {
     }
 
 .msg-btn:hover, .msg-btn:focus {
-    background-color: #079299;
-    border-color: #079299;
+    background-color: #147ba6;
+    border-color: #147ba6;
     color: #fff;
 }
 
 .call-btn:hover, .call-btn:focus {
-    background-color: #079299;
-    border-color: #079299;
+    background-color: #147ba6;
+    border-color: #147ba6;
     color: #fff;
 }
 
@@ -4595,7 +4595,7 @@ html.menu-opened body {
         color: #fff;
         width: 60px;
         height: 60px;
-        border: 2px solid #079299;
+        border: 2px solid #147ba6;
         border-radius: 50%;
         display: -webkit-inline-box;
         display: -ms-inline-flexbox;
@@ -4605,7 +4605,7 @@ html.menu-opened body {
         -ms-flex-pack: center;
         font-size: 30px;
         margin-bottom: 30px;
-        background-color: #079299;
+        background-color: #147ba6;
     }
 
     .success-cont h3 {
@@ -4914,7 +4914,7 @@ html.menu-opened body {
 -----------------------*/
 
 .add-new-btn {
-    background-color: #079299;
+    background-color: #147ba6;
     border-radius: 30px;
     color: #fff;
     display: inline-block;
@@ -4924,7 +4924,7 @@ html.menu-opened body {
 }
 
     .add-new-btn:focus, .add-new-btn:hover, .add-new-btn:active {
-        background-color: #079299;
+        background-color: #147ba6;
         color: #fff;
     }
 
@@ -4974,7 +4974,7 @@ html.menu-opened body {
 }
 
     .add-more-item a {
-        color: #079299;
+        color: #147ba6;
         font-weight: 500;
     }
 
@@ -5444,8 +5444,8 @@ html.menu-opened body {
             }
 
                 .chat-cont-right .chat-footer .input-group .input-group-append .btn.msg-send-btn {
-                    background-color: #079299;
-                    border-color: #079299;
+                    background-color: #147ba6;
+                    border-color: #147ba6;
                     border-radius: 50%;
                     color: #fff;
                     margin-right: 10px;
@@ -6145,7 +6145,7 @@ html.menu-opened body {
 }
 
 .dashboard-menu > ul > li:hover > a, .dashboard-menu > ul > li.active > a {
-    color: #079299;
+    color: #147ba6;
 }
 
 .dashboard-menu ul li a i {
@@ -6155,7 +6155,7 @@ html.menu-opened body {
 }
 
 .unread-msg {
-    background-color: #079299;
+    background-color: #147ba6;
     border-radius: 2px;
     color: #272b41;
     font-size: 10px;
@@ -7635,7 +7635,7 @@ html.menu-opened body {
 
 .product-custom .profile-widget:hover .cart-icon {
     color: #fff;
-    background-color: #079299;
+    background-color: #147ba6;
 }
 
 .product-description .doctor-img1 {
@@ -9116,7 +9116,7 @@ ul.benifits-col li i {
     }
 
     .login-header h3 a {
-        color: #079299;
+        color: #147ba6;
         float: none;
         font-size: 15px;
         margin-top: 10px;
