@@ -838,8 +838,8 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .page-item.active .page-link {
-    background-color: #20c0f3;
-    border-color: #20c0f3;
+    background-color: #147ba6;
+    border-color: #147ba6;
 }
 
 .dropdown-menu {
@@ -1867,7 +1867,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
     .main-nav > li.active > a {
-        color: #09dca4;
+        color: #147ba6;
     }
 
     .main-nav > li .submenu li a {
