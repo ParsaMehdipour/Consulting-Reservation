@@ -1,10 +1,11 @@
 ﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs;
+using CR.Core.DTOs.ResultDTOs.Appointments;
 
 namespace CR.Core.Services.Interfaces.Appointment
 {
     public interface IChangeAppointmentStatusService
     {
-        ResultDto Execute(RequestChangeAppointmentStatusDto request);
+        ResultDto<ResultChangeAppointmentStatusDto> Execute(RequestChangeAppointmentStatusDto request);
     }
 }

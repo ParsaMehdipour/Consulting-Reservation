@@ -8,6 +8,8 @@ namespace CR.DataAccess.Enums
         Consumer = 0,
         [Display(Name = "مشاور")]
         Expert = 1,
+        [Display(Name = "مدیریت")]
+        Admin = 2,
     }
 
     public enum GenderType
@@ -81,8 +83,10 @@ namespace CR.DataAccess.Enums
         ChargeWallet = 2,
         [Display(Name = "شارژ-لغو تراکنش")]
         DeclineTransaction = 3,
+        [Display(Name = "شارژ کیف پول مشاور")]
+        ChargeExpertWallet = 4,
         [Display(Name = "تسویه حساب")]
-        Checkout = 4
+        Checkout = 5
     }
 
     public enum CommentStatus

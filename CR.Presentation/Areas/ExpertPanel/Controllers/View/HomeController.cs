@@ -23,9 +23,9 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 
         public HomeController(IHttpContextAccessor contextAccessor
             , IGetUserFlagService getUserFlagService
-            ,IGetTodayConsumersForExpertDashboardService getTodayConsumersForExpertDashboardService
-            ,IGetIncomingConsumersForExpertDashboardService getIncomingConsumersForExpertDashboardService
-            ,IGetStatisticsForExpertPanelService getStatisticsForExpertPanelService)
+            , IGetTodayConsumersForExpertDashboardService getTodayConsumersForExpertDashboardService
+            , IGetIncomingConsumersForExpertDashboardService getIncomingConsumersForExpertDashboardService
+            , IGetStatisticsForExpertPanelService getStatisticsForExpertPanelService)
         {
             _getUserFlagService = getUserFlagService;
             _getTodayConsumersForExpertDashboardService = getTodayConsumersForExpertDashboardService;
@@ -54,9 +54,8 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 
             var viewModel = new ExpertPanelDashboardViewModel()
             {
-                ResultGetTodayConsumersForExpertDashboardDto = _getTodayConsumersForExpertDashboardService
-                    .Execute(expertId, page, pageSize).Data,
-                ResultGetIncomingConsumersForExpertDashboardDto = _getIncomingConsumersForExpertDashboardService.Execute(expertId,page,pageSize).Data,
+                ResultGetTodayConsumersForExpertDashboardDto = _getTodayConsumersForExpertDashboardService.Execute(expertId, page, pageSize).Data,
+                ResultGetIncomingConsumersForExpertDashboardDto = _getIncomingConsumersForExpertDashboardService.Execute(expertId, page, pageSize).Data,
                 StatisticsForExpertPanelDto = _getStatisticsForExpertPanelService.Execute(expertId)
             };
 

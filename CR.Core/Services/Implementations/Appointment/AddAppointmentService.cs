@@ -28,8 +28,7 @@ namespace CR.Core.Services.Implementations.Appointment
 
             try
             {
-                List<DataAccess.Entities.Appointments.Appointment> appointments =
-                    new List<DataAccess.Entities.Appointments.Appointment>();
+                List<DataAccess.Entities.Appointments.Appointment> appointments = new List<DataAccess.Entities.Appointments.Appointment>();
                 var expertInformation = new ExpertInformation();
                 var consumerInformation = new ConsumerInfromation();
 
@@ -73,8 +72,7 @@ namespace CR.Core.Services.Implementations.Appointment
                     }
 
 
-                    expertInformation =
-                        _context.ExpertInformations.FirstOrDefault(e => e.Id == request.expertInformationId);
+                    expertInformation = _context.ExpertInformations.FirstOrDefault(e => e.Id == request.expertInformationId);
 
                     if (expertInformation == null)
                     {

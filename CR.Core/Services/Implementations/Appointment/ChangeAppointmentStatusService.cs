@@ -1,5 +1,6 @@
 ﻿using CR.Common.DTOs;
 using CR.Core.DTOs.RequestDTOs;
+using CR.Core.DTOs.ResultDTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
@@ -17,18 +18,19 @@ namespace CR.Core.Services.Implementations.Appointment
             _context = context;
         }
 
-        public ResultDto Execute(RequestChangeAppointmentStatusDto request)
+        public ResultDto<ResultChangeAppointmentStatusDto> Execute(RequestChangeAppointmentStatusDto request)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-                var appointment = _context.Appointments.Include(a => a.TimeOfDay).FirstOrDefault(a => a.Id == request.AppointmentId);
+                var appointment = _context.Appointments.Include(a => a.ExpertInformation).Include(a => a.TimeOfDay).FirstOrDefault(a => a.Id == request.AppointmentId);
 
                 if (appointment == null)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultChangeAppointmentStatusDto>()
                     {
+                        Data = new ResultChangeAppointmentStatusDto(),
                         IsSuccess = false,
                         Message = "نوبت پیدا نشد!!"
                     };
@@ -36,11 +38,11 @@ namespace CR.Core.Services.Implementations.Appointment
 
                 if (appointment.TimeOfDay.FinishTime > DateTime.Now)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultChangeAppointmentStatusDto>()
                     {
+                        Data = new ResultChangeAppointmentStatusDto(),
                         IsSuccess = false,
-                        Message =
-                            "به دلیل عدم اتمام زمان یا نرسیدن زمان نوبت قابلیت تغیر وضعیت برای شما امکان پذیر نیست"
+                        Message = "به دلیل عدم اتمام زمان یا نرسیدن زمان نوبت قابلیت تغیر وضعیت برای شما امکان پذیر نیست"
                     };
                 }
 
@@ -55,8 +57,13 @@ namespace CR.Core.Services.Implementations.Appointment
 
                 transaction.Commit();
 
-                return new ResultDto()
+                return new ResultDto<ResultChangeAppointmentStatusDto>()
                 {
+                    Data = new ResultChangeAppointmentStatusDto()
+                    {
+                        price = (int)appointment.Price.Value,
+                        receiverId = appointment.ExpertInformation.ExpertId
+                    },
                     IsSuccess = true,
                     Message = "وضعیت نوبت با موفقیت تغیر یافت"
                 };

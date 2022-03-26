@@ -3,6 +3,7 @@ using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
 using CR.Core.Services.Interfaces.Appointment;
+using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.Core.Services.Interfaces.Users;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -19,18 +20,21 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
         private readonly IGetAppointmentDetailsForExpertPanelService _getAppointmentDetailsForExpertPanelService;
         private readonly IChangeAppointmentStatusService _changeAppointmentStatusService;
         private readonly IGetUserFlagService _getUserFlagService;
+        private readonly IAddChargeExpertWalletService _addChargeExpertWalletService;
         private ResultCheckUserFlagService ResultCheckUserFlag;
 
         public AppointmentsController(IHttpContextAccessor contextAccessor
-        ,IGetAllAppointmentsForExpertPanelService getAllAppointmentsForExpertPanel
-        ,IGetAppointmentDetailsForExpertPanelService getAppointmentDetailsForExpertPanelService
-        ,IChangeAppointmentStatusService changeAppointmentStatusService
-        ,IGetUserFlagService getUserFlagService)
+        , IGetAllAppointmentsForExpertPanelService getAllAppointmentsForExpertPanel
+        , IGetAppointmentDetailsForExpertPanelService getAppointmentDetailsForExpertPanelService
+        , IChangeAppointmentStatusService changeAppointmentStatusService
+        , IGetUserFlagService getUserFlagService
+        , IAddChargeExpertWalletService addChargeExpertWalletService)
         {
             _getAllAppointmentsForExpertPanel = getAllAppointmentsForExpertPanel;
             _getAppointmentDetailsForExpertPanelService = getAppointmentDetailsForExpertPanelService;
             _changeAppointmentStatusService = changeAppointmentStatusService;
             _getUserFlagService = getUserFlagService;
+            _addChargeExpertWalletService = addChargeExpertWalletService;
 
             var userId = ClaimUtility.GetUserId(contextAccessor.HttpContext?.User);
 
@@ -65,6 +69,11 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
         public IActionResult ChangeAppointmentStatus(RequestChangeAppointmentStatusDto request)
         {
             var result = _changeAppointmentStatusService.Execute(request);
+
+            if (result.IsSuccess == true)
+            {
+                return new JsonResult(_addChargeExpertWalletService.Execute(result.Data.receiverId, result.Data.price));
+            }
 
             return new JsonResult(result);
         }

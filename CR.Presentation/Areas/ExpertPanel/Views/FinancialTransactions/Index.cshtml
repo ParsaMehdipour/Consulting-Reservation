@@ -1,0 +1,169 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@using CR.Common.Utilities
+@using CR.DataAccess.Enums
+@model CR.Core.DTOs.ResultDTOs.FinancialTransactions.ResultGetExpertFinancialTransactionsDto
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">کیف پول/تراکنش ها</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">کیف پول/تراکنش ها</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Profile Sidebar -->
+            <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+                <partial name="ExpertPnelSideBarMenu" />
+            </div>
+            <!-- / Profile Sidebar -->
+            <div class="col-md-7 col-lg-8 col-xl-9">
+                <div class="card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">موجودی کیف پول : @Model.WalletBalance.ToString("n0") تومان</h4>
+                        </div>
+                        <div class="card-body btn-showcase">
+                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Checkout" data-original-title="" title="">درخواست تسویه حساب</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body pt-0">
+                        <!-- Tab Menu -->
+                        <nav class="user-tabs mb-4">
+                            <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#pat_appointments" data-toggle="tab">‌تراکنش های مالی</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="tab-content pt-0">
+                            <!-- FinancialTransactions Tab -->
+                            <div id="pat_appointments" class="tab-pane fade show active">
+                                <div class="card card-table mb-0">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-center mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center"> پرداخت کننده </th>
+                                                        <th class="text-center">مبلغ کل </th>
+                                                        <th class="text-center"> تاریخ ایجاد </th>
+                                                        <th class="text-center"> نوع تراکنش </th>
+                                                        <th class="text-center"> وضعیت </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var transaction in Model.ExpertFinancialTransactionDtos)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <h2 class="table-avatar">
+                                                                    <a class="avatar avatar-sm mr-2">
+                                                                        <img class="avatar-img rounded-circle" src="~/@transaction.AdminIconSrc" alt="User Image">
+                                                                    </a>
+                                                                    <a>@transaction.AdminFullName</a>
+                                                                </h2>
+                                                            </td>
+                                                            <td class="text-center">@transaction.Price تومان</td>
+                                                            <td class="text-center">@transaction.CreateDate</td>
+                                                            <td class="text-center">
+                                                                @if (transaction.TransactionType == TransactionType.ChargeExpertWallet.GetDisplayName())
+                                                                {
+                                                                    <span class="badge badge-pill bg-warning-light">@transaction.TransactionType</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="badge badge-pill bg-purple-light">@transaction.TransactionType</span>
+                                                                }
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if (transaction.TransactionStatus == TransactionStatus.UnDefined.GetDisplayName())
+                                                                {
+                                                                    <span class="badge badge-pill bg-warning-light">@transaction.TransactionStatus</span>
+                                                                }
+                                                                else if (transaction.TransactionStatus == TransactionStatus.Successful.GetDisplayName())
+                                                                {
+                                                                    <span class="badge badge-pill bg-success-light">@transaction.TransactionStatus</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="badge badge-pill bg-danger-light">@transaction.TransactionStatus</span>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <paging total-records="Model.RowCount"
+                                            page-no="Model.CurrentPage"
+                                            page-size="Model.PageSize"
+                                            show-prev-next="true"
+                                            show-total-pages="false"
+                                            show-total-records="false"
+                                            show-page-size-nav="true"
+                                            show-first-numbered-page="true"
+                                            show-last-numbered-page="true"
+                                            query-string-key-page-no="Page"
+                                            query-string-key-page-size="PageSize"
+                                            gap-size="2">
+                                    </paging>
+                                </div>
+                            </div>
+                            <!-- /FinancialTransactions Tab -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+@section Scripts
+{
+<script src="~/assets/js/ExpertPanel/FinancialTransactions/FinancialTransactions.js"></script>
+<script src="~/assets/js/ExpertPanel/layout.js"></script>
+}
+
+@section Modal
+{
+<div class="modal fade" id="Checkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">تسویه حساب</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="col-form-label" for="recipient-name">مبلغ به تومان : </label>
+                        <input class="form-control money2" type="text" data-original-title="" id="price" name="price">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal" data-original-title="" title="">بستن</button>
+                <button onclick="ChargeWallet()" class="btn btn-primary" type="button" data-original-title="" title="">شارژ</button>
+            </div>
+        </div>
+    </div>
+</div>
+}

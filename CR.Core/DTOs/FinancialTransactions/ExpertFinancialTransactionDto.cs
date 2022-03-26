@@ -1,9 +1,9 @@
 ﻿namespace CR.Core.DTOs.FinancialTransactions
 {
-    internal class ExpertFinancialTransactionDto
+    public class ExpertFinancialTransactionDto
     {
-        public string ConsumerIconSrc { get; set; }
-        public string ConsumerFullName { get; set; }
+        public string AdminIconSrc { get; set; }
+        public string AdminFullName { get; set; }
         public string Price { get; set; }
         public string CreateDate { get; set; }
         public string TransactionType { get; set; }
