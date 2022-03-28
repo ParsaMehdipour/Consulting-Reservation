@@ -33,12 +33,13 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 var checkoutFinancialTransaction = new CheckoutFinancialTransactionForAdminDto()
                 {
+                    Id = financialTransaction.Id,
                     CreateDate = financialTransaction.CreateDate_String,
                     Price = financialTransaction.Price_Digit.ToString("n0"),
                     ReceiverIconSrc = receiver.IconSrc,
                     ReceiverFullName = receiver.FirstName + " " + receiver.LastName,
                     ReceiverId = financialTransaction.ReceiverId.Value,
-                    TransactionStatus = financialTransaction.TransactionType.GetDisplayName()
+                    TransactionStatus = financialTransaction.Status.GetDisplayName()
                 };
 
                 list.Add(checkoutFinancialTransaction);

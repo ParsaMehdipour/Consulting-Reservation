@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CR.Common.ActiveMenus;
+﻿using CR.Common.ActiveMenus;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Account;
 using CR.Core.DTOs.Users;
@@ -14,6 +13,7 @@ using CR.Presentation.Areas.AdminPanel.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CR.Presentation.Areas.AdminPanel.Controllers.View
 {
@@ -68,6 +68,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
         [HttpGet]
         public IActionResult Profile()
         {
+            TempData["activemenu"] = ActiveMenu.Dashboard;
 
             var adminId = ClaimUtility.GetUserId(User).Value;
 
