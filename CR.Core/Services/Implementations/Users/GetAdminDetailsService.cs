@@ -61,7 +61,8 @@ namespace CR.Core.Services.Implementations.Users
                         phoneNumber = admin.PhoneNumber.GetPersianNumber() ?? admin.UserName,
                         email = admin.Email,
                         specificAddress = expertInformation.SpecificAddress,
-                        degree = expertInformation.PostalCode.GetPersianNumber()
+                        degree = expertInformation.PostalCode.GetPersianNumber(),
+                        iconSrc = admin.IconSrc
                     },
                     IsSuccess = true
                 };
@@ -97,7 +98,8 @@ namespace CR.Core.Services.Implementations.Users
                         phoneNumber = admin.PhoneNumber ?? admin.UserName,
                         email = admin.Email,
                         specificAddress = consumerInformation.SpecificAddress,
-                        degree = consumerInformation.Degree
+                        degree = consumerInformation.Degree,
+                        iconSrc = admin.IconSrc
                     },
                     IsSuccess = true
                 };

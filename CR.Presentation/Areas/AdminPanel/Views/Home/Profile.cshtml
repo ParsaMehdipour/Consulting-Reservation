@@ -9,7 +9,7 @@
             <h3 class="page-title">پروفایل</h3>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
-                <li class="breadcrumb-item active">پروفایل مراجعه کننده</li>
+                <li class="breadcrumb-item active">پروفایل مدیر</li>
             </ul>
         </div>
     </div>
@@ -22,7 +22,7 @@
             <div class="row align-items-center">
                 <div class="col-auto profile-image">
                     <a href="#">
-                        <img class="rounded-circle" alt="User Image" src="~/AdminTemplate/assets/img/profiles/avatar-01.jpg">
+                        <img class="rounded-circle" alt="User Image" src="~/@Model.iconSrc">
                     </a>
                 </div>
                 <div class="col ml-md-n2 profile-user-info">
@@ -31,10 +31,7 @@
                     <div class="user-Location"><i class="fa fa-map-marker"></i> @Model?.province ، @Model?.city</div>
                 </div>
                 <div class="col-auto profile-btn">
-
-                    <a href="#" class="btn btn-primary">
-                        ویرایش
-                    </a>
+                    <input type="file" class="upload" id="iconImage"> تصویر
                 </div>
             </div>
         </div>
@@ -275,31 +272,38 @@
             editData.append("degree", $("#editAdminDetailsFromAdminForm #degree").val());
             editData.append("adminId", $("#editAdminDetailsFromAdminForm #adminId").val());
             editData.append("informationId", $("#editAdminDetailsFromAdminForm #informationId").val());
+            editData.append("image", $("#iconImage").get(0).files[0]);
 
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("EditProfileDetails", "Home")',
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                cache: false,
-                data: editData,
-                success: function(data) {
-                    if (data.isSuccess == true) {
-                        swal.fire('موفق!',
-                            data.message,
-                            'success').then(function(isConfirm) {
-                            location.reload();
-                        });
-                    } else {
-                        swal.fire('هشدار!',
-                            data.message,
-                            'warning');
+            $( "#editAdminDetailsFromAdminForm" ).submit(function( event ) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("EditProfileDetails", "Home")',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    cache: false,
+                    data: editData,
+                    success: function(data) {
+                        if (data.isSuccess == true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        } else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning');
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
                     }
-                },
-                error: function(request, status, error) {
-                    alert(request.responseText);
-                }
+                });
+
+                event.preventDefault();
+
             });
 
         }

@@ -1,6 +1,8 @@
 ﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
+using CR.Core.DTOs.Images;
 using CR.Core.DTOs.Users;
+using CR.Core.Services.Interfaces.Images;
 using CR.Core.Services.Interfaces.Users;
 using CR.DataAccess.Context;
 using System;
@@ -11,10 +13,13 @@ namespace CR.Core.Services.Implementations.Users
     public class EditAdminDetailsService : IEditAdminDetailsService
     {
         private readonly ApplicationContext _context;
+        private readonly IImageUploaderService _imageUploaderService;
 
-        public EditAdminDetailsService(ApplicationContext context)
+        public EditAdminDetailsService(ApplicationContext context
+        , IImageUploaderService imageUploaderService)
         {
             _context = context;
+            _imageUploaderService = imageUploaderService;
         }
 
         public ResultDto Execute(AdminDetailsDto request)
@@ -34,6 +39,19 @@ namespace CR.Core.Services.Implementations.Users
                     };
                 }
 
+
+                if (request.image != null)
+                {
+                    admin.IconSrc = _imageUploaderService.Execute(new UploadImageDto()
+                    {
+                        File = request.image,
+                        Folder = "AdminImage"
+                    });
+                }
+
+                admin.FirstName = request.firstName;
+                admin.LastName = request.lastName;
+
                 if (admin.ExpertInformationId != null)
                 {
                     var expertInformation =
@@ -48,6 +66,14 @@ namespace CR.Core.Services.Implementations.Users
                         };
                     }
 
+                    if (request.image != null)
+                    {
+                        expertInformation.IconSrc = _imageUploaderService.Execute(new UploadImageDto()
+                        {
+                            File = request.image,
+                            Folder = "AdminImage"
+                        });
+                    }
 
                     expertInformation.FirstName = request.firstName;
                     expertInformation.LastName = request.lastName;
@@ -83,6 +109,15 @@ namespace CR.Core.Services.Implementations.Users
                             IsSuccess = false,
                             Message = "اطلاعات مدیریت یافت نشد"
                         };
+                    }
+
+                    if (request.image != null)
+                    {
+                        consumerInformation.IconSrc = _imageUploaderService.Execute(new UploadImageDto()
+                        {
+                            File = request.image,
+                            Folder = "AdminImage"
+                        });
                     }
 
                     consumerInformation.FirstName = request.firstName;
