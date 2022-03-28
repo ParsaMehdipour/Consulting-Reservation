@@ -253,6 +253,8 @@ namespace CR.Presentation
             services.AddScoped<IAddChargeExpertWalletService, AddChargeExpertWalletService>();
             services.AddScoped<IGetExpertFinancialTransactionService, GetExpertFinancialTransactionService>();
             services.AddScoped<IGetExpertWalletBalanceService, GetExpertWalletBalanceService>();
+            services.AddScoped<IAddCheckoutFinancialTransactionService, AddCheckoutFinancialTransactionService>();
+            services.AddScoped<IGetCheckoutFinancialTransactionsService, GetCheckoutFinancialTransactionsService>();
             //Favorites
             services.AddScoped<IAddNewFavoriteService, AddNewFavoriteService>();
             services.AddScoped<IGetConsumerFavoritesService, GetConsumerFavoritesService>();
