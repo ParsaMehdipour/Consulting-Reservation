@@ -2,7 +2,6 @@
 using CR.Common.Utilities;
 using CR.Core.DTOs.Experts;
 using CR.Core.Services.Interfaces.Experts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
