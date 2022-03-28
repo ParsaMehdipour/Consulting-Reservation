@@ -24,6 +24,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
         {
             var expertFinancialTransactions = _context.FinancialTransactions
                 .Where(_ => _.ReceiverId == expertId)
+                .OrderByDescending(_ => _.CreateDate)
                 .AsNoTracking();
 
             var list = new List<ExpertFinancialTransactionDto>();
