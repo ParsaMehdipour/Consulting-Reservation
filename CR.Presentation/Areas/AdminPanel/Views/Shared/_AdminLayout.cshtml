@@ -140,13 +140,16 @@
                             <a asp-controller="CommissionAndDiscounts" asp-action="Index"><i class="fe fe-file"></i> <span>امور مالی</span></a>
                         </li>
                         <li class="submenu">
-                            <a @(TempData["activemenu"].ToString() == ActiveMenu.Factors || TempData["activemenu"].ToString() == ActiveMenu.FinancialTransactions ? @"class=active subdrop" : "") href="#"><i class="fe fe-document"></i> <span>گزارش‌ها</span> <span class="menu-arrow"></span></a>
+                            <a @(TempData["activemenu"].ToString() == ActiveMenu.Factors || TempData["activemenu"].ToString() == ActiveMenu.FinancialTransactions || TempData["activemenu"].ToString() == ActiveMenu.CheckoutFinancialTransactions ? @"class=active subdrop" : "") href="#"><i class="fe fe-document"></i> <span>گزارش‌ها</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Factors ? @"class=active" : "")>
                                     <a asp-controller="Factors" asp-action="Index"><span>گزارش فاکتور ها</span></a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.FinancialTransactions ? @"class=active" : "")>
                                     <a asp-controller="FinancialTransactions" asp-action="Index"><span>گزارش تراکنش ها</span></a>
+                                </li>
+                                <li @(TempData["activemenu"].ToString() == ActiveMenu.CheckoutFinancialTransactions ? @"class=active" : "")>
+                                    <a asp-controller="CheckoutFinancialTransactions" asp-action="Index"><span>گزارش تسویه حساب ها</span></a>
                                 </li>
                             </ul>
                         </li>
