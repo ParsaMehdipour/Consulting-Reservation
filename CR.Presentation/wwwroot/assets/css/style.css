@@ -2541,7 +2541,7 @@ html.menu-opened body {
 -----------------------*/
 
 .section-search {
-    background: #f9f9f9 url(../img/banner.png) no-repeat bottom center;
+    background: #6183c8 url(../img/banner.png) no-repeat bottom center;
     min-height: 450px;
     background-size: 100% auto;
     position: relative;
@@ -2590,7 +2590,7 @@ html.menu-opened body {
         }
 
         .banner-wrapper .banner-header p {
-            color: #757575;
+            color: #fff;
             font-size: 20px;
             margin-bottom: 0;
         }
@@ -2645,7 +2645,7 @@ html.menu-opened body {
     }
 
 .search-box .form-text {
-    color: #757575;
+    color: #fff;
     font-size: 13px;
 }
 
