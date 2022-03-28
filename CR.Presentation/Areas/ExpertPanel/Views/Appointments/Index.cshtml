@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="appointment-action">
-                                    <a onclick="ShowDetails(@appointment.Id)" href="#" class="btn btn-sm bg-info-light" data-toggle="ajaxModal" data-target="#appt_details">
+                                    <a onclick="ShowDetails(@appointment.Id)" class="btn btn-sm bg-info-light" data-toggle="ajaxModal" data-target="#appt_details">
                                         <i class="far fa-eye"></i> مشاهده
                                     </a>
                                     @if (appointment.AppointmentStatus == AppointmentStatus.Waiting.GetDisplayName())

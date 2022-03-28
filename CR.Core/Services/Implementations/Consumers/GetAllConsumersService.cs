@@ -25,6 +25,7 @@ namespace CR.Core.Services.Implementations.Consumers
             int rowCount = 0;
             var consumers = _context.Users
                 .Include(u => u.ConsumerInfromation)
+                .ThenInclude(u => u.ConsumerAppointments)
                 .Where(u => u.UserFlag == UserFlag.Consumer)
                 .OrderByDescending(c => c.Id)
                 .AsNoTracking()
@@ -45,7 +46,7 @@ namespace CR.Core.Services.Implementations.Consumers
                         .OrderBy(a => a.TimeOfDay.Day.Date)
                         .LastOrDefault(a => a.ConsumerInformation.ConsumerId == u.Id)
                         ?.TimeOfDay.Day.Date_String : "",
-                    PaidAmount = "0",
+                    PaidAmount = (u.ConsumerInfromation != null) ? u.ConsumerInfromation.ConsumerAppointments.Sum(a => a.Price.Value).ToString("n0") : "0",
                 }).ToList();
 
 

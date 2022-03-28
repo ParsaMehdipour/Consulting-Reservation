@@ -62,7 +62,7 @@ namespace CR.Core.Services.Implementations.Users
                         email = admin.Email,
                         specificAddress = expertInformation.SpecificAddress,
                         degree = expertInformation.PostalCode.GetPersianNumber(),
-                        iconSrc = admin.IconSrc
+                        iconSrc = admin.IconSrc ?? "assets/img/User.png"
                     },
                     IsSuccess = true
                 };
