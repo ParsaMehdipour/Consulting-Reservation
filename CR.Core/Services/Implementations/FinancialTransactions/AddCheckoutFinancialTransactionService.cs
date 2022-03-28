@@ -41,7 +41,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     return new ResultDto()
                     {
                         IsSuccess = false,
-                        Message = "شما درخواست در در دست بررسی دارید"
+                        Message = "شما درخواست در دست بررسی دارید"
                     };
                 }
 
