@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace CR.Core.DTOs.Users
 {
@@ -43,5 +44,9 @@ namespace CR.Core.DTOs.Users
         [Compare(nameof(newPassword), ErrorMessage = "رمزعبور با تکرار آن مطابقت ندارد")]
         [DataType(DataType.Password)]
         public string confirmNewPassword { get; set; }
+
+        public string iconSrc { get; set; }
+
+        public IFormFile image { get; set; }
     }
 }

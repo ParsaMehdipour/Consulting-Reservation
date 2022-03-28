@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Experts;
@@ -8,6 +7,7 @@ using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Experts
 {
@@ -26,8 +26,10 @@ namespace CR.Core.Services.Implementations.Experts
             var experts = _context.Users
                 .Include(u => u.ExpertInformation)
                 .ThenInclude(u => u.Specialty)
+                .Include(u => u.ExpertInformation)
+                .ThenInclude(u => u.ExpertAppointments)
                 .Where(u => u.UserFlag == UserFlag.Expert)
-                .OrderByDescending(e=>e.Id)
+                .OrderByDescending(e => e.Id)
                 .AsNoTracking()
                 .AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)
@@ -36,10 +38,10 @@ namespace CR.Core.Services.Implementations.Experts
                     Id = u.Id,
                     FullName = u.ExpertInformation.FirstName + " " + u.ExpertInformation.LastName,
                     IconSrc = u.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
-                    Income = "HardCode",
+                    Income = u.ExpertInformation.ExpertAppointments.Where(a => a.AppointmentStatus == AppointmentStatus.Completed).Sum(a => a.Price.Value).ToString("n0"),
                     IsActive = u.IsActive,
                     RegisterDate = u.CreationDate.ToShamsi(),
-                    Speciality = (u.ExpertInformation.Specialty != null)? u.ExpertInformation.Specialty.Name : "تخصص نامعلوم",
+                    Speciality = (u.ExpertInformation.Specialty != null) ? u.ExpertInformation.Specialty.Name : "تخصص نامعلوم",
                     PhoneNumber = u.UserName
                 }).ToList();
 

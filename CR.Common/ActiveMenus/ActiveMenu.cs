@@ -16,6 +16,8 @@
 
         public const string FinancialTransactions = "financialtransactions";
 
+        public const string CheckoutFinancialTransactions = "checkoutfinancialtransactions";
+
         public const string Speciality = "speciality";
 
         public const string Timings = "timings";

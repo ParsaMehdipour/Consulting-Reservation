@@ -140,6 +140,52 @@
 {
 <script src="~/assets/js/ExpertPanel/FinancialTransactions/FinancialTransactions.js"></script>
 <script src="~/assets/js/ExpertPanel/layout.js"></script>
+
+<script>
+    function Checkout(){
+
+        var checkoutForm = new FormData();
+
+        checkoutForm.append("price",Number($("#price").cleanVal()));
+
+        $.ajax({
+            type: "POST",
+            url: '/api/FinancialTransactions/RequestCheckout',
+            data: checkoutForm,
+            processData: false,
+            contentType: false,
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
+            success: function(response) {
+                if (response.isSuccess === true) {
+                    swal.fire(
+                        'موفق!',
+                        response.message,
+                        'success'
+                    ).then(function (isConfirm) {
+                        location.reload();
+                    });
+                }
+                else {
+                    swal.fire('هشدار!',
+                        response.message,
+                        'warning');
+                }
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+</script>
+
 }
 
 @section Modal
@@ -161,7 +207,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal" data-original-title="" title="">بستن</button>
-                <button onclick="ChargeWallet()" class="btn btn-primary" type="button" data-original-title="" title="">شارژ</button>
+                <button onclick="Checkout()" class="btn btn-primary" type="button" data-original-title="" title="">شارژ</button>
             </div>
         </div>
     </div>
