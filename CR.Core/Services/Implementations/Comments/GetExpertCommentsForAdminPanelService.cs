@@ -48,6 +48,8 @@ namespace CR.Core.Services.Implementations.Comments
                 .ToPaged(Page, PageSize, out var rowsCount)
                 .ToList();
 
+            int notReadCommentsCount = _context.Comments.Count(_ => _.TypeId == CommentType.Expert && _.IsRead == false);
+
             return new ResultDto<ResultGetAllExpertCommentsForAdminPanelDto>()
             {
                 Data = new ResultGetAllExpertCommentsForAdminPanelDto()
@@ -55,7 +57,8 @@ namespace CR.Core.Services.Implementations.Comments
                     ExpertCommentForAdminPanelDtos = expertComments,
                     CurrentPage = Page,
                     PageSize = PageSize,
-                    RowCount = rowsCount
+                    RowCount = rowsCount,
+                    NotReadComments = notReadCommentsCount
                 },
                 IsSuccess = true
             };
