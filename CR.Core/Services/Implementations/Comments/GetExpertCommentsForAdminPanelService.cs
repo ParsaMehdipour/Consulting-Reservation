@@ -42,7 +42,8 @@ namespace CR.Core.Services.Implementations.Comments
                     Message = (_.Message.Length > 15)
                         ? _.Message.Substring(0, Math.Min(_.Message.Length, 15)) + "..."
                         : _.Message,
-                    Status = _.CommentStatus.GetDisplayName()
+                    Status = _.CommentStatus.GetDisplayName(),
+                    ShowStatus = _.ShowInMainPage
                 }).AsEnumerable()
                 .ToPaged(Page, PageSize, out var rowsCount)
                 .ToList();

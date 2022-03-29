@@ -26,10 +26,11 @@
                                 <th class="text-center">نام نظر دهنده</th>
                                 <th class="text-center">نام مشاور</th>
                                 <th class="text-center">نظر</th>
-                                <th class="text-center"> توضیحات </th>
+                                <th class="text-center"> متن </th>
                                 <th class="text-center">تاریخ</th>
                                 <th class="text-center">وضعیت</th>
                                 <th class="text-center"> اقدامات </th>
+                                <th class="text-center">نمایش در صفحه اصلی</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,7 +67,6 @@
                                         <td class="text-center">
                                             @comment.CreateDate
                                         </td>
-
                                         <td class="text-center">
                                             @if (comment.Status == CommentStatus.Waiting.GetDisplayName())
                                             {
@@ -81,12 +81,24 @@
                                                 <span class="badge badge-pill bg-danger inv-badge">@comment.Status</span>
                                             }
                                         </td>
-
-                                        <td class="text-right">
+                                        <td class="text-center">
                                             <div class="actions">
                                                 <a onclick="SetId(@comment.Id)" class="btn btn-sm bg-success-light" data-toggle="modal" href="#change_comment_status">
                                                     <i class="fe fe-check-verified"></i> تغیر وضعیت
                                                 </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="status-toggle">
+                                                @if (comment.ShowStatus == true)
+                                                {
+                                                    <input onchange="ChangeShowStatus(@comment.Id)" type="checkbox" id="status_@comment.Id" name="status" class="check" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input onchange="ChangeShowStatus(@comment.Id)" type="checkbox" id="status_@comment.Id" name="status" class="check">
+                                                }
+                                                <label for="status_@comment.Id" class="checktoggle">checkbox</label>
                                             </div>
                                         </td>
                                     </tr>
@@ -275,6 +287,61 @@
 
             },
             error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function ChangeShowStatus(id) {
+        var showStatus = false;
+        var commentId = id;
+
+        if (document.getElementById("status_" + commentId).checked) {
+            showStatus = true;
+        } else {
+            showStatus = false;
+        }
+
+        var showStatusForm = new FormData();
+
+        showStatusForm.append("commentId",commentId);
+        showStatusForm.append("showStatus",showStatus);
+
+        $.ajax({
+            type: "POST",
+            url: '/api/Comments/ChangeShowStatus',
+            data: showStatusForm,
+            processData: false,
+            contentType: false,
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
+            success: function (data) {
+                if (data.isSuccess == true) {
+                    swal.fire(
+                        'موفق!',
+                        data.message,
+                        'success'
+                    ).then(function (isConfirm) {
+                        location.reload();
+                    });
+                }
+                else {
+                    swal.fire(
+                        'هشدار!',
+                        data.message,
+                        'warning'
+                    );
+
+                }
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
+            },
+            error: function (request, status, error) {
                 alert(request.responseText);
             }
         });
