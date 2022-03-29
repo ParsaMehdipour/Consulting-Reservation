@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CR.Core.DTOs.Comments.Experts
+namespace CR.Core.DTOs.Comments.Blogs
 {
     public class BlogCommentDto
     {
