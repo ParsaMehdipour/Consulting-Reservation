@@ -9080,6 +9080,7 @@ ul.benifits-col li i {
 
 @media only screen and (max-width:479px) {
     .section-search {
+        background: #6183c8 url(../img/banner.png) no-repeat bottom center;
         min-height: 410px;
         padding: 30px 15px;
     }
