@@ -60,7 +60,7 @@ namespace CR.Presentation.Controllers.Api
 
             int price = result.Data.price * 10;
 
-            var res = CallApi(price.ToString(), result.Data.transactionNumber);
+            var res = CallApi(price.ToString(), result.Data.transactionNumber, result.Data.phoneNumber);
 
             res.Wait();
 
@@ -93,7 +93,7 @@ namespace CR.Presentation.Controllers.Api
 
         }
 
-        private async Task<bpPayRequestResponse> CallApi(string price, string factorNumber)
+        private async Task<bpPayRequestResponse> CallApi(string price, string factorNumber, string phoneNumber)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace CR.Presentation.Controllers.Api
                     additionalData: "پس از نیم ساعت امکان لغو درخواست وجود ندارد",
                     callBackUrl: "http://www.chalechoole.com/Payment/Verify",
                     payerId: "0",
-                    mobileNo: "989122502978",
+                    mobileNo: phoneNumber,
                     encPan: "",
                     panHiddenMode: "",
                     cartItem: "",

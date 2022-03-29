@@ -37,7 +37,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     };
                 }
 
-                var factor = _context.Factors.Include(_ => _.ConsumerInformation).FirstOrDefault(_ => _.Id == factorId);
+                var factor = _context.Factors.Include(_ => _.ConsumerInformation).ThenInclude(_ => _.Consumer).FirstOrDefault(_ => _.Id == factorId);
 
                 if (factor == null)
                 {
@@ -73,7 +73,8 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     Data = new RedirectToPaymentForReservationDto()
                     {
                         price = Convert.ToInt32(financialTransaction.Price_Digit),
-                        transactionNumber = financialTransaction.TransactionNumber
+                        transactionNumber = financialTransaction.TransactionNumber,
+                        phoneNumber = factor.ConsumerInformation.Consumer.PhoneNumber
                     },
                     IsSuccess = true,
                     Message = string.Empty
