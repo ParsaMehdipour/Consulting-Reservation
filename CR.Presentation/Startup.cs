@@ -270,6 +270,8 @@ namespace CR.Presentation
             services.AddScoped<IGetBlogCommentsForAdminService, GetBlogCommentsForAdminService>();
             services.AddScoped<IGetBlogCommentsForBlogDetailsService, GetBlogCommentsForBlogDetailsService>();
             services.AddScoped<IGetCommentDetailsForAdminPanelService, GetCommentDetailsForAdminPanelService>();
+            services.AddScoped<IShowCommentInMainPageService, ShowCommentInMainPageService>();
+            services.AddScoped<IGetCommentsForMainViewService, GetCommentsForMainViewService>();
             //Wallet
             services.AddScoped<IGetWalletBalanceService, GetWalletBalanceService>();
             //ChatUsers

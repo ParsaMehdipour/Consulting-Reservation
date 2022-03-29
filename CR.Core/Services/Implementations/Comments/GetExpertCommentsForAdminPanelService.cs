@@ -42,10 +42,13 @@ namespace CR.Core.Services.Implementations.Comments
                     Message = (_.Message.Length > 15)
                         ? _.Message.Substring(0, Math.Min(_.Message.Length, 15)) + "..."
                         : _.Message,
-                    Status = _.CommentStatus.GetDisplayName()
+                    Status = _.CommentStatus.GetDisplayName(),
+                    ShowStatus = _.ShowInMainPage
                 }).AsEnumerable()
                 .ToPaged(Page, PageSize, out var rowsCount)
                 .ToList();
+
+            int notReadCommentsCount = _context.Comments.Count(_ => _.TypeId == CommentType.Expert && _.IsRead == false);
 
             return new ResultDto<ResultGetAllExpertCommentsForAdminPanelDto>()
             {
@@ -54,7 +57,8 @@ namespace CR.Core.Services.Implementations.Comments
                     ExpertCommentForAdminPanelDtos = expertComments,
                     CurrentPage = Page,
                     PageSize = PageSize,
-                    RowCount = rowsCount
+                    RowCount = rowsCount,
+                    NotReadComments = notReadCommentsCount
                 },
                 IsSuccess = true
             };

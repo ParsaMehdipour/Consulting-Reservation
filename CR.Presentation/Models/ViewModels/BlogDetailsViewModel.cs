@@ -2,6 +2,7 @@
 using CR.Core.DTOs.Blogs;
 using CR.Core.DTOs.Comments.Experts;
 using System.Collections.Generic;
+using CR.Core.DTOs.Comments.Blogs;
 
 namespace CR.Presentation.Models.ViewModels
 {

@@ -77,35 +77,38 @@
 </section>
 
 <!-- Clinic and Specialities -->
-<section class="section section-specialities">
-    <div class="container-fluid">
-        <div class="section-header text-center">
-            <h2>دسته بندی تخصص ها</h2>
-            <p class="sub-title">در هر حوزه ای که نیاز به مشاوره دارید، می توانید از تجارب ارزشمند مشاوران ما بهرمند شوید</p>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-9">
-                <!-- Slider -->
+@if (Model.SpecialityDtos.Count > 0)
+{
+    <section class="section section-specialities">
+        <div class="container-fluid">
+            <div class="section-header text-center">
+                <h2>دسته بندی تخصص ها</h2>
+                <p class="sub-title">در هر حوزه ای که نیاز به مشاوره دارید، می توانید از تجارب ارزشمند مشاوران ما بهرمند شوید</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-9">
+                    <!-- Slider -->
                 <div class="specialities-slider slider" dir="rtl">
-                    @foreach (var speciality in Model.SpecialityDtos)
-                    {
-                        <!-- Slider Item -->
-                        <div class="speicality-item text-center">
-                            <div class="speicality-img">
-                                <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="@speciality.Name"><img src="~/@speciality.ImageSrc" class="img-fluid" alt="Speciality"></a>
-                                <span><i class="fa fa-circle" aria-hidden="true"></i></span>
+                        @foreach (var speciality in Model.SpecialityDtos)
+                        {
+                            <!-- Slider Item -->
+                            <div class="speicality-item text-center">
+                                <div class="speicality-img">
+                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="@speciality.Name"><img src="~/@speciality.ImageSrc" class="img-fluid" alt="Speciality"></a>
+                                    <span><i class="fa fa-circle" aria-hidden="true"></i></span>
+                                </div>
+                                <p>@speciality.Name</p>
                             </div>
-                            <p>@speciality.Name</p>
-                        </div>
-                        <!-- /Slider Item -->
-                    }
-                </div>
-                <!-- /Slider -->
+                            <!-- /Slider Item -->
+                        }
+                    </div>
+                    <!-- /Slider -->
 
             </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+}
 <!-- Clinic and Specialities -->
 <!-- Popular Section -->
 @if (Model.ExpertForPresentationDtos.Count > 0)
@@ -193,235 +196,79 @@
     </section>
 }
 <!-- /Popular Section -->
-<!-- Availabe Features -->
-@*<section class="section section-features">
-    <div class="container-fluid">
-    <div class="row">
-    <div class="col-md-5 features-img">
-    <img src="assets/img/features/feature.png" class="img-fluid" alt="Feature">
-    </div>
-    <div class="col-md-7">
-    <div class="section-header">
-    <h2 class="mt-2"> امکانات موجود در کلینیک ما </h2>
-    <p>کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. </p>
-    </div>
-    <div class="features-slider slider" dir="rtl">
-    <!-- Slider Item -->
-    <div class="feature-item text-center">
-    <img src="assets/img/features/feature-01.jpg" class="img-fluid" alt="Feature">
-    <p>پیشنت وارد</p>
-    </div>
-    <!-- /Slider Item -->
-    <!-- Slider Item -->
-    <div class="feature-item text-center">
-    <img src="assets/img/features/feature-02.jpg" class="img-fluid" alt="Feature">
-    <p>تست روم</p>
-    </div>
-    <!-- /Slider Item -->
-    <!-- Slider Item -->
-    <div class="feature-item text-center">
-    <img src="assets/img/features/feature-03.jpg" class="img-fluid" alt="Feature">
-    <p>ای سو یو</p>
-    </div>
-    <!-- /Slider Item -->
-    <!-- Slider Item -->
-    <div class="feature-item text-center">
-    <img src="assets/img/features/feature-04.jpg" class="img-fluid" alt="Feature">
-    <p>لابراتوری</p>
-    </div>
-    <!-- /Slider Item -->
-    <!-- Slider Item -->
-    <div class="feature-item text-center">
-    <img src="assets/img/features/feature-05.jpg" class="img-fluid" alt="Feature">
-    <p>اوپریشن</p>
-    </div>
-    <!-- /Slider Item -->
-    <!-- Slider Item -->
-    <div class="feature-item text-center">
-    <img src="assets/img/features/feature-06.jpg" class="img-fluid" alt="Feature">
-    <p>مدیکال</p>
-    </div>
-    <!-- /Slider Item -->
-    </div>
-    </div>
-    </div>
-    </div>
-    </section>*@
 
-@*<section id="registration" class="section">
-    <div class="container">
-    <div class="row">
-    <div class="section-body">
-    <div class="registration-body doctor-registration">
-    <span class="registration-message-type registration-message-img img-bg"></span>
-    <figure class="registration-img doctor-registration-img img-bg float-right"></figure>
-    <nav class="registration-text-nav registration-text-doctor-nav float-left">
-    <ul class="registration-text">
-    <li>
-    <label class="registratoin-caption doctor-registration-caption">پزشک هستید؟</label>
-    </li>
-    <li>
-    <p class="registrtion-explain doctor-registrtion-explain">شما هم با پیوستن به جمع بزرگ پزشکان دکترساینا حس خوب همدلی با کاربران را تجربه کنید</p>
-    </li>
-    <li>
-    <a class="registrtion-link doctor-registrtion-link lg-drsaina-btn corner-btn green-primary-btn top-interaction-btn-transform" href="/DoctorContracts/Home/Index" target="_blank" title="ثبت نام پزشک"> ثبت نام پزشک </a>
-    </li>
-    </ul>
-    </nav>
+@*<div class="card search-filter">
+    <div class="card-body">
+        <div class="card flex-fill mt-0 mb-0">
+            <div class="list-group list-group-flush benifits-col">
+                <div class="list-group-item d-flex align-items-center">
+                    <div>
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <div>
+                        ارسال رایگان <br><span class="text-sm">برای سفارشات بالای 50 تومان</span>
+                    </div>
+                </div>
+                <div class="list-group-item d-flex align-items-center">
+                    <div>
+                        <i class="far fa-question-circle"></i>
+                    </div>
+                    <div>
+                        پشتیبانی 24/7<br><span class="text-sm"> در هر زمان با ما تماس بگیرید </span>
+                    </div>
+                </div>
+                <div class="list-group-item d-flex align-items-center">
+                    <div>
+                        <i class="fas fa-hands"></i>
+                    </div>
+                    <div>
+                        ایمنی 100٪<br><span class="text-sm">فقط پرداخت های ایمن</span>
+                    </div>
+                </div>
+                <div class="list-group-item d-flex align-items-center">
+                    <div>
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <div>
+                        پیشنهادات داغ<br><span class="text-sm"> تخفیف تا 90٪ </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="registration-body doctor-registration">
-    <span class="registration-message-type registration-text-img img-bg"></span>
-    <figure class="registration-img user-registration-img img-bg float-left"></figure>
-    <nav class="registration-text-nav registration-text-user-nav float-right">
-    <ul class="registration-text float-left">
-    <li>
-    <label class="registratoin-caption user-registration-caption">کاربر هستید؟</label>
-    </li>
-    <li>
-    <p class="registrtion-explain user-registrtion-explain">شما هم با عضویت در دکترساینا از دریافت آنلاین خدمات سلامت لذت ببراید</p>
-    </li>
-    <li>
-    <a class="registrtion-link user-registrtion-link lg-drsaina-btn corner-btn red-primary-btn top-interaction-btn-transform" href="/RegisterLogin" title="ثبت نام کاربر"> ثبت نام کاربر </a>
-    </li>
-    </ul>
-    </nav>
-    </div>
-    </div>
-    </div>
-    </div>
+</div>*@
+
+<!-- popular Comments -->
+@if (Model.CommentForMainViewDtos.Count > 0)
+{
+    <section class="section section-specialities">
+        <div class="container-fluid">
+            <div class="section-header text-center">
+                <h2>نظرات کاربران</h2>
+                <p class="sub-title">آنچه کاربران درباره چاله چوله میگویند</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="doctor-slider slider" dir="rtl" style="width: auto;height: auto">
+                        @foreach (var comment in Model.CommentForMainViewDtos)
+                        {
+                            <!-- Doctor Widget -->
+                            <div class="profile-widget" style="box-shadow: 1px 6px 14px rgba(0, 0, 0, 0.2);">
+                                <div class="pro-content">
+                                    <h3 class="title text-center">"@comment.Message"</h3>
+                                    <br />
+                                    <p style="color: gray" class="text-center">@comment.FirstName </p>
+                                </div>
+                            </div>
+                            <!-- /Doctor Widget -->
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-*@
-
-@*<section class="section section-specialities">
-    <h5 class="text-center bt-color">نظرات کاربران ما</h5>
-    <div id="owl-topblog" class="owl-carousel owl-theme text-right ">
-        <div class="mx-2">
-            <a href="Blogdetails.html">
-                <img src="~/assets/img/patient8.jpg" class="img-fluid rad25 bigpic" />
-                <div class="d-flex flex-column blogdiv">
-                    <div>
-                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
-                    </div>
-                    <div class="d-flex flex-row">
-                        <img src="~/assets/img/patient8.jpg" class="img-fluid rounded-circle ml-3 pic55" />
-
-                        <div>
-                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p"> سیما محمدی</p>
-                            <span class="text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
-                        </div>
-                    </div>
-                </div>
-
-            </a>
-
-        </div>
-        <div class="mx-2">
-            <a href="Blogdetails.html">
-                <img src="Images/topblog5.jpg" class="img-fluid rad25 bigpic" />
-                <div class="d-flex flex-column blogdiv">
-                    <div>
-                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
-
-                    </div>
-                    <div class="d-flex flex-row">
-                        <img src="Images/11.jpg" class="img-fluid rounded-circle ml-3 pic55" />
-
-                        <div>
-                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p"> مبین حیدری</p>
-                            <span class="IRANSansWeb_Medium text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
-                        </div>
-                    </div>
-                </div>
-
-            </a>
-
-        </div>
-        <div class="mx-2">
-            <a href="Blogdetails.html">
-                <img src="Images/topblog6.jpg" class="img-fluid rad25 bigpic" />
-                <div class="d-flex flex-column blogdiv">
-                    <div>
-                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
-
-                    </div>
-                    <div class="d-flex flex-row">
-                        <img src="Images/10.jpg" class="img-fluid rounded-circle ml-3 pic55" />
-
-                        <div>
-                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p"> سیما محمدی</p>
-                            <span class="IRANSansWeb_Medium text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
-                        </div>
-                    </div>
-                </div>
-
-            </a>
-
-        </div>
-        <div class="mx-2">
-            <a href="Blogdetails.html">
-                <img src="Images/topblog12.jpg" class="img-fluid rad25 bigpic" />
-                <div class="d-flex flex-column blogdiv">
-                    <div>
-                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
-
-                    </div>
-                    <div class="d-flex flex-row">
-                        <img src="Images/12.jpg" class="img-fluid rounded-circle ml-3 pic55" />
-
-                        <div>
-                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p"> عاطف محمدی</p>
-                            <span class="IRANSansWeb_Medium text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
-                        </div>
-                    </div>
-                </div>
-
-            </a>
-
-        </div><div class="mx-2">
-            <a href="Blogdetails.html">
-                <img src="Images/topblog1.jpg" class="img-fluid rad25 bigpic" />
-                <div class="d-flex flex-column blogdiv">
-                    <div>
-                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
-
-                    </div>
-                    <div class="d-flex flex-row">
-                        <img src="Images/11.jpg" class="img-fluid rounded-circle ml-3 pic55" />
-
-                        <div>
-                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p"> سیما محمدی</p>
-                            <span class="IRANSansWeb_Medium text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
-                        </div>
-                    </div>
-                </div>
-
-            </a>
-
-        </div>
-        <div class="mx-2">
-            <a href="Blogdetails.html">
-                <img src="Images/topblog9.jpg" class="img-fluid rad25 bigpic" />
-                <div class="d-flex flex-column blogdiv">
-                    <div>
-                        <h6 class="IRANSansWeb_Medium text-white text-shadow">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h6>
-
-                    </div>
-                    <div class="d-flex flex-row">
-                        <img src="Images/12.jpg" class="img-fluid rounded-circle ml-3 pic55" />
-
-                        <div>
-                            <p class="text-white IRANSansWeb_Medium text-shadow bottom_p">دکتر سیما محمدی</p>
-                            <span class="IRANSansWeb_Medium text-shadow text-white"><i class="fas fa-ticket-alt"></i> 98/5/9</span>
-                        </div>
-                    </div>
-                </div>
-
-            </a>
-
-        </div>
-    </div>
-</section>*@
-<!-- /Availabe Features -->
+}
+<!-- /Popular Comments -->
 <!-- Blog Section -->
 @if (Model.BlogForPresentationDtos.Count > 0)
 {

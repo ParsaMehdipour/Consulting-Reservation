@@ -46,6 +46,8 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     TransactionType = TransactionType.ChargeWallet
                 };
 
+                var consumer = _context.Users.Find(payerId);
+
                 _context.FinancialTransactions.Add(financialTransaction);
 
                 _context.SaveChanges();
@@ -57,7 +59,8 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     Data = new RedirectToPaymentForWalletChargeDto()
                     {
                         price = Convert.ToInt32(financialTransaction.Price_Digit),
-                        transactionNumber = financialTransaction.TransactionNumber
+                        transactionNumber = financialTransaction.TransactionNumber,
+                        phoneNumber = consumer.PhoneNumber
                     },
                     IsSuccess = true,
                     Message = string.Empty

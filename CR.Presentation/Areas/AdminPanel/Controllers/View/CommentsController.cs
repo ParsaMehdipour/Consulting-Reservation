@@ -25,6 +25,8 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
 
             var model = _getExpertCommentsForAdminPanelService.Execute(Page, PageSize).Data;
 
+            ViewData["notReadCommentsCount"] = model.NotReadComments;
+
             return View(model);
         }
 

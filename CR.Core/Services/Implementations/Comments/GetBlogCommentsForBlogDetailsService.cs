@@ -6,6 +6,7 @@ using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
 using System.Collections.Generic;
 using System.Linq;
+using CR.Core.DTOs.Comments.Blogs;
 
 namespace CR.Core.Services.Implementations.Comments
 {
