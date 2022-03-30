@@ -70,6 +70,58 @@ namespace CR.DataAccess.Configurations
                 .WithOne(_ => _.ExpertInformation)
                 .HasForeignKey(_ => _.ExpertInformationId);
 
+            builder.Property(_ => _.Bio)
+                .HasMaxLength(200)
+                .IsRequired();
+
+            builder.Property(_ => _.City)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.BirthDate_String)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(_ => _.ClinicAddress)
+                .HasMaxLength(200);
+
+            builder.Property(_ => _.ClinicName)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.FirstName)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(_ => _.LastName)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(_ => _.Instagram)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.PostalCode)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(_ => _.Gender);
+
+            builder.Property(_ => _.Tag);
+
+            builder.Property(_ => _.PhoneCallPrice);
+
+            builder.Property(_ => _.VoiceCallPrice);
+
+            builder.Property(_ => _.TextCallPrice);
+
+            builder.Property(_ => _.SpecificAddress)
+                .HasMaxLength(200);
+
+            builder.Property(_ => _.UsePhoneCall);
+
+            builder.Property(_ => _.UseVoiceCall);
+
+            builder.Property(_ => _.UseTextCall);
+
+
         }
     }
 }

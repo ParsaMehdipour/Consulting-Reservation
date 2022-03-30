@@ -21,6 +21,12 @@ namespace CR.DataAccess.Configurations
             builder.HasMany(_ => _.ChatUserMessages)
                 .WithOne(_ => _.ChatUser)
                 .HasForeignKey(_ => _.ChatUserId);
+
+            builder.Property(_ => _.AppointmentDate_String)
+                .HasMaxLength(150)
+                .IsRequired();
+
+            builder.Property(_ => _.MessageType);
         }
     }
 }

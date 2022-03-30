@@ -8,7 +8,6 @@ namespace CR.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            
         }
     }
 }

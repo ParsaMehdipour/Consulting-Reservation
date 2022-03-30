@@ -1,5 +1,4 @@
 ﻿using CR.DataAccess.Entities.Appointments;
-using CR.DataAccess.Entities.ExpertAvailabilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -26,6 +25,14 @@ namespace CR.DataAccess.Configurations
             builder.HasOne(a => a.Factor)
                 .WithMany(a => a.Appointments)
                 .HasForeignKey(a => a.FactorId);
+
+            builder.Property(_ => _.Reason);
+
+            builder.Property(_ => _.AppointmentStatus);
+
+            builder.Property(_ => _.CallingType);
+
+            builder.Property(_ => _.Price);
         }
     }
 }

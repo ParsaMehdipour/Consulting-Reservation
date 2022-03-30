@@ -13,6 +13,10 @@ namespace CR.DataAccess.Configurations
             builder.HasMany(p => p.ExpertInformations)
                 .WithOne(p => p.Specialty)
                 .HasForeignKey(p => p.SpecialtyId);
+
+            builder.Property(_ => _.Name)
+                .HasMaxLength(100)
+                .IsRequired();
         }
     }
 }

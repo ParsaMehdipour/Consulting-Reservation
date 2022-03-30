@@ -10,7 +10,19 @@ namespace CR.DataAccess.Configurations
         {
             builder.ToTable("TBL_Timings");
 
+            builder.Property(_ => _.StartTime_String)
+                .HasMaxLength(50)
+                .IsRequired();
 
+            builder.Property(_ => _.EndTime_String)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            builder.Property(_ => _.StartTime);
+
+            builder.Property(_ => _.EndTime);
+
+            builder.Property(_ => _.TimingType);
         }
     }
 }
