@@ -6,6 +6,7 @@ using CR.Core.DTOs.ResultDTOs.Comments;
 using CR.Core.Services.Interfaces.Comments;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,7 +35,10 @@ namespace CR.Core.Services.Implementations.Comments
                 };
             }
 
+            var rate = _context.Comments.Include(_ => _.Rate);
+
             var expertComments = _context.Comments
+                .Include(_ => _.Rate)
                 .Where(_ => _.TypeId == CommentType.Expert
                             && _.OwnerRecordId == expertInformationId.Id
                             && _.CommentStatus == CommentStatus.Accepted
@@ -47,6 +51,7 @@ namespace CR.Core.Services.Implementations.Comments
                     Id = _.Id,
                     Message = _.Message,
                     HasChildren = _.Children.Any(c => c.CommentStatus == CommentStatus.Accepted),
+                    Rate = _.Rate.FirstOrDefault().Rate,
                     Children = _.Children.Any(c => c.CommentStatus == CommentStatus.Accepted) ? _.Children.Select(c => new ExpertCommentDto
                     {
                         ParentId = c.ParentId.Value,
@@ -54,7 +59,8 @@ namespace CR.Core.Services.Implementations.Comments
                         CommenterIconSrc = c.User.IconSrc ?? "assets/img/icon-256x256.png",
                         CreateDate = c.CreateDate.ToShamsi(),
                         Id = c.Id,
-                        Message = c.Message
+                        Message = c.Message,
+                        Rate = _.Rate.FirstOrDefault().Rate
                     }).ToList() : new List<ExpertCommentDto>()
                 }).AsEnumerable()
                 .ToPaged(page, pageSize, out var rowsCount)

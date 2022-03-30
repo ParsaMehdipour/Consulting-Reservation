@@ -53,11 +53,18 @@
                                         </td>
 
                                         <td class="text-center">
-                                            <i class="fe fe-star text-warning"></i>
-                                            <i class="fe fe-star text-warning"></i>
-                                            <i class="fe fe-star text-warning"></i>
-                                            <i class="fe fe-star text-warning"></i>
-                                            <i class="fe fe-star-o text-secondary"></i>
+                                            @if (comment.Rate != null)
+                                            {
+                                                @for (int i = 1; i <= comment.Rate; i++)
+                                                {
+                                                    <i class="fe fe-star text-warning"></i>
+                                                }
+                                                @for (int i = 1; i <= (5 - comment.Rate); i++)
+                                                {
+                                                    <i class="fe fe-star-o text-secondary"></i>
+
+                                                }
+                                            }
                                         </td>
 
                                         <td class="text-center">
@@ -155,7 +162,6 @@
     </div>
 </div>
 <!-- /Change Status Modal -->
-
 <!-- Comment Details Modal -->
 <div class="modal fade custom-modal" id="comment_details">
     <div class="modal-dialog modal-dialog-centered">

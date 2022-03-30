@@ -72,15 +72,15 @@
                             <a onclick="AddToFavorites(@Model.ExpertDetailsForSiteDto.id)" class="btn btn-white fav-btn">
                                 <i class="far fa-bookmark"></i>
                             </a>
-                        @*    <a class="btn btn-white msg-btn">
+                            @*    <a class="btn btn-white msg-btn">
                                 <i class="far fa-comment-alt"></i>
-                            </a>
-                            <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#voice_call">
+                                </a>
+                                <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#voice_call">
                                 <i class="fas fa-phone"></i>
-                            </a>
-                            <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#video_call">
+                                </a>
+                                <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#video_call">
                                 <i class="fas fa-video"></i>
-                            </a>*@
+                                </a>*@
                         </div>
                         @if (Model.ExpertDetailsForSiteDto.DayDtos.Count > 0)
                         {
@@ -249,14 +249,20 @@
                                                         <span id="commenterName_@comment.Id" class="comment-author">@comment.CommenterFullName</span>
                                                         <span class="comment-date">نظر داده شده در تاریخ @comment.CreateDate</span>
                                                         <div class="review-count rating">
-                                                            <i class="fas fa-star filled"></i>
-                                                            <i class="fas fa-star filled"></i>
-                                                            <i class="fas fa-star filled"></i>
-                                                            <i class="fas fa-star filled"></i>
-                                                            <i class="fas fa-star"></i>
+                                                            @if (comment.Rate != null)
+                                                            {
+                                                                @for (int i = 1; i <= comment.Rate.Value; i++)
+                                                                {
+                                                                    <i class="fas fa-star filled"></i>
+                                                                }
+                                                                @for (int i = 1; i <= (5 - comment.Rate.Value); i++)
+                                                                {
+                                                                    <i class="fas fa-star"></i>
+
+                                                                }
+                                                            }
                                                         </div>
                                                     </div>
-                                                    @*<p class="recommended"><i class="far fa-thumbs-up"></i> این دکتر را پیشنهاد میکنم</p>*@
                                                     <p class="comment-content">
                                                         @comment.Message
                                                     </p>
@@ -264,15 +270,6 @@
                                                         <a class="comment-btn" onclick="SetParentId(@comment.Id)">
                                                             <i class="fas fa-reply"></i> پاسخ
                                                         </a>
-                                                        @*      <p class="recommend-btn">
-                                                            <span>پیشنهاد؟</span>
-                                                            <a href="#" class="like-btn">
-                                                            <i class="far fa-thumbs-up"></i> بله
-                                                            </a>
-                                                            <a href="#" class="dislike-btn">
-                                                            <i class="far fa-thumbs-down"></i> نه
-                                                            </a>
-                                                            </p>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -290,13 +287,20 @@
                                                                     <div class="meta-data">
                                                                         <span class="comment-author">@reply.CommenterFullName</span>
                                                                         <span class="comment-date">پاسخ داده شده در تاریخ @reply.CreateDate</span>
-                                                                      @*  <div class="review-count rating">
-                                                                            <i class="fas fa-star filled"></i>
-                                                                            <i class="fas fa-star filled"></i>
-                                                                            <i class="fas fa-star filled"></i>
-                                                                            <i class="fas fa-star filled"></i>
-                                                                            <i class="fas fa-star"></i>
-                                                                        </div>*@
+                                                                        <div class="review-count rating">
+                                                                            @if (reply.Rate != null)
+                                                                            {
+                                                                                @for (int i = 1; i <= reply.Rate; i++)
+                                                                                {
+                                                                                    <i class="fas fa-star filled"></i>
+                                                                                }
+                                                                                @for (int i = 1; i <= (5 - reply.Rate); i++)
+                                                                                {
+                                                                                    <i class="fas fa-star"></i>
+
+                                                                                }
+                                                                            }
+                                                                        </div>
                                                                     </div>
                                                                     <p class="comment-content">
                                                                         @reply.Message
@@ -334,23 +338,23 @@
                                 <div class="star-rating">
                                     <input id="star-5" type="radio" name="rating" value="star-5">
                                     <label for="star-5" title="5 stars">
-                                        <i class="active fa fa-star"></i>
+                                        <i onclick="GetRate(5)" class="active fa fa-star"></i>
                                     </label>
                                     <input id="star-4" type="radio" name="rating" value="star-4">
                                     <label for="star-4" title="4 stars">
-                                        <i class="active fa fa-star"></i>
+                                        <i onclick="GetRate(4)" class="active fa fa-star"></i>
                                     </label>
                                     <input id="star-3" type="radio" name="rating" value="star-3">
                                     <label for="star-3" title="3 stars">
-                                        <i class="active fa fa-star"></i>
+                                        <i onclick="GetRate(3)" class="active fa fa-star"></i>
                                     </label>
                                     <input id="star-2" type="radio" name="rating" value="star-2">
                                     <label for="star-2" title="2 stars">
-                                        <i class="active fa fa-star"></i>
+                                        <i onclick="GetRate(2)" class="active fa fa-star"></i>
                                     </label>
                                     <input id="star-1" type="radio" name="rating" value="star-1">
                                     <label for="star-1" title="1 star">
-                                        <i class="active fa fa-star"></i>
+                                        <i onclick="GetRate(1)" class="active fa fa-star"></i>
                                     </label>
                                 </div>
                             </div>
@@ -466,6 +470,11 @@
 <script>
 
     var parentId = null;
+    var rate = null;
+
+    function GetRate(starRate) {
+        rate = starRate;
+    }
 
     function SetParentId(Id) {
 
@@ -529,6 +538,7 @@
             data["typeId"] = 0;
             data["ownerRecordId"] =  @Model.ExpertDetailsForSiteDto.id;
             data["parentId"] =  parentId;
+            data["rate"] =  rate;
 
             $.ajax({
                 type: "POST",

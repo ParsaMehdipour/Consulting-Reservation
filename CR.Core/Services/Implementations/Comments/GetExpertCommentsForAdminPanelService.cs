@@ -26,6 +26,7 @@ namespace CR.Core.Services.Implementations.Comments
             var expertInformations = _context.ExpertInformations.AsQueryable();
 
             var expertComments = _context.Comments
+                .Include(_ => _.Rate)
                 .Include(_ => _.User)
                 .Where(_ => _.TypeId == CommentType.Expert)
                 .Select(_ => new ExpertCommentForAdminPanelDto
@@ -43,7 +44,8 @@ namespace CR.Core.Services.Implementations.Comments
                         ? _.Message.Substring(0, Math.Min(_.Message.Length, 15)) + "..."
                         : _.Message,
                     Status = _.CommentStatus.GetDisplayName(),
-                    ShowStatus = _.ShowInMainPage
+                    ShowStatus = _.ShowInMainPage,
+                    Rate = _.Rate.FirstOrDefault().Rate
                 }).AsEnumerable()
                 .ToPaged(Page, PageSize, out var rowsCount)
                 .ToList();
