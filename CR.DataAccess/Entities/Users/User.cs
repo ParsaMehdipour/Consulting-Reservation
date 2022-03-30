@@ -39,6 +39,8 @@ namespace CR.DataAccess.Entities.Users
 
         public ICollection<ChatUser> ChatUsers { get; set; }
 
+        public ICollection<Rating> Ratings { get; set; }
+
         #endregion
 
 
