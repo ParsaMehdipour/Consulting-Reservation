@@ -51,8 +51,7 @@ namespace CR.Presentation.Controllers.View
             var model = new ExpertProfileViewModel()
             {
                 ExpertDetailsForSiteDto = _getExpertDetailsForSiteService.Execute(expertInformationId).Data,
-                ResultGetExpertCommentsForPresentationDto =
-                    _getExpertCommentsForPresentationService.Execute(expertInformationId).Data
+                ResultGetExpertCommentsForPresentationDto = _getExpertCommentsForPresentationService.Execute(expertInformationId).Data
             };
 
             return View(model);

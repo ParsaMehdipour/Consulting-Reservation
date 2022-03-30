@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220105113726_AddedFactor")]
-    partial class AddedFactor
+    [Migration("20220330075028_AddedRatingAndChangedConfigurations")]
+    partial class AddedRatingAndChangedConfigurations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,24 @@ namespace CR.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("CR.DataAccess.Entities.AboutUs.AboutUs", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_AboutUs");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.Appointments.Appointment", b =>
                 {
                     b.Property<long>("Id")
@@ -29,6 +47,9 @@ namespace CR.DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AppointmentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CallingType")
                         .HasColumnType("int");
 
                     b.Property<long>("ConsumerInformationId")
@@ -63,6 +84,348 @@ namespace CR.DataAccess.Migrations
                     b.ToTable("TBL_Appointments");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Blogs.Blog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("BlogCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CanonicalAddress")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Keywords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PictureSrc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ShowOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogCategoryId");
+
+                    b.ToTable("TBL_Blogs");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Blogs.BlogCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("MetaDescription")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long?>("ParentCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PictureSrc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ShowOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentCategoryId");
+
+                    b.ToTable("TBL_BlogCategories");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUserMessages.ChatUserMessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Audio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ChatUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("File")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MessageFlag")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatUserId");
+
+                    b.ToTable("TBL_ChatUserMessages");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUsers.ChatUser", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AppointmentDate_String")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long>("ConsumerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ExpertInformationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("MessageType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("lastChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsumerId");
+
+                    b.HasIndex("ExpertInformationId");
+
+                    b.ToTable("TBL_ChatUsers");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CommentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("OwnerRecordId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("ShowInMainPage")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TBL_Comments");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Rating", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("CommentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TBL_Ratings");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.CommissionAndDiscounts.CommissionAndDiscount", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ExpertInformationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("PhoneCallCommission")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PhoneCallDiscount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TextCallCommission")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TextCallDiscount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("VoiceCallCommission")
+                        .HasColumnType("float");
+
+                    b.Property<double>("VoiceCallDiscount")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_CommissionAndDiscounts");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ContactUs.ContactUs", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_ContactUs");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ContactUs.ContactUsContent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_ContactUsContents");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.Day", b =>
                 {
                     b.Property<long>("Id")
@@ -77,7 +440,8 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Date_String")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("DayOfWeek")
                         .HasColumnType("int");
@@ -111,17 +475,36 @@ namespace CR.DataAccess.Migrations
                     b.Property<long>("ExpertInformationId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("FinishDate")
+                    b.Property<string>("FinishHour")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("FinishTime")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsReserved")
                         .HasColumnType("bit");
 
-                    b.Property<long?>("Price")
+                    b.Property<long>("PhoneCallPrice")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<string>("StartHour")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<long>("TextCallPrice")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("TimingType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("VoiceCallPrice")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -143,29 +526,31 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ClinicName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("ExpertInformationId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("FinishDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FinishDate_String")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HospitalName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("FinishYear")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("StartDate_String")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("StartYear")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -186,6 +571,9 @@ namespace CR.DataAccess.Migrations
 
                     b.Property<long>("ExpertInformationId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("ImageType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Src")
                         .HasColumnType("nvarchar(max)");
@@ -211,7 +599,9 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -234,10 +624,14 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("PrizeName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Year")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -257,19 +651,22 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DegreeOfEducation")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EndDate_String")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("EndDate")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("ExpertInformationId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("University")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -292,10 +689,14 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("SubscriptionName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Year")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -314,8 +715,14 @@ namespace CR.DataAccess.Migrations
                     b.Property<string>("CardHolderPAN")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("ConsumerInformationId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<long?>("ExpertInformationId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("FactorNumber")
                         .HasColumnType("nvarchar(max)");
@@ -334,7 +741,89 @@ namespace CR.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ConsumerInformationId");
+
+                    b.HasIndex("ExpertInformationId");
+
                     b.ToTable("TBL_Factors");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Favorites.Favorite", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ExpertInformationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpertInformationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TBL_Favorites");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.FinancialTransactions.FinancialTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CardHolderPAN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateDate_String")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("FactorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PayerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Price_Digit")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Price_String")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ReceiverId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RefId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("SaleReferenceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FactorId");
+
+                    b.ToTable("TBL_FinancialTransactions");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ConsumerInfromation", b =>
@@ -348,13 +837,14 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BirthDate_String")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BloodType")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("ConsumerId")
                         .HasColumnType("bigint");
@@ -362,8 +852,15 @@ namespace CR.DataAccess.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Degree")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -372,16 +869,19 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Province")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("SpecificAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
@@ -396,22 +896,32 @@ namespace CR.DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Bio")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BirthDate_String")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ClinicAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ClinicName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("CommissionAndDiscountId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -420,7 +930,9 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -429,19 +941,21 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Instagram")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsFreeOfCharge")
-                        .HasColumnType("bit");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("PhoneCallPrice")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("Price")
-                        .HasColumnType("bigint");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Province")
                         .HasColumnType("nvarchar(max)");
@@ -450,12 +964,32 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("SpecificAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Tag")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("TextCallPrice")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("UsePhoneCall")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("UseTextCall")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("UseVoiceCall")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("VoiceCallPrice")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CommissionAndDiscountId")
+                        .IsUnique()
+                        .HasFilter("[CommissionAndDiscountId] IS NOT NULL");
 
                     b.HasIndex("SpecialtyId");
 
@@ -491,6 +1025,33 @@ namespace CR.DataAccess.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Rules.Rule", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CommentContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtherContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_Rule");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.Specialties.Specialty", b =>
                 {
                     b.Property<long>("Id")
@@ -505,11 +1066,47 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
                     b.ToTable("TBL_Specialties");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Timings.Timing", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EndTime_String")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StartTime_String")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("TimingType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_Timings");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.Users.User", b =>
@@ -542,8 +1139,21 @@ namespace CR.DataAccess.Migrations
                     b.Property<long?>("ExpertInformationId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("IconSrc")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -728,6 +1338,90 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("Factor");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Blogs.Blog", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Blogs.BlogCategory", "BlogCategory")
+                        .WithMany("Blogs")
+                        .HasForeignKey("BlogCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BlogCategory");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Blogs.BlogCategory", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Blogs.BlogCategory", "ParentCategory")
+                        .WithMany("SubCategories")
+                        .HasForeignKey("ParentCategoryId");
+
+                    b.Navigation("ParentCategory");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUserMessages.ChatUserMessage", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.ChatUsers.ChatUser", "ChatUser")
+                        .WithMany("ChatUserMessages")
+                        .HasForeignKey("ChatUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChatUser");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUsers.ChatUser", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Users.User", "Consumer")
+                        .WithMany("ChatUsers")
+                        .HasForeignKey("ConsumerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
+                        .WithMany("ChatUsers")
+                        .HasForeignKey("ExpertInformationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Consumer");
+
+                    b.Navigation("ExpertInformation");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Comments.Comment", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("CR.DataAccess.Entities.Users.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parent");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Rating", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Comments.Comment", "Comment")
+                        .WithMany("Rate")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CR.DataAccess.Entities.Users.User", "User")
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.Day", b =>
                 {
                     b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
@@ -830,11 +1524,60 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("ExpertInformation");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Factors.Factor", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.IndividualInformations.ConsumerInfromation", "ConsumerInformation")
+                        .WithMany("Factors")
+                        .HasForeignKey("ConsumerInformationId");
+
+                    b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
+                        .WithMany("Factors")
+                        .HasForeignKey("ExpertInformationId");
+
+                    b.Navigation("ConsumerInformation");
+
+                    b.Navigation("ExpertInformation");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Favorites.Favorite", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
+                        .WithMany("Favorites")
+                        .HasForeignKey("ExpertInformationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CR.DataAccess.Entities.Users.User", "User")
+                        .WithMany("Favorites")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExpertInformation");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.FinancialTransactions.FinancialTransaction", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Factors.Factor", "Factor")
+                        .WithMany("FinancialTransactions")
+                        .HasForeignKey("FactorId");
+
+                    b.Navigation("Factor");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", b =>
                 {
+                    b.HasOne("CR.DataAccess.Entities.CommissionAndDiscounts.CommissionAndDiscount", "CommissionAndDiscount")
+                        .WithOne("ExpertInformation")
+                        .HasForeignKey("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "CommissionAndDiscountId");
+
                     b.HasOne("CR.DataAccess.Entities.Specialties.Specialty", "Specialty")
                         .WithMany("ExpertInformations")
                         .HasForeignKey("SpecialtyId");
+
+                    b.Navigation("CommissionAndDiscount");
 
                     b.Navigation("Specialty");
                 });
@@ -910,6 +1653,30 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("TimeOfDay");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Blogs.BlogCategory", b =>
+                {
+                    b.Navigation("Blogs");
+
+                    b.Navigation("SubCategories");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUsers.ChatUser", b =>
+                {
+                    b.Navigation("ChatUserMessages");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
+                {
+                    b.Navigation("Children");
+
+                    b.Navigation("Rate");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.CommissionAndDiscounts.CommissionAndDiscount", b =>
+                {
+                    b.Navigation("ExpertInformation");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.Day", b =>
                 {
                     b.Navigation("TimeOfDays");
@@ -918,6 +1685,8 @@ namespace CR.DataAccess.Migrations
             modelBuilder.Entity("CR.DataAccess.Entities.Factors.Factor", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("FinancialTransactions");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ConsumerInfromation", b =>
@@ -925,10 +1694,14 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("Consumer");
 
                     b.Navigation("ConsumerAppointments");
+
+                    b.Navigation("Factors");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", b =>
                 {
+                    b.Navigation("ChatUsers");
+
                     b.Navigation("Days");
 
                     b.Navigation("Expert");
@@ -947,12 +1720,27 @@ namespace CR.DataAccess.Migrations
 
                     b.Navigation("ExpertSubscriptions");
 
+                    b.Navigation("Factors");
+
+                    b.Navigation("Favorites");
+
                     b.Navigation("TimeOfDays");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.Specialties.Specialty", b =>
                 {
                     b.Navigation("ExpertInformations");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Users.User", b =>
+                {
+                    b.Navigation("ChatUsers");
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("Favorites");
+
+                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }

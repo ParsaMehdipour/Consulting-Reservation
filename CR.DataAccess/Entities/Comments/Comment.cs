@@ -21,6 +21,7 @@ namespace CR.DataAccess.Entities.Comments
         public User User { get; set; }
         public Comment Parent { get; set; }
         public ICollection<Comment> Children { get; set; }
+        public ICollection<Rating> Rate { get; set; }
 
         #endregion
     }

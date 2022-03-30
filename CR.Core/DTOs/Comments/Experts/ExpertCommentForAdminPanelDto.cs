@@ -13,6 +13,7 @@
         public string CreateDate { get; set; }
         public string Status { get; set; }
         public bool ShowStatus { get; set; }
+        public int? Rate { get; set; }
 
     }
 }

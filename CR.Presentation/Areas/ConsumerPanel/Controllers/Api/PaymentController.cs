@@ -102,7 +102,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
                     localDate: $"{date.Year}{date.Month}{date.Day}",
                     localTime: $"{date.Hour}{date.Minute}{date.Second}",
                     additionalData: "پس از نیم ساعت امکان لغو درخواست وجود ندارد",
-                    callBackUrl: "http://www.chalechoole.com/ConsumerPanel/Payment/Verify",
+                    callBackUrl: "https://www.chalechoole.com/ConsumerPanel/Payment/Verify",
                     payerId: "0",
                     mobileNo: phoneNumber,
                     encPan: "",

@@ -17,6 +17,20 @@ namespace CR.DataAccess.Configurations
             builder.HasOne(_ => _.Parent)
                 .WithMany(_ => _.Children)
                 .HasForeignKey(_ => _.ParentId);
+
+            builder.Property(_ => _.Message)
+                .IsRequired();
+
+            builder.Property(_ => _.CommentStatus);
+
+            builder.Property(_ => _.IsRead);
+
+            builder.Property(_ => _.OwnerRecordId);
+
+            builder.Property(_ => _.ShowInMainPage);
+
+            builder.Property(_ => _.TypeId);
+
         }
     }
 }

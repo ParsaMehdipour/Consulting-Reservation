@@ -8,7 +8,7 @@ namespace CR.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<Day> builder)
         {
-            builder.ToTable("TBL_Days"); 
+            builder.ToTable("TBL_Days");
 
             builder.HasMany(p => p.TimeOfDays)
                 .WithOne(p => p.Day)
@@ -17,6 +17,11 @@ namespace CR.DataAccess.Configurations
             builder.HasOne(p => p.ExpertInformation)
                 .WithMany(p => p.Days)
                 .HasForeignKey(p => p.ExpertInformationId);
+
+            builder.Property(_ => _.Date_String)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.DayOfWeek);
         }
     }
 }

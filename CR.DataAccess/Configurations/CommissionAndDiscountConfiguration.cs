@@ -1,5 +1,4 @@
 ﻿using CR.DataAccess.Entities.CommissionAndDiscounts;
-using CR.DataAccess.Entities.IndividualInformations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,6 +13,19 @@ namespace CR.DataAccess.Configurations
             builder.HasOne(p => p.ExpertInformation)
                 .WithOne(p => p.CommissionAndDiscount)
                 .HasForeignKey<CommissionAndDiscount>(p => p.ExpertInformationId);
+
+            builder.Property(_ => _.PhoneCallCommission);
+
+            builder.Property(_ => _.TextCallCommission);
+
+            builder.Property(_ => _.VoiceCallCommission);
+
+            builder.Property(_ => _.PhoneCallDiscount);
+
+            builder.Property(_ => _.TextCallDiscount);
+
+            builder.Property(_ => _.VoiceCallDiscount);
+
         }
     }
 }
