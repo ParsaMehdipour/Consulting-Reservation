@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220207104733_AddSaleRefId")]
-    partial class AddSaleRefId
+    [Migration("20220328100028_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,24 @@ namespace CR.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("CR.DataAccess.Entities.AboutUs.AboutUs", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_AboutUs");
+                });
 
             modelBuilder.Entity("CR.DataAccess.Entities.Appointments.Appointment", b =>
                 {
@@ -91,6 +109,9 @@ namespace CR.DataAccess.Migrations
                     b.Property<string>("MetaDescription")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PictureSrc")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("PublishDate")
                         .HasColumnType("datetime2");
 
@@ -157,6 +178,121 @@ namespace CR.DataAccess.Migrations
                     b.ToTable("TBL_BlogCategories");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUserMessages.ChatUserMessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Audio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ChatUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("File")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MessageFlag")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatUserId");
+
+                    b.ToTable("TBL_ChatUserMessages");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUsers.ChatUser", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AppointmentDate_String")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ConsumerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ExpertInformationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("MessageType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("lastChangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsumerId");
+
+                    b.HasIndex("ExpertInformationId");
+
+                    b.ToTable("TBL_ChatUsers");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CommentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("OwnerRecordId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("ShowInMainPage")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TBL_Comments");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.CommissionAndDiscounts.CommissionAndDiscount", b =>
                 {
                     b.Property<long>("Id")
@@ -191,6 +327,54 @@ namespace CR.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TBL_CommissionAndDiscounts");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ContactUs.ContactUs", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_ContactUs");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ContactUs.ContactUsContent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_ContactUsContents");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.Day", b =>
@@ -325,6 +509,9 @@ namespace CR.DataAccess.Migrations
 
                     b.Property<long>("ExpertInformationId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("ImageType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Src")
                         .HasColumnType("nvarchar(max)");
@@ -483,6 +670,84 @@ namespace CR.DataAccess.Migrations
                     b.ToTable("TBL_Factors");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Favorites.Favorite", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ExpertInformationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpertInformationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TBL_Favorites");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.FinancialTransactions.FinancialTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CardHolderPAN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateDate_String")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("FactorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PayerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Price_Digit")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Price_String")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ReceiverId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RefId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("SaleReferenceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FactorId");
+
+                    b.ToTable("TBL_FinancialTransactions");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ConsumerInfromation", b =>
                 {
                     b.Property<long>("Id")
@@ -505,6 +770,9 @@ namespace CR.DataAccess.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Degree")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -515,9 +783,6 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Province")
@@ -651,6 +916,33 @@ namespace CR.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Rules.Rule", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CommentContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtherContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBL_Rule");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.Specialties.Specialty", b =>
@@ -949,6 +1241,53 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("ParentCategory");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUserMessages.ChatUserMessage", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.ChatUsers.ChatUser", "ChatUser")
+                        .WithMany("ChatUserMessages")
+                        .HasForeignKey("ChatUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChatUser");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUsers.ChatUser", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Users.User", "Consumer")
+                        .WithMany("ChatUsers")
+                        .HasForeignKey("ConsumerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
+                        .WithMany("ChatUsers")
+                        .HasForeignKey("ExpertInformationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Consumer");
+
+                    b.Navigation("ExpertInformation");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Comments.Comment", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("CR.DataAccess.Entities.Users.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parent");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.Day", b =>
                 {
                     b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
@@ -1066,6 +1405,34 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("ExpertInformation");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Favorites.Favorite", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", "ExpertInformation")
+                        .WithMany("Favorites")
+                        .HasForeignKey("ExpertInformationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CR.DataAccess.Entities.Users.User", "User")
+                        .WithMany("Favorites")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExpertInformation");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.FinancialTransactions.FinancialTransaction", b =>
+                {
+                    b.HasOne("CR.DataAccess.Entities.Factors.Factor", "Factor")
+                        .WithMany("FinancialTransactions")
+                        .HasForeignKey("FactorId");
+
+                    b.Navigation("Factor");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", b =>
                 {
                     b.HasOne("CR.DataAccess.Entities.CommissionAndDiscounts.CommissionAndDiscount", "CommissionAndDiscount")
@@ -1159,6 +1526,16 @@ namespace CR.DataAccess.Migrations
                     b.Navigation("SubCategories");
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.ChatUsers.ChatUser", b =>
+                {
+                    b.Navigation("ChatUserMessages");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Comments.Comment", b =>
+                {
+                    b.Navigation("Children");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.CommissionAndDiscounts.CommissionAndDiscount", b =>
                 {
                     b.Navigation("ExpertInformation");
@@ -1172,6 +1549,8 @@ namespace CR.DataAccess.Migrations
             modelBuilder.Entity("CR.DataAccess.Entities.Factors.Factor", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("FinancialTransactions");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ConsumerInfromation", b =>
@@ -1185,6 +1564,8 @@ namespace CR.DataAccess.Migrations
 
             modelBuilder.Entity("CR.DataAccess.Entities.IndividualInformations.ExpertInformation", b =>
                 {
+                    b.Navigation("ChatUsers");
+
                     b.Navigation("Days");
 
                     b.Navigation("Expert");
@@ -1205,12 +1586,23 @@ namespace CR.DataAccess.Migrations
 
                     b.Navigation("Factors");
 
+                    b.Navigation("Favorites");
+
                     b.Navigation("TimeOfDays");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.Specialties.Specialty", b =>
                 {
                     b.Navigation("ExpertInformations");
+                });
+
+            modelBuilder.Entity("CR.DataAccess.Entities.Users.User", b =>
+                {
+                    b.Navigation("ChatUsers");
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("Favorites");
                 });
 #pragma warning restore 612, 618
         }
