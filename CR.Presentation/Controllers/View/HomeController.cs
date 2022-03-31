@@ -38,5 +38,23 @@ namespace CR.Presentation.Controllers.View
             return View(viewModel);
         }
 
+        //public async Task SendSMS()
+        //{
+        //    var model = new SMSModel()
+        //    {
+        //        toNum = "09122502978",
+        //        patternCode = SMSPatterns.VerificationCodePatternCode,
+        //        inputData = new List<Dictionary<string, string>>()
+        //        {
+        //            new Dictionary<string, string> { { SMSInputs.VerificationCode, "123456789" } },
+        //        },
+        //    };
+
+        //    var uri = "https://ippanel.com/api/select";
+
+        //    var result = await CallApi<object>(uri, model);
+
+        //}
+
     }
 }

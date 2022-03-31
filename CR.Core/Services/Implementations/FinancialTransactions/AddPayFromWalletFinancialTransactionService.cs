@@ -61,7 +61,9 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 var factor = _context.Factors
                     .Include(_ => _.ConsumerInformation)
+                    .ThenInclude(_ => _.Consumer)
                     .Include(_ => _.ExpertInformation)
+                    .ThenInclude(_ => _.Expert)
                     .Include(_ => _.Appointments)
                     .ThenInclude(_ => _.TimeOfDay)
                     .ThenInclude(_ => _.Day)
@@ -97,6 +99,20 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     appointment.TimeOfDay.IsReserved = true;
                 }
 
+                var consumerAppointmentsDetailsForSMS = factor.Appointments.Select(_ => new AppointmentDetailsForSMSDto()
+                {
+                    Date = _.TimeOfDay.Day.Date_String,
+                    Time = _.TimeOfDay.StartHour + " - " + _.TimeOfDay.FinishHour,
+                    UserName = factor.ConsumerInformation.Consumer.FirstName + " " + factor.ConsumerInformation.Consumer.LastName
+                }).ToList();
+
+                var expertAppointmentsDetailsForSMS = factor.Appointments.Select(_ => new AppointmentDetailsForSMSDto()
+                {
+                    Date = _.TimeOfDay.Day.Date_String,
+                    Time = _.TimeOfDay.StartHour + " - " + _.TimeOfDay.FinishHour,
+                    UserName = factor.ExpertInformation.Expert.FirstName + " " + factor.ExpertInformation.Expert.LastName
+                }).ToList();
+
                 _context.FinancialTransactions.Add(financialTransaction);
 
                 _context.SaveChanges();
@@ -116,7 +132,11 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                         {
                             CallingType = _.CallingType,
                             AppointmentDate = _.TimeOfDay.Day.Date
-                        }).ToList()
+                        }).ToList(),
+                        AppointmentDetailsForConsumerSmsDtos = consumerAppointmentsDetailsForSMS,
+                        AppointmentDetailsForExpertSmsDtos = expertAppointmentsDetailsForSMS,
+                        ConsumerPhoneNum = factor.ConsumerInformation.Consumer.PhoneNumber,
+                        ExpertPhoneNum = factor.ExpertInformation.Expert.PhoneNumber
                     }
                 };
             }

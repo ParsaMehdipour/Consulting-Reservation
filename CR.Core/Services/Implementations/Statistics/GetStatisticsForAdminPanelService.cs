@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Statistics;
 using CR.Core.Services.Interfaces.Statistics;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Statistics
 {
@@ -21,10 +21,10 @@ namespace CR.Core.Services.Implementations.Statistics
 
         public ResultDto<StatisticsForAdminPanelDto> Execute()
         {
-            var consumerCount = _context.Users.Count(u => u.ConsumerInfromation != null).ToString().GetPersianNumber();
-            var expertCount = _context.Users.Count(e => e.IsActive == true && e.ExpertInformation != null).ToString().GetPersianNumber();
+            var consumerCount = _context.Users.Count(u => u.UserFlag == UserFlag.Consumer).ToString().GetPersianNumber();
+            var expertCount = _context.Users.Count(e => e.IsActive == true && e.UserFlag == UserFlag.Expert).ToString().GetPersianNumber();
             var appointmentCount = _context.Appointments.Count().ToString().GetPersianNumber();
-            var income = _context.Appointments.Sum(a=>a.Price).ToString().GetPersianNumber();
+            var income = _context.Appointments.Sum(a => a.Price.Value).ToString("n0");
 
             StatisticsCountForAdminPanelDto consumerStatisticsCountForAdminPanelDto = GetConsumersYearStatistics();
             StatisticsCountForAdminPanelDto expertStatisticsCountForAdminPanelDto = GetExpertsYearStatistics();
@@ -50,7 +50,7 @@ namespace CR.Core.Services.Implementations.Statistics
             DateTime yearEnd = DateTime.Now.Date.AddYears(1);
 
             var consumerYearStatisticView = _context.Users
-                .Where(u=>u.UserFlag == UserFlag.Consumer && u.ConsumerInformationId != null)
+                .Where(u => u.UserFlag == UserFlag.Consumer && u.ConsumerInformationId != null)
                 .AsQueryable()
                 .Where(a => a.CreationDate.Year >= yearStart.Year && a.CreationDate.Year < yearEnd.Year)
                 .OrderByDescending(a => a.CreationDate.Year)

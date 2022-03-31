@@ -40,7 +40,7 @@ namespace CR.Core.Services.Implementations.Appointment
                     ExpertInformationId = a.ExpertInformationId,
                     ExpertIconSrc = a.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ExpertTracking = "HardCode",
-                    Price = a.Price.ToString().GetPersianNumber(),
+                    Price = a.Price.Value.ToString("n0"),
                     ReservationDate = a.CreateDate.ToShamsi(),
                     Status = a.AppointmentStatus.GetDisplayName(),
                     Speciality = a.ExpertInformation.Specialty.Name

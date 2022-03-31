@@ -2,6 +2,7 @@
 using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
+using CR.Core.DTOs.SMS;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.Core.Services.Interfaces.Users;
@@ -9,6 +10,11 @@ using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 {
@@ -66,16 +72,54 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
             return _getAppointmentDetailsForExpertPanelService.Execute(id).Data;
         }
 
-        public IActionResult ChangeAppointmentStatus(RequestChangeAppointmentStatusDto request)
+        public async Task<IActionResult> ChangeAppointmentStatus(RequestChangeAppointmentStatusDto request)
         {
             var result = _changeAppointmentStatusService.Execute(request);
 
             if (result.IsSuccess == true)
             {
+                var modelExpert = new SMSModel()
+                {
+                    toNum = result.Data.phoneNumber,
+                    patternCode = SMSPatterns.ReservationDeclined_ExpertSide,
+                    inputData = new List<Dictionary<string, string>>()
+                    {
+                        new Dictionary<string, string>
+                        {
+                            {SMSInputs.Date, result.Data.date},
+                            {SMSInputs.Time, result.Data.time}
+                        },
+                    },
+                };
+
+                var uri = "https://ippanel.com/api/select";
+
+                await CallApiReservation<object>(uri, modelExpert);
+
                 return new JsonResult(_addChargeExpertWalletService.Execute(result.Data.receiverId, result.Data.price));
             }
 
             return new JsonResult(result);
         }
+
+        private async Task<T> CallApiReservation<T>(string apiUrl, object value)
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                var w = client.PostAsJsonAsync(apiUrl, value);
+                w.Wait();
+                HttpResponseMessage response = w.Result;
+                if (response.IsSuccessStatusCode)
+                {
+
+                    return default(T);
+                }
+                return default(T);
+            }
+        }
+
     }
 }
