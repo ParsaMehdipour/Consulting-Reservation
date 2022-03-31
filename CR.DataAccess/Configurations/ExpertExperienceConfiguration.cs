@@ -15,20 +15,16 @@ namespace CR.DataAccess.Configurations
                 .HasForeignKey(e => e.ExpertInformationId);
 
             builder.Property(_ => _.ClinicName)
-                .HasMaxLength(100)
-                .IsRequired();
+                .HasMaxLength(100);
 
             builder.Property(_ => _.StartYear)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.FinishYear)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.Role)
-                .HasMaxLength(100)
-                .IsRequired();
+                .HasMaxLength(100);
         }
     }
 }

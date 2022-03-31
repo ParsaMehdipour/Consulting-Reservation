@@ -23,32 +23,25 @@ namespace CR.DataAccess.Configurations
                 .HasForeignKey(c => c.ConsumerInformationId);
 
             builder.Property(_ => _.BirthDate_String)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.City)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.Degree)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.FirstName)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.LastName)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.Province)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.SpecificAddress)
-                .HasMaxLength(150)
-                .IsRequired();
+                .HasMaxLength(150);
         }
     }
 }
