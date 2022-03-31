@@ -13,6 +13,17 @@ namespace CR.DataAccess.Configurations
             builder.HasOne(_ => _.ChatUser)
                 .WithMany(_ => _.ChatUserMessages)
                 .HasForeignKey(_ => _.ChatUserId);
+
+            builder.Property(_ => _.Message)
+                .IsRequired();
+
+            builder.Property(_ => _.MessageFlag);
+
+            builder.Property(_ => _.File);
+
+            builder.Property(_ => _.Audio);
+
+            builder.Property(_ => _.IsRead);
         }
     }
 }

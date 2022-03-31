@@ -19,9 +19,6 @@ namespace CR.Core.DTOs.RequestDTOs
         [Required(ErrorMessage = "نام خانوادگی خود را وارد کنید")]
         public string lastName { get; set; }
 
-        [Required(ErrorMessage = "شماره تماس خود را وارد کنید")]
-        public string phoneNumber { get; set; }
-
         public GenderType gender { get; set; }
 
         [Required(ErrorMessage = "تاریخ تولد خود را وارد کنید")]

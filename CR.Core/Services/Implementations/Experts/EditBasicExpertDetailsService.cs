@@ -244,7 +244,6 @@ namespace CR.Core.Services.Implementations.Experts
                 expertInformation.VoiceCallPrice = (request.useVoiceCall && request.voiceCallPrice != null) ? Convert.ToInt32(request.voiceCallPrice.ToEnglishNumber()) : 0;
                 expertInformation.TextCallPrice = (request.useTextCall && request.textCallPrice != null) ? Convert.ToInt32(request.textCallPrice.ToEnglishNumber()) : 0;
                 expert.Email = request.email;
-                expert.PhoneNumber = request.phoneNumber;
                 expert.FirstName = request.firstName;
                 expert.LastName = request.lastName;
 

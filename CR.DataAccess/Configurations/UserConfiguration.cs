@@ -24,6 +24,11 @@ namespace CR.DataAccess.Configurations
                 .WithOne(_ => _.Consumer)
                 .HasForeignKey(_ => _.ConsumerId);
 
+            builder.Property(_ => _.FirstName)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.LastName)
+                .HasMaxLength(50);
         }
     }
 }

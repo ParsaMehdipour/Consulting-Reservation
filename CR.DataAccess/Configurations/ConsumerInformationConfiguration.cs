@@ -21,6 +21,27 @@ namespace CR.DataAccess.Configurations
             builder.HasMany(c => c.Factors)
                 .WithOne(c => c.ConsumerInformation)
                 .HasForeignKey(c => c.ConsumerInformationId);
+
+            builder.Property(_ => _.BirthDate_String)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.City)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.Degree)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.FirstName)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.LastName)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.Province)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.SpecificAddress)
+                .HasMaxLength(150);
         }
     }
 }

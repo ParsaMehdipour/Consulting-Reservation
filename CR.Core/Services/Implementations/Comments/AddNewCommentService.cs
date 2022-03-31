@@ -45,6 +45,21 @@ namespace CR.Core.Services.Implementations.Comments
 
                 _context.Comments.Add(comment);
 
+                if (request.rate != null)
+                {
+                    Rating rate = new Rating()
+                    {
+                        Comment = comment,
+                        CommentId = comment.Id,
+                        Rate = request.rate.Value,
+                        User = comment.User,
+                        UserId = comment.UserId
+                    };
+
+                    _context.Ratings.Add(rate);
+
+                }
+
                 if (request.parentId is > 0)
                 {
                     var parentComment = GetParentComment(request.parentId);
@@ -55,7 +70,6 @@ namespace CR.Core.Services.Implementations.Comments
                     _context.SaveChanges();
 
                     parentComment.Children.Add(comment);
-
                 }
 
                 _context.SaveChanges();

@@ -26,6 +26,17 @@ namespace CR.DataAccess.Configurations
                 .WithOne(f => f.Factor)
                 .HasForeignKey(f => f.FactorId);
 
+            builder.Property(_ => _.FactorNumber);
+
+            builder.Property(_ => _.CardHolderPAN);
+
+            builder.Property(_ => _.FactorStatus);
+
+            builder.Property(_ => _.RefId);
+
+            builder.Property(_ => _.SaleReferenceId);
+
+            builder.Property(_ => _.TotalPrice);
         }
     }
 }

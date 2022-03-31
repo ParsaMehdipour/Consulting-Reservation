@@ -13,6 +13,15 @@ namespace CR.DataAccess.Configurations
             builder.HasOne(e => e.ExpertInformation)
                 .WithMany(e => e.ExpertStudies)
                 .HasForeignKey(e => e.ExpertInformationId);
+
+            builder.Property(_ => _.DegreeOfEducation)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.University)
+                .HasMaxLength(50);
+
+            builder.Property(_ => _.EndDate)
+                .HasMaxLength(50);
         }
     }
 }

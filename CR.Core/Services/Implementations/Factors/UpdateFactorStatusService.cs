@@ -29,6 +29,7 @@ namespace CR.Core.Services.Implementations.Factors
                     .ThenInclude(_ => _.TimeOfDay)
                     .ThenInclude(f => f.Day)
                     .Include(f => f.ConsumerInformation)
+                    .ThenInclude(_ => _.Consumer)
                     .Include(f => f.ExpertInformation)
                     .First(_ => _.Id == factorId);
 
@@ -66,6 +67,19 @@ namespace CR.Core.Services.Implementations.Factors
                     }
                 }
 
+                var consumerAppointmentsDetailsForSMS = factor.Appointments.Select(_ => new AppointmentDetailsForSMSDto()
+                {
+                    Date = _.TimeOfDay.Day.Date_String,
+                    Time = _.TimeOfDay.StartHour + " - " + _.TimeOfDay.FinishHour,
+                    UserName = factor.ConsumerInformation.Consumer.FirstName + " " + factor.ConsumerInformation.Consumer.LastName
+                }).ToList();
+
+                var expertAppointmentsDetailsForSMS = factor.Appointments.Select(_ => new AppointmentDetailsForSMSDto()
+                {
+                    Date = _.TimeOfDay.Day.Date_String,
+                    Time = _.TimeOfDay.StartHour + " - " + _.TimeOfDay.FinishHour,
+                    UserName = factor.ExpertInformation.Expert.FirstName + " " + factor.ExpertInformation.Expert.LastName
+                }).ToList();
 
                 _context.SaveChanges();
 
@@ -84,7 +98,11 @@ namespace CR.Core.Services.Implementations.Factors
                         {
                             CallingType = _.CallingType,
                             AppointmentDate = _.TimeOfDay.Day.Date
-                        }).ToList()
+                        }).ToList(),
+                        AppointmentDetailsForConsumerSmsDtos = consumerAppointmentsDetailsForSMS,
+                        AppointmentDetailsForExpertSmsDtos = expertAppointmentsDetailsForSMS,
+                        ConsumerPhoneNum = factor.ConsumerInformation.Consumer.PhoneNumber,
+                        ExpertPhoneNum = factor.ExpertInformation.Expert.PhoneNumber,
                     }
                 };
             }
