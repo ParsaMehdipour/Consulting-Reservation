@@ -24,7 +24,13 @@ namespace CR.Core.Services.Implementations.Appointment
 
             try
             {
-                var appointment = _context.Appointments.Include(a => a.ExpertInformation).Include(a => a.TimeOfDay).FirstOrDefault(a => a.Id == request.AppointmentId);
+                var appointment = _context.Appointments
+                    .Include(_ => _.ConsumerInformation)
+                    .ThenInclude(_ => _.Consumer)
+                    .Include(a => a.ExpertInformation)
+                    .Include(a => a.TimeOfDay)
+                    .ThenInclude(_ => _.Day)
+                    .FirstOrDefault(a => a.Id == request.AppointmentId);
 
                 if (appointment == null)
                 {
@@ -62,8 +68,12 @@ namespace CR.Core.Services.Implementations.Appointment
                     Data = new ResultChangeAppointmentStatusDto()
                     {
                         price = (int)appointment.Price.Value,
-                        receiverId = appointment.ExpertInformation.ExpertId
+                        receiverId = appointment.ExpertInformation.ExpertId,
+                        date = appointment.TimeOfDay.Day.Date_String,
+                        time = appointment.TimeOfDay.StartHour + " - " + appointment.TimeOfDay.FinishHour,
+                        phoneNumber = appointment.ConsumerInformation.Consumer.PhoneNumber
                     },
+
                     IsSuccess = true,
                     Message = "وضعیت نوبت با موفقیت تغیر یافت"
                 };

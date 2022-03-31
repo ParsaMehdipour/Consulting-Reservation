@@ -1,5 +1,7 @@
 ﻿using CR.Common.DTOs;
+using CR.Common.Utilities;
 using CR.Core.DTOs.RequestDTOs.ChatUser;
+using CR.Core.DTOs.SMS;
 using CR.Core.Services.Interfaces.ChatUsers;
 using CR.Core.Services.Interfaces.Factors;
 using CR.Core.Services.Interfaces.FinancialTransaction;
@@ -7,6 +9,9 @@ using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
 using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CR.Presentation.Controllers.View
@@ -47,7 +52,7 @@ namespace CR.Presentation.Controllers.View
 
 
         [HttpPost]
-        public IActionResult Verify(string RefId, string ResCode, long SaleOrderId, long SaleReferenceId, string CardHolderPan, long FinalAmount)
+        public async Task<IActionResult> Verify(string RefId, string ResCode, long SaleOrderId, long SaleReferenceId, string CardHolderPan, long FinalAmount)
         {
             var result = new ResultDto()
             {
@@ -105,6 +110,50 @@ namespace CR.Presentation.Controllers.View
                                     appointmentDate = chatAppointment.AppointmentDate
                                 });
                             }
+                        }
+
+                        foreach (var appointment in updateStatusResult.Data.AppointmentDetailsForConsumerSmsDtos)
+                        {
+                            var model = new SMSModel()
+                            {
+                                toNum = updateStatusResult.Data.ConsumerPhoneNum,
+                                patternCode = SMSPatterns.ReservationSuccessfulPatternCode_ConsumerSide,
+                                inputData = new List<Dictionary<string, string>>()
+                                {
+                                    new Dictionary<string, string>
+                                    {
+                                        {SMSInputs.UserName, appointment.UserName },
+                                        {SMSInputs.Date, appointment.Date},
+                                        {SMSInputs.Time, appointment.Time}
+                                    },
+                                },
+                            };
+
+                            var uri = "https://ippanel.com/api/select";
+
+                            await CallApiReservation<object>(uri, model);
+                        }
+
+                        foreach (var appointment in updateStatusResult.Data.AppointmentDetailsForExpertSmsDtos)
+                        {
+                            var modelExpert = new SMSModel()
+                            {
+                                toNum = updateStatusResult.Data.ExpertPhoneNum,
+                                patternCode = SMSPatterns.ReservationSuccessfulPatternCode_Expert_Side,
+                                inputData = new List<Dictionary<string, string>>()
+                                {
+                                    new Dictionary<string, string>
+                                    {
+                                        {SMSInputs.UserName, appointment.UserName },
+                                        {SMSInputs.Date, appointment.Date},
+                                        {SMSInputs.Time, appointment.Time}
+                                    },
+                                },
+                            };
+
+                            var uri = "https://ippanel.com/api/select";
+
+                            await CallApiReservation<object>(uri, modelExpert);
                         }
                     }
 
@@ -167,6 +216,25 @@ namespace CR.Presentation.Controllers.View
                 var exception = e.Message;
 
                 return null;
+            }
+        }
+
+        private async Task<T> CallApiReservation<T>(string apiUrl, object value)
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                var w = client.PostAsJsonAsync(apiUrl, value);
+                w.Wait();
+                HttpResponseMessage response = w.Result;
+                if (response.IsSuccessStatusCode)
+                {
+
+                    return default(T);
+                }
+                return default(T);
             }
         }
     }

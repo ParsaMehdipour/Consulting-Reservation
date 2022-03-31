@@ -71,15 +71,13 @@ namespace CR.DataAccess.Configurations
                 .HasForeignKey(_ => _.ExpertInformationId);
 
             builder.Property(_ => _.Bio)
-                .HasMaxLength(200)
-                .IsRequired();
+                .HasMaxLength(200);
 
             builder.Property(_ => _.City)
                 .HasMaxLength(50);
 
             builder.Property(_ => _.BirthDate_String)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.ClinicAddress)
                 .HasMaxLength(200);
@@ -88,19 +86,16 @@ namespace CR.DataAccess.Configurations
                 .HasMaxLength(50);
 
             builder.Property(_ => _.FirstName)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.LastName)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.Instagram)
                 .HasMaxLength(50);
 
             builder.Property(_ => _.PostalCode)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
 
             builder.Property(_ => _.Gender);
 

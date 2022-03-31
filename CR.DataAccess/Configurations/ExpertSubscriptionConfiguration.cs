@@ -15,12 +15,10 @@ namespace CR.DataAccess.Configurations
                 .HasForeignKey(e => e.ExpertInformationId);
 
             builder.Property(_ => _.SubscriptionName)
-                .HasMaxLength(100)
-                .IsRequired();
+                .HasMaxLength(100);
 
             builder.Property(_ => _.Year)
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasMaxLength(50);
         }
     }
 }

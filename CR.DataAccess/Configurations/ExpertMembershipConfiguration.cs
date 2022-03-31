@@ -15,8 +15,7 @@ namespace CR.DataAccess.Configurations
                 .HasForeignKey(e => e.ExpertInformationId);
 
             builder.Property(_ => _.Name)
-                .HasMaxLength(100)
-                .IsRequired();
+                .HasMaxLength(100);
         }
     }
 }

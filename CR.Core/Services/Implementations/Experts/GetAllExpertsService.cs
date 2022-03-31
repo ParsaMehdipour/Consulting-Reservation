@@ -38,7 +38,7 @@ namespace CR.Core.Services.Implementations.Experts
                     Id = u.Id,
                     FullName = u.ExpertInformation.FirstName + " " + u.ExpertInformation.LastName,
                     IconSrc = u.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
-                    Income = u.ExpertInformation.ExpertAppointments.Where(a => a.AppointmentStatus == AppointmentStatus.Completed).Sum(a => a.Price.Value).ToString("n0"),
+                    Income = _context.FinancialTransactions.Where(_ => _.TransactionType == TransactionType.ChargeExpertWallet).Sum(_ => _.Price_Digit).ToString("n0"),
                     IsActive = u.IsActive,
                     RegisterDate = u.CreationDate.ToShamsi(),
                     Speciality = (u.ExpertInformation.Specialty != null) ? u.ExpertInformation.Specialty.Name : "تخصص نامعلوم",
