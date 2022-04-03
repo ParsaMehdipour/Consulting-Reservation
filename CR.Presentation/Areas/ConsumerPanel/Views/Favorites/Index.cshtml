@@ -78,6 +78,10 @@
 <!-- /Page Content -->
 <input type="hidden" value="@ClaimUtility.GetUserId(User).Value" id="userId" name="userId"/>
 
+@section Footer{
+    <partial name="Footer"/>
+}
+
 @section Scripts
 {
     <script src="~/assets/js/ConusmerPanel/Favorites/Favorites.js"></script>
