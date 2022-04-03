@@ -67,6 +67,12 @@ namespace CR.Core.DTOs.RequestDTOs
 
         public string instagram { get; set; }
 
+        [Required(ErrorMessage = "شماره شبا را وارد کنید را وارد کنید")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "شماره شبا وارد شده معتبر نیست")]
+        [MaxLength(24, ErrorMessage = "طول شماره شبا وارد شده معتبر نیست")]
+        [MinLength(24, ErrorMessage = "طول شماره شبا وارد شده معتبر نیست")]
+        public string shabaNumber { get; set; }
+
         public long? specialtyId { get; set; }
 
         [DisplayName("otherImage")]

@@ -83,6 +83,7 @@ namespace CR.Core.Services.Implementations.Experts
                     useTextCall = expertInformation.UseTextCall,
                     textCallPrice = expertInformation.UseTextCall ? expertInformation.TextCallPrice.ToString() : 0.ToString().GetPersianNumber(),
                     tag = expertInformation.Tag,
+                    shabaNumber = expertInformation.ShabaNumber,
                     Tags = (string.IsNullOrEmpty(expertInformation.Tag)) ? new List<string>() : expertInformation.Tag.Split(",").ToList(),
                     otherImages = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages
                         .Where(i => i.ImageType == ImageType.Other)
