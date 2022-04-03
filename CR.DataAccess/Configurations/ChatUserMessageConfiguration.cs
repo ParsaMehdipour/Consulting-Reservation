@@ -14,8 +14,7 @@ namespace CR.DataAccess.Configurations
                 .WithMany(_ => _.ChatUserMessages)
                 .HasForeignKey(_ => _.ChatUserId);
 
-            builder.Property(_ => _.Message)
-                .IsRequired();
+            builder.Property(_ => _.Message);
 
             builder.Property(_ => _.MessageFlag);
 

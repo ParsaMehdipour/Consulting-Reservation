@@ -56,7 +56,7 @@ namespace CR.Core.Services.Implementations.Consumers
                 };
 
                 consumer.FirstName = request.firstName;
-                consumer.LastName = request.firstName;
+                consumer.LastName = request.lastName;
 
                 if (request.gender != 0)
                 {

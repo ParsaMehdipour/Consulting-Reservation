@@ -8,6 +8,7 @@ using CR.Core.DTOs.ResultDTOs.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.Experts;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace CR.Presentation.Controllers.Api
 {
@@ -31,7 +32,7 @@ namespace CR.Presentation.Controllers.Api
         [HttpPost]
         public ResultDto<ResultGetExpertAvailabilitiesDetailsDto> GetDetails(RequestGetSpecificTiming model)
         {
-            var date = model.date_String.ToGeorgianDateTime();
+            var date = model.date_String.ToGeorgianDateTime().AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute);
 
             var outPut = _getExpertAvailabilitiesForReservationService.Execute(model.expertInformationId, model.timingType, date);
 
