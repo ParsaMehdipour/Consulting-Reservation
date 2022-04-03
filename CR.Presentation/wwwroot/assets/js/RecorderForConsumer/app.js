@@ -112,11 +112,12 @@ function stopRecording() {
 	//stop microphone access
 	gumStream.getAudioTracks()[0].stop();
 
+
 	//create the wav blob and pass it on to createDownloadLink
-	rec.exportWAV(createDownloadLink);
+	rec.exportWAV(Send);
 }
 
-function createDownloadLink(blob) {
+function createDownloadLink1(blob) {
 	
 	var url = URL.createObjectURL(blob);
 	var au = document.createElement('audio');
@@ -131,15 +132,15 @@ function createDownloadLink(blob) {
 	au.src = url;
 
 	//save to disk link
-	link.href = url;
-	link.download = filename+".wav"; //download forces the browser to donwload the file using the  filename
-	link.innerHTML = " | ذخیره در سیستم | ";
+	//link.href = url;
+	//link.download = filename+".wav"; //download forces the browser to donwload the file using the  filename
+	//link.innerHTML = " | ذخیره در سیستم | ";
 
 	//add the new audio element to li
 	li.appendChild(au);
 	
 	//add the filename to the li
-    li.appendChild(document.createTextNode(filename + ".wav "));
+    /*li.appendChild(document.createTextNode(filename + ".wav "));*/
 
 	//add the save to disk link to li
 	li.appendChild(link);
@@ -207,4 +208,50 @@ function createDownloadLink(blob) {
 
 	//add the li element to the ol
 	recordingsList.appendChild(li);
+}
+
+function Send(blob) {
+
+	var file = new File([blob], "wav");
+
+	var formData = new FormData();
+
+	formData.append("file", file);
+	formData.append("chatUserId", ChatUserId);
+	formData.append("messageFlag", 0);
+
+	$.ajax({
+		url: '/api/Chat/AddNewConsumerVoiceMessage',
+		type: 'post',
+		data: formData,
+		contentType: false,
+		processData: false,
+		cache: false,
+		beforeSend: function (x) {
+			$('#loading').show();
+		},
+		success: function (data) {
+			if (data.isSuccess === true) {
+				location.reload();
+			}
+			else {
+				swal.fire(
+					'هشدار!',
+					data.message,
+					'warning'
+				);
+
+			}
+		},
+		complete: function () {
+			$('#loading').hide();
+		},
+		fail: function () {
+			$('#loading').hide();
+		},
+		error: function (request, status, error) {
+			alert(request.responseText);
+		}
+	});
+
 }

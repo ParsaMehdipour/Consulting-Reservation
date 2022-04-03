@@ -113,7 +113,7 @@ function stopRecording() {
 	gumStream.getAudioTracks()[0].stop();
 
 	//create the wav blob and pass it on to createDownloadLink
-	rec.exportWAV(createDownloadLink);
+	rec.exportWAV(Send);
 }
 
 function createDownloadLink(blob) {
@@ -207,4 +207,50 @@ function createDownloadLink(blob) {
 
 	//add the li element to the ol
 	recordingsList.appendChild(li);
+}
+
+function Send(blob) {
+
+	var file = new File([blob], "wav");
+
+	var formData = new FormData();
+
+	formData.append("file", file);
+	formData.append("chatUserId", ChatUserId);
+	formData.append("messageFlag", 1);
+
+	$.ajax({
+		url: '/api/Chat/AddNewVoiceMessage',
+		type: 'post',
+		data: formData,
+		contentType: false,
+		processData: false,
+		cache: false,
+		beforeSend: function (x) {
+			$('#loading').show();
+		},
+		success: function (data) {
+			if (data.isSuccess === true) {
+				location.reload();
+			}
+			else {
+				swal.fire(
+					'هشدار!',
+					data.message,
+					'warning'
+				);
+
+			}
+		},
+		complete: function () {
+			$('#loading').hide();
+		},
+		fail: function () {
+			$('#loading').hide();
+		},
+		error: function (request, status, error) {
+			alert(request.responseText);
+		}
+	});
+
 }
