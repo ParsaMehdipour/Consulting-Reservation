@@ -37,6 +37,7 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public bool UseTextCall { get; set; }
         public long TextCallPrice { get; set; } = 0;
         public string Instagram { get; set; }
+        public string ShabaNumber { get; set; }
 
 
         #region Foreign Keys

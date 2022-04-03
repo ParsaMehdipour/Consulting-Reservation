@@ -100,11 +100,18 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <label class="control-label">شماره شبا</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" asp-for="shabaNumber" id="shabaNumber" name="shabaNumber" dir="ltr" aria-describedby="sizing-addon2">
+                                        <span class="input-group-text" id="sizing-addon2">IR</span>
+                                    </div>
+                                    <span asp-validation-for="shabaNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">لینک اینستاگرام</label>
                                         <input type="text" class="form-control" asp-for="instagram" id="instagram" name="instagram" dir="ltr">
                                         <span asp-validation-for="instagram" class="text-danger"></span>
-
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +169,7 @@
                                             </div>
                                         </span>
                                     </div>
-                                </div><br/>
+                                </div><br />
                                 <div class="col-md-12">
                                     @if (Model.resumeImages.Count > 0)
                                     {
@@ -193,7 +200,7 @@
                                             </div>
                                         </span>
                                     </div>
-                                </div><br/>
+                                </div><br />
                                 <div class="col-md-12">
                                     @if (Model.degreeImages.Count > 0)
                                     {
@@ -714,6 +721,10 @@
     </div>
 </div>
 <!-- /Page Content -->
+@section Footer{
+<partial name="Footer" />
+}
+
 @section Scripts
 {
 
@@ -787,6 +798,7 @@
             expertProfileData.append("iconImage", $("#expertBasicProfileForm #iconImage").get(0).files[0]);
             expertProfileData.append("specialtyId", BigInt($("#expertBasicProfileForm #specialtyId").val()));
             expertProfileData.append("tag", $("#expertBasicProfileForm #services").val());
+            expertProfileData.append("shabaNumber", $("#expertBasicProfileForm #shabaNumber").val());
             expertProfileData.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
             expertProfileData.append("id", id);
 

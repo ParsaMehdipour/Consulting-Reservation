@@ -156,6 +156,7 @@ namespace CR.Core.Services.Implementations.Experts
                 expertInformation.FirstName = request.firstName;
                 expertInformation.Tag = request.tag;
                 expertInformation.LastName = request.lastName;
+                expertInformation.ShabaNumber = request.shabaNumber;
                 expertInformation.Bio = request.bio;
                 expertInformation.Specialty = speciality;
                 expertInformation.SpecialtyId = speciality?.Id;

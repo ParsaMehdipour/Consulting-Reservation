@@ -465,6 +465,10 @@
 
 <input type="hidden" value="@ClaimUtility.GetUserId(User).Value" id="userId" name="userId" />
 
+@section Footer{
+    <partial name="Footer"/>
+}
+
 @section Scripts
 {
 <script>
@@ -584,7 +588,5 @@
             return;
         }
     }
-
-
 </script>
 }

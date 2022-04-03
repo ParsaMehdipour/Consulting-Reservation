@@ -99,6 +99,14 @@
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <label class="control-label">شماره شبا</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="shabaNumber" id="shabaNumber" name="shabaNumber" dir="ltr" aria-describedby="sizing-addon2">
+                                <span class="input-group-text" id="sizing-addon2">IR</span>
+                            </div>
+                            <span asp-validation-for="shabaNumber" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">لینک اینستاگرام</label>
                                 <input type="text" class="form-control" asp-for="instagram" id="instagram" name="instagram" dir="ltr">
@@ -752,6 +760,7 @@
             expertProfileData.append("postalCode", $('input[name=postalCode]').val());
             expertProfileData.append("bio", $("#expertBasicProfileForm #bio").val());
             expertProfileData.append("instagram", $('input[name=instagram]').val());
+            expertProfileData.append("shabaNumber", $("#expertBasicProfileForm #shabaNumber").val());
             expertProfileData.append("iconImage", $("#expertBasicProfileForm #iconImage").get(0).files[0]);
             expertProfileData.append("specialtyId", BigInt($("#expertBasicProfileForm #specialtyId").val()));
             expertProfileData.append("tag", $("#expertBasicProfileForm #services").val());

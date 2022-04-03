@@ -57,8 +57,10 @@ namespace CR.Core.Services.Implementations.ChatMessages
                 };
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                var error = e;
+
                 transaction.Rollback();
 
                 return new ResultDto()

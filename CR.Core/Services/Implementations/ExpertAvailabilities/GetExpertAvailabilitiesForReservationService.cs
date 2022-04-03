@@ -44,7 +44,7 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
                     date_String = d.Date_String,
                     dayOfWeek = DateConvertor.GetDayOfWeek(d.Date),
                     id = d.Id,
-                    timeOfDayDtos = d.TimeOfDays.Where(t => t.IsReserved == false && t.TimingType == timingType).Select(
+                    timeOfDayDtos = d.TimeOfDays.Where(t => t.IsReserved == false && t.TimingType == timingType && t.StartTime > date).Select(
                         f => new TimeOfDayDto()
                         {
                             id = f.Id,

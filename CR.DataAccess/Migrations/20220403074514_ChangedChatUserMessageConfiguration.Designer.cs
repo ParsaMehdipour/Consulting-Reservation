@@ -4,14 +4,16 @@ using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220403074514_ChangedChatUserMessageConfiguration")]
+    partial class ChangedChatUserMessageConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -932,10 +934,6 @@ namespace CR.DataAccess.Migrations
 
                     b.Property<string>("Province")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShabaNumber")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long?>("SpecialtyId")
                         .HasColumnType("bigint");
