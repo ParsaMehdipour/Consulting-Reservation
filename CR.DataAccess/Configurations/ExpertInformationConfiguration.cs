@@ -76,6 +76,9 @@ namespace CR.DataAccess.Configurations
             builder.Property(_ => _.City)
                 .HasMaxLength(50);
 
+            builder.Property(_ => _.ShabaNumber)
+                .HasMaxLength(50);
+
             builder.Property(_ => _.BirthDate_String)
                 .HasMaxLength(50);
 
