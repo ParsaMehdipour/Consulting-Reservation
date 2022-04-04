@@ -66,7 +66,7 @@ namespace CR.Core.Services.Implementations.Factors
                     AppointmentDetailsForSiteDtos = appointments,
                     price = appointments.Sum(a => a.Price),
                     expertFullName = factor.Appointments.FirstOrDefault()?.ExpertInformation.FirstName + " " + factor.Appointments.FirstOrDefault()?.ExpertInformation.LastName,
-                    expertIconSrc = factor.Appointments.FirstOrDefault()?.ExpertInformation.IconSrc,
+                    expertIconSrc = factor.Appointments.FirstOrDefault()?.ExpertInformation.IconSrc ?? "assets/img/User.png",
                     expertInformationId = factor.Appointments.FirstOrDefault()?.ExpertInformation.Id,
                     refId = factor.RefId,
                     consumerId = factor.ConsumerInformation.ConsumerId
