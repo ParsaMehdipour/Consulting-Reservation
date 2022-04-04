@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Factors;
@@ -7,6 +6,7 @@ using CR.Core.DTOs.ResultDTOs.Factors;
 using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Factors
 {
@@ -32,7 +32,7 @@ namespace CR.Core.Services.Implementations.Factors
                 {
                     ConsumerId = f.ConsumerInformation.ConsumerId,
                     ConsumerFullName = f.ConsumerInformation.FirstName + " " + f.ConsumerInformation.LastName,
-                    ConsumerIconSrc = f.ConsumerInformation.IconSrc,
+                    ConsumerIconSrc = f.ConsumerInformation.IconSrc ?? "assets/img/User.png",
                     CreateDate = f.CreateDate.ToShamsi(),
                     FactorNumber = f.FactorNumber,
                     Status = f.FactorStatus.GetDisplayName(),
