@@ -37,7 +37,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 {
                     Id = financialTransaction.Id,
                     AdminFullName = payer.FirstName + " " + payer.LastName,
-                    AdminIconSrc = payer.IconSrc,
+                    AdminIconSrc = payer.IconSrc ?? "assets/img/User.png",
                     CreateDate = financialTransaction.CreateDate_String,
                     Price = financialTransaction.Price_Digit.ToString("n0"),
                     TransactionStatus = financialTransaction.Status.GetDisplayName(),
