@@ -8,6 +8,7 @@
         public string Price { get; set; }
         public string CreateDate { get; set; }
         public string TransactionStatus { get; set; }
+        public string ShabaNumber { get; set; }
         public long Id { get; set; }
     }
 }

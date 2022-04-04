@@ -139,7 +139,7 @@ namespace CR.Presentation.Controllers.View
                             var modelExpert = new SMSModel()
                             {
                                 toNum = updateStatusResult.Data.ExpertPhoneNum,
-                                patternCode = SMSPatterns.ReservationSuccessfulPatternCode_Expert_Side,
+                                patternCode = SMSPatterns.ReservationSuccessfulPatternCode_ExpertSide,
                                 inputData = new List<Dictionary<string, string>>()
                                 {
                                     new Dictionary<string, string>

@@ -5,6 +5,6 @@ namespace CR.Core.Services.Interfaces.FinancialTransaction
 {
     public interface IChangeCheckoutFinancialTransactionService
     {
-        ResultDto Execute(long transactionId, TransactionStatus status);
+        ResultDto Execute(long transactionId, TransactionStatus status, string description);
     }
 }

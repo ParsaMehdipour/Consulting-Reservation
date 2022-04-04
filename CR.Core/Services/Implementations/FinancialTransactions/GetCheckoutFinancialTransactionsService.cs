@@ -5,6 +5,7 @@ using CR.Core.DTOs.ResultDTOs.FinancialTransactions;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,7 +30,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
             foreach (var financialTransaction in financialTransactions)
             {
-                var receiver = _context.Users.Find(financialTransaction.ReceiverId);
+                var receiver = _context.Users.Include(_ => _.ExpertInformation).FirstOrDefault(_ => _.Id == financialTransaction.ReceiverId);
 
                 var checkoutFinancialTransaction = new CheckoutFinancialTransactionForAdminDto()
                 {
@@ -39,7 +40,8 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     ReceiverIconSrc = receiver.IconSrc,
                     ReceiverFullName = receiver.FirstName + " " + receiver.LastName,
                     ReceiverId = financialTransaction.ReceiverId.Value,
-                    TransactionStatus = financialTransaction.Status.GetDisplayName()
+                    TransactionStatus = financialTransaction.Status.GetDisplayName(),
+                    ShabaNumber = receiver.ExpertInformation.ShabaNumber
                 };
 
                 list.Add(checkoutFinancialTransaction);

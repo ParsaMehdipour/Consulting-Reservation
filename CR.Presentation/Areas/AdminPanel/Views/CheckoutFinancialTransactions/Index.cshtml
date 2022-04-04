@@ -26,6 +26,7 @@
                             <tr>
                                 <th class="text-center">دریافت کننده</th>
                                 <th class="text-center"> مبلغ کل </th>
+                                <th class="text-center"> شماره شبا </th>
                                 <th class="text-center"> تاریخ ایجاد </th>
                                 <th class="text-center"> وضعیت </th>
                                 <th class="text-center"> عملیات </th>
@@ -42,6 +43,7 @@
                                         </h2>
                                     </td>
                                     <td class="text-center">@transaction.Price تومان</td>
+                                    <td class="text-center">IR @transaction.ShabaNumber</td>
                                     <td class="text-center">@transaction.CreateDate</td>
                                     <td class="text-center">
                                         @if (transaction.TransactionStatus == TransactionStatus.UnDefined.GetDisplayName())
@@ -61,6 +63,9 @@
                                         <div class="actions">
                                             <a onclick="SetId(@transaction.Id)" class="btn btn-sm bg-success-light" data-toggle="modal" href="#change_transaction_status">
                                                 <i class="fe fe-check-verified"></i> تغیر وضعیت
+                                            </a>
+                                            <a onclick="ShowDetails(@transaction.Id)" class="btn btn-sm bg-primary-light" data-toggle="modal">
+                                                <i class="fe fe-eye"></i> نمایش توضیحات
                                             </a>
                                         </div>
                                     </td>
@@ -101,6 +106,12 @@
             </div>
             <div class="modal-body">
                 <div class="row form-row">
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="col-form-label" for="description">توضیحات :</label>
+                            <textarea id="description" class="form-control"></textarea>
+                        </div>
+                    </div>
                     <div class="col-12 col-sm-6">
                         <div class="form-group">
                             <button onclick="ChangeStatus(2)" id="accepted" type="button" class="btn btn-block btn-outline-success active">انجام شد</button>
@@ -117,6 +128,24 @@
     </div>
 </div>
 <!-- /Edit Details Modal -->
+
+<!-- Transaction Details Modal -->
+<div class="modal fade custom-modal" id="comment_details">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">توضیحات تراکنش</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="detailsBody">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Transaction Details Modal -->
+
 @section Scripts
 {
 <script>
@@ -125,6 +154,40 @@
 
     function SetId(Id) {
         id = Id;
+    }
+
+    function ShowDetails(id) {
+
+        var data = {};
+        data["id"] = id;
+
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "POST",
+            enctype: 'application/json',
+            url: '/api/CheckoutFinancialTransactions/GetDescription',
+            data: JSON.stringify(data),
+            success: function(response) {
+                var data = response;
+
+                var body = '';
+
+                body += '<ul class="info-details">';
+                body += '<li>';
+                body += '<span class="title">متن توضیحات : </span>';
+                body += '<span class="text">' + data + '</span>';
+                body += '</li>';
+                body += '</ul>';
+
+                $("#comment_details #detailsBody").html(body);
+                $("#comment_details").modal("show");
+
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
     }
 
     function ChangeStatus(Status) {
@@ -142,6 +205,7 @@
                 var data = {};
                 data["transactionId"] = id;
                 data["transactionStatus"] = Status;
+                data["description"] = $("#description").val();
                 $.ajax({
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',

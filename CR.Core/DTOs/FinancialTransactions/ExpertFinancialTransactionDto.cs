@@ -2,6 +2,7 @@
 {
     public class ExpertFinancialTransactionDto
     {
+        public long Id { get; set; }
         public string AdminIconSrc { get; set; }
         public string AdminFullName { get; set; }
         public string Price { get; set; }

@@ -256,6 +256,7 @@ namespace CR.Presentation
             services.AddScoped<IAddCheckoutFinancialTransactionService, AddCheckoutFinancialTransactionService>();
             services.AddScoped<IGetCheckoutFinancialTransactionsService, GetCheckoutFinancialTransactionsService>();
             services.AddScoped<IChangeCheckoutFinancialTransactionService, ChangeCheckoutFinancialTransactionService>();
+            services.AddScoped<IGetCheckoutFinancialTransactionDescriptionService, GetCheckoutFinancialTransactionDescriptionService>();
             //Favorites
             services.AddScoped<IAddNewFavoriteService, AddNewFavoriteService>();
             services.AddScoped<IGetConsumerFavoritesService, GetConsumerFavoritesService>();

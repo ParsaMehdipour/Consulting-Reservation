@@ -35,6 +35,8 @@ namespace CR.DataAccess.Configurations
             builder.Property(_ => _.TransactionType);
 
             builder.Property(_ => _.Status);
+
+            builder.Property(_ => _.Description);
         }
     }
 }

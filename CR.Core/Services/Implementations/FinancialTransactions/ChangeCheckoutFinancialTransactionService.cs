@@ -14,8 +14,17 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             _context = context;
         }
 
-        public ResultDto Execute(long transactionId, TransactionStatus status)
+        public ResultDto Execute(long transactionId, TransactionStatus status, string description)
         {
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                return new ResultDto()
+                {
+                    IsSuccess = false,
+                    Message = "لطفا متن توضیحات را وارد کنید"
+                };
+            }
+
             var transaction = _context.FinancialTransactions.Find(transactionId);
 
             if (transaction == null)
@@ -27,6 +36,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 };
             }
 
+            transaction.Description = description;
             transaction.Status = status;
 
             _context.SaveChanges();

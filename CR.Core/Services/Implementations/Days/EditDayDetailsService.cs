@@ -98,6 +98,24 @@ namespace CR.Core.Services.Implementations.Days
 
                     var list = timeOfDaysList;
 
+                    if (list.Count != list.GroupBy(_ => _.StartTime).Distinct().Count())
+                    {
+                        return new ResultDto()
+                        {
+                            IsSuccess = false,
+                            Message = "در زمان بندی ها تداخل وجود دارد"
+                        };
+                    }
+
+                    if (list.Count != list.GroupBy(_ => _.FinishTime).Distinct().Count())
+                    {
+                        return new ResultDto()
+                        {
+                            IsSuccess = false,
+                            Message = "در زمان بندی ها تداخل وجود دارد"
+                        };
+                    }
+
                     _context.TimeOfDays.AddRange(timeOfDaysList);
 
                     _context.SaveChanges();

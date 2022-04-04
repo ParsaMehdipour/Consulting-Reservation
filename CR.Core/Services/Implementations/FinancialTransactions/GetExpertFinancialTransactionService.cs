@@ -35,6 +35,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 var expertFinancialTransaction = new ExpertFinancialTransactionDto()
                 {
+                    Id = financialTransaction.Id,
                     AdminFullName = payer.FirstName + " " + payer.LastName,
                     AdminIconSrc = payer.IconSrc,
                     CreateDate = financialTransaction.CreateDate_String,

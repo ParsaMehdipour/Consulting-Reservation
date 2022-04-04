@@ -17,6 +17,7 @@ namespace CR.DataAccess.Entities.FinancialTransactions
         public long SaleReferenceId { get; set; }
         public TransactionType TransactionType { get; set; }
         public TransactionStatus Status { get; set; }
+        public string Description { get; set; }
 
         #region Foreign Keys
 
