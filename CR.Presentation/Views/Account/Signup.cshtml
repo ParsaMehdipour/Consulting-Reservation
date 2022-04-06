@@ -4,6 +4,12 @@
     Layout = "_Layout";
 }
 
+<style>
+    .hide {
+        display: none
+    }
+</style>
+
 <!-- Page Content -->
 <div class="content">
     <div class="container-fluid">
@@ -19,19 +25,39 @@
                         </div>
                         <div class="col-md-12 col-lg-6 login-right">
                             <div class="login-header">
-                                <h3>ثبت نام کاربر <a asp-controller="Account" asp-action="ExpertSignup">مشاور هستید؟</a></h3>
+                                <h3 id="signUpText">ثبت نام کاربر <a asp-controller="Account" asp-action="ExpertSignup">مشاور هستید؟</a></h3>
                             </div>
 
-                            <!-- Register Form -->
-                            <form asp-controller="Account" asp-action="Signup" method="post">
-                                <div asp-validation-summary="ModelOnly"></div>
+                            <!-- PhoneNumber Form -->
+                            <form id="signUpForm">
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" asp-for="PhoneNumber">
+                                    <input type="text" class="form-control floating" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
                                     <label class="focus-label">شماره موبایل </label>
-                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    <span asp-validation-for="phoneNumber" class="text-danger"></span>
                                 </div>
+                                <div class="text-right">
+                                    <a class="forgot-link" asp-area="" asp-controller="Account" asp-action="Login"> حساب کاربری دارید؟ </a>
+                                </div>
+                                <button onclick="SignUpSendCode()" type="submit" class="btn btn-primary btn-block btn-lg login-btn">ارسال کد تایید</button>
+                            </form>
+                            <!-- /PhoneNumber Form -->
+                            <!-- VerificationCode Form -->
+                            <form id="verificationCodeForm" class="hide">
                                 <div class="form-group form-focus">
-                                    <input type="password" class="form-control floating" asp-for="Password">
+                                    <input type="text" class="form-control floating" asp-for="verificationCode" id="verificationCode" name="verificationCode">
+                                    <label class="focus-label">کد تایید </label>
+                                    <span asp-validation-for="verificationCode" class="text-danger"></span>
+                                </div>
+                                <div class="text-right">
+                                    <a class="forgot-link" asp-area="" asp-controller="Account" asp-action="Login"> حساب کاربری دارید؟ </a>
+                                </div>
+                                <button onclick="Verify()" type="submit" class="btn btn-primary btn-block btn-lg login-btn">ارسال</button>
+                            </form>
+                            <!-- /VerificationCode Form -->
+                            <!-- Password Form -->
+                            <form id="passwordForm" class="hide">
+                                <div class="form-group form-focus">
+                                    <input type="password" class="form-control floating" asp-for="Password" id="password" name="password">
                                     <label class="focus-label">رمزعبور </label>
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
@@ -43,9 +69,9 @@
                                 <div class="text-right">
                                     <a class="forgot-link" asp-area="" asp-controller="Account" asp-action="Login"> حساب کاربری دارید؟ </a>
                                 </div>
-                                <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">ثبت‌نام</button>
+                                <button onclick="ConfirmSignup()" type="submit" class="btn btn-primary btn-block btn-lg login-btn">ثبت‌نام</button>
                             </form>
-                            <!-- /Register Form -->
+                            <!-- /Password Form -->
 
                         </div>
                     </div>
@@ -57,12 +83,166 @@
 
     </div>
 
-</div><br />
+</div>
+<br />
 <!-- /Page Content -->
 @section Footer{
-    <partial name="Footer"/>
+<partial name="Footer" />
 }
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+<script>
+    function SignUpSendCode() {
+        if ($("#signUpForm").valid()) {
+
+            var phoneNumberData = new FormData();
+
+            phoneNumberData.append("phoneNumber",$("#signUpForm #phoneNumber").val());
+
+            $("#signUpForm" ).submit(function( event ) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SignupVerificationCode","Account")',
+                    data: phoneNumberData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                $("#signUpText").html("کد تایید را وارد نمایید");
+                                $("#signUpForm").addClass("hide");
+                                $("#verificationCodeForm").removeClass("hide");
+                                $("#passwordForm").addClass("hide");
+                            });
+                        }
+                        else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning');
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                event.preventDefault();
+            });
+        }
+    }
+
+    function Verify() {
+        if ($("#verificationCodeForm").valid()) {
+
+            var postData = {
+                'verificationCode': $("#verificationCodeForm #verificationCode").val()
+            };
+
+            console.log(postData);
+
+            $("#verificationCodeForm" ).submit(function( event ) {
+                $.ajax({
+                    url: '@Url.Action("Verify","Account")',
+                    data: postData,
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: 'POST',
+                    cache: false,
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                $("#signUpText").html("رمز عبور را وارد نمایید");
+                                $("#signUpForm").addClass("hide");
+                                $("#passwordForm").removeClass("hide");
+                                $("#verificationCodeForm").addClass("hide");
+                            });
+                        }
+                        else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning').then(function(isConfirm) {
+                                document.getElementById("verificationCode").value = "";
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                event.preventDefault();
+            });
+        }
+    }
+
+    function ConfirmSignup() {
+        if ($("#passwordForm").valid()) {
+
+            var passwordData = new FormData();
+
+            passwordData.append("password",$("#passwordForm #password").val());
+
+            $("#passwordForm" ).submit(function( event ) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ConfirmSignup","Account")',
+                    data: passwordData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location = location.replace("/Account");
+                            });
+                        }
+                        else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning');
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                event.preventDefault();
+            });
+        }
+    }
+</script>
 }
