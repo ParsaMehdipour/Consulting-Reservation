@@ -1,3 +1,5 @@
+using CR.Common.Utilities.PhoneTotp;
+using CR.Common.Utilities.PhoneTotp.Providers;
 using CR.Core.DTOs.FinancialTransactions;
 using CR.Core.Services.Implementations.AboutUs;
 using CR.Core.Services.Implementations.Appointment;
@@ -300,8 +302,15 @@ namespace CR.Presentation
             services.AddScoped<IGetContactUsForAdminPanelService, GetContactUsForAdminPanelService>();
             services.AddScoped<IAddNewContactUsService, AddNewContactUsService>();
             services.AddScoped<IGetContactUsDetailsService, GetContactUsDetailsService>();
+            //PhoneTOTP
+            services.AddTransient<IPhoneTotpProvider, PhoneTotpProvider>();
 
             #endregion
+
+            services.Configure<PhoneTotpOptions>(options =>
+            {
+                options.StepInSeconds = 120;
+            });
 
         }
 

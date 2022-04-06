@@ -131,7 +131,7 @@ namespace CR.Presentation.Controllers.View
 
                             var uri = "https://ippanel.com/api/select";
 
-                            await CallApiReservation<object>(uri, model);
+                            await CallApiSMSPanel<object>(uri, model);
                         }
 
                         foreach (var appointment in updateStatusResult.Data.AppointmentDetailsForExpertSmsDtos)
@@ -153,7 +153,7 @@ namespace CR.Presentation.Controllers.View
 
                             var uri = "https://ippanel.com/api/select";
 
-                            await CallApiReservation<object>(uri, modelExpert);
+                            await CallApiSMSPanel<object>(uri, modelExpert);
                         }
                     }
 
@@ -219,7 +219,7 @@ namespace CR.Presentation.Controllers.View
             }
         }
 
-        private async Task<T> CallApiReservation<T>(string apiUrl, object value)
+        private async Task<T> CallApiSMSPanel<T>(string apiUrl, object value)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
             using (var client = new HttpClient())

@@ -8,7 +8,11 @@ namespace CR.Core.DTOs.Account
         [Required(ErrorMessage = "شماره تماس را وارد کنید")]
         [Display(Name = "شماره تماس")]
         [Phone]
-        public string PhoneNumber { get; set; }
+        public string phoneNumber { get; set; }
+
+        [Required(ErrorMessage = "کد تایید را وارد کنید")]
+        [Display(Name = "کد تایید")]
+        public string verificationCode { get; set; }
 
         [Required(ErrorMessage = "رمزعبور را وارد کنید")]
         [Display(Name = "رمزعبور")]
