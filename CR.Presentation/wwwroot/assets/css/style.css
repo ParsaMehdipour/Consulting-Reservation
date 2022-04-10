@@ -2096,6 +2096,14 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
     cursor: pointer
 }
 
+.user-menu.nav > li > a.mobile_btn2 {
+    border: 0;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    cursor: pointer
+}
+
 .header-navbar-rht .dropdown-menu {
     min-width: 200px;
     padding: 0;
@@ -2235,6 +2243,11 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 #mobile_btn {
     display: none;
     margin-left: 30px;
+}
+
+#mobile_btn2 {
+    display: none;
+    margin-right: 30px;
 }
 
 html.menu-opened body {
@@ -8181,8 +8194,16 @@ ul.benifits-col li i {
         display: inline-block;
     }
 
+    #mobile_btn2 {
+        display: inline-block;
+    }
+
+
     .section-search {
-        min-height: 330px;
+        background: #6183c8 url(../img/banner.png) no-repeat bottom center;
+        min-height: 410px;
+        padding: 30px 15px;
+        background-size: 100% auto;
     }
 
     .section-specialities {
@@ -8342,9 +8363,31 @@ ul.benifits-col li i {
         flex: 0 0 100%;
         max-width: 100%;
     }
+    .section-search {
+        background: #6183c8 url(../img/banner.png) no-repeat bottom center;
+        min-height: 410px;
+        padding: 30px 15px;
+        background-size: 100% auto;
+    }
+
 }
 
+
 @media only screen and (max-width: 767.98px) {
+
+    .search-box .search-btn {
+        -ms-flex: 0 0 100%;
+        /*flex: 0 0 100%;*/
+        min-height: 46px;
+        width: 100%;
+    }
+
+        .search-box .search-btn span {
+            display: inline-block;
+            margin-left: 5px;
+            text-transform: uppercase;
+        }
+
     body {
         font-size: 0.875rem;
     }
@@ -8476,22 +8519,14 @@ ul.benifits-col li i {
             width: 100%;
         }
 
-        .search-box .search-btn {
-            -ms-flex: 0 0 100%;
-            flex: 0 0 100%;
-            min-height: 46px;
-            width: 100%;
-        }
-
-            .search-box .search-btn span {
-                display: inline-block;
-                margin-left: 5px;
-                text-transform: uppercase;
-            }
 
     .section-search {
-        background: #6183c8;
+        background: #6183c8 url(../img/banner.png) no-repeat bottom center;
+        min-height: 410px;
+        padding: 30px 15px;
+        background-size: 100% auto;
     }
+
 
     .day-slot li span {
         font-size: 16px;
@@ -8804,6 +8839,13 @@ ul.benifits-col li i {
 }
 
 @media only screen and (max-width: 575.98px) {
+    .section-search {
+        background: #6183c8 url(../img/banner.png) no-repeat bottom center;
+        min-height: 410px;
+        padding: 30px 15px;
+        background-size: 100% auto;
+    }
+
     body {
         font-size: 0.8125rem;
     }
@@ -8871,6 +8913,14 @@ ul.benifits-col li i {
         padding: 0 15px;
         position: absolute;
         z-index: 99;
+    }
+
+    #mobile_btn2 {
+        left: 0;
+        margin-left: 0;
+        padding: 0 15px;
+        position: absolute;
+        z-index: 0;
     }
 
     .navbar-brand.logo {
@@ -9083,6 +9133,7 @@ ul.benifits-col li i {
         background: #6183c8 url(../img/banner.png) no-repeat bottom center;
         min-height: 410px;
         padding: 30px 15px;
+        background-size: 100% auto;
     }
 
     .specialities-slider .slick-slide {
