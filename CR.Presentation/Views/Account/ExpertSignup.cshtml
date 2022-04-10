@@ -4,58 +4,82 @@
     Layout = "_Layout";
 }
 
+<style>
+    .hide {
+        display: none
+    }
+</style>
+
 <!-- Page Content -->
 <div class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-
                 <!-- Account Content -->
                 <div class="account-content">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-md-7 col-lg-6 login-left">
-                            <img src="~/assets/img/بنر لاگین 2.png" class="img-fluid" alt="Login Banner">
+                            <img src="~/assets/img/loginBanner.svg" class="img-fluid" alt="chalechoole Register">
                         </div>
                         <div class="col-md-12 col-lg-6 login-right">
                             <div class="login-header">
-                                <h3>ثبت نام مشاور <a asp-controller="Account" asp-action="Signup"> مشاور نیستید؟ </a></h3>
+                                <h3 id="registerExpertText">ثبت نام مشاور <a asp-controller="Account" asp-action="Signup"> مشاور نیستید؟ </a></h3>
                             </div>
-
-                            <!-- Register Form -->
-                            <form asp-controller="Account" asp-action="ExpertSignup" method="post">
-                                <div asp-validation-summary="ModelOnly"></div>
+                            <!-- Register-PhoneNumber Form -->
+                            <form id="registerExpertForm_PhoneNumber">
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" asp-for="FirstName">
-                                    <label class="focus-label"> نام </label>
-                                     <span asp-validation-for="FirstName" class="text-danger"></span>
-                                </div>
-                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" asp-for="LastName">
-                                    <label class="focus-label"> نام خانوادگی </label>
-                                     <span asp-validation-for="LastName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" asp-for="PhoneNumber">
+                                    <input type="text" class="form-control floating" asp-for="phoneNumber" id="phoneNumber" name="phoneNumber">
                                     <label class="focus-label">شماره موبایل </label>
-                                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                                </div>
-                                <div class="form-group form-focus">
-                                    <input type="password" class="form-control floating" asp-for="Password">
-                                    <label class="focus-label"> رمزعبور </label>
-                                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                                </div>
-                                 <div class="form-group form-focus">
-                                    <input type="password" class="form-control floating" asp-for="ConfirmPassword">
-                                    <label class="focus-label"> تکرار رمزعبور </label>
-                                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    <span asp-validation-for="phoneNumber" class="text-danger"></span>
                                 </div>
                                 <div class="text-right">
                                     <a class="forgot-link" asp-controller="Account" asp-action="Login"> حساب کاربری دارید؟ </a>
                                 </div>
-                                <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">ثبت‌نام</button>
+                                <button onclick="ExpertSignupSendCode()" class="btn btn-primary btn-block btn-lg login-btn" type="submit">ارسال کد تایید</button>
                             </form>
-                            <!-- /Register Form -->
-
+                            <!-- /Register-PhoneNumber Form -->
+                            <!-- Register-VerificationCode Form -->
+                            <form id="registerExpertForm_VerificationCode" class="hide">
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating" asp-for="verificationCode" id="verificationCode" name="verificationCode">
+                                    <label class="focus-label"> کد تایید </label>
+                                    <span asp-validation-for="verificationCode" class="text-danger"></span>
+                                </div>
+                                <div class="text-right">
+                                    <a class="forgot-link" asp-controller="Account" asp-action="Login"> حساب کاربری دارید؟ </a>
+                                </div>
+                                <button onclick="Verify()" class="btn btn-primary btn-block btn-lg login-btn" type="submit">تایید</button>
+                            </form>
+                            <!-- /Register-VerificationCode Form -->
+                            <!-- Register-ExpertInformation Form -->
+                            <form id="registerExpertForm_ExpertInformation" class="hide">
+                                <div asp-validation-summary="ModelOnly"></div>
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating" asp-for="FirstName" id="firstName" name="firstName">
+                                    <label class="focus-label"> نام </label>
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating" asp-for="LastName" id="lastName" name="lastName">
+                                    <label class="focus-label"> نام خانوادگی </label>
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-focus">
+                                    <input type="password" class="form-control floating" asp-for="Password" id="password" name="password">
+                                    <label class="focus-label"> رمزعبور </label>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-focus">
+                                    <input type="password" class="form-control floating" asp-for="ConfirmPassword">
+                                    <label class="focus-label"> تکرار رمزعبور </label>
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+                                <div class="text-right">
+                                    <a class="forgot-link" asp-controller="Account" asp-action="Login"> حساب کاربری دارید؟ </a>
+                                </div>
+                                <button onclick="ExpertConfirmSignup()" class="btn btn-primary btn-block btn-lg login-btn" type="submit">ثبت‌نام</button>
+                            </form>
+                            <!-- /Register-ExpertInformation Form -->
                         </div>
                     </div>
                 </div>
@@ -67,12 +91,173 @@
     </div>
 
 </div>
-<!-- /Page Content -->
+<br />
 
+<!-- /Page Content -->
 @section Footer{
-    <partial name="Footer"/>
+<partial name="Footer" />
 }
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    <script>
+        function ExpertSignupSendCode() {
+            if ($("#registerExpertForm_PhoneNumber").valid()) {
+
+                var expertPhoneNumberData = new FormData();
+
+                expertPhoneNumberData.append("phoneNumber",$("#registerExpertForm_PhoneNumber #phoneNumber").val());
+
+                $("#registerExpertForm_PhoneNumber" ).submit(function( event ) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("SignupVerificationCode","Account")',
+                        data: expertPhoneNumberData,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function(x) {
+                            $('#loading').show();
+                        },
+                        success: function(data) {
+                            if (data.isSuccess === true) {
+                                swal.fire('موفق!',
+                                    data.message,
+                                    'success').then(function(isConfirm) {
+                                    $("#registerExpertText").html("کد تایید را وارد نمایید");
+                                    $("#registerExpertForm_PhoneNumber").addClass("hide");
+                                    $("#registerExpertForm_VerificationCode").removeClass("hide");
+                                    $("#registerExpertForm_ExpertInformation").addClass("hide");
+                                });
+                            }
+                            else {
+                                swal.fire('هشدار!',
+                                    data.message,
+                                    'warning');
+                            }
+                        },
+                        complete: function() {
+                            $('#loading').hide();
+                        },
+                        fail: function() {
+                            $('#loading').hide();
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
+                        }
+                    });
+
+                    event.preventDefault();
+                });
+            }
+        }
+
+        function Verify() {
+            if ($("#registerExpertForm_VerificationCode").valid()) {
+
+            var postData = {
+                'verificationCode': $("#registerExpertForm_VerificationCode #verificationCode").val()
+            };
+
+            $("#registerExpertForm_VerificationCode" ).submit(function( event ) {
+                $.ajax({
+                    url: '@Url.Action("Verify","Account")',
+                    data: postData,
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: 'POST',
+                    cache: false,
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                $("#registerExpertText").html("اطلاعات خود را وارد نمایید");
+                                $("#registerExpertForm_PhoneNumber").addClass("hide");
+                                $("#registerExpertForm_ExpertInformation").removeClass("hide");
+                                $("#registerExpertForm_VerificationCode").addClass("hide");
+                            });
+                        }
+                        else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning').then(function(isConfirm) {
+                                document.getElementById("verificationCode").value = null;
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                event.preventDefault();
+            });
+            }
+        }
+
+        function ExpertConfirmSignup() {
+            if ($("#registerExpertForm_ExpertInformation").valid()) {
+
+                var expertInformationData = new FormData();
+
+                expertInformationData.append("firstName",$("#registerExpertForm_ExpertInformation #firstName").val());
+                expertInformationData.append("lastName",$("#registerExpertForm_ExpertInformation #lastName").val());
+                expertInformationData.append("password",$("#registerExpertForm_ExpertInformation #password").val());
+
+                $("#registerExpertForm_ExpertInformation").submit(function( event ) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("ExpertConfirmSignup","Account")',
+                        data: expertInformationData,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function(x) {
+                            $('#loading').show();
+                        },
+                        success: function(data) {
+                            if (data.isSuccess === true) {
+                                swal.fire('موفق!',
+                                    data.message,
+                                    'success').then(function(isConfirm) {
+                                    location.replace("/Account");
+                                });
+                            }
+                            else {
+                                swal.fire('هشدار!',
+                                    data.message,
+                                    'warning').then(function(isConfirm) {
+                                    $("#registerExpertText").html("اطلاعات خود را وارد نمایید");
+                                    $("#registerExpertForm_PhoneNumber").addClass("hide");
+                                    $("#registerExpertForm_ExpertInformation").removeClass("hide");
+                                    $("#registerExpertForm_VerificationCode").addClass("hide");
+                                });
+                            }
+                        },
+                        complete: function() {
+                            $('#loading').hide();
+                        },
+                        fail: function() {
+                            $('#loading').hide();
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
+                        }
+                    });
+
+                    event.stopImmediatePropagation();
+                });
+            }
+        }
+    </script>
+ }
 }
