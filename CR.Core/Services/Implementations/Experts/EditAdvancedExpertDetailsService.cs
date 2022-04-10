@@ -68,7 +68,7 @@ namespace CR.Core.Services.Implementations.Experts
                     };
                 }
 
-                //ویرایش تجربه های مشاور
+                //ویرایش سوابق کاری مشاور
                 _context.ExpertExperiences.RemoveRange(expertInformation.ExpertExperiences);
 
                 if (request.experiences != null)
@@ -160,7 +160,7 @@ namespace CR.Core.Services.Implementations.Experts
                     _context.ExpertStudies.AddRange(expertStudies);
                 }
 
-                //ویرایش ثبت نام های مشاور
+                //ویرایش گواهی های مشاور
                 _context.ExpertSubscriptions.RemoveRange(expertInformation.ExpertSubscriptions);
 
                 if (request.subscriptions != null)
