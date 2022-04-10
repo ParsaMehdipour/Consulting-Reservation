@@ -70,8 +70,7 @@ namespace CR.DataAccess.Configurations
                 .WithOne(_ => _.ExpertInformation)
                 .HasForeignKey(_ => _.ExpertInformationId);
 
-            builder.Property(_ => _.Bio)
-                .HasMaxLength(200);
+            builder.Property(_ => _.Bio);
 
             builder.Property(_ => _.City)
                 .HasMaxLength(50);

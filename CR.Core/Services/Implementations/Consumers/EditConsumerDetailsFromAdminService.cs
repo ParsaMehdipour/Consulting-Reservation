@@ -68,7 +68,7 @@ namespace CR.Core.Services.Implementations.Consumers
                 return new ResultDto()
                 {
                     IsSuccess = true,
-                    Message = "اطلاعات مراجعه کننده با موفقیت ویرایش"
+                    Message = "اطلاعات کاربر با موفقیت ویرایش"
                 };
 
             }

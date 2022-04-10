@@ -49,15 +49,19 @@
                                                     <h3><a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-consumerId="@consumer.Id">@consumer.FullName</a></h3>
                                                     <div class="patient-details">
                                                         <h5><b>شناسه مراجعه‌کننده :</b> @consumer.Id</h5>
-                                                        <h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> @consumer.City ، @consumer.Province</h5>
+                                                        @*<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> @consumer.City ، @consumer.Province</h5>*@
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="patient-info">
                                             <ul>
-                                                <li>شماره تماس <span>@consumer.PhoneNumber</span></li>
-                                                <li>سن <span>@consumer.Age سال، @consumer.Gender</span></li>
+                                                @if (consumer.PhoneNumber != null)
+                                                {
+                                                    <li>شماره تماس <span>@consumer.PhoneNumber</span></li>
+                                                }
+                                                <li>سن <span>@consumer.Age سال</span></li>
+                                                <li>جنسیت <span>@consumer.Gender</span></li>
                                                 <li>میزان تحصیلات<span>@consumer.Degree</span></li>
                                             </ul>
                                         </div>

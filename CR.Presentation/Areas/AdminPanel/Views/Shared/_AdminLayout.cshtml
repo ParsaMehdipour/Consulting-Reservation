@@ -163,7 +163,7 @@
                             <a asp-controller="Experts" asp-action="Index"><i class="fe fe-user-plus"></i> <span>مشاورین</span></a>
                         </li>
                         <li @(TempData["activemenu"].ToString() == ActiveMenu.Consumers ? @"class=active" : "")>
-                            <a asp-controller="Consumers" asp-action="Index"><i class="fe fe-user"></i> <span>مراجعان</span></a>
+                            <a asp-controller="Consumers" asp-action="Index"><i class="fe fe-user"></i> <span>کاربران</span></a>
                         </li>
                         <li class="submenu">
                             <a @(TempData["activemenu"].ToString() == ActiveMenu.ExpertComments || TempData["activemenu"].ToString() == ActiveMenu.BlogComments ? @"class=active subdrop" : "") href="#"><i class="fe fe-document"></i> <span>نظرات</span> <span class="menu-arrow"></span></a>

@@ -5,6 +5,7 @@ using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs.Consumers;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -48,8 +49,10 @@ namespace CR.Core.Services.Implementations.Appointment
                 .ToList();
 
             var consumer = _context.Appointments
+                .Include(a => a.ConsumerInformation.ConsumerAppointments)
                 .Include(a => a.ConsumerInformation)
-                .ThenInclude(a => a.Consumer).FirstOrDefault(a => a.ConsumerInformation.ConsumerId == consumerId);
+                .ThenInclude(a => a.Consumer)
+                .FirstOrDefault(a => a.ConsumerInformation.ConsumerId == consumerId);
 
 
 
@@ -64,7 +67,7 @@ namespace CR.Core.Services.Implementations.Appointment
                     City = consumer.ConsumerInformation.City,
                     Degree = consumer.ConsumerInformation.Degree,
                     Gender = consumer.ConsumerInformation.Gender.GetDisplayName(),
-                    PhoneNumber = consumer.ConsumerInformation.Consumer.PhoneNumber.GetPersianNumber(),
+                    PhoneNumber = (consumer.ConsumerInformation.ConsumerAppointments.Any(_ => _.CallingType == CallingType.PhoneCall)) ? consumer.ConsumerInformation.Consumer.PhoneNumber : null,
                     CurrentPage = Page,
                     PageSize = PageSize,
                     RowCount = rowCount,
