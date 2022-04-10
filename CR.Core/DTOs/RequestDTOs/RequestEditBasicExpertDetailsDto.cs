@@ -30,7 +30,7 @@ namespace CR.Core.DTOs.RequestDTOs
         //[Required(ErrorMessage = "تصویر خود را وارد کنید")]
         public IFormFile iconImage { get; set; }
 
-        [Required(ErrorMessage = "نام کلینیک خود را وارد کنید")]
+        [Required(ErrorMessage = "محل کار خود را وارد کنید")]
         public string clinicName { get; set; }
 
         [Required(ErrorMessage = "آدرس کلینیک خود را وارد کنید")]

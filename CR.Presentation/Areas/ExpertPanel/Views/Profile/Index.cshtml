@@ -298,7 +298,7 @@
                                 <div class="row custom_price_cont" id="custom_price_cont_phoneCallPrice">
                                     <div class="col-md-4">
                                         <input readonly="readonly" type="text" class="form-control money2" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
-                                        <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
+                                        <small class="form-text text-muted">مبلغ بالا با توجه به سوابق، تخصص و نوع مشاوره برای شما تعیین می گردد (دقیقه ای به تومان)</small>
                                     </div>
                                 </div>
                             }
@@ -307,7 +307,7 @@
                                 <div class="row custom_price_cont" id="custom_price_cont_phoneCallPrice" style="display: none;">
                                     <div class="col-md-4">
                                         <input readonly="readonly" type="text" class="form-control money2" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
-                                        <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای به تومان)</small>
+                                        <small class="form-text text-muted">مبلغ بالا با توجه به سوابق، تخصص و نوع مشاوره برای شما تعیین می گردد (دقیقه ای به تومان)</small>
                                     </div>
                                 </div>
                             }
@@ -344,7 +344,7 @@
                                 <div class="row custom_price_cont" id="voiceCallPrice_Custom">
                                     <div class="col-md-4">
                                         <input readonly="readonly" type="text" class="form-control money2" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
-                                        <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
+                                        <small class="form-text text-muted">مبلغ بالا با توجه به سوابق، تخصص و نوع مشاوره برای شما تعیین می گردد (دقیقه ای به تومان)</small>
                                     </div>
                                 </div>
                             }
@@ -353,7 +353,7 @@
                                 <div class="row custom_price_cont" id="voiceCallPrice_Custom" style="display: none;">
                                     <div class="col-md-4">
                                         <input readonly="readonly" type="text" class="form-control money2" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
-                                        <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
+                                        <small class="form-text text-muted">مبلغ بالا با توجه به سوابق، تخصص و نوع مشاوره برای شما تعیین می گردد (دقیقه ای به تومان)</small>
                                     </div>
                                 </div>
                             }
@@ -390,7 +390,7 @@
                                 <div class="row custom_price_cont" id="textCallPrice_Custom">
                                     <div class="col-md-4">
                                         <input readonly="readonly" type="text" class="form-control money2" id="custom_rating_input_textCallPrice" name="custom_rating_count_textCallPrice" value="@Model.textCallPrice">
-                                        <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
+                                        <small class="form-text text-muted">مبلغ بالا با توجه به سوابق، تخصص و نوع مشاوره برای شما تعیین می گردد (دقیقه ای به تومان)</small>
                                     </div>
                                 </div>
                             }
@@ -399,7 +399,7 @@
                                 <div class="row custom_price_cont" id="textCallPrice_Custom" style="display: none;">
                                     <div class="col-md-4">
                                         <input readonly="readonly" type="text" class="form-control money2" id="custom_rating_input_textCallPrice" name="custom_rating_count_textCallPrice" value="@Model.textCallPrice">
-                                        <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
+                                        <small class="form-text text-muted">مبلغ بالا با توجه به سوابق، تخصص و نوع مشاوره برای شما تعیین می گردد (دقیقه ای به تومان)</small>
                                     </div>
                                 </div>
                             }
@@ -412,7 +412,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>خدمات</label>
+                                <label>خدمات (جزئیات بیشتری از تخصص خود ذکر کنید)</label>
                                 <input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="وارد کردن خدمت" name="services" asp-for="tag" id="services">
                                 <small class="form-text text-muted">توجه: برای افزودن سرویس های جدید ، اینتر را فشار داده و وارد کنید</small>
                             </div>
@@ -495,7 +495,7 @@
                         </div>
                         <hr />
                         <div class="card-body">
-                            <h4 class="card-title">تجربه</h4>
+                            <h4 class="card-title">سوابق کاری</h4>
                             <div class="experience-info">
                                 @if (Model.experiences.Count > 0)
                                 {
@@ -506,7 +506,7 @@
                                                 <div class="row form-row">
                                                     <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="form-group">
-                                                            <label>نام کلینیک</label>
+                                                            <label>محل کار</label>
                                                             <input type="text" class="form-control" id="pastClinicName" name="pastClinicName" value="@experience?.clinicName">
                                                         </div>
                                                     </div>
@@ -524,7 +524,7 @@
                                                     </div>
                                                     <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="form-group">
-                                                            <label> نقش</label>
+                                                            <label>سِمَت</label>
                                                             <input type="text" class="form-control" id="role" name="role" value="@experience?.role">
                                                         </div>
                                                     </div>
@@ -541,7 +541,7 @@
                                             <div class="row form-row">
                                                 <div class="col-12 col-md-6 col-lg-4">
                                                     <div class="form-group">
-                                                        <label>نام کلینیک</label>
+                                                        <label>محل کار</label>
                                                         <input type="text" class="form-control" id="pastClinicName" name="pastClinicName">
                                                     </div>
                                                 </div>
@@ -662,7 +662,7 @@
                         </div>
                         <hr />
                         <div class="card-body">
-                            <h4 class="card-title"> ثبت نام ها </h4>
+                            <h4 class="card-title"> گواهی ها </h4>
                             <div class="registrations-info">
                                 @if (Model.subscriptions.Count > 0)
                                 {
@@ -671,7 +671,7 @@
                                         <div class="row form-row reg-cont">
                                             <div class="col-12 col-md-5">
                                                 <div class="form-group">
-                                                    <label> ثبت نام ها </label>
+                                                    <label> گواهی ها </label>
                                                     <input type="text" class="form-control" id="subscriptionName" name="subscriptionName" value="@subscription?.subscriptionName">
                                                 </div>
                                             </div>
@@ -693,7 +693,7 @@
                                     <div class="row form-row reg-cont">
                                         <div class="col-12 col-md-5">
                                             <div class="form-group">
-                                                <label> ثبت نام ها </label>
+                                                <label> گواهی ها </label>
                                                 <input type="text" class="form-control" id="subscriptionName" name="subscriptionName">
                                             </div>
                                         </div>
@@ -858,6 +858,11 @@
                                 data.message,
                                 'success').then(function(isConfirm) {
                                 location.reload();
+                            });
+                        } else {
+                            swal.fire('هشدار!',
+                                data.message,
+                                'warning').then(function(isConfirm) {
                             });
                         }
                     },

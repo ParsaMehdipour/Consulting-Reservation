@@ -4,7 +4,7 @@ namespace CR.DataAccess.Enums
 {
     public enum UserFlag
     {
-        [Display(Name = "مراجعه کننده")]
+        [Display(Name = "کاربر")]
         Consumer = 0,
         [Display(Name = "مشاور")]
         Expert = 1,
@@ -109,7 +109,7 @@ namespace CR.DataAccess.Enums
 
     public enum MessageFlag
     {
-        [Display(Name = "پیام مراجعه کننده")]
+        [Display(Name = "پیام کاربر")]
         ConsumerMessage = 0,
         [Display(Name = "پیام متخصص")]
         ExpertMessage = 1

@@ -70,7 +70,7 @@ namespace CR.Core.Services.Implementations.Users
                 return new ResultDto()
                 {
                     IsSuccess = true,
-                    Message = "مراجعه کننده با موفقیت افزوده شد"
+                    Message = "کاربر با موفقیت افزوده شد"
                 };
 
             }

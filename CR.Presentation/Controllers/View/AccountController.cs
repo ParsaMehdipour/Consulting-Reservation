@@ -200,12 +200,18 @@ namespace CR.Presentation.Controllers.View
 
                 if (result.Succeeded)
                 {
+                    TempData.Remove("PTCPhone");
+
+
                     return new ResultDto()
                     {
                         IsSuccess = true,
                         Message = "ثبت نام با موفقیت انجام شد"
                     };
                 }
+
+                TempData.Remove("PTCPhone");
+
 
                 return new ResultDto()
                 {
@@ -232,38 +238,61 @@ namespace CR.Presentation.Controllers.View
         }
 
         [HttpPost]
-        public async Task<IActionResult> ExpertSignup(RegisterExpertViewModel model)
+        public async Task<ResultDto> ExpertConfirmSignup([FromForm] ExpertInformationForSignupConfirmationDto model)
         {
-            if (_signInManager.IsSignedIn(User))
-                return RedirectToAction("Index", "Home");
-            if (ModelState.IsValid)
+            if (TempData.ContainsKey("PTCPhone"))
             {
-                var user = new User
+                var totpTempDataModel = JsonSerializer.Deserialize<PhoneNumberTempDataModel>(TempData["PTCPhone"].ToString()!);
+                if (totpTempDataModel.ExpirationTime <= DateTime.Now)
                 {
-                    UserName = model.PhoneNumber,
-                    PhoneNumber = model.PhoneNumber,
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "لطفا مجددا برای ثبت نام اقدام نمایید"
+                    };
+                }
+
+                var user = new User()
+                {
+                    PhoneNumber = totpTempDataModel.PhoneNumber,
+                    FirstName = model.firstName,
+                    LastName = model.lastName,
+                    UserName = totpTempDataModel.PhoneNumber,
                 };
 
-                var result = await _userManager.CreateAsync(user, model.Password);
-
+                var result = await _userManager.CreateAsync(user, model.password);
 
                 if (result.Succeeded)
                 {
-                    var signedUser = await _userManager.FindByNameAsync(model.PhoneNumber);
+                    var signedUser = await _userManager.FindByNameAsync(totpTempDataModel.PhoneNumber);
 
-                    _registerAsExpertService.Execute(signedUser.Id, model.FirstName, model.LastName);
+                    _registerAsExpertService.Execute(signedUser.Id, model.firstName, model.lastName);
 
-                    return RedirectToAction("Login", "Account");
+                    TempData.Remove("PTCPhone");
+
+                    return new ResultDto()
+                    {
+                        IsSuccess = true,
+                        Message = "ثبت نام با موفقیت انجام شد"
+                    };
                 }
 
-                foreach (var error in result.Errors)
+                TempData.Remove("PTCPhone");
+
+
+                return new ResultDto()
                 {
-                    ModelState.AddModelError("", error.Description);
-                }
+                    IsSuccess = false,
+                    Message = "ثبت نام با موفقیت انجام نشد لطفا مجددا تلاش نمایید"
+                };
 
             }
 
-            return View(model);
+            return new ResultDto()
+            {
+                IsSuccess = false,
+                Message = "لطفا مجددا برای ثبت نام اقدام نمایید"
+            };
         }
 
         [HttpGet]
@@ -329,14 +358,6 @@ namespace CR.Presentation.Controllers.View
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> IsUserNameInUse(string userName)
-        //{
-        //    var user = await _userManager.FindByNameAsync(userName);
-        //    if (user == null) return Json(true);
-        //    return Json("نام کاربری وارد شده از قبل موجود است");
-        //}
 
         private async Task<T> CallApiSMSPanel<T>(string apiUrl, object value)
         {

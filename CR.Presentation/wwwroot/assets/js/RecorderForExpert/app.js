@@ -147,7 +147,7 @@ function createDownloadLink(blob) {
 	//upload link
 	var upload = document.createElement('a');
 	upload.href="#";
-	upload.innerHTML = "ارسال به مراجعه کننده";
+	upload.innerHTML = "ارسال به کاربر";
     upload.addEventListener("click",
         function(event) {
             var xhr = new XMLHttpRequest();

@@ -111,7 +111,7 @@ $(document).ready(function () {
 				'<div class="row form-row">' +
 					'<div class="col-12 col-md-6 col-lg-4">' +
 						'<div class="form-group">' +
-							'<label>نام کلینیک</label>' +
+							'<label>محل کار</label>' +
 							'<input type="text" class="form-control" id="pastClinicName" name="pastClinicName">' +
 						'</div>' +
 					'</div>' +
@@ -212,7 +212,7 @@ $(document).ready(function () {
         var regcontent = '<div class="row form-row reg-cont">' +
 			'<div class="col-12 col-md-5">' +
 				'<div class="form-group">' +
-					'<label> ثبت نام ها </label>' +
+					'<label> گواهی ها </label>' +
 					'<input type="text" class="form-control" id="subscriptionName" name="subscriptionName">' +
 				'</div>' +
 			'</div>' +
