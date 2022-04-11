@@ -18,7 +18,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.Api
         [HttpPost]
         public IActionResult Decline(RequestDeclineFinancialTransactionDto request)
         {
-            var result = _addDeclineFinancialTransactionService.Execute(request.payerId, request.price, request.factorId);
+            var result = _addDeclineFinancialTransactionService.Execute(request.payerId, request.factorId);
 
             return new JsonResult(result);
         }
