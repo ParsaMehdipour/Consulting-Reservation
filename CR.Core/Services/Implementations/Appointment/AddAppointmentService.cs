@@ -84,6 +84,7 @@ namespace CR.Core.Services.Implementations.Appointment
                         };
                     }
 
+                    PriceValues priceValues = CheckCallingType(request.callingType, timeOfDay);
 
                     var appointment = new DataAccess.Entities.Appointments.Appointment()
                     {
@@ -93,7 +94,10 @@ namespace CR.Core.Services.Implementations.Appointment
                         ExpertInformationId = expertInformation.Id,
                         TimeOfDay = timeOfDay,
                         TimeOfDayId = timeOfDay.Id,
-                        Price = CheckCallingType(request.callingType, timeOfDay),
+                        Price = priceValues.Price,
+                        RawPrice = priceValues.RawPrice,
+                        CommissionPrice = priceValues.CommissionPrice,
+                        DiscountPrice = priceValues.DiscountPrice,
                         CallingType = request.callingType,
                         FactorId = factor.Id,
                         Factor = factor
@@ -154,7 +158,7 @@ namespace CR.Core.Services.Implementations.Appointment
             return (Convert.ToInt32(factor.FactorNumber) + 1).ToString();
         }
 
-        private long CheckCallingType(CallingType callingType, TimeOfDay entity)
+        private PriceValues CheckCallingType(CallingType callingType, TimeOfDay entity)
         {
             long commission = 0;
             long discount = 0;
@@ -165,10 +169,22 @@ namespace CR.Core.Services.Implementations.Appointment
                 {
                     commission = (long)((entity.ExpertInformation.CommissionAndDiscount.PhoneCallCommission * entity.PhoneCallPrice) / 100);
                     discount = (long)((entity.ExpertInformation.CommissionAndDiscount.PhoneCallDiscount * entity.PhoneCallPrice) / 100);
-                    return ((entity.PhoneCallPrice + commission) - discount);
+                    return new PriceValues()
+                    {
+                        Price = (entity.PhoneCallPrice + commission) - discount,
+                        CommissionPrice = commission,
+                        DiscountPrice = discount,
+                        RawPrice = entity.PhoneCallPrice
+                    };
                 }
 
-                return entity.VoiceCallPrice;
+                return new PriceValues()
+                {
+                    Price = entity.PhoneCallPrice,
+                    RawPrice = entity.PhoneCallPrice,
+                    DiscountPrice = 0,
+                    CommissionPrice = 0
+                };
             }
             if (callingType == CallingType.VoiceCall)
             {
@@ -176,20 +192,52 @@ namespace CR.Core.Services.Implementations.Appointment
                 {
                     commission = (long)((entity.ExpertInformation.CommissionAndDiscount.VoiceCallCommission * entity.VoiceCallPrice) / 100);
                     discount = (long)((entity.ExpertInformation.CommissionAndDiscount.VoiceCallDiscount * entity.VoiceCallPrice) / 100);
-                    return ((entity.VoiceCallPrice + commission) - discount);
+                    return new PriceValues()
+                    {
+                        Price = (entity.VoiceCallPrice + commission) - discount,
+                        CommissionPrice = commission,
+                        DiscountPrice = discount,
+                        RawPrice = entity.VoiceCallPrice
+                    };
                 }
-                return entity.VoiceCallPrice;
+                return new PriceValues()
+                {
+                    Price = entity.VoiceCallPrice,
+                    RawPrice = entity.VoiceCallPrice,
+                    DiscountPrice = 0,
+                    CommissionPrice = 0
+                };
             }
             if (entity.ExpertInformation.CommissionAndDiscount != null)
             {
                 commission = (long)((entity.ExpertInformation.CommissionAndDiscount.TextCallCommission * entity.TextCallPrice) / 100);
                 discount = (long)((entity.ExpertInformation.CommissionAndDiscount.TextCallDiscount * entity.TextCallPrice) / 100);
-                return ((entity.TextCallPrice + commission) - discount);
+                return new PriceValues()
+                {
+                    Price = (entity.TextCallPrice + commission) - discount,
+                    CommissionPrice = commission,
+                    DiscountPrice = discount,
+                    RawPrice = entity.TextCallPrice
+                };
             }
 
-            return entity.TextCallPrice;
+            return new PriceValues()
+            {
+                Price = entity.TextCallPrice,
+                RawPrice = entity.TextCallPrice,
+                DiscountPrice = 0,
+                CommissionPrice = 0
+            };
 
         }
+    }
+
+    class PriceValues
+    {
+        public long Price { get; set; }
+        public long RawPrice { get; set; }
+        public long CommissionPrice { get; set; }
+        public long DiscountPrice { get; set; }
     }
 
 }

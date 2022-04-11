@@ -30,6 +30,7 @@ namespace CR.Core.Services.Implementations.Factors
                 .AsNoTracking()
                 .Select(f => new FactorForAdminDto()
                 {
+                    Id = f.Id,
                     ConsumerId = f.ConsumerInformation.ConsumerId,
                     ConsumerFullName = f.ConsumerInformation.FirstName + " " + f.ConsumerInformation.LastName,
                     ConsumerIconSrc = f.ConsumerInformation.IconSrc ?? "assets/img/User.png",

@@ -13,7 +13,6 @@
         public string AppointmentDate { get; set; }
         public string AppointmentTime { get; set; }
         public string AppointmentPrice { get; set; }
-        public long FactorId { get; set; }
-        public string FactorStatus { get; set; }
+        public string AppointmentStatus { get; set; }
     }
 }

@@ -461,7 +461,10 @@
             jm = 7 + ~~((days - 186) / 30);
             jd = 1 + ((days - 186) % 30);
         }
-        return [jy, jm, jd];
+
+        var output = [jy, jm, jd];
+
+        return output;
     }
 
     function jalali_to_gregorian(jy, jm, jd) {

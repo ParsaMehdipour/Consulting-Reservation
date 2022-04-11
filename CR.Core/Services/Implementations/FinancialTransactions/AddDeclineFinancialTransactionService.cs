@@ -20,13 +20,13 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             _context = context;
         }
 
-        public ResultDto Execute(long payerId, int price, long factorId)
+        public ResultDto Execute(long payerId, long factorId)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-                if (payerId == 0 || price == 0 || factorId == 0)
+                if (payerId == 0 || factorId == 0)
                 {
                     return new ResultDto()
                     {
@@ -59,9 +59,9 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 var financialTransaction = new FinancialTransaction()
                 {
                     PayerId = payerId,
-                    Price_Digit = price,
+                    Price_Digit = factor.TotalPrice,
                     CreateDate_String = DateTime.Now.ToShamsi(),
-                    Price_String = price.ToString().GetPersianNumber(),
+                    Price_String = factor.TotalPrice.ToString().GetPersianNumber(),
                     TransactionNumber = GetLastTransactionNumber(),
                     TransactionType = TransactionType.DeclineTransaction,
                     Status = TransactionStatus.Successful

@@ -106,7 +106,16 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
 
                 var list = timeOfDaysList;
 
-                if (list.Count != list.GroupBy(_ => _.StartTime).Distinct().Count())
+                if (list.Count != list.GroupBy(_ => _.StartTime.Hour).Distinct().Count())
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "در زمان بندی ها تداخل وجود دارد"
+                    };
+                }
+
+                if (list.Count != list.GroupBy(_ => _.FinishTime.Hour).Distinct().Count())
                 {
                     return new ResultDto()
                     {

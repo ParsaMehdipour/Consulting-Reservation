@@ -67,11 +67,12 @@ namespace CR.Core.Services.Implementations.Appointment
                 {
                     Data = new ResultChangeAppointmentStatusDto()
                     {
-                        price = (int)appointment.Price.Value,
+                        price = (int)appointment.RawPrice,
                         receiverId = appointment.ExpertInformation.ExpertId,
                         date = appointment.TimeOfDay.Day.Date_String,
                         time = appointment.TimeOfDay.StartHour + " - " + appointment.TimeOfDay.FinishHour,
-                        phoneNumber = appointment.ConsumerInformation.Consumer.PhoneNumber
+                        phoneNumber = appointment.ConsumerInformation.Consumer.PhoneNumber,
+                        appointmentStatus = request.AppointmentStatus
                     },
 
                     IsSuccess = true,

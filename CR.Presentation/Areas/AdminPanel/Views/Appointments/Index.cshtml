@@ -31,8 +31,7 @@
                                 <th>نام کاربر</th>
                                 <th>وقت ویزیت</th>
                                 <th class="text-center">هزینه مشاوره</th>
-                                <th class="text-center">وضعیت فاکتور</th>
-                                <th class="text-right">عملیات</th>
+                                <th class="text-center">وضعیت نوبت</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,34 +64,20 @@
                                             @appointment.AppointmentPrice تومان
                                         </td>
                                     }
-
                                     <td class="text-center">
-                                        @if (appointment.FactorStatus == FactorStatus.Waiting.GetDisplayName())
+                                        @if (appointment.AppointmentStatus == AppointmentStatus.Waiting.GetDisplayName())
                                         {
-                                            <span class="badge badge-pill bg-warning inv-badge">@appointment.FactorStatus</span>
+                                            <span class="badge badge-pill bg-warning inv-badge">@appointment.AppointmentStatus</span>
                                         }
-                                        else if (appointment.FactorStatus == FactorStatus.SuccessfulPayment.GetDisplayName())
+                                        else if (appointment.AppointmentStatus == AppointmentStatus.Completed.GetDisplayName())
                                         {
-                                            <span class="badge badge-pill bg-success inv-badge">@appointment.FactorStatus</span>
+                                            <span class="badge badge-pill bg-success inv-badge">@appointment.AppointmentStatus</span>
                                         }
-                                        else if (appointment.FactorStatus == FactorStatus.Declined.GetDisplayName())
+                                        else if (appointment.AppointmentStatus == AppointmentStatus.NotDone.GetDisplayName())
                                         {
-                                            <span class="badge badge-pill bg-primary inv-badge">@appointment.FactorStatus</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-pill bg-danger inv-badge">@appointment.FactorStatus</span>
+                                            <span class="badge badge-pill bg-danger inv-badge">@appointment.AppointmentStatus</span>
                                         }
                                     </td>
-
-                                    @if (appointment.FactorStatus == FactorStatus.SuccessfulPayment.GetDisplayName())
-                                    {
-                                        <td class="text-center">
-                                            <a onclick="Decline(@appointment.FactorId,@appointment.AppointmentPrice.Replace(",",""),@appointment.ConsumerId)" class="btn btn-sm bg-danger-light">
-                                                <i class="fe fe-trash"></i> لغو تراکنش
-                                            </a>
-                                        </td>
-                                    }
                                 </tr>
                             }
                         </tbody>
@@ -119,66 +104,3 @@
     </div>
 </div>
 
-@section Scripts
-{
-<script>
-
-    function Decline(factorId,price,payerId) {
-
-        swal.fire({
-            title: 'بازگشت وجه',
-            text: "مدیریت گرامی از بازگشت وجه مطمئن هستید؟",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#7cacbe',
-            confirmButtonText: 'تایید',
-            cancelButtonText: 'انصراف'
-        }).then((result) => {
-            if (result.value) {
-                var data = {};
-
-                data["factorId"] = factorId;
-                data["price"] = Number(price);
-                data["payerId"] = payerId;
-
-                $.ajax({
-                    type: "POST",
-                    url: '/api/FinancialTransactions/Decline',
-                    data: JSON.stringify(data),
-                    dataType: "json",
-                    cache: false,
-                    contentType: "application/json; charset=utf-8",
-                    enctype: 'application/json',
-                    beforeSend: function(x) {
-                        $('#loading').show();
-                    },
-                    success: function(response) {
-                        if (response.isSuccess === true) {
-                            swal.fire('موفق!',
-                                response.message,
-                                'success').then(function(isConfirm) {
-                                location.reload();
-                            });
-                        }else {
-                            swal.fire('هشدار!',
-                                response.message,
-                                'warning');
-                        }
-                    },
-                    complete: function() {
-                        $('#loading').hide();
-                    },
-                    fail: function() {
-                        $('#loading').hide();
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
-                    }
-                });
-            }
-        });
-
-    }
-</script>
-}

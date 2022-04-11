@@ -54,7 +54,7 @@
                                                             </div>
                                                             <div class="dash-widget-info">
                                                                 <h6> کاربران کلی </h6>
-                                                                <h3>1500</h3>
+                                                                <h3>@Model.StatisticsForExpertPanelDto.AllConsumersCount</h3>
                                                                 <p class="text-muted"> تا امروز </p>
                                                             </div>
                                                         </div>
@@ -69,7 +69,7 @@
                                                             </div>
                                                             <div class="dash-widget-info">
                                                                 <h6> کاربران امروز </h6>
-                                                                <h3>160</h3>
+                                                                <h3>@Model.StatisticsForExpertPanelDto.TodayConsumersCount</h3>
                                                                 <p class="text-muted">6 تیر 1398</p>
                                                             </div>
                                                         </div>
@@ -79,12 +79,12 @@
                                                         <div class="dash-widget">
                                                             <div class="circle-bar circle-bar3">
                                                                 <div class="circle-graph3" data-percent="50">
-                                                                    <img src="~/assets/img/icon-03.png" class="img-fluid" alt="Patient">
+                                                                    <img src="/assets/img/icon-03.png" class="img-fluid" alt="Patient">
                                                                 </div>
                                                             </div>
                                                             <div class="dash-widget-info">
                                                                 <h6>نوبت ها</h6>
-                                                                <h3>85</h3>
+                                                                <h3>@Model.StatisticsForExpertPanelDto.AllAppointmentCount</h3>
                                                                 <p class="text-muted">6 تیر 1398</p>
                                                             </div>
                                                         </div>
@@ -141,7 +141,7 @@
                                                                     <td>
                                                                         <h2 class="table-avatar">
                                                                             <a asp-area="ExpertPanel" asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-consumerId="@consumer.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.ConsumerIconSrc" alt="User Image"></a>
-                                                                            <a asp-area="ExpertPanel" asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-consumerId="@consumer.ConsumerId">@consumer.FullName <span>@consumer.ConsumerId</span></a>
+                                                                            <a asp-area="ExpertPanel" asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-consumerId="@consumer.ConsumerId">@consumer.FullName</a>
                                                                         </h2>
                                                                     </td>
                                                                     <td>@consumer.AppointmentDate<span class="d-block text-info">@consumer.AppointmentTime</span></td>
@@ -238,7 +238,7 @@
                                                                     }
                                                                     <td class="text-right">
                                                                         <div class="table-action">
-                                                                            <a onclick="ShowDetails(@consumer.AppointmentId)" href="#" class="btn btn-sm bg-info-light" data-toggle="ajaxModal" data-target="#appt_details">
+                                                                            <a onclick="ShowDetails(@consumer.AppointmentId)" class="btn btn-sm bg-info-light" data-toggle="ajaxModal" data-target="#appt_details">
                                                                                 <i class="far fa-eye"></i> مشاهده
                                                                             </a>
                                                                             @if (consumer.AppointmentStatus == AppointmentStatus.Waiting.GetDisplayName())

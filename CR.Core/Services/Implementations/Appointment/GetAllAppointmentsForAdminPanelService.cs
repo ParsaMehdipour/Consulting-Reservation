@@ -34,8 +34,7 @@ namespace CR.Core.Services.Implementations.Appointment
                 {
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentPrice = a.Price.Value.ToString("n0"),
-                    FactorStatus = a.Factor.FactorStatus.GetDisplayName(),
-                    FactorId = a.FactorId.Value,
+                    AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     ConsumerId = a.ConsumerInformation.ConsumerId,
                     Speciality = a.ExpertInformation.Specialty.Name,
                     ConsumerFullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,

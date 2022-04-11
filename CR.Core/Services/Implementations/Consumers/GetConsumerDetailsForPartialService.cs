@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Consumers;
@@ -7,6 +6,8 @@ using CR.Core.Services.Interfaces.Consumers;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Consumers
 {
@@ -26,6 +27,16 @@ namespace CR.Core.Services.Implementations.Consumers
                 .Include(u => u.ConsumerInfromation)
                 .FirstOrDefault(c => c.Id == consumerId);
 
+            var sum = _context.FinancialTransactions
+                .Where(_ => _.PayerId == consumerId && (_.TransactionType == TransactionType.ChargeWallet || _.TransactionType == TransactionType.DeclineTransaction) && _.Status == TransactionStatus.Successful)
+                .Sum(_ => _.Price_Digit);
+
+            var minus = _context.FinancialTransactions
+                .Where(_ => _.PayerId == consumerId && _.TransactionType == TransactionType.PayFromWallet && _.Status == TransactionStatus.Successful)
+                .Sum(_ => _.Price_Digit);
+
+            var balance = Convert.ToInt32(sum - minus).ToString("n0");
+
             if (consumer == null)
             {
                 return new ResultDto<ConsumerForPartialDto>()
@@ -42,9 +53,8 @@ namespace CR.Core.Services.Implementations.Consumers
                     Data = new ConsumerForPartialDto()
                     {
                         age = "سن",
+                        walletBalance = "",
                         birthDate = "تاریخ تولد",
-                        city = "شهر",
-                        province = "استان",
                         fullName = "نام و نام خانوادگی شما",
                         iconSrc = "assets/img/User.png"
                     },
@@ -58,8 +68,7 @@ namespace CR.Core.Services.Implementations.Consumers
                 {
                     age = consumer.ConsumerInfromation.BirthDate.GetAge().ToString().GetPersianNumber(),
                     birthDate = consumer.ConsumerInfromation.BirthDate_String,
-                    city = consumer.ConsumerInfromation.City,
-                    province = consumer.ConsumerInfromation.Province,
+                    walletBalance = balance,
                     fullName = consumer.ConsumerInfromation.FirstName + " " + consumer.ConsumerInfromation.LastName,
                     iconSrc = consumer.ConsumerInfromation.IconSrc ?? "assets/img/User.png"
                 },

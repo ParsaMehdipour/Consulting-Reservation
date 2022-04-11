@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using CR.Core.DTOs.ExpertAvailabilities;
+﻿using CR.Core.DTOs.ExpertAvailabilities;
+using System.Collections.Generic;
 
 namespace CR.Core.DTOs.Experts
 {
@@ -16,7 +16,6 @@ namespace CR.Core.DTOs.Experts
         public string ClinicAddress { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
-        public long? Price { get; set; }
         public string IconSrc { get; set; }
 
         public List<DayDto> DayDtos { get; set; }
