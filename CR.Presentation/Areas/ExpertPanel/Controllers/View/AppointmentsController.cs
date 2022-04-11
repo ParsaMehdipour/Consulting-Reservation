@@ -72,29 +72,33 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
             return _getAppointmentDetailsForExpertPanelService.Execute(id).Data;
         }
 
+        [HttpPost]
         public async Task<IActionResult> ChangeAppointmentStatus(RequestChangeAppointmentStatusDto request)
         {
             var result = _changeAppointmentStatusService.Execute(request);
 
             if (result.IsSuccess == true)
             {
-                var modelExpert = new SMSModel()
+                if (result.Data.appointmentStatus == AppointmentStatus.NotDone)
                 {
-                    toNum = result.Data.phoneNumber,
-                    patternCode = SMSPatterns.ReservationDeclined_ExpertSide,
-                    inputData = new List<Dictionary<string, string>>()
+                    var modelExpert = new SMSModel()
                     {
-                        new Dictionary<string, string>
+                        toNum = result.Data.phoneNumber,
+                        patternCode = SMSPatterns.ReservationDeclined_ExpertSide,
+                        inputData = new List<Dictionary<string, string>>()
                         {
-                            {SMSInputs.Date, result.Data.date},
-                            {SMSInputs.Time, result.Data.time}
+                            new Dictionary<string, string>
+                            {
+                                {SMSInputs.Date, result.Data.date},
+                                {SMSInputs.Time, result.Data.time}
+                            },
                         },
-                    },
-                };
+                    };
 
-                var uri = "https://ippanel.com/api/select";
+                    var uri = "https://ippanel.com/api/select";
 
-                await CallApiReservation<object>(uri, modelExpert);
+                    await CallApiReservation<object>(uri, modelExpert);
+                }
 
                 return new JsonResult(_addChargeExpertWalletService.Execute(result.Data.receiverId, result.Data.price));
             }

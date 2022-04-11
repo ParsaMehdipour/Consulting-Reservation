@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Appointment
 {
@@ -20,8 +20,8 @@ namespace CR.Core.Services.Implementations.Appointment
         public ResultDto<AppointmentDetailsForExpertPanel> Execute(long id)
         {
             var appointment = _context.Appointments
-                .Include(a=>a.TimeOfDay)
-                .ThenInclude(t=>t.Day)
+                .Include(a => a.TimeOfDay)
+                .ThenInclude(t => t.Day)
                 .FirstOrDefault(a => a.Id == id);
 
             if (appointment == null)
@@ -38,9 +38,9 @@ namespace CR.Core.Services.Implementations.Appointment
                 Data = new AppointmentDetailsForExpertPanel()
                 {
                     appointmentDate = appointment.TimeOfDay.Day.Date_String,
-                    appointmentTime = appointment.TimeOfDay.StartHour + " - " + appointment.TimeOfDay.FinishHour, 
+                    appointmentTime = appointment.TimeOfDay.StartHour + " - " + appointment.TimeOfDay.FinishHour,
                     appointmentStatus = appointment.AppointmentStatus.GetDisplayName(),
-                    appointmentPrice = appointment.Price.ToString().GetPersianNumber(),
+                    appointmentPrice = appointment.RawPrice.ToString("n0"),
                     id = appointment.Id
                 },
                 IsSuccess = true

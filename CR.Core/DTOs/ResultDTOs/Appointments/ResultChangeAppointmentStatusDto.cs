@@ -1,4 +1,6 @@
-﻿namespace CR.Core.DTOs.ResultDTOs.Appointments
+﻿using CR.DataAccess.Enums;
+
+namespace CR.Core.DTOs.ResultDTOs.Appointments
 {
     public class ResultChangeAppointmentStatusDto
     {
@@ -7,5 +9,6 @@
         public string phoneNumber { get; set; }
         public string date { get; set; }
         public string time { get; set; }
+        public AppointmentStatus appointmentStatus { get; set; }
     }
 }
