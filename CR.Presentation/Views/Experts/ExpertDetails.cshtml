@@ -57,15 +57,7 @@
                     <div class="doc-info-right">
                         <div class="clini-infos">
                             <ul>
-                                <li><i class="far fa-comment"></i> @Model.ExpertDetailsForSiteDto.RateCount فیدبک </li>
-                                @if (@Model.ExpertDetailsForSiteDto.Price != 0)
-                                {
-                                    <li><i class="far fa-money-bill-alt"></i> @Model.ExpertDetailsForSiteDto.Price?.ToString("n0") تومان ساعتی </li>
-                                }
-                                else
-                                {
-                                    <li><i class="far fa-money-bill-alt"></i>  رایگان </li>
-                                }
+                                <li><i class="far fa-comment"></i> @Model.ExpertDetailsForSiteDto.RateCount نظر </li>
                             </ul>
                         </div>
                         <div class="doctor-action">
@@ -107,7 +99,7 @@
                 <nav class="user-tabs mb-4">
                     <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#doc_overview" data-toggle="tab"> نمای کل </a>
+                            <a class="nav-link active" href="#doc_overview" data-toggle="tab"> درباره من </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#doc_reviews" data-toggle="tab">نظرات</a>
@@ -128,7 +120,7 @@
 
                                 <!-- About Details -->
                                 <div class="widget about-widget">
-                                    <h4 class="widget-title"> درباره من </h4>
+                                    <h4 class="widget-title"> بیوگرافی </h4>
                                     <p>@Model.ExpertDetailsForSiteDto.Bio</p>
                                 </div>
                                 <!-- /About Details -->
@@ -147,9 +139,9 @@
                                                         </div>
                                                         <div class="experience-content">
                                                             <div class="timeline-content">
-                                                                <a href="#/" class="name"> @study.university </a>
+                                                                <a class="name"> @study.university </a>
                                                                 <div>@study.degreeOfEducation</div>
-                                                                <span class="time">@study.endDate</span>
+                                                                <span>@study.endDate</span>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -174,8 +166,8 @@
                                                         </div>
                                                         <div class="experience-content">
                                                             <div class="timeline-content">
-                                                                <a href="#" class="name">@experience.clinicName - @experience.role</a>
-                                                                <span class="time">@experience.startYear - @experience.finishYear</span>
+                                                                <a class="name">@experience.clinicName - @experience.role</a><br/>
+                                                                <span>@experience.startYear - @experience.finishYear</span>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -202,7 +194,6 @@
                                                             <div class="timeline-content">
                                                                 <p class="exp-year">@prize.year</p>
                                                                 <h4 class="exp-title">@prize.prizeName</h4>
-                                                                @*<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>*@
                                                             </div>
                                                         </div>
                                                     </li>
@@ -334,7 +325,7 @@
 
                             <!-- Write Review Form -->
                             <div class="form-group">
-                                <label>نظر</label>
+                                <label>امتیاز</label>
                                 <div class="star-rating">
                                     <input id="star-5" type="radio" name="rating" value="star-5">
                                     <label for="star-5" title="5 stars">
@@ -398,11 +389,11 @@
                                                     <div class="time-items">
                                                         @if (@Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault()?.timeOfDayDtos.Count > 0)
                                                         {
-                                                            <span class="open-status"><span class="badge bg-success-light">باز</span></span>
+                                                            <span class="open-status"><span class="badge bg-success-light"></span></span>
                                                         }
                                                         else
                                                         {
-                                                            <span class="open-status"><span class="badge bg-danger-light">بسته</span></span>
+                                                            <span class="open-status"><span class="badge bg-danger-light"></span></span>
                                                         }
                                                         @foreach (var timeOfDay in Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault()?.timeOfDayDtos!)
                                                         {
