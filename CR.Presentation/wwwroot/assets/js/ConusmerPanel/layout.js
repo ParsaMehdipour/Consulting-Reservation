@@ -23,7 +23,7 @@ function updateSideBar() {
 
             $('.profile-sidebar .widget-profile .profile-info-widget .profile-det-info .patient-details h5').html(model.birthDate + " , " + model.age + " سال");
 
-            $('.profile-sidebar .widget-profile .profile-info-widget .profile-det-info .patient-details .cityAndProvince h5').html(model.province + " , " + model.city);
+            $('.profile-sidebar .widget-profile .profile-info-widget .profile-det-info .patient-details .cityAndProvince h5').html(model.walletBalance + " تومان");
 
         }
     });
