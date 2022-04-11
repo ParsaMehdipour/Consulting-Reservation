@@ -12,6 +12,9 @@ namespace CR.DataAccess.Entities.Appointments
         public CallingType CallingType { get; set; }
         public string Reason { get; set; }
         public long? Price { get; set; }
+        public long CommissionPrice { get; set; }
+        public long DiscountPrice { get; set; }
+        public long RawPrice { get; set; }
 
 
         #region Foreign Keys

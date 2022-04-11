@@ -33,6 +33,12 @@ namespace CR.DataAccess.Configurations
             builder.Property(_ => _.CallingType);
 
             builder.Property(_ => _.Price);
+
+            builder.Property(_ => _.RawPrice);
+
+            builder.Property(_ => _.CommissionPrice);
+
+            builder.Property(_ => _.DiscountPrice);
         }
     }
 }
