@@ -1,4 +1,6 @@
-﻿namespace CR.Core.DTOs.FinancialTransactions
+﻿using CR.DataAccess.Enums;
+
+namespace CR.Core.DTOs.FinancialTransactions
 {
     public class FinancialTransactionForAdminDto
     {
@@ -12,5 +14,7 @@
         public string CreateDate { get; set; }
         public string TransactionType { get; set; }
         public string TransactionStatus { get; set; }
+        public UserFlag PayerUserFlag { get; set; }
+        public UserFlag ReceiverUserFlag { get; set; }
     }
 }

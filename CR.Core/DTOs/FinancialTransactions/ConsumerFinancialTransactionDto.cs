@@ -2,9 +2,12 @@
 {
     public class ConsumerFinancialTransactionDto
     {
-        public long? ExpertInformationId { get; set; }
-        public string ExpertIconSrc { get; set; }
-        public string ExpertFullName { get; set; }
+        public long ReceiverId { get; set; }
+        public string ReceiverIconSrc { get; set; }
+        public string ReceiverFullName { get; set; }
+        public long PayerId { get; set; }
+        public string payerIconSrc { get; set; }
+        public string PayerFullName { get; set; }
         public string Price { get; set; }
         public string CreateDate { get; set; }
         public string TransactionType { get; set; }
