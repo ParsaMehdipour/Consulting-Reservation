@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.FinancialTransactions
 {

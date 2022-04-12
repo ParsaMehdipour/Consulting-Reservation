@@ -28,8 +28,10 @@ namespace CR.Core.Services.Implementations.Consumers
                 .FirstOrDefault(c => c.Id == consumerId);
 
             var sum = _context.FinancialTransactions
-                .Where(_ => _.PayerId == consumerId && (_.TransactionType == TransactionType.ChargeWallet || _.TransactionType == TransactionType.DeclineTransaction) && _.Status == TransactionStatus.Successful)
-                .Sum(_ => _.Price_Digit);
+                .Where(_ => _.ReceiverId == consumerId && (_.TransactionType == TransactionType.ChargeWallet
+                                                           || _.TransactionType == TransactionType.DeclineFactorTransaction
+                                                           || _.TransactionType == TransactionType.DeclineAppointmentTransaction)
+                                                       && _.Status == TransactionStatus.Successful).Sum(_ => _.Price_Digit);
 
             var minus = _context.FinancialTransactions
                 .Where(_ => _.PayerId == consumerId && _.TransactionType == TransactionType.PayFromWallet && _.Status == TransactionStatus.Successful)

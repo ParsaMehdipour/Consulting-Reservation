@@ -274,7 +274,7 @@ namespace CR.Core.Services.Implementations.Experts
                     };
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 transaction.Rollback();
 

@@ -6,61 +6,49 @@ using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.FinancialTransactions;
 using CR.DataAccess.Enums;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
 namespace CR.Core.Services.Implementations.FinancialTransactions
 {
-    public class AddPaymentTransactionService : IAddPaymentTransactionService
+    public class AddPayForChargeWalletFinancialTransactionService : IAddPayForChargeWalletFinancialTransactionService
     {
         private readonly ApplicationContext _context;
 
-        public AddPaymentTransactionService(ApplicationContext context)
+        public AddPayForChargeWalletFinancialTransactionService(ApplicationContext context)
         {
             _context = context;
         }
 
-        public ResultDto<RedirectToPaymentForReservationDto> Execute(long factorId, int price)
+        public ResultDto<RedirectToPaymentForWalletChargeDto> Execute(long payerId, int price)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-                if (factorId == 0 || price == 0)
+                if (payerId == 0 || price == 0)
                 {
-                    return new ResultDto<RedirectToPaymentForReservationDto>()
+                    return new ResultDto<RedirectToPaymentForWalletChargeDto>()
                     {
-                        Data = new RedirectToPaymentForReservationDto(),
+                        Data = new RedirectToPaymentForWalletChargeDto(),
                         IsSuccess = false,
                         Message = "لطفا مبلغ را وارد کنید"
                     };
                 }
 
-                var factor = _context.Factors.Include(_ => _.ConsumerInformation).ThenInclude(_ => _.Consumer).FirstOrDefault(_ => _.Id == factorId);
-
-                if (factor == null)
-                {
-                    return new ResultDto<RedirectToPaymentForReservationDto>()
-                    {
-                        Data = new RedirectToPaymentForReservationDto(),
-                        Message = "فاکتور یافت نشد!!",
-                        IsSuccess = false
-                    };
-                }
-
                 var financialTransaction = new FinancialTransaction()
                 {
-                    PayerId = factor.ConsumerInformation.ConsumerId,
-                    Price_Digit = price,
+                    PayerId = payerId,
                     ReceiverId = _context.Users.FirstOrDefault(_ => _.UserFlag == UserFlag.Admin)!.Id,
-                    Factor = factor,
-                    FactorId = factor.Id,
+                    Price_Digit = price,
                     CreateDate_String = DateTime.Now.ToShamsi(),
                     Price_String = price.ToString().GetPersianNumber(),
                     TransactionNumber = GetLastTransactionNumber(),
-                    TransactionType = TransactionType.PayFromCreditCard
+                    TransactionType = TransactionType.PayForWalletCharge,
+                    Status = TransactionStatus.Failed
                 };
+
+                var consumer = _context.Users.Find(payerId);
 
                 _context.FinancialTransactions.Add(financialTransaction);
 
@@ -68,26 +56,28 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 transaction.Commit();
 
-                return new ResultDto<RedirectToPaymentForReservationDto>()
+                return new ResultDto<RedirectToPaymentForWalletChargeDto>()
                 {
-                    Data = new RedirectToPaymentForReservationDto()
+                    Data = new RedirectToPaymentForWalletChargeDto()
                     {
                         price = Convert.ToInt32(financialTransaction.Price_Digit),
                         transactionNumber = financialTransaction.TransactionNumber,
-                        phoneNumber = factor.ConsumerInformation.Consumer.PhoneNumber
+                        phoneNumber = consumer.PhoneNumber
                     },
                     IsSuccess = true,
                     Message = string.Empty
                 };
+
             }
             catch (Exception)
             {
                 transaction.Rollback();
 
-                return new ResultDto<RedirectToPaymentForReservationDto>()
+                return new ResultDto<RedirectToPaymentForWalletChargeDto>()
                 {
-                    Data = null,
-                    Message = "خطا!!"
+                    Data = new RedirectToPaymentForWalletChargeDto(),
+                    IsSuccess = false,
+                    Message = "خطا از سمت سرور"
                 };
             }
             finally
@@ -95,6 +85,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 transaction.Dispose();
             }
         }
+
         private string GetLastTransactionNumber()
         {
             var financialTransactions = _context.FinancialTransactions.OrderBy(f => f.Id).LastOrDefault();

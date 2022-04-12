@@ -22,7 +22,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             _context = context;
         }
 
-        public ResultDto<ResultAddPayFromWalletDto> Execute(long payerId, long factorId, int price)
+        public ResultDto<ResultAddPayFromWalletDto> Execute(long userId, long factorId, int price)
         {
             using var transaction = _context.Database.BeginTransaction();
 
@@ -40,11 +40,13 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 }
 
                 var sum = _context.FinancialTransactions
-                    .Where(_ => _.PayerId == payerId && (_.TransactionType == TransactionType.ChargeWallet || _.TransactionType == TransactionType.DeclineTransaction) && _.Status == TransactionStatus.Successful)
-                    .Sum(_ => _.Price_Digit);
+                    .Where(_ => _.ReceiverId == userId && (_.TransactionType == TransactionType.ChargeWallet
+                                                           || _.TransactionType == TransactionType.DeclineFactorTransaction
+                                                           || _.TransactionType == TransactionType.DeclineAppointmentTransaction)
+                                                       && _.Status == TransactionStatus.Successful).Sum(_ => _.Price_Digit);
 
                 var minus = _context.FinancialTransactions
-                    .Where(_ => _.PayerId == payerId && _.TransactionType == TransactionType.PayFromWallet && _.Status == TransactionStatus.Successful)
+                    .Where(_ => _.PayerId == userId && _.TransactionType == TransactionType.PayFromWallet && _.Status == TransactionStatus.Successful)
                     .Sum(_ => _.Price_Digit);
 
                 var balance = Convert.ToInt32(sum - minus);
@@ -81,7 +83,8 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 var financialTransaction = new FinancialTransaction()
                 {
-                    PayerId = payerId,
+                    PayerId = userId,
+                    ReceiverId = _context.Users.FirstOrDefault(_ => _.UserFlag == UserFlag.Admin)!.Id,
                     Price_Digit = price,
                     FactorId = factorId,
                     Factor = factor,

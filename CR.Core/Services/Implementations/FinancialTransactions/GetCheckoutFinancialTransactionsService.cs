@@ -39,7 +39,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     Price = financialTransaction.Price_Digit.ToString("n0"),
                     ReceiverIconSrc = receiver?.IconSrc ?? "assets/img/User.png",
                     ReceiverFullName = receiver?.FirstName + " " + receiver.LastName,
-                    ReceiverId = financialTransaction.ReceiverId.Value,
+                    ReceiverId = financialTransaction.ReceiverId,
                     TransactionStatus = financialTransaction.Status.GetDisplayName(),
                     ShabaNumber = receiver.ExpertInformation.ShabaNumber
                 };

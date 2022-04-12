@@ -1,7 +1,6 @@
 ﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
-using CR.Core.DTOs.Payment;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.FinancialTransactions;
@@ -20,33 +19,23 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             _context = context;
         }
 
-        public ResultDto<RedirectToPaymentForWalletChargeDto> Execute(long payerId, int price)
+        public ResultDto Execute(long receiverId, long price)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-                if (payerId == 0 || price == 0)
-                {
-                    return new ResultDto<RedirectToPaymentForWalletChargeDto>()
-                    {
-                        Data = new RedirectToPaymentForWalletChargeDto(),
-                        IsSuccess = false,
-                        Message = "لطفا مبلغ را وارد کنید"
-                    };
-                }
-
                 var financialTransaction = new FinancialTransaction()
                 {
-                    PayerId = payerId,
+                    PayerId = _context.Users.FirstOrDefault(_ => _.UserFlag == UserFlag.Admin)!.Id,
+                    ReceiverId = receiverId,
                     Price_Digit = price,
                     CreateDate_String = DateTime.Now.ToShamsi(),
                     Price_String = price.ToString().GetPersianNumber(),
                     TransactionNumber = GetLastTransactionNumber(),
-                    TransactionType = TransactionType.ChargeWallet
+                    TransactionType = TransactionType.ChargeWallet,
+                    Status = TransactionStatus.Successful
                 };
-
-                var consumer = _context.Users.Find(payerId);
 
                 _context.FinancialTransactions.Add(financialTransaction);
 
@@ -54,14 +43,8 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 transaction.Commit();
 
-                return new ResultDto<RedirectToPaymentForWalletChargeDto>()
+                return new ResultDto()
                 {
-                    Data = new RedirectToPaymentForWalletChargeDto()
-                    {
-                        price = Convert.ToInt32(financialTransaction.Price_Digit),
-                        transactionNumber = financialTransaction.TransactionNumber,
-                        phoneNumber = consumer.PhoneNumber
-                    },
                     IsSuccess = true,
                     Message = string.Empty
                 };
@@ -70,11 +53,10 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             {
                 transaction.Rollback();
 
-                return new ResultDto<RedirectToPaymentForWalletChargeDto>()
+                return new ResultDto()
                 {
-                    Data = new RedirectToPaymentForWalletChargeDto(),
                     IsSuccess = false,
-                    Message = "خطا از سمت سرور!!"
+                    Message = "خطا از سمت سرور"
                 };
             }
             finally

@@ -1,11 +1,13 @@
-﻿using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.FinancialTransactions;
 using CR.Core.DTOs.ResultDTOs.FinancialTransactions;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Context;
+using CR.DataAccess.Entities.Users;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.FinancialTransactions
 {
@@ -20,24 +22,38 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
         public ResultDto<ResultGetConsumerFinancialTransactions> Execute(long consumerId, int Page = 1, int PageSize = 20)
         {
-            var consumerFinancialTransactions = _context.FinancialTransactions
-                .Include(_ => _.Factor)
-                .Include(_ => _.Factor.ExpertInformation)
-                .Include(_ => _.Factor.ConsumerInformation)
+            var financialTransactions = _context.FinancialTransactions
+                .Where(_ => _.PayerId == consumerId || _.ReceiverId == consumerId)
                 .OrderByDescending(_ => _.CreateDate)
-                .Where(_ => _.PayerId == consumerId)
-                .Select(_ => new ConsumerFinancialTransactionDto
+                .AsNoTracking();
+
+            var list = new List<ConsumerFinancialTransactionDto>();
+
+            foreach (var financialTransaction in financialTransactions)
+            {
+
+                var payer = GetUser(financialTransaction.PayerId, _context);
+
+                var receiver = GetUser(financialTransaction.ReceiverId, _context);
+
+                var consumerFinancialTransaction = new ConsumerFinancialTransactionDto()
                 {
-                    CreateDate = _.CreateDate_String,
-                    ExpertInformationId = _.Factor.ExpertInformationId,
-                    ExpertIconSrc = (_.Factor.ExpertInformation != null) ? _.Factor.ExpertInformation.IconSrc : "assets/img/favicon-32x32.png",
-                    ExpertFullName = (_.Factor.ExpertInformation != null) ? _.Factor.ExpertInformation.FirstName + " " + _.Factor.ExpertInformation.LastName : "",
-                    Price = _.Price_String,
-                    TransactionStatus = _.Status.GetDisplayName(),
-                    TransactionType = _.TransactionType.GetDisplayName(),
-                })
-                .AsNoTracking()
-                .AsEnumerable()
+                    CreateDate = financialTransaction.CreateDate_String,
+                    PayerFullName = payer.FirstName + " " + payer.LastName,
+                    payerIconSrc = payer.IconSrc,
+                    PayerId = financialTransaction.PayerId,
+                    ReceiverFullName = receiver.FirstName + " " + receiver.LastName,
+                    ReceiverIconSrc = receiver.IconSrc,
+                    ReceiverId = financialTransaction.ReceiverId,
+                    Price = financialTransaction.Price_Digit.ToString("n0"),
+                    TransactionStatus = financialTransaction.Status.GetDisplayName(),
+                    TransactionType = financialTransaction.TransactionType.GetDisplayName()
+                };
+
+                list.Add(consumerFinancialTransaction);
+            }
+
+            list = list.AsEnumerable()
                 .ToPaged(Page, PageSize, out var rowCount)
                 .ToList();
 
@@ -45,7 +61,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             {
                 Data = new ResultGetConsumerFinancialTransactions()
                 {
-                    ConsumerFinancialTransactionDtos = consumerFinancialTransactions,
+                    ConsumerFinancialTransactionDtos = list,
                     CurrentPage = Page,
                     PageSize = PageSize,
                     RowCount = rowCount,
@@ -53,6 +69,12 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 IsSuccess = true
             };
         }
+
+        private static User GetUser(long payerId, ApplicationContext context)
+        {
+            return context.Users.Find(payerId);
+        }
+
     }
 }
 
