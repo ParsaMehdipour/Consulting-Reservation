@@ -1,10 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
+using CR.Common.Utilities;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
+using System;
+using System.Threading.Tasks;
 
 namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
 {
@@ -16,16 +17,19 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
 
         private readonly IUpdateFinancialTransactionCarHolderPANService _updateFinancialTransactionCarHolderPanService;
         private readonly IUpdateFinancialTransactionStatusService _updateFinancialTransactionStatusService;
+        private readonly IAddChargeWalletFinancialTransactionService _addChargeWalletFinancialTransactionService;
         private readonly IGetFinancialTransactionForVerifyService _getFinancialTransactionForVerifyService;
 
         public PaymentController(IGetFinancialTransactionForVerifyService getFinancialTransactionForVerifyService
             , IUpdateFinancialTransactionSaleReferenceIdService updateFinancialTransactionSaleReferenceIdService
             , IUpdateFinancialTransactionCarHolderPANService updateFinancialTransactionCarHolderPanService
-            , IUpdateFinancialTransactionStatusService updateFinancialTransactionStatusService)
+            , IUpdateFinancialTransactionStatusService updateFinancialTransactionStatusService
+            , IAddChargeWalletFinancialTransactionService addChargeWalletFinancialTransactionService)
         {
             _updateFinancialTransactionSaleReferenceIdService = updateFinancialTransactionSaleReferenceIdService;
             _updateFinancialTransactionCarHolderPanService = updateFinancialTransactionCarHolderPanService;
             _updateFinancialTransactionStatusService = updateFinancialTransactionStatusService;
+            _addChargeWalletFinancialTransactionService = addChargeWalletFinancialTransactionService;
             _getFinancialTransactionForVerifyService = getFinancialTransactionForVerifyService;
         }
 
@@ -73,6 +77,10 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
 
                     _updateFinancialTransactionStatusService.Execute(SaleOrderId.ToString(),
                         TransactionStatus.Successful);
+
+                    var userId = ClaimUtility.GetUserId(User).Value;
+
+                    _addChargeWalletFinancialTransactionService.Execute(userId, transaction.Price);
 
                     ViewData["Description"] = "تراکنش با موفقیت انجام شد، کد رهگیری پرداخت شما : " + SaleReferenceId;
 

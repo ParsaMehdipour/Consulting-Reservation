@@ -12,13 +12,13 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private readonly IAddChargeWalletFinancialTransactionService _addChargeWalletFinancialTransactionService;
+        private readonly IAddPayForChargeWalletFinancialTransactionService _addPayForChargeWalletFinancialTransactionService;
         private readonly IUpdateFinancialTransactionsRefIdService _updateFinancialTransactionsRefIdService;
 
-        public PaymentController(IAddChargeWalletFinancialTransactionService addChargeWalletFinancialTransactionService
+        public PaymentController(IAddPayForChargeWalletFinancialTransactionService addPayForChargeWalletFinancialTransactionService
         , IUpdateFinancialTransactionsRefIdService updateFinancialTransactionsRefIdService)
         {
-            _addChargeWalletFinancialTransactionService = addChargeWalletFinancialTransactionService;
+            _addPayForChargeWalletFinancialTransactionService = addPayForChargeWalletFinancialTransactionService;
             _updateFinancialTransactionsRefIdService = updateFinancialTransactionsRefIdService;
         }
 
@@ -28,7 +28,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
         {
             var payerId = ClaimUtility.GetUserId(User).Value;
 
-            var result = _addChargeWalletFinancialTransactionService.Execute(payerId, model.price);
+            var result = _addPayForChargeWalletFinancialTransactionService.Execute(payerId, model.price);
 
             if (result.IsSuccess == false)
             {
