@@ -1,4 +1,6 @@
-﻿@model CR.Presentation.Areas.ConsumerPanel.Models.ViewModels.ConsumerPanelDashboardViewModel
+﻿@using CR.Common.Utilities
+@using CR.DataAccess.Enums
+@model CR.Presentation.Areas.ConsumerPanel.Models.ViewModels.ConsumerPanelDashboardViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -42,9 +44,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" href="#pat_appointments" data-toggle="tab">نوبت های من</a>
                                 </li>
-                              @*  <li class="nav-item">
+                                @*  <li class="nav-item">
                                     <a class="nav-link" href="#pat_billing" data-toggle="tab"> صورتحساب </a>
-                                </li>*@
+                                    </li>*@
                             </ul>
                         </nav>
                         <!-- /Tab Menu -->
@@ -75,7 +77,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <h2 class="table-avatar">
-                                                                        <a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@appointment.ExpertInformationId"  class="avatar avatar-sm mr-2">
+                                                                        <a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@appointment.ExpertInformationId" class="avatar avatar-sm mr-2">
                                                                             <img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image">
                                                                         </a>
                                                                         <a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@appointment.ExpertInformationId">@appointment.ExpertFullName <span>@appointment.Speciality</span></a>
@@ -105,9 +107,12 @@
                                                                 }
                                                                 <td class="text-right">
                                                                     <div class="table-action">
-                                                                        <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                            <i class="fas fa-print"></i> چاپ
-                                                                        </a>
+                                                                        @if (@appointment.Status == AppointmentStatus.Waiting.GetDisplayName())
+                                                                        {
+                                                                            <a onclick="DeclineAppointment(@appointment.Id)" class="btn btn-sm bg-danger-light">
+                                                                                <i class="fas fa-print"></i> لغو نوبت
+                                                                            </a>
+                                                                        }
                                                                         <a onclick="ShowDetails(@appointment.Id)" class="btn btn-sm bg-info-light">
                                                                             <i class="far fa-eye"></i> مشاهده
                                                                         </a>
@@ -127,279 +132,279 @@
                                 </div>
                             </div>
                             <!-- /Appointment Tab -->
-                         @*   <!-- Billing Tab -->
-                            <div id="pat_billing" class="tab-pane fade">
+                            @*   <!-- Billing Tab -->
+                                <div id="pat_billing" class="tab-pane fade">
                                 <div class="card card-table mb-0">
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover table-center mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>شماره فاکتور</th>
-                                                        <th>مشاور</th>
-                                                        <th>مقدار</th>
-                                                        <th>پرداخت شده</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="invoice-view.html">#INV-0010</a>
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
-                                                                    <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-01.jpg" alt="User Image">
-                                                                </a>
-                                                                <a href="doctor-profile.html">رابی پرین <span>دندان مشاور</span></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td> 450 تومان </td>
-                                                        <td>14 مهر 1399</td>
-                                                        <td class="text-right">
-                                                            <div class="table-action">
-                                                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
-                                                                    <i class="far fa-eye"></i> مشاهده
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                    <i class="fas fa-print"></i> چاپ
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="invoice-view.html">#INV-0009</a>
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
-                                                                    <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
-                                                                </a>
-                                                                <a href="doctor-profile.html">دکتر دارن الدور <span>دندان مشاور</span></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td>300 تومان</td>
-                                                        <td>13 مهر 1399</td>
-                                                        <td class="text-right">
-                                                            <div class="table-action">
-                                                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
-                                                                    <i class="far fa-eye"></i> مشاهده
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                    <i class="fas fa-print"></i> چاپ
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="invoice-view.html">#INV-0008</a>
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
-                                                                    <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-03.jpg" alt="User Image">
-                                                                </a>
-                                                                <a href="doctor-profile.html">مشاور دبرا آنجل <span>قلب و عروق</span></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td> 150 تومان </td>
-                                                        <td>12 مهر 1399</td>
-                                                        <td class="text-right">
-                                                            <div class="table-action">
-                                                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
-                                                                    <i class="far fa-eye"></i> مشاهده
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                    <i class="fas fa-print"></i> چاپ
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="invoice-view.html">#INV-0007</a>
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
-                                                                    <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-04.jpg" alt="User Image">
-                                                                </a>
-                                                                <a href="doctor-profile.html">مشاور سوفیا برنت <span>اورولوژی</span></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td>50 تومان</td>
-                                                        <td>11 مهر 1399</td>
-                                                        <td class="text-right">
-                                                            <div class="table-action">
-                                                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
-                                                                    <i class="far fa-eye"></i> مشاهده
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                    <i class="fas fa-print"></i> چاپ
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="invoice-view.html">#INV-0006</a>
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
-                                                                    <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-05.jpg" alt="User Image">
-                                                                </a>
-                                                                <a href="doctor-profile.html">مشاور ماروین کمپل <span>چشم مشاوری</span></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td>600 تومان</td>
-                                                        <td>10 مهر 1399</td>
-                                                        <td class="text-right">
-                                                            <div class="table-action">
-                                                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
-                                                                    <i class="far fa-eye"></i> مشاهده
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                    <i class="fas fa-print"></i> چاپ
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="invoice-view.html">#INV-0005</a>
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
-                                                                    <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-06.jpg" alt="User Image">
-                                                                </a>
-                                                                <a href="doctor-profile.html">مشاور کاترینا برتفولد <span>ارتوپدی</span></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td>200 تومان</td>
-                                                        <td>9 مهر 1399</td>
-                                                        <td class="text-right">
-                                                            <div class="table-action">
-                                                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
-                                                                    <i class="far fa-eye"></i> مشاهده
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                    <i class="fas fa-print"></i> چاپ
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="invoice-view.html">#INV-0004</a>
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
-                                                                    <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-07.jpg" alt="User Image">
-                                                                </a>
-                                                                <a href="doctor-profile.html">مشاور لیندا توبین <span>نئورولوژی</span></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td>100 تومان</td>
-                                                        <td>8 مهر 1399</td>
-                                                        <td class="text-right">
-                                                            <div class="table-action">
-                                                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
-                                                                    <i class="far fa-eye"></i> مشاهده
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                    <i class="fas fa-print"></i> چاپ
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="invoice-view.html">#INV-0003</a>
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
-                                                                    <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-08.jpg" alt="User Image">
-                                                                </a>
-                                                                <a href="doctor-profile.html">مشاور پول ریچارد <span>پوست</span></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td>250 تومان</td>
-                                                        <td>7 مهر 1399</td>
-                                                        <td class="text-right">
-                                                            <div class="table-action">
-                                                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
-                                                                    <i class="far fa-eye"></i> مشاهده
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                    <i class="fas fa-print"></i> چاپ
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="invoice-view.html">#INV-0002</a>
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
-                                                                    <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-09.jpg" alt="User Image">
-                                                                </a>
-                                                                <a href="doctor-profile.html">مشاور جان گیبز <span>دندان مشاور</span></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td>175 تومان</td>
-                                                        <td>6 مهر 1399</td>
-                                                        <td class="text-right">
-                                                            <div class="table-action">
-                                                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
-                                                                    <i class="far fa-eye"></i> مشاهده
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                    <i class="fas fa-print"></i> چاپ
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="invoice-view.html">#INV-0001</a>
-                                                        </td>
-                                                        <td>
-                                                            <h2 class="table-avatar">
-                                                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
-                                                                    <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-10.jpg" alt="User Image">
-                                                                </a>
-                                                                <a href="doctor-profile.html">مشاور اولگا بارلو <span>#0010</span></a>
-                                                            </h2>
-                                                        </td>
-                                                        <td>550 تومان</td>
-                                                        <td>5 مهر 1399</td>
-                                                        <td class="text-right">
-                                                            <div class="table-action">
-                                                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
-                                                                    <i class="far fa-eye"></i> مشاهده
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-                                                                    <i class="fas fa-print"></i> چاپ
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                <div class="card-body">
+                                <div class="table-responsive">
+                                <table class="table table-hover table-center mb-0">
+                                <thead>
+                                <tr>
+                                <th>شماره فاکتور</th>
+                                <th>مشاور</th>
+                                <th>مقدار</th>
+                                <th>پرداخت شده</th>
+                                <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                <td>
+                                <a href="invoice-view.html">#INV-0010</a>
+                                </td>
+                                <td>
+                                <h2 class="table-avatar">
+                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-01.jpg" alt="User Image">
+                                </a>
+                                <a href="doctor-profile.html">رابی پرین <span>دندان مشاور</span></a>
+                                </h2>
+                                </td>
+                                <td> 450 تومان </td>
+                                <td>14 مهر 1399</td>
+                                <td class="text-right">
+                                <div class="table-action">
+                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                <i class="far fa-eye"></i> مشاهده
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                <i class="fas fa-print"></i> چاپ
+                                </a>
                                 </div>
-                            </div>
-                            <!-- /Billing Tab -->*@
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                <a href="invoice-view.html">#INV-0009</a>
+                                </td>
+                                <td>
+                                <h2 class="table-avatar">
+                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-02.jpg" alt="User Image">
+                                </a>
+                                <a href="doctor-profile.html">دکتر دارن الدور <span>دندان مشاور</span></a>
+                                </h2>
+                                </td>
+                                <td>300 تومان</td>
+                                <td>13 مهر 1399</td>
+                                <td class="text-right">
+                                <div class="table-action">
+                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                <i class="far fa-eye"></i> مشاهده
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                <i class="fas fa-print"></i> چاپ
+                                </a>
+                                </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                <a href="invoice-view.html">#INV-0008</a>
+                                </td>
+                                <td>
+                                <h2 class="table-avatar">
+                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-03.jpg" alt="User Image">
+                                </a>
+                                <a href="doctor-profile.html">مشاور دبرا آنجل <span>قلب و عروق</span></a>
+                                </h2>
+                                </td>
+                                <td> 150 تومان </td>
+                                <td>12 مهر 1399</td>
+                                <td class="text-right">
+                                <div class="table-action">
+                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                <i class="far fa-eye"></i> مشاهده
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                <i class="fas fa-print"></i> چاپ
+                                </a>
+                                </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                <a href="invoice-view.html">#INV-0007</a>
+                                </td>
+                                <td>
+                                <h2 class="table-avatar">
+                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-04.jpg" alt="User Image">
+                                </a>
+                                <a href="doctor-profile.html">مشاور سوفیا برنت <span>اورولوژی</span></a>
+                                </h2>
+                                </td>
+                                <td>50 تومان</td>
+                                <td>11 مهر 1399</td>
+                                <td class="text-right">
+                                <div class="table-action">
+                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                <i class="far fa-eye"></i> مشاهده
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                <i class="fas fa-print"></i> چاپ
+                                </a>
+                                </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                <a href="invoice-view.html">#INV-0006</a>
+                                </td>
+                                <td>
+                                <h2 class="table-avatar">
+                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-05.jpg" alt="User Image">
+                                </a>
+                                <a href="doctor-profile.html">مشاور ماروین کمپل <span>چشم مشاوری</span></a>
+                                </h2>
+                                </td>
+                                <td>600 تومان</td>
+                                <td>10 مهر 1399</td>
+                                <td class="text-right">
+                                <div class="table-action">
+                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                <i class="far fa-eye"></i> مشاهده
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                <i class="fas fa-print"></i> چاپ
+                                </a>
+                                </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                <a href="invoice-view.html">#INV-0005</a>
+                                </td>
+                                <td>
+                                <h2 class="table-avatar">
+                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-06.jpg" alt="User Image">
+                                </a>
+                                <a href="doctor-profile.html">مشاور کاترینا برتفولد <span>ارتوپدی</span></a>
+                                </h2>
+                                </td>
+                                <td>200 تومان</td>
+                                <td>9 مهر 1399</td>
+                                <td class="text-right">
+                                <div class="table-action">
+                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                <i class="far fa-eye"></i> مشاهده
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                <i class="fas fa-print"></i> چاپ
+                                </a>
+                                </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                <a href="invoice-view.html">#INV-0004</a>
+                                </td>
+                                <td>
+                                <h2 class="table-avatar">
+                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-07.jpg" alt="User Image">
+                                </a>
+                                <a href="doctor-profile.html">مشاور لیندا توبین <span>نئورولوژی</span></a>
+                                </h2>
+                                </td>
+                                <td>100 تومان</td>
+                                <td>8 مهر 1399</td>
+                                <td class="text-right">
+                                <div class="table-action">
+                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                <i class="far fa-eye"></i> مشاهده
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                <i class="fas fa-print"></i> چاپ
+                                </a>
+                                </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                <a href="invoice-view.html">#INV-0003</a>
+                                </td>
+                                <td>
+                                <h2 class="table-avatar">
+                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-08.jpg" alt="User Image">
+                                </a>
+                                <a href="doctor-profile.html">مشاور پول ریچارد <span>پوست</span></a>
+                                </h2>
+                                </td>
+                                <td>250 تومان</td>
+                                <td>7 مهر 1399</td>
+                                <td class="text-right">
+                                <div class="table-action">
+                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                <i class="far fa-eye"></i> مشاهده
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                <i class="fas fa-print"></i> چاپ
+                                </a>
+                                </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                <a href="invoice-view.html">#INV-0002</a>
+                                </td>
+                                <td>
+                                <h2 class="table-avatar">
+                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-09.jpg" alt="User Image">
+                                </a>
+                                <a href="doctor-profile.html">مشاور جان گیبز <span>دندان مشاور</span></a>
+                                </h2>
+                                </td>
+                                <td>175 تومان</td>
+                                <td>6 مهر 1399</td>
+                                <td class="text-right">
+                                <div class="table-action">
+                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                <i class="far fa-eye"></i> مشاهده
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                <i class="fas fa-print"></i> چاپ
+                                </a>
+                                </div>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                <a href="invoice-view.html">#INV-0001</a>
+                                </td>
+                                <td>
+                                <h2 class="table-avatar">
+                                <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
+                                <img class="avatar-img rounded-circle" src="~/assets/img/doctors/doctor-thumb-10.jpg" alt="User Image">
+                                </a>
+                                <a href="doctor-profile.html">مشاور اولگا بارلو <span>#0010</span></a>
+                                </h2>
+                                </td>
+                                <td>550 تومان</td>
+                                <td>5 مهر 1399</td>
+                                <td class="text-right">
+                                <div class="table-action">
+                                <a href="invoice-view.html" class="btn btn-sm bg-info-light">
+                                <i class="far fa-eye"></i> مشاهده
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
+                                <i class="fas fa-print"></i> چاپ
+                                </a>
+                                </div>
+                                </td>
+                                </tr>
+                                </tbody>
+                                </table>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                <!-- /Billing Tab -->*@
                         </div>
                         <!--  محتوای تب -->
 
@@ -412,7 +417,7 @@
 </div>
 
 @section Footer{
-    <partial name="Footer"/>
+<partial name="Footer" />
 }
 
 @section Scripts
@@ -449,7 +454,7 @@
                     body += '<button type="button" class="btn bg-danger-light btn-sm">' + data.appointmentStatus + '</button>';
                 }
                 else {
-                    body += '<button type="button" class="btn bg-success-light btn-sm">' + data.appointmentStatus + '</button>';
+                    body += '<button type="button" class="btn bg-danger-light btn-sm">' + data.appointmentStatus + '</button>';
                 }
                 body += '</div>';
                 body += '</div>';
@@ -475,24 +480,79 @@
             }
         });
     }
+
+     function DeclineAppointment(appointmentId) {
+          swal.fire({
+            title: 'کاربر گرامی از لغو نوبت مطمئن هستید؟',
+            text: "در صورتی که کمتر از 24 ساعت تا نوبت شما باقی مانده باشد تنها نصف مبلغ نوبت به کیف پول شما افزوده می شود",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'تایید',
+            cancelButtonText: 'انصراف'
+        }).then((result) => {
+            if (result.value) {
+                var data = {};
+
+                data["appointmentId"] = appointmentId;
+
+                $.ajax({
+                    type: "POST",
+                    url: '/api/FinancialTransactions/DeclineAppointmentConsumerSide',
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    enctype: 'application/json',
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(response) {
+                        if (response.isSuccess === true) {
+                            swal.fire('موفق!',
+                                response.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }else {
+                            swal.fire('هشدار!',
+                                response.message,
+                                'warning');
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+        });
+
+     }
 </script>
 }
 
 @section Modal{
-    <!-- Appointment Details Modal -->
-    <div class="modal fade custom-modal" id="appt_details">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">جزییات نوبت</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="detailsBody">
-                </div>
+<!-- Appointment Details Modal -->
+<div class="modal fade custom-modal" id="appt_details">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">جزییات نوبت</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="detailsBody">
             </div>
         </div>
     </div>
-    <!-- /Appointment Details Modal -->
+</div>
+<!-- /Appointment Details Modal -->
 }
