@@ -5,6 +5,6 @@ namespace CR.Core.Services.Interfaces.FinancialTransaction
 {
     public interface IAddPayFromWalletFinancialTransactionService
     {
-        ResultDto<ResultAddPayFromWalletDto> Execute(long payerId, long factorId, int price);
+        ResultDto<ResultAddPayFromWalletDto> Execute(long userId, long factorId, int price);
     }
 }
