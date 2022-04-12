@@ -27,7 +27,7 @@ namespace CR.Core.Services.Implementations.Appointment
                 .ThenInclude(a => a.Consumer)
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
-                .Where(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.IsReserved == true)
+                .Where(a => a.ExpertInformation.ExpertId == expertId)
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
                 .Select(a => new AppointmentForExpertPanelDto
                 {

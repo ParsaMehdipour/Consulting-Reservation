@@ -251,7 +251,7 @@ namespace CR.Presentation
             services.AddScoped<IAddPaymentTransactionService, AddPaymentTransactionService>();
             services.AddScoped<IGetFinancialTransactionDetailsForVerifyService, GetFinancialTransactionDetailsForVerifyService>();
             services.AddScoped<IAddPayFromWalletFinancialTransactionService, AddPayFromWalletFinancialTransactionService>();
-            services.AddScoped<IAddDeclineFinancialTransactionService, AddDeclineFinancialTransactionService>();
+            services.AddScoped<IAddDeclineFactorFinancialTransactionService, AddDeclineFactorFinancialTransactionService>();
             services.AddScoped<IAddChargeExpertWalletService, AddChargeExpertWalletService>();
             services.AddScoped<IGetExpertFinancialTransactionService, GetExpertFinancialTransactionService>();
             services.AddScoped<IGetExpertWalletBalanceService, GetExpertWalletBalanceService>();
@@ -259,6 +259,9 @@ namespace CR.Presentation
             services.AddScoped<IGetCheckoutFinancialTransactionsService, GetCheckoutFinancialTransactionsService>();
             services.AddScoped<IChangeCheckoutFinancialTransactionService, ChangeCheckoutFinancialTransactionService>();
             services.AddScoped<IGetCheckoutFinancialTransactionDescriptionService, GetCheckoutFinancialTransactionDescriptionService>();
+            services.AddScoped<IAddDeclineAppointmentFinancialTransactionService, AddDeclineAppointmentFinancialTransactionService>();
+            services.AddScoped<IAddDeclineAppointmentConsumerSideFinancialTransactionService, AddDeclineAppointmentConsumerSideFinancialTransactionService>();
+            services.AddScoped<IAddPayForChargeWalletFinancialTransactionService, AddPayForChargeWalletFinancialTransactionService>();
             //Favorites
             services.AddScoped<IAddNewFavoriteService, AddNewFavoriteService>();
             services.AddScoped<IGetConsumerFavoritesService, GetConsumerFavoritesService>();

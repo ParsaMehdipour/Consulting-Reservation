@@ -28,6 +28,8 @@ namespace CR.DataAccess.Enums
         NotDone = 1,
         [Display(Name = "انجام شد")]
         Completed = 2,
+        [Display(Name = "لغو شده")]
+        Declined = 3
     }
 
     public enum FactorStatus
@@ -75,18 +77,22 @@ namespace CR.DataAccess.Enums
 
     public enum TransactionType
     {
-        [Display(Name = "پرداخت از کارت بانکی")]
+        [Display(Name = "پرداخت از کارت بانکی کاربر")]
         PayFromCreditCard = 0,
-        [Display(Name = "پرداخت از کیف پول")]
+        [Display(Name = "پرداخت از کیف پول کاربر")]
         PayFromWallet = 1,
-        [Display(Name = "شارژ کیف پول")]
+        [Display(Name = "شارژ کیف پول کاربر")]
         ChargeWallet = 2,
-        [Display(Name = "شارژ-لغو تراکنش")]
-        DeclineTransaction = 3,
+        [Display(Name = "شارژ کیف پول کاربر - لغو نوبت")]
+        DeclineAppointmentTransaction = 3,
+        [Display(Name = "شارژ کیف پول کاربر - لغو فاکتور")]
+        DeclineFactorTransaction = 4,
         [Display(Name = "شارژ کیف پول مشاور")]
-        ChargeExpertWallet = 4,
-        [Display(Name = "تسویه حساب")]
-        Checkout = 5
+        ChargeExpertWallet = 5,
+        [Display(Name = "تسویه حساب مشاور")]
+        Checkout = 6,
+        [Display(Name = "پرداخت جهت شارژ کیف پول کاربر")]
+        PayForWalletCharge = 7
     }
 
     public enum CommentStatus

@@ -59,9 +59,10 @@
                                             <table class="table table-hover table-center mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-center"> دریافت کننده </th>
-                                                        <th class="text-center">مبلغ کل </th>
-                                                        <th class="text-center"> تاریخ ایجاد </th>
+                                                        <th class="text-center">پرداخت کننده </th>
+                                                        <th class="text-center">دریافت کننده</th>
+                                                        <th class="text-center"> مبلغ کل </th>
+                                                        <th class="text-center"> تاریخ تراکنش </th>
                                                         <th class="text-center"> نوع تراکنش </th>
                                                         <th class="text-center"> وضعیت </th>
                                                     </tr>
@@ -72,10 +73,14 @@
                                                         <tr>
                                                             <td class="text-center">
                                                                 <h2 class="table-avatar">
-                                                                    <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@transaction.ExpertInformationId" class="avatar avatar-sm mr-2">
-                                                                        <img class="avatar-img rounded-circle" src="~/@transaction.ExpertIconSrc" alt="User Image">
-                                                                    </a>
-                                                                    <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@transaction.ExpertInformationId">@transaction.ExpertFullName</a>
+                                                                    <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@transaction.payerIconSrc" alt="Payer"></a>
+                                                                    <a>@transaction.PayerFullName </a>
+                                                                </h2>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <h2 class="table-avatar">
+                                                                    <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@transaction.ReceiverIconSrc" alt="Receiver"></a>
+                                                                    <a>@transaction.ReceiverFullName </a>
                                                                 </h2>
                                                             </td>
                                                             <td class="text-center">@transaction.Price تومان</td>
@@ -83,33 +88,41 @@
                                                             <td class="text-center">
                                                                 @if (transaction.TransactionType == TransactionType.ChargeWallet.GetDisplayName())
                                                                 {
-                                                                    <span class="badge badge-pill bg-warning-light">@transaction.TransactionType</span>
+                                                                    <span class="badge badge-pill bg-primary-light inv-badge">@transaction.TransactionType</span>
                                                                 }
                                                                 else if (transaction.TransactionType == TransactionType.PayFromCreditCard.GetDisplayName())
                                                                 {
-                                                                    <span class="badge badge-pill bg-success-light">@transaction.TransactionType</span>
+                                                                    <span class="badge badge-pill bg-success-light inv-badge">@transaction.TransactionType</span>
                                                                 }
                                                                 else if (transaction.TransactionType == TransactionType.PayFromWallet.GetDisplayName())
                                                                 {
-                                                                    <span class="badge badge-pill bg-purple-light">@transaction.TransactionType</span>
+                                                                    <span class="badge badge-pill bg-purple-light inv-badge">@transaction.TransactionType</span>
+                                                                }
+                                                                else if (transaction.TransactionType == TransactionType.PayForWalletCharge.GetDisplayName())
+                                                                {
+                                                                    <span class="badge badge-pill bg-default-light inv-badge">@transaction.TransactionType</span>
+                                                                }
+                                                                else if (transaction.TransactionType == TransactionType.DeclineFactorTransaction.GetDisplayName())
+                                                                {
+                                                                    <span class="badge badge-pill bg-danger-light inv-badge">@transaction.TransactionType</span>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <span class="badge badge-pill bg-danger-light">@transaction.TransactionType</span>
+                                                                    <span class="badge badge-pill bg-danger-light inv-badge">@transaction.TransactionType</span>
                                                                 }
                                                             </td>
                                                             <td class="text-center">
                                                                 @if (transaction.TransactionStatus == TransactionStatus.UnDefined.GetDisplayName())
                                                                 {
-                                                                    <span class="badge badge-pill bg-warning-light">@transaction.TransactionStatus</span>
+                                                                    <span class="badge badge-pill bg-warning-light inv-badge">@transaction.TransactionStatus</span>
                                                                 }
                                                                 else if (transaction.TransactionStatus == TransactionStatus.Successful.GetDisplayName())
                                                                 {
-                                                                    <span class="badge badge-pill bg-success-light">@transaction.TransactionStatus</span>
+                                                                    <span class="badge badge-pill bg-success-light inv-badge">@transaction.TransactionStatus</span>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <span class="badge badge-pill bg-danger-light">@transaction.TransactionStatus</span>
+                                                                    <span class="badge badge-pill bg-danger-light inv-badge">@transaction.TransactionStatus</span>
                                                                 }
                                                             </td>
                                                         </tr>
@@ -144,9 +157,8 @@
     </div>
 </div>
 <!-- /Page Content -->
-
 @section Footer{
-    <partial name="Footer"/>
+<partial name="Footer" />
 }
 
 @section Scripts

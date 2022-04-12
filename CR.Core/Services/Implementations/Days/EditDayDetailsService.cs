@@ -125,8 +125,8 @@ namespace CR.Core.Services.Implementations.Days
 
                 return new ResultDto()
                 {
-                    IsSuccess = true,
-                    Message = "زمانبندی ها با موفقیت ویرایش شدند"
+                    IsSuccess = false,
+                    Message = "لطفا حداقل یک زمانبندی انتخاب کنید"
                 };
             }
             catch (Exception)

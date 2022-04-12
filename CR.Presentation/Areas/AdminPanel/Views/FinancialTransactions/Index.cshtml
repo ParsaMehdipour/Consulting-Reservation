@@ -27,7 +27,7 @@
                                 <th class="text-center">پرداخت کننده </th>
                                 <th class="text-center">دریافت کننده</th>
                                 <th class="text-center"> مبلغ کل </th>
-                                <th class="text-center"> تاریخ ایجاد </th>
+                                <th class="text-center"> تاریخ تراکنش </th>
                                 <th class="text-center"> نوع تراکنش </th>
                                 <th class="text-center"> وضعیت </th>
                             </tr>
@@ -38,34 +38,66 @@
                                 <tr>
                                     <td class="text-center">
                                         <h2 class="table-avatar">
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@transaction.PayerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@transaction.PayerIconSrc" alt="Payer"></a>
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@transaction.PayerId">@transaction.PayerFullName </a>
-                                        </h2>
+                                            <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@transaction.PayerIconSrc" alt="Payer"></a><br/>
+                                            <a>@transaction.PayerFullName </a>
+                                        </h2><br/>
+                                        @if (transaction.PayerUserFlag == UserFlag.Consumer)
+                                        {
+                                            <span>کاربر</span>
+                                        }
+                                        else if (transaction.PayerUserFlag == UserFlag.Expert)
+                                        {
+                                            <span>مشاور</span>
+                                        }
+                                        else
+                                        {
+
+                                        }
                                     </td>
                                     <td class="text-center">
                                         <h2 class="table-avatar">
-                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@transaction.ReceiverId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@transaction.ReceiverIconSrc" alt="Receiver"></a>
-                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@transaction.ReceiverId">@transaction.ReceiverFullName </a>
-                                        </h2>
+                                            <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@transaction.ReceiverIconSrc" alt="Receiver"></a>
+                                            <a>@transaction.ReceiverFullName </a>
+                                        </h2><br/>
+                                        @if (transaction.ReceiverUserFlag == UserFlag.Consumer)
+                                        {
+                                            <span>کاربر</span>
+                                        }
+                                        else if (transaction.ReceiverUserFlag == UserFlag.Expert)
+                                        {
+                                            <span>مشاور</span>
+                                        }
+                                        else
+                                        {
+
+                                        }
                                     </td>
                                     <td class="text-center">@transaction.Price تومان</td>
                                     <td class="text-center">@transaction.CreateDate</td>
                                     <td class="text-center">
                                         @if (transaction.TransactionType == TransactionType.ChargeWallet.GetDisplayName())
                                         {
-                                            <span class="badge badge-pill bg-warning inv-badge">@transaction.TransactionType</span>
+                                            <span class="badge badge-pill bg-primary-light inv-badge">@transaction.TransactionType</span>
                                         }
                                         else if (transaction.TransactionType == TransactionType.PayFromCreditCard.GetDisplayName())
                                         {
-                                            <span class="badge badge-pill bg-success inv-badge">@transaction.TransactionType</span>
+                                            <span class="badge badge-pill bg-success-light inv-badge">@transaction.TransactionType</span>
                                         }
                                         else if (transaction.TransactionType == TransactionType.PayFromWallet.GetDisplayName())
                                         {
-                                            <span class="badge badge-pill bg-purple inv-badge">@transaction.TransactionType</span>
+                                            <span class="badge badge-pill bg-purple-light inv-badge">@transaction.TransactionType</span>
+                                        }
+                                        else if (transaction.TransactionType == TransactionType.PayForWalletCharge.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-default-light inv-badge">@transaction.TransactionType</span>
+                                        }
+                                        else if (transaction.TransactionType == TransactionType.DeclineFactorTransaction.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-danger-light inv-badge">@transaction.TransactionType</span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-pill bg-danger inv-badge">@transaction.TransactionType</span>
+                                            <span class="badge badge-pill bg-danger-light inv-badge">@transaction.TransactionType</span>
                                         }
                                     </td>
                                     <td class="text-center">

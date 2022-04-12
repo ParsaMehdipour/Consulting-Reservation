@@ -7,9 +7,9 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.Api
     [ApiController]
     public class FinancialTransactionsController : ControllerBase
     {
-        private readonly IAddDeclineFinancialTransactionService _addDeclineFinancialTransactionService;
+        private readonly IAddDeclineFactorFinancialTransactionService _addDeclineFinancialTransactionService;
 
-        public FinancialTransactionsController(IAddDeclineFinancialTransactionService addDeclineFinancialTransactionService)
+        public FinancialTransactionsController(IAddDeclineFactorFinancialTransactionService addDeclineFinancialTransactionService)
         {
             _addDeclineFinancialTransactionService = addDeclineFinancialTransactionService;
         }

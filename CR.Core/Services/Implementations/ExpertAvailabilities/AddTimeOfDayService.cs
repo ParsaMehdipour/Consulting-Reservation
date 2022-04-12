@@ -47,94 +47,104 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
                     };
                 }
 
-                var timeOfDaysList = new List<TimeOfDay>();
-
-
-                //foreach (var timeOfDayRequest in request.TimeOfDays)
-                //{
-                //    var timeOfDay = new TimeOfDay()
-                //    {
-                //        DayId = request.dayId,
-                //        Day = day,
-                //        ExpertInformation = expertInformation,
-                //        ExpertInformationId = request.expertInformationId,
-                //        Start = timeOfDayRequest.start,
-                //        Finish = timeOfDayRequest.finish
-                //    };
-
-                //    timeOfDaysList.Add(timeOfDay);
-                //}
-
-
-                foreach (var timingId in request.timings)
+                if (request.timings != null)
                 {
+                    var timeOfDaysList = new List<TimeOfDay>();
 
-                    var timing = _context.Timings.FirstOrDefault(t => t.Id == timingId);
 
-                    if (timing == null)
+                    //foreach (var timeOfDayRequest in request.TimeOfDays)
+                    //{
+                    //    var timeOfDay = new TimeOfDay()
+                    //    {
+                    //        DayId = request.dayId,
+                    //        Day = day,
+                    //        ExpertInformation = expertInformation,
+                    //        ExpertInformationId = request.expertInformationId,
+                    //        Start = timeOfDayRequest.start,
+                    //        Finish = timeOfDayRequest.finish
+                    //    };
+
+                    //    timeOfDaysList.Add(timeOfDay);
+                    //}
+
+
+                    foreach (var timingId in request.timings)
+                    {
+
+                        var timing = _context.Timings.FirstOrDefault(t => t.Id == timingId);
+
+                        if (timing == null)
+                        {
+                            return new ResultDto()
+                            {
+                                IsSuccess = false,
+                                Message = "زمانبندی یافت نشد!!"
+                            };
+                        }
+
+                        var startMinutes = (timing.StartTime.Hour * 60) + timing.StartTime.Minute;
+                        var endMinutes = (timing.EndTime.Hour * 60) + timing.EndTime.Minute;
+                        var pureMinutes = endMinutes - startMinutes;
+
+                        var timeOfDay = new TimeOfDay
+                        {
+                            DayId = request.dayId,
+                            Day = day,
+                            ExpertInformation = expertInformation,
+                            ExpertInformationId = request.expertInformationId,
+                            StartHour = timing.StartTime_String,
+                            FinishHour = timing.EndTime_String,
+                            StartTime = day.Date.AddHours(timing.StartTime.Hour).AddMinutes(timing.StartTime.Minute),
+                            FinishTime = day.Date.AddHours(timing.EndTime.Hour).AddMinutes(timing.EndTime.Minute),
+                            TimingType = timing.TimingType,
+                            PhoneCallPrice = (pureMinutes * expertInformation.PhoneCallPrice),
+                            VoiceCallPrice = (pureMinutes * expertInformation.VoiceCallPrice),
+                            TextCallPrice = (pureMinutes * expertInformation.TextCallPrice),
+                        };
+
+                        timeOfDaysList.Add(timeOfDay);
+
+                    }
+
+                    var list = timeOfDaysList;
+
+                    if (list.Count != list.GroupBy(_ => _.StartTime).Distinct().Count())
                     {
                         return new ResultDto()
                         {
                             IsSuccess = false,
-                            Message = "زمانبندی یافت نشد!!"
+                            Message = "در زمان بندی ها تداخل وجود دارد"
                         };
                     }
 
-                    var startMinutes = (timing.StartTime.Hour * 60) + timing.StartTime.Minute;
-                    var endMinutes = (timing.EndTime.Hour * 60) + timing.EndTime.Minute;
-                    var pureMinutes = endMinutes - startMinutes;
-
-                    var timeOfDay = new TimeOfDay
+                    if (list.Count != list.GroupBy(_ => _.FinishTime).Distinct().Count())
                     {
-                        DayId = request.dayId,
-                        Day = day,
-                        ExpertInformation = expertInformation,
-                        ExpertInformationId = request.expertInformationId,
-                        StartHour = timing.StartTime_String,
-                        FinishHour = timing.EndTime_String,
-                        StartTime = day.Date.AddHours(timing.StartTime.Hour).AddMinutes(timing.StartTime.Minute),
-                        FinishTime = day.Date.AddHours(timing.EndTime.Hour).AddMinutes(timing.EndTime.Minute),
-                        TimingType = timing.TimingType,
-                        PhoneCallPrice = (pureMinutes * expertInformation.PhoneCallPrice),
-                        VoiceCallPrice = (pureMinutes * expertInformation.VoiceCallPrice),
-                        TextCallPrice = (pureMinutes * expertInformation.TextCallPrice),
-                    };
+                        return new ResultDto()
+                        {
+                            IsSuccess = false,
+                            Message = "در زمان بندی ها تداخل وجود دارد"
+                        };
+                    }
 
-                    timeOfDaysList.Add(timeOfDay);
+                    _context.TimeOfDays.AddRange(timeOfDaysList);
 
-                }
+                    _context.SaveChanges();
 
-                var list = timeOfDaysList;
+                    transaction.Commit();
 
-                if (list.Count != list.GroupBy(_ => _.StartTime.Hour).Distinct().Count())
-                {
                     return new ResultDto()
                     {
-                        IsSuccess = false,
-                        Message = "در زمان بندی ها تداخل وجود دارد"
+                        IsSuccess = true,
+                        Message = "زمانبندی ها با موفقیت افزوده شدند"
                     };
                 }
-
-                if (list.Count != list.GroupBy(_ => _.FinishTime.Hour).Distinct().Count())
-                {
-                    return new ResultDto()
-                    {
-                        IsSuccess = false,
-                        Message = "در زمان بندی ها تداخل وجود دارد"
-                    };
-                }
-
-                _context.TimeOfDays.AddRange(timeOfDaysList);
-
-                _context.SaveChanges();
-
-                transaction.Commit();
 
                 return new ResultDto()
                 {
-                    IsSuccess = true,
-                    Message = "زمانبندی ها با موفقیت افزوده شدند"
+                    IsSuccess = false,
+                    Message = "لطفا حداقل یک زمانبندی انتخاب کنید"
                 };
+
             }
             catch (Exception e)
             {

@@ -11,22 +11,22 @@ using System.Linq;
 
 namespace CR.Core.Services.Implementations.FinancialTransactions
 {
-    public class AddDeclineFinancialTransactionService : IAddDeclineFinancialTransactionService
+    public class AddDeclineAppointmentFinancialTransactionService : IAddDeclineAppointmentFinancialTransactionService
     {
         private readonly ApplicationContext _context;
 
-        public AddDeclineFinancialTransactionService(ApplicationContext context)
+        public AddDeclineAppointmentFinancialTransactionService(ApplicationContext context)
         {
             _context = context;
         }
 
-        public ResultDto Execute(long payerId, long factorId)
+        public ResultDto Execute(long receiverId, long appointmentId)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
-                if (payerId == 0 || factorId == 0)
+                if (receiverId == 0 || appointmentId == 0)
                 {
                     return new ResultDto()
                     {
@@ -35,35 +35,64 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     };
                 }
 
-                var factor = _context.Factors
-                    .Include(_ => _.Appointments)
-                    .ThenInclude(_ => _.TimeOfDay)
-                    .FirstOrDefault(_ => _.Id == factorId);
+                var appointment = _context.Appointments
+                    .Include(_ => _.TimeOfDay)
+                    .FirstOrDefault(_ => _.Id == appointmentId);
+
+                if (appointment == null)
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "نوبت یافت نشد"
+                    };
+                }
+
+                appointment.AppointmentStatus = AppointmentStatus.Declined;
+
+                var timeOfDay = _context.TimeOfDays.Find(appointment.TimeOfDayId);
+
+                if (timeOfDay == null)
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "روز یافت نشد"
+                    };
+                }
+
+                timeOfDay.IsReserved = false;
+
+                var factor = _context.Factors.Include(_ => _.Appointments)
+                    .FirstOrDefault(_ => _.Id == appointment.FactorId);
 
                 if (factor == null)
                 {
                     return new ResultDto()
                     {
                         IsSuccess = false,
-                        Message = "فاکتور یافت نشد!!"
+                        Message = "فاکتور یافت نشد"
                     };
                 }
 
-                factor.FactorStatus = FactorStatus.Declined;
+                factor.TotalPrice = factor.TotalPrice - appointment.Price.Value;
 
-                foreach (var appointment in factor.Appointments)
+                if (factor.Appointments.Any(_ => _.AppointmentStatus == AppointmentStatus.Completed
+                                                 || _.AppointmentStatus == AppointmentStatus.NotDone
+                                                 || _.AppointmentStatus == AppointmentStatus.Waiting) is false)
                 {
-                    appointment.TimeOfDay.IsReserved = false;
+                    factor.FactorStatus = FactorStatus.Declined;
                 }
 
                 var financialTransaction = new FinancialTransaction()
                 {
-                    PayerId = payerId,
-                    Price_Digit = factor.TotalPrice,
+                    PayerId = _context.Users.FirstOrDefault(_ => _.UserFlag == UserFlag.Admin)!.Id,
+                    ReceiverId = receiverId,
+                    Price_Digit = appointment.Price.Value,
                     CreateDate_String = DateTime.Now.ToShamsi(),
-                    Price_String = factor.TotalPrice.ToString().GetPersianNumber(),
+                    Price_String = appointment.Price.ToString().GetPersianNumber(),
                     TransactionNumber = GetLastTransactionNumber(),
-                    TransactionType = TransactionType.DeclineTransaction,
+                    TransactionType = TransactionType.DeclineAppointmentTransaction,
                     Status = TransactionStatus.Successful
                 };
 
@@ -79,7 +108,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     Message = string.Empty
                 };
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 transaction.Rollback();
 
@@ -94,7 +123,6 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 transaction.Dispose();
             }
         }
-
         private string GetLastTransactionNumber()
         {
             var financialTransactions = _context.FinancialTransactions.OrderBy(f => f.Id).LastOrDefault();

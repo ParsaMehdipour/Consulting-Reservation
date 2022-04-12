@@ -28,7 +28,7 @@ namespace CR.Core.Services.Implementations.Appointment
                 .Include(a => a.ConsumerInformation)
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
-                .Where(a => a.ConsumerInformation.ConsumerId == consumerId && a.TimeOfDay.IsReserved)
+                .Where(a => a.ConsumerInformation.ConsumerId == consumerId)
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
                 .ThenByDescending(a => a.TimeOfDay.StartTime.Hour)
                 .Select(a => new AppointmentForConsumerPanelDto
