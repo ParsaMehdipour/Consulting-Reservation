@@ -26,7 +26,8 @@ namespace CR.Core.Services.Implementations.Experts
                 .ThenInclude(e => e.Specialty)
                 .Include(e => e.ExpertInformation)
                 .ThenInclude(_ => _.Favorites)
-                .Where(e => e.UserFlag == UserFlag.Expert && e.IsActive == true && e.ExpertInformation.Favorites.Count > 0)
+                .Include(_ => _.ExpertInformation.ExpertAppointments)
+                .Where(e => e.UserFlag == UserFlag.Expert && e.IsActive == true && e.ExpertInformation.ExpertAppointments.Count(_ => _.AppointmentStatus == AppointmentStatus.Completed) > 2)
                 .OrderByDescending(e => e.Favorites.Count)
                 .Select(e => new ExpertForPresentationDto
                 {
