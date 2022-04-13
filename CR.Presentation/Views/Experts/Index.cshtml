@@ -111,14 +111,22 @@
                                              class="img-fluid" alt="Speciality">@expert.Speciality
 
                                         </h5>
-                                        <div class="rating">
-                                            <i class="fas fa-star filled"></i>
-                                            <i class="fas fa-star filled"></i>
-                                            <i class="fas fa-star filled"></i>
-                                            <i class="fas fa-star filled"></i>
-                                            <i class="fas fa-star"></i>
-                                            <span class="d-inline-block average-rating">(@expert.RateCount)</span>
-                                        </div>
+                                        @if (expert.AverageRate != 0)
+                                        {
+                                            <div class="rating">
+
+                                                @for (int i = 1; i <= expert.AverageRate; i++)
+                                                {
+                                                    <i class="fas fa-star filled"></i>
+                                                }
+                                                @for (int i = 1; i <= (5 - expert.AverageRate); i++)
+                                                {
+                                                    <i class="fas fa-star"></i>
+
+                                                }
+                                                <span class="d-inline-block average-rating">(@expert.RateCount)</span>
+                                            </div>
+                                        }
                                         <div class="clinic-services">
                                             @foreach (var tag in expert.Tags)
                                             {

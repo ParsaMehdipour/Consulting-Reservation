@@ -150,14 +150,22 @@
                                         }
                                     </h3>
                                     <p class="speciality"> @expert.Tags </p>
-                                    <div class="rating">
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <span class="d-inline-block average-rating">(17)</span>
-                                    </div>
+                                    @if (expert.AverageRate != 0)
+                                    {
+                                        <div class="rating">
+
+                                            @for (int i = 1; i <= expert.AverageRate; i++)
+                                            {
+                                                <i class="fas fa-star filled"></i>
+                                            }
+                                            @for (int i = 1; i <= (5 - expert.AverageRate); i++)
+                                            {
+                                                <i class="fas fa-star"></i>
+
+                                            }
+                                            <span class="d-inline-block average-rating">(@expert.RateCount)</span>
+                                        </div>
+                                    }
                                     <ul class="available-info">
                                         <li>
                                             <p class="doc-department"><img src="~/@expert.SpecialitySrc" class="img-fluid" alt="Speciality">‌@expert.Speciality</p>

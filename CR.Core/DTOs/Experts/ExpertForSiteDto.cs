@@ -10,7 +10,7 @@ namespace CR.Core.DTOs.Experts
         public string Bio { get; set; }
         public string SpecialitySrc { get; set; }
         public string Speciality { get; set; }
-        public int Rate { get; set; }
+        public decimal AverageRate { get; set; }
         public int RateCount { get; set; }
         public string Province { get; set; }
         public string City { get; set; }

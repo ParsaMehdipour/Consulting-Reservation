@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.ExpertAvailabilities;
 using CR.Core.DTOs.Experts;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Experts
 {
@@ -50,12 +51,11 @@ namespace CR.Core.Services.Implementations.Experts
                 Bio = expertInformation.Bio,
                 City = expertInformation.City,
                 Province = expertInformation.Province,
-                //Price = (expertInformation.IsFreeOfCharge == true) ? 0 : expertInformation.Price,
                 FullName = expertInformation.FirstName + " " + expertInformation.LastName,
-                Rate = 4,
+                RateCount = _context.Comments.Count(_ => _.TypeId == CommentType.Expert && _.CommentStatus == CommentStatus.Accepted && _.OwnerRecordId == expertInformation.Id),
+                AverageRate = Decimal.Round(expertInformation.AverageRate),
                 ClinicAddress = expertInformation.ClinicAddress,
                 ClinicName = expertInformation.ClinicName,
-                RateCount = 10,
                 Tag = expertInformation.Tag,
                 Tags = (string.IsNullOrEmpty(expertInformation.Tag)) ? new List<string>() : expertInformation.Tag.Split(",").ToList(),
                 SpecialityImage = expertInformation.Specialty.ImageSrc,

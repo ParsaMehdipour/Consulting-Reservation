@@ -14,7 +14,7 @@ namespace CR.Core.DTOs.Experts
         public long? voicePrice { get; set; }
         public long? textPrice { get; set; }
         public string IconSrc { get; set; }
-        public int Rate { get; set; }
+        public decimal AverageRate { get; set; }
         public int RateCount { get; set; }
         public DateTime? ThisDate { get; set; }
         public List<DayDto> DayDtos { get; set; }

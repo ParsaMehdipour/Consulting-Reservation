@@ -23,8 +23,6 @@ namespace CR.Core.Services.Implementations.Experts
 
         public ResultDto<ResultGetExpertsForSiteDto> Execute(string searchKey, List<string> speciality, GenderType gender, int Page = 1, int PageSize = 20)
         {
-
-            int rowCount = 0;
             var expertsQuery = _context.Users
                 .Include(u => u.ExpertInformation)
                 .ThenInclude(e => e.Specialty)
@@ -63,14 +61,14 @@ namespace CR.Core.Services.Implementations.Experts
                 Province = e.ExpertInformation.Province,
                 ClinicImages = new List<string>(),
                 FullName = e.ExpertInformation.FirstName + " " + e.ExpertInformation.LastName,
-                Rate = 5,
-                RateCount = 10,
+                RateCount = _context.Comments.Count(_ => _.TypeId == CommentType.Expert && _.CommentStatus == CommentStatus.Accepted && _.OwnerRecordId == e.ExpertInformation.Id),
+                AverageRate = Decimal.Round(e.ExpertInformation.AverageRate),
                 Speciality = e.ExpertInformation.Specialty.Name,
                 HasTimeOfDays = e.ExpertInformation.TimeOfDays.Any(_ => _.StartTime.Date >= DateTime.Now.Date && (e.ExpertInformation.UsePhoneCall || e.ExpertInformation.UseVoiceCall || e.ExpertInformation.UseTextCall)),
                 SpecialitySrc = e.ExpertInformation.Specialty.ImageSrc,
                 Tags = e.ExpertInformation.Tag.Split(",", System.StringSplitOptions.None).ToList()
             }).AsEnumerable()
-                .ToPaged(Page, PageSize, out rowCount)
+                .ToPaged(Page, PageSize, out var rowCount)
                 .ToList();
 
             return new ResultDto<ResultGetExpertsForSiteDto>()

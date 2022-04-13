@@ -34,15 +34,23 @@
                                 <img src="~/@Model.IconSrc" alt="User Image">
                             </a>
                             <div class="booking-info col-md-8">
-                                <h4><a href="doctor-profile.html">مشاور @Model.FullName</a></h4>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">35</span>
-                                </div>
+                                <h4><a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.ExpertInformationId">مشاور @Model.FullName</a></h4>
+                                @if (Model.AverageRate != 0)
+                                {
+                                    <div class="rating">
+
+                                        @for (int i = 1; i <= Model.AverageRate; i++)
+                                        {
+                                            <i class="fas fa-star filled"></i>
+                                        }
+                                        @for (int i = 1; i <= (5 - Model.AverageRate); i++)
+                                        {
+                                            <i class="fas fa-star"></i>
+
+                                        }
+                                        <span class="d-inline-block average-rating">(@Model.RateCount)</span>
+                                    </div>
+                                }
                                 <p class="doc-department"><img src="~/@Model.SpecialitySrc" class="img-fluid" alt="Speciality">‌@Model.Speciality</p>
                                 @*                                <p id="phoneCallPrice" class="text-muted mb-0" style="visibility: hidden"><i class="far fa-money-bill-alt"></i> نرخ نوبت تلفنی (ساعتی) : @Model.phonePrice?.ToString("n0") تومان</p>
                                     <p id="voiceCallPrice" class="text-muted mb-0" style="visibility: hidden"><i class="far fa-money-bill-alt"></i> نرخ نوبت صوتی (ساعتی) : @Model.voicePrice?.ToString("n0") تومان</p>

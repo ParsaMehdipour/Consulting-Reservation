@@ -4,6 +4,7 @@ using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,7 +38,9 @@ namespace CR.Core.Services.Implementations.Experts
                     SpecialitySrc = e.ExpertInformation.Specialty.ImageSrc,
                     Tags = e.ExpertInformation.Tag,
                     ExpertInformationId = e.ExpertInformation.Id,
-                    HasStar = (e.ExpertInformation.Favorites.Count >= 2)
+                    HasStar = (e.ExpertInformation.Favorites.Count >= 2),
+                    AverageRate = Decimal.Round(e.ExpertInformation.AverageRate),
+                    RateCount = _context.Comments.Count(_ => _.TypeId == CommentType.Expert && _.CommentStatus == CommentStatus.Accepted && _.OwnerRecordId == e.ExpertInformation.Id)
                 }).Take(10).ToList();
 
             return new ResultDto<List<ExpertForPresentationDto>>()
