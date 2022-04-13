@@ -4,6 +4,7 @@ using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -27,7 +28,10 @@ namespace CR.Core.Services.Implementations.Appointment
                 .ThenInclude(a => a.Consumer)
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
-                .Where(a => a.ExpertInformation.ExpertId == expertId)
+                .Where(a => a.ExpertInformation.ExpertId == expertId && (a.AppointmentStatus == AppointmentStatus.Declined
+                                                                         || a.AppointmentStatus == AppointmentStatus.NotDone
+                                                                         || a.AppointmentStatus == AppointmentStatus.Completed
+                                                                         || a.AppointmentStatus == AppointmentStatus.Waiting))
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
                 .Select(a => new AppointmentForExpertPanelDto
                 {

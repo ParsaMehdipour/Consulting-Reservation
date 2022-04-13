@@ -100,7 +100,8 @@ namespace CR.Core.Services.Implementations.Appointment
                         DiscountPrice = priceValues.DiscountPrice,
                         CallingType = request.callingType,
                         FactorId = factor.Id,
-                        Factor = factor
+                        Factor = factor,
+                        AppointmentStatus = AppointmentStatus.Temporary
                     };
 
                     _context.Appointments.Add(appointment);

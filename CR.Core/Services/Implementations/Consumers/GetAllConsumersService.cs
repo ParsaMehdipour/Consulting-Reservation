@@ -46,7 +46,9 @@ namespace CR.Core.Services.Implementations.Consumers
                         .OrderBy(a => a.TimeOfDay.Day.Date)
                         .LastOrDefault(a => a.ConsumerInformation.ConsumerId == u.Id)
                         ?.TimeOfDay.Day.Date_String : "",
-                    PaidAmount = (u.ConsumerInfromation != null) ? u.ConsumerInfromation.ConsumerAppointments.Sum(a => a.Price.Value).ToString("n0") : "0",
+                    PaidAmount = (u.ConsumerInfromation != null) ? u.ConsumerInfromation.ConsumerAppointments.Where(a => a.AppointmentStatus == AppointmentStatus.Waiting
+                        || a.AppointmentStatus == AppointmentStatus.Completed
+                        || a.AppointmentStatus == AppointmentStatus.NotDone).Sum(a => a.Price.Value).ToString("n0") : "0",
                 }).ToList();
 
 

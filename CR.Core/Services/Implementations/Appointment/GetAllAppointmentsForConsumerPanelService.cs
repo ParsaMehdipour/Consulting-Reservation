@@ -5,6 +5,7 @@ using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -28,7 +29,11 @@ namespace CR.Core.Services.Implementations.Appointment
                 .Include(a => a.ConsumerInformation)
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(a => a.Day)
-                .Where(a => a.ConsumerInformation.ConsumerId == consumerId)
+                .Where(a => a.ConsumerInformation.ConsumerId == consumerId &&
+                            (a.AppointmentStatus == AppointmentStatus.Declined
+                            || a.AppointmentStatus == AppointmentStatus.NotDone
+                            || a.AppointmentStatus == AppointmentStatus.Completed
+                            || a.AppointmentStatus == AppointmentStatus.Waiting))
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
                 .ThenByDescending(a => a.TimeOfDay.StartTime.Hour)
                 .Select(a => new AppointmentForConsumerPanelDto

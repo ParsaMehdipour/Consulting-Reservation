@@ -43,6 +43,11 @@ namespace CR.Core.Services.Implementations.Factors
                     };
                 }
 
+                foreach (var factorAppointment in factor.Appointments)
+                {
+                    factorAppointment.AppointmentStatus = AppointmentStatus.Waiting;
+                }
+
                 var financialTransaction = _context.FinancialTransactions.FirstOrDefault(_ => _.FactorId == factorId);
 
                 if (financialTransaction == null)
