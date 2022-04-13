@@ -38,34 +38,34 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4 mb-3">
-                        <div class="card text-center doctor-book-card">
+                        <div class="card text-center doctor-book-card pakh">
                             <img src="~/assets/img/doctors/doctor-07.jpg" alt="" class="img-fluid">
                             <div class="doctor-book-card-content tile-card-content-1">
                                 <div>
                                     <h3 class="card-title mb-0">مشاوره تحصیلی</h3>
-                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="تحصیلی" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">پیدا کن</a>
+                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="تحصیلی" class="btn book-btn1 px-3 py-2 mt-3 pakh25" tabindex="0">پیدا کن</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-3">
-                        <div class="card text-center doctor-book-card">
+                        <div class="card text-center doctor-book-card pakh">
                             <img src="~/assets/img/img-pharmacy1.jpg" alt="" class="img-fluid">
                             <div class="doctor-book-card-content tile-card-content-1">
                                 <div>
                                     <h3 class="card-title mb-0">مشاوره کسب و کار</h3>
-                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="کسب و کار" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">پیدا کن</a>
+                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="کسب و کار" class="btn book-btn1 px-3 py-2 mt-3 pakh25" tabindex="0">پیدا کن</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-3">
-                        <div class="card text-center doctor-book-card">
+                        <div class="card text-center doctor-book-card pakh">
                             <img src="~/assets/img/lab-image.jpg" alt="" class="img-fluid">
                             <div class="doctor-book-card-content tile-card-content-1">
                                 <div>
                                     <h3 class="card-title mb-0">مشاوره شغلی</h3>
-                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="شغلی" class="btn book-btn1 px-3 py-2 mt-3" tabindex="0">پیدا کن</a>
+                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="شغلی" class="btn book-btn1 px-3 py-2 mt-3 pakh25" tabindex="0">پیدا کن</a>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                     <div class="about-content">
                         <p>  برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و مشاوران را می طلبد</p>
                         <p>تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد</p>
-                        <a href="javascript:;">بیشتر بخوانید...</a>
+                        <a href="javascript:;" class="pakh25">بیشتر بخوانید...</a>
                     </div>
                 </div>
                 <div class="col-lg-8">
@@ -132,10 +132,10 @@
                         @foreach (var expert in Model.ExpertForPresentationDtos)
                         {
                             <!-- Doctor Widget -->
-                            <div class="profile-widget">
+                            <div class="profile-widget pakh">
                                 <div class="doc-img">
                                     <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId">
-                                        <img class="img-fluid" alt="@expert.FullName" src="~/@expert.IconSrc">
+                                        <img class="img-fluid pakh25" alt="@expert.FullName" src="~/@expert.IconSrc">
                                     </a>
                                     <a href="javascript:void(0)" class="fav-btn">
                                         <i class="far fa-bookmark"></i>
@@ -150,14 +150,22 @@
                                         }
                                     </h3>
                                     <p class="speciality"> @expert.Tags </p>
-                                    <div class="rating">
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <span class="d-inline-block average-rating">(17)</span>
-                                    </div>
+                                    @if (expert.AverageRate != 0)
+                                    {
+                                        <div class="rating">
+
+                                            @for (int i = 1; i <= expert.AverageRate; i++)
+                                            {
+                                                <i class="fas fa-star filled"></i>
+                                            }
+                                            @for (int i = 1; i <= (5 - expert.AverageRate); i++)
+                                            {
+                                                <i class="fas fa-star"></i>
+
+                                            }
+                                            <span class="d-inline-block average-rating">(@expert.RateCount)</span>
+                                        </div>
+                                    }
                                     <ul class="available-info">
                                         <li>
                                             <p class="doc-department"><img src="~/@expert.SpecialitySrc" class="img-fluid" alt="Speciality">‌@expert.Speciality</p>
@@ -179,10 +187,10 @@
                                     </ul>
                                     <div class="row row-sm">
                                         <div class="col-6">
-                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId" class="btn view-btn">مشاهده پروفایل</a>
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.ExpertInformationId" class="btn view-btn pakh25">مشاهده پروفایل</a>
                                         </div>
                                         <div class="col-6">
-                                            <a asp-controller="Experts" asp-action="Reservation" asp-route-expertInformationId="@expert.ExpertInformationId" class="btn book-btn">رزرو کنید</a>
+                                            <a asp-controller="Experts" asp-action="Reservation" asp-route-expertInformationId="@expert.ExpertInformationId" class="btn book-btn pakh25">رزرو کنید</a>
                                         </div>
                                     </div>
                                 </div>
@@ -196,52 +204,51 @@
     </section>
 }
 <!-- /Popular Section -->
-
 @*<div class="card search-filter">
     <div class="card-body">
-        <div class="card flex-fill mt-0 mb-0">
-            <div class="list-group list-group-flush benifits-col">
-                <div class="list-group-item d-flex align-items-center">
-                    <div>
-                        <i class="fas fa-shipping-fast"></i>
-                    </div>
-                    <div>
-                        ارسال رایگان <br><span class="text-sm">برای سفارشات بالای 50 تومان</span>
-                    </div>
-                </div>
-                <div class="list-group-item d-flex align-items-center">
-                    <div>
-                        <i class="far fa-question-circle"></i>
-                    </div>
-                    <div>
-                        پشتیبانی 24/7<br><span class="text-sm"> در هر زمان با ما تماس بگیرید </span>
-                    </div>
-                </div>
-                <div class="list-group-item d-flex align-items-center">
-                    <div>
-                        <i class="fas fa-hands"></i>
-                    </div>
-                    <div>
-                        ایمنی 100٪<br><span class="text-sm">فقط پرداخت های ایمن</span>
-                    </div>
-                </div>
-                <div class="list-group-item d-flex align-items-center">
-                    <div>
-                        <i class="fas fa-tag"></i>
-                    </div>
-                    <div>
-                        پیشنهادات داغ<br><span class="text-sm"> تخفیف تا 90٪ </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="card flex-fill mt-0 mb-0">
+    <div class="list-group list-group-flush benifits-col">
+    <div class="list-group-item d-flex align-items-center">
+    <div>
+    <i class="fas fa-shipping-fast"></i>
     </div>
-</div>*@
+    <div>
+    ارسال رایگان <br><span class="text-sm">برای سفارشات بالای 50 تومان</span>
+    </div>
+    </div>
+    <div class="list-group-item d-flex align-items-center">
+    <div>
+    <i class="far fa-question-circle"></i>
+    </div>
+    <div>
+    پشتیبانی 24/7<br><span class="text-sm"> در هر زمان با ما تماس بگیرید </span>
+    </div>
+    </div>
+    <div class="list-group-item d-flex align-items-center">
+    <div>
+    <i class="fas fa-hands"></i>
+    </div>
+    <div>
+    ایمنی 100٪<br><span class="text-sm">فقط پرداخت های ایمن</span>
+    </div>
+    </div>
+    <div class="list-group-item d-flex align-items-center">
+    <div>
+    <i class="fas fa-tag"></i>
+    </div>
+    <div>
+    پیشنهادات داغ<br><span class="text-sm"> تخفیف تا 90٪ </span>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
 
 <!-- popular Comments -->
 @if (Model.CommentForMainViewDtos.Count > 0)
 {
-    <section class="section section-specialities">
+    <section class="section section-specialities comment-image">
         <div class="container-fluid">
             <div class="section-header text-center">
                 <h2>نظرات کاربران</h2>
@@ -253,7 +260,7 @@
                         @foreach (var comment in Model.CommentForMainViewDtos)
                         {
                             <!-- Doctor Widget -->
-                            <div class="profile-widget" style="box-shadow: 1px 6px 14px rgba(0, 0, 0, 0.2);">
+                            <div class="profile-widget pakh" style="box-shadow: 1px 6px 14px rgba(0, 0, 0, 0.2);">
                                 <div class="pro-content">
                                     <h3 class="title text-center">"@comment.Message"</h3>
                                     <br />
@@ -267,6 +274,7 @@
             </div>
         </div>
     </section>
+
 }
 <!-- /Popular Comments -->
 <!-- Blog Section -->
@@ -316,7 +324,6 @@
     </section>
 }
 <!-- /Blog Section -->
-
 @section Footer{
-    <partial name="Footer"/>
+<partial name="Footer" />
 }

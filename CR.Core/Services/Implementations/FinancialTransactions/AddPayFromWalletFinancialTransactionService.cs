@@ -81,6 +81,11 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     };
                 }
 
+                foreach (var factorAppointment in factor.Appointments)
+                {
+                    factorAppointment.AppointmentStatus = AppointmentStatus.Waiting;
+                }
+
                 var financialTransaction = new FinancialTransaction()
                 {
                     PayerId = userId,

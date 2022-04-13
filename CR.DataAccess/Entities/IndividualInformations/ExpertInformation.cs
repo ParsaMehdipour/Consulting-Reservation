@@ -38,6 +38,7 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public long TextCallPrice { get; set; } = 0;
         public string Instagram { get; set; }
         public string ShabaNumber { get; set; }
+        public decimal AverageRate { get; set; }
 
 
         #region Foreign Keys

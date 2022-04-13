@@ -118,6 +118,8 @@ namespace CR.DataAccess.Configurations
 
             builder.Property(_ => _.UseTextCall);
 
+            builder.Property(_ => _.AverageRate);
+
 
         }
     }

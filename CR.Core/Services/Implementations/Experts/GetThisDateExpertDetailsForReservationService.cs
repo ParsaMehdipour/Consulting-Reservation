@@ -1,12 +1,13 @@
-﻿using System;
-using System.Linq;
-using CR.Common.Convertor;
+﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Core.DTOs.ExpertAvailabilities;
 using CR.Core.DTOs.Experts;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Experts
 {
@@ -46,8 +47,8 @@ namespace CR.Core.Services.Implementations.Experts
                 voicePrice = expertInformation.UseVoiceCall ? expertInformation.VoiceCallPrice : 0,
                 textPrice = expertInformation.UseTextCall ? expertInformation.TextCallPrice : 0,
                 FullName = expertInformation.FirstName + " " + expertInformation.LastName,
-                Rate = 4,
-                RateCount = 10,
+                AverageRate = Decimal.Round(expertInformation.AverageRate),
+                RateCount = _context.Comments.Count(_ => _.TypeId == CommentType.Expert && _.CommentStatus == CommentStatus.Accepted && _.OwnerRecordId == expertInformation.Id),
                 SpecialitySrc = expertInformation.Specialty.ImageSrc,
                 Speciality = (expertInformation.Specialty != null) ? expertInformation.Specialty.Name : " ",
                 DayDtos = expertInformation.Days

@@ -32,6 +32,7 @@
                                 <th>وقت ویزیت</th>
                                 <th class="text-center">هزینه مشاوره</th>
                                 <th class="text-center">وضعیت نوبت</th>
+                                <th class="text-center">عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,6 +79,14 @@
                                             <span class="badge badge-pill bg-danger inv-badge">@appointment.AppointmentStatus</span>
                                         }
                                     </td>
+                                    <td class="text-center">
+                                        @if (appointment.AppointmentStatus == AppointmentStatus.Waiting.GetDisplayName())
+                                        {
+                                            <a onclick="DeclineAppointment(@appointment.Id,@appointment.ConsumerId)" class="btn btn-sm bg-danger-light">
+                                                <i class="fas fa-print"></i> لغو نوبت
+                                            </a>
+                                        }
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -104,3 +113,62 @@
     </div>
 </div>
 
+@section Scripts
+{
+    <script>
+        function DeclineAppointment(appointmentId,receiverId) {
+          swal.fire({
+            title: 'مشاور گرامی از لغو نوبت مطمئن هستید؟',
+            text: "پس از تایید تمام هزینه مبلغ به کیف پول کاربر منتقل می شود",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'تایید',
+            cancelButtonText: 'انصراف'
+        }).then((result) => {
+            if (result.value) {
+                var data = {};
+
+                data["receiverId"] = receiverId;
+                data["appointmentId"] = appointmentId;
+
+                $.ajax({
+                    type: "POST",
+                    url: '/api/FinancialTransactions/DeclineAppointment',
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    enctype: 'application/json',
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(response) {
+                        if (response.isSuccess === true) {
+                            swal.fire('موفق!',
+                                response.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }else {
+                            swal.fire('هشدار!',
+                                response.message,
+                                'warning');
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+            }
+        });
+     }
+    </script>
+}

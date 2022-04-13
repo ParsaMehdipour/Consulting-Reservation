@@ -21,8 +21,6 @@ namespace CR.Core.Services.Implementations.Factors
 
         public ResultDto<ResultGetAllFactorsForAdminPanelDto> Execute(int Page = 1, int PageSize = 20)
         {
-            int rowCount = 0;
-
             var factors = _context.Factors
                 .Include(f => f.Appointments)
                 .Include(f => f.ConsumerInformation)
@@ -39,7 +37,7 @@ namespace CR.Core.Services.Implementations.Factors
                     Status = f.FactorStatus.GetDisplayName(),
                     TotalPrice = f.TotalPrice.ToString("n0")
                 }).AsEnumerable()
-                .ToPaged(Page, PageSize, out rowCount)
+                .ToPaged(Page, PageSize, out var rowCount)
                 .ToList();
 
             return new ResultDto<ResultGetAllFactorsForAdminPanelDto>()

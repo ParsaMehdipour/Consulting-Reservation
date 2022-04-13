@@ -31,8 +31,6 @@ namespace CR.Core.Services.Implementations.Consumers
                 .Select(a => new ConsumerForExpertPanelDto
                 {
                     Age = a.ConsumerInformation.BirthDate.GetAge().ToString().GetPersianNumber(),
-                    //City = a.ConsumerInformation.City,
-                    //Province = a.ConsumerInformation.Province,
                     FullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
                     Gender = a.ConsumerInformation.Gender.GetDisplayName(),
                     IconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",

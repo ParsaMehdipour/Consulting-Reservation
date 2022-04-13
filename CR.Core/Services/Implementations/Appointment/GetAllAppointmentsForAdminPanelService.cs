@@ -4,6 +4,7 @@ using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -30,6 +31,10 @@ namespace CR.Core.Services.Implementations.Appointment
                 .Include(a => a.TimeOfDay)
                 .ThenInclude(d => d.Day)
                 .OrderByDescending(a => a.TimeOfDay.Day.Date)
+                .Where(_ => (_.AppointmentStatus == AppointmentStatus.Declined
+                             || _.AppointmentStatus == AppointmentStatus.NotDone
+                             || _.AppointmentStatus == AppointmentStatus.Completed
+                             || _.AppointmentStatus == AppointmentStatus.Waiting))
                 .Select(a => new AppointmentForAdminDto
                 {
                     AppointmentDate = a.TimeOfDay.Day.Date_String,

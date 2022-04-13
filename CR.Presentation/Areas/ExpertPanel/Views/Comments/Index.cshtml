@@ -45,20 +45,20 @@
                                             <div class="meta-data">
                                                 <span class="comment-author">@comment.CommenterFullName</span>
                                                 <span class="comment-date">نظر داده شده @comment.CreateDate</span>
-                                                <div class="review-count rating">
-                                                    @if (comment.Rate != null)
+                                            </div>
+                                            <div class="review-count rating">
+                                                @if (comment.Rate != null)
+                                                {
+                                                    @for (int i = 1; i <= comment.Rate.Value; i++)
                                                     {
-                                                        @for (int i = 1; i <= comment.Rate.Value; i++)
-                                                        {
-                                                            <i class="fas fa-star filled"></i>
-                                                        }
-                                                        @for (int i = 1; i <= (5 - comment.Rate.Value); i++)
-                                                        {
-                                                            <i class="fas fa-star"></i>
-
-                                                        }
+                                                        <i class="fas fa-star filled"></i>
                                                     }
-                                                </div>
+                                                    @for (int i = 1; i <= (5 - comment.Rate.Value); i++)
+                                                    {
+                                                        <i class="fas fa-star"></i>
+
+                                                    }
+                                                }
                                             </div>
                                             <p class="comment-content">
                                                 @comment.Message

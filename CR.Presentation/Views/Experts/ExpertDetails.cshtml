@@ -35,14 +35,23 @@
                             <h4 class="doc-name">مشاور @Model.ExpertDetailsForSiteDto.FullName</h4>
                             <p class="doc-speciality"> @Model.ExpertDetailsForSiteDto.Tag </p>
                             <p class="doc-department"><img src="~/@Model.ExpertDetailsForSiteDto.SpecialityImage" class="img-fluid" alt="Speciality">‌@Model.ExpertDetailsForSiteDto.Speciality</p>
-                            <div class="rating">
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star"></i>
-                                <span class="d-inline-block average-rating">(35)</span>
-                            </div>
+                            @if (Model.ExpertDetailsForSiteDto.AverageRate != 0)
+                            {
+                                <div class="rating">
+
+                                    @for (int i = 1; i <= Model.ExpertDetailsForSiteDto.AverageRate; i++)
+                                    {
+                                        <i class="fas fa-star filled"></i>
+                                    }
+                                    @for (int i = 1; i <= (5 - Model.ExpertDetailsForSiteDto.AverageRate); i++)
+                                    {
+                                        <i class="fas fa-star"></i>
+
+                                    }
+                                    <span class="d-inline-block average-rating">(@Model.ExpertDetailsForSiteDto.RateCount)</span>
+                                </div>
+                            }
+
                             @if (Model.ExpertDetailsForSiteDto.Tags.Count > 0)
                             {
                                 <div class="clinic-services">
@@ -166,7 +175,7 @@
                                                         </div>
                                                         <div class="experience-content">
                                                             <div class="timeline-content">
-                                                                <a class="name">@experience.clinicName - @experience.role</a><br/>
+                                                                <a class="name">@experience.clinicName - @experience.role</a><br />
                                                                 <span>@experience.startYear - @experience.finishYear</span>
                                                             </div>
                                                         </div>
@@ -239,20 +248,20 @@
                                                     <div class="meta-data">
                                                         <span id="commenterName_@comment.Id" class="comment-author">@comment.CommenterFullName</span>
                                                         <span class="comment-date">نظر داده شده در تاریخ @comment.CreateDate</span>
-                                                        <div class="review-count rating">
-                                                            @if (comment.Rate != null)
+                                                    </div>
+                                                    <div class="review-count rating">
+                                                        @if (comment.Rate != null)
+                                                        {
+                                                            @for (int i = 1; i <= comment.Rate.Value; i++)
                                                             {
-                                                                @for (int i = 1; i <= comment.Rate.Value; i++)
-                                                                {
-                                                                    <i class="fas fa-star filled"></i>
-                                                                }
-                                                                @for (int i = 1; i <= (5 - comment.Rate.Value); i++)
-                                                                {
-                                                                    <i class="fas fa-star"></i>
-
-                                                                }
+                                                                <i class="fas fa-star filled"></i>
                                                             }
-                                                        </div>
+                                                            @for (int i = 1; i <= (5 - comment.Rate.Value); i++)
+                                                            {
+                                                                <i class="fas fa-star"></i>
+
+                                                            }
+                                                        }
                                                     </div>
                                                     <p class="comment-content">
                                                         @comment.Message
@@ -278,21 +287,22 @@
                                                                     <div class="meta-data">
                                                                         <span class="comment-author">@reply.CommenterFullName</span>
                                                                         <span class="comment-date">پاسخ داده شده در تاریخ @reply.CreateDate</span>
+                                                                    </div>
+                                                                    @if (reply.Rate != 0)
+                                                                    {
                                                                         <div class="review-count rating">
-                                                                            @if (reply.Rate != null)
-                                                                            {
-                                                                                @for (int i = 1; i <= reply.Rate; i++)
-                                                                                {
-                                                                                    <i class="fas fa-star filled"></i>
-                                                                                }
-                                                                                @for (int i = 1; i <= (5 - reply.Rate); i++)
-                                                                                {
-                                                                                    <i class="fas fa-star"></i>
 
-                                                                                }
+                                                                            @for (int i = 1; i <= reply.Rate; i++)
+                                                                            {
+                                                                                <i class="fas fa-star filled"></i>
+                                                                            }
+                                                                            @for (int i = 1; i <= (5 - reply.Rate); i++)
+                                                                            {
+                                                                                <i class="fas fa-star"></i>
+
                                                                             }
                                                                         </div>
-                                                                    </div>
+                                                                    }
                                                                     <p class="comment-content">
                                                                         @reply.Message
                                                                     </p>
@@ -309,13 +319,13 @@
                                 }
                             </ul>
 
-                        @*    <!-- Show All -->
-                            <div class="all-feedback text-center">
+                            @*    <!-- Show All -->
+                                <div class="all-feedback text-center">
                                 <a href="#" class="btn btn-primary btn-sm">
-                                    نمایش همگی فیدبک ها <strong>(@Model.ResultGetExpertCommentsForPresentationDto.ExpertCommentDtos.Count)</strong>
+                                نمایش همگی فیدبک ها <strong>(@Model.ResultGetExpertCommentsForPresentationDto.ExpertCommentDtos.Count)</strong>
                                 </a>
-                            </div>
-                            <!-- /Show All -->*@
+                                </div>
+                                <!-- /Show All -->*@
 
                         </div>
                         <!-- /Review Listing -->
@@ -457,7 +467,7 @@
 <input type="hidden" value="@ClaimUtility.GetUserId(User).Value" id="userId" name="userId" />
 
 @section Footer{
-    <partial name="Footer"/>
+<partial name="Footer" />
 }
 
 @section Scripts

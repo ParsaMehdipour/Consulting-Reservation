@@ -262,6 +262,7 @@ namespace CR.Presentation
             services.AddScoped<IAddDeclineAppointmentFinancialTransactionService, AddDeclineAppointmentFinancialTransactionService>();
             services.AddScoped<IAddDeclineAppointmentConsumerSideFinancialTransactionService, AddDeclineAppointmentConsumerSideFinancialTransactionService>();
             services.AddScoped<IAddPayForChargeWalletFinancialTransactionService, AddPayForChargeWalletFinancialTransactionService>();
+            services.AddScoped<IAddDeclineAppointmentExpertSideFinancialTransactionService, AddDeclineAppointmentExpertSideFinancialTransactionService>();
             //Favorites
             services.AddScoped<IAddNewFavoriteService, AddNewFavoriteService>();
             services.AddScoped<IGetConsumerFavoritesService, GetConsumerFavoritesService>();

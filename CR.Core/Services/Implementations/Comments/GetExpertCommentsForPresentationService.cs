@@ -25,6 +25,8 @@ namespace CR.Core.Services.Implementations.Comments
 
             var expertComments = _context.Comments
                 .Include(_ => _.Rate)
+                .Include(_ => _.Children)
+                .ThenInclude(_ => _.Rate)
                 .Where(_ => _.TypeId == CommentType.Expert
                             && _.OwnerRecordId == expertInformationId
                             && _.CommentStatus == CommentStatus.Accepted
@@ -46,7 +48,7 @@ namespace CR.Core.Services.Implementations.Comments
                         CreateDate = c.CreateDate.ToShamsi(),
                         Id = c.Id,
                         Message = c.Message,
-                        Rate = _.Rate.FirstOrDefault().Rate
+                        Rate = c.Rate.FirstOrDefault().Rate
                     }).ToList()
                 }).ToList();
 

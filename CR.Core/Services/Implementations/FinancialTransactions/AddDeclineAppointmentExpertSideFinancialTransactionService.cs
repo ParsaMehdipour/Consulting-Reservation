@@ -12,11 +12,11 @@ using System.Linq;
 
 namespace CR.Core.Services.Implementations.FinancialTransactions
 {
-    public class AddDeclineAppointmentFinancialTransactionService : IAddDeclineAppointmentFinancialTransactionService
+    public class AddDeclineAppointmentExpertSideFinancialTransactionService : IAddDeclineAppointmentExpertSideFinancialTransactionService
     {
         private readonly ApplicationContext _context;
 
-        public AddDeclineAppointmentFinancialTransactionService(ApplicationContext context)
+        public AddDeclineAppointmentExpertSideFinancialTransactionService(ApplicationContext context)
         {
             _context = context;
         }
@@ -70,6 +70,18 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 timeOfDay.IsReserved = false;
 
+                var financialTransaction = new FinancialTransaction()
+                {
+                    PayerId = _context.Users.FirstOrDefault(_ => _.UserFlag == UserFlag.Admin)!.Id,
+                    ReceiverId = receiverId,
+                    Price_Digit = appointment.Price.Value,
+                    CreateDate_String = DateTime.Now.ToShamsi(),
+                    Price_String = appointment.Price.ToString().GetPersianNumber(),
+                    TransactionNumber = GetLastTransactionNumber(),
+                    TransactionType = TransactionType.DeclineAppointmentTransaction,
+                    Status = TransactionStatus.Successful
+                };
+
                 var factor = _context.Factors.Include(_ => _.Appointments)
                     .FirstOrDefault(_ => _.Id == appointment.FactorId);
 
@@ -92,18 +104,6 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     factor.FactorStatus = FactorStatus.Declined;
                 }
 
-                var financialTransaction = new FinancialTransaction()
-                {
-                    PayerId = _context.Users.FirstOrDefault(_ => _.UserFlag == UserFlag.Admin)!.Id,
-                    ReceiverId = receiverId,
-                    Price_Digit = appointment.Price.Value,
-                    CreateDate_String = DateTime.Now.ToShamsi(),
-                    Price_String = appointment.Price.ToString().GetPersianNumber(),
-                    TransactionNumber = GetLastTransactionNumber(),
-                    TransactionType = TransactionType.DeclineAppointmentTransaction,
-                    Status = TransactionStatus.Successful
-                };
-
                 _context.FinancialTransactions.Add(financialTransaction);
 
                 _context.SaveChanges();
@@ -114,15 +114,16 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 {
                     Data = new ResultDeclineAppointmentExpertSideDto()
                     {
-                        date = appointment.TimeOfDay.Day.Date_String,
                         time = appointment.TimeOfDay.StartHour + " - " + appointment.TimeOfDay.FinishHour,
+                        date = appointment.TimeOfDay.Day.Date_String,
                         phoneNumber = appointment.ConsumerInformation.Consumer.PhoneNumber
                     },
                     IsSuccess = true,
-                    Message = "نوبت با موفقیت لغو شد و مبلغ آن به کیف پول کاربر منتقل شد"
+                    Message = "نوبت با موفقیت لغو گردید و مبلغ آن به کیف پول کاربر واریز شد"
                 };
+
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 transaction.Rollback();
 
@@ -130,7 +131,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 {
                     Data = new ResultDeclineAppointmentExpertSideDto(),
                     IsSuccess = false,
-                    Message = "خطا از سمت سرور!!"
+                    Message = "خطا از سمت سرور"
                 };
             }
             finally
@@ -138,6 +139,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 transaction.Dispose();
             }
         }
+
         private string GetLastTransactionNumber()
         {
             var financialTransactions = _context.FinancialTransactions.OrderBy(f => f.Id).LastOrDefault();

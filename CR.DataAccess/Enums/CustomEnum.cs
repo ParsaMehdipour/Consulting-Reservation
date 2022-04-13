@@ -29,7 +29,10 @@ namespace CR.DataAccess.Enums
         [Display(Name = "انجام شد")]
         Completed = 2,
         [Display(Name = "لغو شده")]
-        Declined = 3
+        Declined = 3,
+        [Display(Name = "ثبت اولیه")]
+        Temporary = 4
+
     }
 
     public enum FactorStatus

@@ -2916,7 +2916,7 @@ html.menu-opened body {
 }
 
 .profile-widget .verified {
-    color: #28a745;
+    color: #147ba6;
     margin-right: 3px;
 }
 
@@ -9469,4 +9469,16 @@ ul.benifits-col li i {
         top: 24px;
         height: 32px;
     }
+}
+
+.pakh {
+    border-radius: 30px;
+}
+
+.pakh25 {
+    border-radius: 25px;
+}
+
+.comment-image {
+    background: #FFF url(../img/quote-icon.png) no-repeat bottom center;
 }

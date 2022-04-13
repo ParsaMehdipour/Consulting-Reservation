@@ -12,5 +12,7 @@
         public string FirstAvailability { get; set; }
         public string Price { get; set; }
         public bool HasStar { get; set; }
+        public decimal AverageRate { get; set; }
+        public int RateCount { get; set; }
     }
 }
