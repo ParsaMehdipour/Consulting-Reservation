@@ -121,6 +121,12 @@ namespace CR.Core.Services.Implementations.Days
                     _context.SaveChanges();
 
                     transaction.Commit();
+
+                    return new ResultDto()
+                    {
+                        IsSuccess = true,
+                        Message = "زمانبندی ها با موفقیت ویرایش شدند"
+                    };
                 }
 
                 return new ResultDto()
