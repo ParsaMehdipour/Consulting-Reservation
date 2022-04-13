@@ -1,6 +1,7 @@
 ﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
 using CR.Common.Utilities;
+using CR.Core.DTOs.ResultDTOs.Appointments;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.FinancialTransactions;
@@ -20,7 +21,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             _context = context;
         }
 
-        public ResultDto Execute(long receiverId, long appointmentId)
+        public ResultDto<ResultDeclineAppointmentExpertSideDto> Execute(long receiverId, long appointmentId)
         {
             using var transaction = _context.Database.BeginTransaction();
 
@@ -28,8 +29,9 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             {
                 if (receiverId == 0 || appointmentId == 0)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultDeclineAppointmentExpertSideDto>()
                     {
+                        Data = new ResultDeclineAppointmentExpertSideDto(),
                         IsSuccess = false,
                         Message = "یکی از پارامتر های وروردی صحیح نسیت"
                     };
@@ -37,12 +39,16 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 var appointment = _context.Appointments
                     .Include(_ => _.TimeOfDay)
+                    .ThenInclude(_ => _.Day)
+                    .Include(_ => _.ConsumerInformation)
+                    .ThenInclude(_ => _.Consumer)
                     .FirstOrDefault(_ => _.Id == appointmentId);
 
                 if (appointment == null)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultDeclineAppointmentExpertSideDto>()
                     {
+                        Data = new ResultDeclineAppointmentExpertSideDto(),
                         IsSuccess = false,
                         Message = "نوبت یافت نشد"
                     };
@@ -54,8 +60,9 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 if (timeOfDay == null)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultDeclineAppointmentExpertSideDto>()
                     {
+                        Data = new ResultDeclineAppointmentExpertSideDto(),
                         IsSuccess = false,
                         Message = "روز یافت نشد"
                     };
@@ -68,8 +75,9 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 if (factor == null)
                 {
-                    return new ResultDto()
+                    return new ResultDto<ResultDeclineAppointmentExpertSideDto>()
                     {
+                        Data = new ResultDeclineAppointmentExpertSideDto(),
                         IsSuccess = false,
                         Message = "فاکتور یافت نشد"
                     };
@@ -102,18 +110,25 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 transaction.Commit();
 
-                return new ResultDto()
+                return new ResultDto<ResultDeclineAppointmentExpertSideDto>()
                 {
+                    Data = new ResultDeclineAppointmentExpertSideDto()
+                    {
+                        date = appointment.TimeOfDay.Day.Date_String,
+                        time = appointment.TimeOfDay.StartHour + " - " + appointment.TimeOfDay.FinishHour,
+                        phoneNumber = appointment.ConsumerInformation.Consumer.PhoneNumber
+                    },
                     IsSuccess = true,
-                    Message = string.Empty
+                    Message = "نوبت با موفقیت لغو شد و مبلغ آن به کیف پول کاربر منتقل شد"
                 };
             }
             catch (Exception e)
             {
                 transaction.Rollback();
 
-                return new ResultDto()
+                return new ResultDto<ResultDeclineAppointmentExpertSideDto>()
                 {
+                    Data = new ResultDeclineAppointmentExpertSideDto(),
                     IsSuccess = false,
                     Message = "خطا از سمت سرور!!"
                 };
