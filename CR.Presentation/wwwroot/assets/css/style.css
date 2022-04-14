@@ -9482,3 +9482,6 @@ ul.benifits-col li i {
 .comment-image {
     background: #FFF url(../img/quote-icon.png) no-repeat bottom center;
 }
+.hide {
+    display: none
+}

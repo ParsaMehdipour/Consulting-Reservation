@@ -5,7 +5,9 @@ using CR.Core.DTOs.SMS;
 using CR.Core.Services.Interfaces.ChatUsers;
 using CR.Core.Services.Interfaces.Factors;
 using CR.Core.Services.Interfaces.FinancialTransaction;
+using CR.DataAccess.Entities.Users;
 using CR.DataAccess.Enums;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServiceReference2;
 using System;
@@ -24,13 +26,17 @@ namespace CR.Presentation.Controllers.View
         private readonly IUpdateFactorStatusService _updateFactorStatusService;
         private readonly IGetFinancialTransactionDetailsForVerifyService _getFinancialTransactionDetailsForVerifyService;
         private readonly IAddNewChatUserService _addNewChatUserService;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
         public PaymentController(IGetFactorDetailsService getFactorDetailsService
         , IUpdateFactorSaleReferenceIdService updateFactorSaleReferenceIdService
         , IUpdateFactorCartHolderPanService updateFactorCartHolderPanService
         , IUpdateFactorStatusService updateFactorStatusService
         , IGetFinancialTransactionDetailsForVerifyService getFinancialTransactionDetailsForVerifyService
-        , IAddNewChatUserService addNewChatUserService)
+        , IAddNewChatUserService addNewChatUserService
+        , UserManager<User> userManager
+        , SignInManager<User> signInManager)
         {
             _getFactorDetailsService = getFactorDetailsService;
             _updateFactorSaleReferenceIdService = updateFactorSaleReferenceIdService;
@@ -38,6 +44,8 @@ namespace CR.Presentation.Controllers.View
             _updateFactorStatusService = updateFactorStatusService;
             _getFinancialTransactionDetailsForVerifyService = getFinancialTransactionDetailsForVerifyService;
             _addNewChatUserService = addNewChatUserService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index(string factorNumber)
@@ -60,6 +68,10 @@ namespace CR.Presentation.Controllers.View
             };
 
             var factor = _getFinancialTransactionDetailsForVerifyService.Execute(SaleOrderId.ToString()).Data;
+
+            User user = await _userManager.FindByIdAsync(factor.UserId.ToString());
+
+            await _signInManager.SignInAsync(user, true);
 
             if (ResCode == "0")
             {

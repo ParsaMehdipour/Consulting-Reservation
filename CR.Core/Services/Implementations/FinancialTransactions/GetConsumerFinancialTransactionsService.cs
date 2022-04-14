@@ -40,10 +40,10 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 {
                     CreateDate = financialTransaction.CreateDate_String,
                     PayerFullName = payer.FirstName + " " + payer.LastName,
-                    payerIconSrc = payer.IconSrc,
+                    payerIconSrc = payer.IconSrc ?? "assets/img/User.png",
                     PayerId = financialTransaction.PayerId,
                     ReceiverFullName = receiver.FirstName + " " + receiver.LastName,
-                    ReceiverIconSrc = receiver.IconSrc,
+                    ReceiverIconSrc = receiver.IconSrc ?? "assets/img/User.png",
                     ReceiverId = financialTransaction.ReceiverId,
                     Price = financialTransaction.Price_Digit.ToString("n0"),
                     TransactionStatus = financialTransaction.Status.GetDisplayName(),

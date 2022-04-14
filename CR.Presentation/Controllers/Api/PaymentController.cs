@@ -110,7 +110,7 @@ namespace CR.Presentation.Controllers.Api
                     localDate: $"{date.Year}{date.Month}{date.Day}",
                     localTime: $"{date.Hour}{date.Minute}{date.Second}",
                     additionalData: "پس از نیم ساعت امکان لغو درخواست وجود ندارد",
-                    callBackUrl: "https://www.chalechoole.com/Payment/Verify",
+                    callBackUrl: "https://chalechoole.com/Payment/Verify",
                     payerId: "0",
                     mobileNo: phoneNumber,
                     encPan: "",
