@@ -59,7 +59,8 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     CreateDate_String = DateTime.Now.ToShamsi(),
                     Price_String = price.ToString().GetPersianNumber(),
                     TransactionNumber = GetLastTransactionNumber(),
-                    TransactionType = TransactionType.PayFromCreditCard
+                    TransactionType = TransactionType.PayFromCreditCard,
+                    Status = TransactionStatus.Failed
                 };
 
                 _context.FinancialTransactions.Add(financialTransaction);

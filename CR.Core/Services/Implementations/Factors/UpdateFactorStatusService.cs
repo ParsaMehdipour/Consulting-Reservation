@@ -69,6 +69,7 @@ namespace CR.Core.Services.Implementations.Factors
                     foreach (var appointment in factor.Appointments)
                     {
                         appointment.TimeOfDay.IsReserved = true;
+                        appointment.AppointmentStatus = AppointmentStatus.Waiting;
                     }
                 }
 
