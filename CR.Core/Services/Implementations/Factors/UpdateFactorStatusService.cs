@@ -43,11 +43,6 @@ namespace CR.Core.Services.Implementations.Factors
                     };
                 }
 
-                foreach (var factorAppointment in factor.Appointments)
-                {
-                    factorAppointment.AppointmentStatus = AppointmentStatus.Waiting;
-                }
-
                 var financialTransaction = _context.FinancialTransactions.FirstOrDefault(_ => _.FactorId == factorId);
 
                 if (financialTransaction == null)
@@ -55,7 +50,7 @@ namespace CR.Core.Services.Implementations.Factors
                     return new ResultDto<ResultUpdateFactorStatusDto>()
                     {
                         IsSuccess = false,
-                        Message = "تراکنش یافت نشد!!",
+                        Message = "تراکنش یافت نشد",
                         Data = new ResultUpdateFactorStatusDto()
                     };
                 }
@@ -70,6 +65,8 @@ namespace CR.Core.Services.Implementations.Factors
                     {
                         appointment.TimeOfDay.IsReserved = true;
                         appointment.AppointmentStatus = AppointmentStatus.Waiting;
+
+                        _context.SaveChanges();
                     }
                 }
 
