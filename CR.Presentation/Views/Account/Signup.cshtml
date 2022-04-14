@@ -3,13 +3,6 @@
 @{
     Layout = "_Layout";
 }
-
-<style>
-    .hide {
-        display: none
-    }
-</style>
-
 <!-- Page Content -->
 <div class="content">
     <div class="container-fluid">
@@ -80,7 +73,6 @@
         </div>
 
     </div>
-
 </div>
 <br />
 <!-- /Page Content -->
@@ -219,6 +211,7 @@
                             swal.fire('موفق!',
                                 data.message,
                                 'success').then(function(isConfirm) {
+                                localStorage.setItem("password",$("#passwordForm #password").val());
                                 location.replace("/Account/Login");
                             });
                         }
