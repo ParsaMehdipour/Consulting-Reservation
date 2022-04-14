@@ -3,6 +3,7 @@
     public class FactorDetailsForVerifyDto
     {
         public long Id { get; set; }
+        public long UserId { get; set; }
         public long price { get; set; }
         public string refId { get; set; }
     }
