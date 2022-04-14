@@ -18,7 +18,9 @@ namespace CR.Core.DTOs.FinancialTransactions
 
         public ResultDto<FactorDetailsForVerifyDto> Execute(string transactionNumber)
         {
-            var factor = _context.FinancialTransactions.Include(_ => _.Factor)
+            var factor = _context.FinancialTransactions
+                .Include(_ => _.Factor)
+                .ThenInclude(_ => _.ConsumerInformation)
                 .FirstOrDefault(_ => _.TransactionNumber == transactionNumber)
                 ?.Factor;
 
@@ -39,6 +41,7 @@ namespace CR.Core.DTOs.FinancialTransactions
                 Data = new FactorDetailsForVerifyDto()
                 {
                     Id = factor.Id,
+                    UserId = factor.ConsumerInformation.ConsumerId,
                     price = factor.TotalPrice,
                     refId = factor.RefId
                 }
