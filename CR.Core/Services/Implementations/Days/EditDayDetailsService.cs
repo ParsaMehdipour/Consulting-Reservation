@@ -52,13 +52,12 @@ namespace CR.Core.Services.Implementations.Days
                     };
                 }
 
-                _context.TimeOfDays.RemoveRange(day.TimeOfDays);
+                _context.TimeOfDays.RemoveRange(day.TimeOfDays.Where(_ => _.IsReserved == false));
 
                 if (request.timings != null)
                 {
 
                     var timeOfDaysList = new List<TimeOfDay>();
-
 
                     foreach (var timingId in request.timings)
                     {
