@@ -452,7 +452,7 @@
                                                     <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="form-group">
                                                             <label>سال اتمام</label>
-                                                            <input type="number" class="form-control" id="endDate" name="endDate" value="@study?.endDate">
+                                                            <input type="number" class="form-control number" id="endDate" name="endDate" value="@study?.endDate">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -481,7 +481,7 @@
                                                 <div class="col-12 col-md-6 col-lg-4">
                                                     <div class="form-group">
                                                         <label>سال اتمام</label>
-                                                        <input type="number" class="form-control" id="endDate" name="endDate">
+                                                        <input type="number" class="form-control number" id="endDate" name="endDate">
                                                     </div>
                                                 </div>
                                             </div>
@@ -513,13 +513,13 @@
                                                     <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="form-group">
                                                             <label>از سال</label>
-                                                            <input type="text" class="form-control" id="startYear" name="startYear" value="@experience?.startYear">
+                                                            <input type="text" class="form-control number" id="startYear" name="startYear" value="@experience?.startYear">
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-md-6 col-lg-4">
                                                         <div class="form-group">
                                                             <label>تا سال</label>
-                                                            <input type="text" class="form-control" id="finishYear" name="finishYear" value="@experience?.finishYear">
+                                                            <input type="text" class="form-control number" id="finishYear" name="finishYear" value="@experience?.finishYear">
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-md-6 col-lg-4">
@@ -548,13 +548,13 @@
                                                 <div class="col-12 col-md-6 col-lg-4">
                                                     <div class="form-group">
                                                         <label>از سال</label>
-                                                        <input type="text" class="form-control" id="startYear" name="startYear">
+                                                        <input type="text" class="form-control number" id="startYear" name="startYear">
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6 col-lg-4">
                                                     <div class="form-group">
                                                         <label>تا سال</label>
-                                                        <input type="text" class="form-control" id="finishYear" name="finishYear">
+                                                        <input type="text" class="form-control number" id="finishYear" name="finishYear">
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6 col-lg-4">
@@ -590,7 +590,7 @@
                                             <div class="col-12 col-md-5">
                                                 <div class="form-group">
                                                     <label>سال</label>
-                                                    <input type="text" class="form-control" id="year" name="year" value="@prize?.year">
+                                                    <input type="text" class="form-control number" id="year" name="year" value="@prize?.year">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-2">
@@ -612,7 +612,7 @@
                                         <div class="col-12 col-md-5">
                                             <div class="form-group">
                                                 <label>سال</label>
-                                                <input type="text" class="form-control" id="year" name="year">
+                                                <input type="text" class="form-control number" id="year" name="year">
                                             </div>
                                         </div>
                                     </div>
@@ -678,7 +678,7 @@
                                             <div class="col-12 col-md-5">
                                                 <div class="form-group">
                                                     <label>سال</label>
-                                                    <input type="text" class="form-control" id="subscriptionYear" name="subscriptionYear" value="@subscription?.subscriptionYear">
+                                                    <input type="text" class="form-control number" id="subscriptionYear" name="subscriptionYear" value="@subscription?.subscriptionYear">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-2">
@@ -700,7 +700,7 @@
                                         <div class="col-12 col-md-5">
                                             <div class="form-group">
                                                 <label>سال</label>
-                                                <input type="text" class="form-control" id="subscriptionYear" name="subscriptionYear">
+                                                <input type="text" class="form-control number" id="subscriptionYear" name="subscriptionYear">
                                             </div>
                                         </div>
                                     </div>
@@ -727,53 +727,12 @@
 
 @section Scripts
 {
+    <script src="~/assets/js/ExpertPanel/layout.js"></script>
+    
+    <!-- Profile Settings JS -->
+    <script src="~/assets/js/ExpertPanel/Profile/profile-settings.js"></script>
 
-<script src="~/assets/js/ExpertPanel/layout.js"></script>
-
-<script>
-    var otherImageFileList = [];
-    var resumeImageFileList = [];
-    var degreeImageFileList = [];
-
-    function addOtherFileToList(file) {
-        otherImageFileList.push(file);
-    }
-
-    function removeOtherFileFromList(id) {
-        for (var i = 0; i < otherImageFileList.length; i++) {
-            if (i === parseInt(id)) {
-                otherImageFileList.splice(i, 1);
-                break;
-            }
-        }
-    }
-
-    function addResumeFileToList(file) {
-        resumeImageFileList.push(file);
-    }
-
-    function removeResumeFileFromList(id) {
-        for (var i = 0; i < resumeImageFileList.length; i++) {
-            if (i === parseInt(id)) {
-                resumeImageFileList.splice(i, 1);
-                break;
-            }
-        }
-    }
-
-    function addDegreeFileToList(file) {
-        degreeImageFileList.push(file);
-    }
-
-    function removeDegreeFileFromList(id) {
-        for (var i = 0; i < degreeImageFileList.length; i++) {
-            if (i === parseInt(id)) {
-                degreeImageFileList.splice(i, 1);
-                break;
-            }
-        }
-    }
-
+    <script>
     function EditBasicInformation(id) {
 
         if ($("#expertBasicProfileForm").valid()) {
@@ -803,14 +762,19 @@
             expertProfileData.append("id", id);
 
             for (var i = 0; i < otherImageFileList.length; i++) {
+                alert("otherImageFileList");
                 expertProfileData.append("otherImage",otherImageFileList[i]);
             }
 
             for (var j = 0; j < resumeImageFileList.length; j++) {
+                alert("resumeImageFileList");
+
                 expertProfileData.append("resumeImage",resumeImageFileList[j]);
             }
 
             for (var k = 0; k < degreeImageFileList.length; k++) {
+                alert("degreeImageFileList");
+
                 expertProfileData.append("degreeImage",degreeImageFileList[k]);
             }
 

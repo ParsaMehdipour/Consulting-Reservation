@@ -7,13 +7,19 @@ Version      : 1.0
 $(document).ready(function () {
 
 	var optionsResume = {};
-	var resumeUploader = $('.js-uploader__box_Resume').uploader(optionsResume);
+	var resumeUploader = $('.js-uploader__box_Resume').uploader1(optionsResume);
+
+	console.log(resumeUploader);
 
 	var optionsOther = {};
-	var otherUploader = $('.js-uploader__box_other').uploader(optionsOther);
+	var otherUploader = $('.js-uploader__box_other').uploader3(optionsOther);
+
+	console.log(otherUploader);
 
 	var optionsDegree = {};
-	var degreeUploader = $('.js-uploader__box_Degree').uploader(optionsDegree);
+	var degreeUploader = $('.js-uploader__box_Degree').uploader3(optionsDegree);
+
+	console.log(degreeUploader);
 
 	$("#ExpertPanelMenu .active").removeClass("active");
 	$("#ExpertPanelMenu #Profile").addClass("active");
@@ -235,8 +241,11 @@ $(document).ready(function () {
 })(jQuery);
 
 var otherImageFileList = [];
+var resumeImageFileList = [];
+var degreeImageFileList = [];
 
 function addOtherFileToList(file) {
+	alert("addOtherFileToList");
 	otherImageFileList.push(file);
 }
 
@@ -249,9 +258,8 @@ function removeOtherFileFromList(id) {
 	}
 }
 
-var resumeImageFileList = [];
-
 function addResumeFileToList(file) {
+	alert("addResumeFileToList");
 	resumeImageFileList.push(file);
 }
 
@@ -264,9 +272,8 @@ function removeResumeFileFromList(id) {
 	}
 }
 
-var degreeImageFileList = [];
-
 function addDegreeFileToList(file) {
+	alert("addDegreeFileToList");
 	degreeImageFileList.push(file);
 }
 
