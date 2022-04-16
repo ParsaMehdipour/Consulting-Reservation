@@ -31,7 +31,8 @@ namespace CR.Core.Services.Implementations.Factors
                     .Include(f => f.ConsumerInformation)
                     .ThenInclude(_ => _.Consumer)
                     .Include(f => f.ExpertInformation)
-                    .First(_ => _.Id == factorId);
+                    .ThenInclude(_ => _.Expert)
+                    .FirstOrDefault(_ => _.Id == factorId);
 
                 if (factor == null)
                 {

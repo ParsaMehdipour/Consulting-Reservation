@@ -144,6 +144,9 @@
                 if (data.appointmentStatus === "در انتظار") {
                     body += '<button type="button" class="btn bg-warning-light btn-sm">' + data.appointmentStatus + '</button>';
                 }
+                else if (data.appointmentStatus === "انجام شد") {
+                    body += '<button type="button" class="btn bg-success-light btn-sm">' + data.appointmentStatus + '</button>';
+                }
                 else if (data.appointmentStatus === "انجام نشد") {
                     body += '<button type="button" class="btn bg-danger-light btn-sm">' + data.appointmentStatus + '</button>';
                 }

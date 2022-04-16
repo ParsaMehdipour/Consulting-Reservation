@@ -68,6 +68,12 @@
                             <ul>
                                 <li><i class="far fa-comment"></i> @Model.ExpertDetailsForSiteDto.RateCount نظر </li>
                             </ul>
+                            <ul>
+                                <li><i class="far fa-arrow-alt-circle-down"></i> @Model.ExpertDetailsForSiteDto.YearsOfExperience سال تجربه </li>
+                            </ul>
+                            <ul>
+                                <li><i style="color: green" class="far fa-check-circle"></i> @Model.ExpertDetailsForSiteDto.NumberOfDoneAppointments نوبت انجام داده شده </li>
+                            </ul>
                         </div>
                         <div class="doctor-action">
                             <a onclick="AddToFavorites(@Model.ExpertDetailsForSiteDto.id)" class="btn btn-white fav-btn">

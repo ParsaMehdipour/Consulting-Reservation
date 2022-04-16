@@ -116,9 +116,9 @@
                                             <ul class="submenu">
                                                 <li>
                                                     <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="ریاضی">ریاضی</a>
-                                                    <a  asp-controller="Experts" asp-action="Index" asp-route-searchKey="تجربی">تجربی </a>
-                                                    <a  asp-controller="Experts" asp-action="Index" asp-route-searchKey="انسانی">انسانی</a>
-                                                    <a  asp-controller="Experts" asp-action="Index" asp-route-searchKey="هنر">هنر</a>
+                                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="تجربی">تجربی </a>
+                                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="انسانی">انسانی</a>
+                                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="هنر">هنر</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -126,10 +126,10 @@
                                             <a href="#">مشورت با مشاوران کنکور</a>
                                             <ul class="submenu">
                                                 <li>
-                                                    <a  asp-controller="Experts" asp-action="Index" asp-route-searchKey="ریاضی">ریاضی</a>
-                                                    <a  asp-controller="Experts" asp-action="Index" asp-route-searchKey="تجربی">تجربی </a>
-                                                    <a  asp-controller="Experts" asp-action="Index" asp-route-searchKey="انسانی">انسانی</a>
-                                                    <a  asp-controller="Experts" asp-action="Index" asp-route-searchKey="هنر">هنر</a>
+                                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="ریاضی">ریاضی</a>
+                                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="تجربی">تجربی </a>
+                                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="انسانی">انسانی</a>
+                                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="هنر">هنر</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -148,7 +148,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a  asp-controller="Experts" asp-action="Index" asp-route-searchKey="ریاضی">دکترا</a></li>
+                                <li><a asp-controller="Experts" asp-action="Index" asp-route-searchKey="ریاضی">دکترا</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
@@ -259,8 +259,8 @@
                                 <li><a asp-controller="Experts" asp-action="Index" asp-route-searchKey="ریاضی">دکترا</a></li>
                             </ul>
                         </li>
-                        
-                         <li class="has-submenu">
+
+                        <li class="has-submenu">
                             <a href="#">قوانین و مقررات<i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu">
                                 <li><a asp-area="" asp-controller="Rules" asp-action="Index">قوانین و مقررات کلی</a></li>
@@ -303,8 +303,8 @@
         @RenderBody()
 
         <div id="loading" class="lds-facebook"><div></div><div></div><div></div></div>
-    
-    @RenderSection("Footer",false)
+
+        @RenderSection("Footer",false)
 
     </div>
 
@@ -344,10 +344,6 @@
 
     <script src="~/assets/js/owl.carousel.js"></script>
 
-
-    <!-- Profile Settings JS -->
-    <script src="~/assets/js/ExpertPanel/Profile/profile-settings.js"></script>
-
     <!-- Mask JS -->
     <script src="~/assets/js/jquery.maskedinput.min.js"></script>
     <script src="~/assets/js/jquery.mask.js"></script>
@@ -375,6 +371,7 @@
 
             $('.date').mask('00/00/0000');
             $('.time').mask('00:00:00');
+            $('.number').mask('0000');
             $('.date_time').mask('00/00/0000 00:00:00');
             $('.cep').mask('00000-000');
             $('.phone').mask('0000-0000');
