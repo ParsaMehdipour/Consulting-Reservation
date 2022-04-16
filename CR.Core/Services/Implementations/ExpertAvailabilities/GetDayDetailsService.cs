@@ -37,7 +37,7 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
 
             var timings = new List<TimingForEditDto>();
 
-            foreach (var timeOfDay in day.TimeOfDays)
+            foreach (var timeOfDay in day.TimeOfDays.Where(_ => _.IsReserved == false))
             {
                 var timing = new TimingForEditDto()
                 {

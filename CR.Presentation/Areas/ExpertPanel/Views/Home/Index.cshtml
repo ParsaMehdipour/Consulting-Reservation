@@ -15,7 +15,7 @@
             <div class="col-md-12 col-12">
                 <nav aria-label="breadcrumb" class="page-breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">خانه</a></li>
                         <li class="breadcrumb-item active" aria-current="page">داشبورد</li>
                     </ol>
                 </nav>
@@ -70,7 +70,7 @@
                                                             <div class="dash-widget-info">
                                                                 <h6> کاربران امروز </h6>
                                                                 <h3>@Model.StatisticsForExpertPanelDto.TodayConsumersCount</h3>
-                                                                <p class="text-muted">6 تیر 1398</p>
+                                                                <p class="text-muted">@DateTime.Now.ToShamsi()</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -85,7 +85,7 @@
                                                             <div class="dash-widget-info">
                                                                 <h6>نوبت ها</h6>
                                                                 <h3>@Model.StatisticsForExpertPanelDto.AllAppointmentCount</h3>
-                                                                <p class="text-muted">6 تیر 1398</p>
+                                                                <p class="text-muted">@DateTime.Now.ToShamsi()</p>
                                                             </div>
                                                         </div>
                                                     </div>
