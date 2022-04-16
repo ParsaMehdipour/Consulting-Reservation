@@ -34,6 +34,7 @@ namespace CR.Core.DTOs.Experts
         public DateTime? birthDate { get; set; }
 
         [Required(ErrorMessage = "بیوگرافی خود را وارد کنید")]
+        [MaxLength(250, ErrorMessage = "متن بیوگرافی بیشتر از 250 کاراکتر نمیتواند باشد")]
         public string bio { get; set; }
 
         //[Required(ErrorMessage = "تصویر خود را وارد کنید")]

@@ -3,6 +3,7 @@ using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.ExpertInformations;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -58,8 +59,7 @@ namespace CR.Core.Services.Implementations.Experts
                     };
                 }
 
-                if (expert.ExpertInformation.ExpertAppointments.Any(e =>
-                        e.TimeOfDay.Day.Date.Date > DateTime.Now && e.TimeOfDay.IsReserved == true))
+                if (expert.ExpertInformation.ExpertAppointments.Any(e => e.AppointmentStatus == AppointmentStatus.Waiting && (e.TimeOfDay.Day.Date.Date > DateTime.Now && e.TimeOfDay.IsReserved == true)))
                 {
                     return new ResultDto()
                     {

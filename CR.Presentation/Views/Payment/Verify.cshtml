@@ -25,32 +25,32 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
 
-               @if (Model.IsSuccess == true)
-               {
-                   <!-- Success Card -->
-                   <div class="card success-card">
-                       <div class="card-body">
-                           <div class="success-cont">
-                               <i class="fas fa-check"></i>
-                               <h3>@ViewData["Description"]</h3>
-                           </div>
-                       </div>
-                   </div>
-                   <!-- /Success Card -->
-               }
-               else
-               {
-                   <!-- Success Card -->
-                   <div class="card success-card">
-                       <div class="card-body">
-                           <div class="success-cont">
-                               <i class="fas fa-times-circle"></i>
-                               <h3>@ViewData["Description"]</h3>
-                           </div>
-                       </div>
-                   </div>
-                   <!-- /Success Card -->
-               }
+                @if (Model.IsSuccess == true)
+                {
+                    <!-- Success Card -->
+                    <div class="card success-card">
+                        <div class="card-body">
+                            <div class="success-cont">
+                                <i class="fas fa-check"></i>
+                                <h3>@ViewData["Description"]</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Success Card -->
+                }
+                else
+                {
+                    <!-- Success Card -->
+                    <div class="card success-card">
+                        <div class="card-body">
+                            <div class="success-cont">
+                                <i class="fas fa-times-circle"></i>
+                                <h3>@ViewData["Description"]</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Success Card -->
+                }
 
             </div>
         </div>
@@ -58,7 +58,175 @@
     </div>
 </div>
 <!-- /Page Content -->
-
 @section Footer{
-    <partial name="Footer"/>
+<partial name="Footer" />
+}
+
+@section Scripts
+{
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/api/Shared/GetUserFlag',
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            enctype: 'application/json',
+            success: function(response) {
+
+                var userFlag = response;
+
+                if (userFlag === 0) {
+                    GetConsumerDetails();
+                } else if(userFlag === 1) {
+                    GetExpertDetails();
+                } else {
+                    GetAdminDetails();
+                }
+
+            }
+        });
+    });
+
+    function GetExpertDetails() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/api/ExpertDetails/GetDetails',
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            enctype: 'application/json',
+            success: function(response) {
+
+                var model = response.data;
+
+                var body =
+                    '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
+                        '<span class="user-img">' +
+                        '<img class="rounded-circle" src="/' +
+                        model.iconSrc +
+                        '" width="31" alt="' +
+                        model.fullName +
+                        '">' +
+                        '</span>' +
+                        '</a>' +
+                        '<div class="dropdown-menu dropdown-menu-right">' +
+                        '<div class="user-header">' +
+                        '<div class="avatar avatar-sm">' +
+                        '<img id="Image" src="/' +
+                        model.iconSrc +
+                        '" alt="User Image" class="avatar-img rounded-circle">' +
+                        '</div>' +
+                        '<div class="user-text">' +
+                        '<h6 id="FullName">' +
+                        model.fullName +
+                        '</h6>' +
+                        '<p class="text-muted mb-0">مشاور</p>' +
+                        '</div>' +
+                        '</div>' +
+                        '<a class="dropdown-item" href="/ExpertPanel/Home/">داشبورد</a>' +
+                        '<a class="dropdown-item" href="/ExpertPanel/Profile/">تنظیمات پروفایل</a>' +
+                        '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
+                        '</div>';
+
+                $("#userInfo").html(body);
+
+            }
+        });
+    }
+
+    function GetConsumerDetails() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/api/ConsumerDetails/GetDetails',
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            enctype: 'application/json',
+            success: function(response) {
+
+                var model = response.data;
+
+                var body =
+                    '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
+                        '<span class="user-img">' +
+                        '<img class="rounded-circle" src="/' +
+                        model.iconSrc +
+                        '" width="31" alt="' +
+                        model.fullName +
+                        '">' +
+                        '</span>' +
+                        '</a>' +
+                        '<div class="dropdown-menu dropdown-menu-right">' +
+                        '<div class="user-header">' +
+                        '<div class="avatar avatar-sm">' +
+                        '<img id="Image" src="/' +
+                        model.iconSrc +
+                        '" alt="User Image" class="avatar-img rounded-circle">' +
+                        '</div>' +
+                        '<div class="user-text">' +
+                        '<h6 id="FullName">' +
+                        model.fullName +
+                        '</h6>' +
+                        '<p class="text-muted mb-0">کاربر</p>' +
+                        '</div>' +
+                        '</div>' +
+                        '<a class="dropdown-item" href="/ConsumerPanel/Home/">داشبورد</a>' +
+                        '<a class="dropdown-item" href="/ConsumerPanel/Profile/">تنظیمات پروفایل</a>' +
+                        '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
+                        '</div>';
+
+                $("#userInfo").html(body);
+
+            }
+        });
+    }
+
+     function GetAdminDetails() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/api/AdminDetails/GetDetails',
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            enctype: 'application/json',
+            success: function(response) {
+
+                var model = response.data;
+
+                var body =
+                    '<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">' +
+                        '<span class="user-img">' +
+                        '<img class="rounded-circle" src="/' +
+                        model.iconSrc +
+                        '" width="31" alt="' +
+                        model.fullName +
+                        '">' +
+                        '</span>' +
+                        '</a>' +
+                        '<div class="dropdown-menu dropdown-menu-right">' +
+                        '<div class="user-header">' +
+                        '<div class="avatar avatar-sm">' +
+                        '<img id="Image" src="/' +
+                        model.iconSrc +
+                        '" alt="User Image" class="avatar-img rounded-circle">' +
+                        '</div>' +
+                        '<div class="user-text">' +
+                        '<h6 id="FullName">' +
+                        model.fullName +
+                        '</h6>' +
+                        '<p class="text-muted mb-0">مدیریت</p>' +
+                        '</div>' +
+                        '</div>' +
+                        '<a class="dropdown-item" href="/AdminPanel/Home/">پنل مدیریت</a>' +
+                        '<a class="dropdown-item" href="/Account/Logout">خروج</a>' +
+                        '</div>';
+
+                $("#userInfo").html(body);
+
+            }
+        });
+    }
+</script>
 }

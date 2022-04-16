@@ -2567,9 +2567,9 @@ html.menu-opened body {
 }
 
     .section-header h2 {
-        font-size: 36px;
+        font-size: 30px;
         margin-bottom: 0;
-        font-weight: 500;
+        font-weight: 700;
     }
 
     .section-header .sub-title {
@@ -2598,7 +2598,7 @@ html.menu-opened body {
 
         .banner-wrapper .banner-header h1 {
             margin-bottom: 10px;
-            font-size: 40px;
+            font-size: 34px;
             font-weight: 600;
         }
 

@@ -32,6 +32,7 @@ namespace CR.Core.Services.Implementations.Experts
                 .Include(e => e.Specialty)
                 .Include(e => e.Days)
                 .ThenInclude(e => e.TimeOfDays)
+                .Include(e => e.ExpertAppointments)
                 .FirstOrDefault(e => e.Id == expertInformationId);
 
             if (expertInformation == null)
@@ -59,6 +60,8 @@ namespace CR.Core.Services.Implementations.Experts
                 Tag = expertInformation.Tag,
                 Tags = (string.IsNullOrEmpty(expertInformation.Tag)) ? new List<string>() : expertInformation.Tag.Split(",").ToList(),
                 SpecialityImage = expertInformation.Specialty.ImageSrc,
+                YearsOfExperience = expertInformation.ExpertExperiences != null ? Convert.ToInt32(expertInformation.ExpertExperiences.Last().FinishYear) - Convert.ToInt32(expertInformation.ExpertExperiences.First().StartYear) : 0,
+                NumberOfDoneAppointments = expertInformation.ExpertAppointments.Count(_ => _.AppointmentStatus == AppointmentStatus.Completed),
                 Speciality = (expertInformation.Specialty != null) ? expertInformation.Specialty.Name : " ",
                 DayDtos = expertInformation.Days
                     .Where(d => d.Date >= DateTime.Now.Date && d.Date < DateTime.Now.Date.AddDays(7))

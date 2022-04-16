@@ -17,6 +17,8 @@ namespace CR.Core.DTOs.Experts
         public string City { get; set; }
         public string IconSrc { get; set; }
         public decimal AverageRate { get; set; }
+        public int YearsOfExperience { get; set; }
+        public int NumberOfDoneAppointments { get; set; }
 
         public List<DayDto> DayDtos { get; set; }
         public List<ExpertExperienceDto> experiences { get; set; }
