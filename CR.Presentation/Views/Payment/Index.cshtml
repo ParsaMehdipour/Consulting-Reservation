@@ -90,14 +90,22 @@
                             </a>
                             <div class="booking-info">
                                 <h4><a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.expertInformationId">مشاور @Model.expertFullName</a></h4>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating">35</span>
-                                </div>
+                                @if (Model.AverageRate != 0)
+                                {
+                                    <div class="rating">
+
+                                        @for (int i = 1; i <= Model.AverageRate; i++)
+                                        {
+                                            <i class="fas fa-star filled"></i>
+                                        }
+                                        @for (int i = 1; i <= (5 - Model.AverageRate); i++)
+                                        {
+                                            <i class="fas fa-star"></i>
+
+                                        }
+                                        <span class="d-inline-block average-rating">(@Model.RateCount)</span>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <br />

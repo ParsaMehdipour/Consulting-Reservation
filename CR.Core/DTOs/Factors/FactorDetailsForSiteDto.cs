@@ -12,6 +12,8 @@ namespace CR.Core.DTOs.Factors
         public long price { get; set; }
         public string refId { get; set; }
         public long consumerId { get; set; }
+        public int RateCount { get; set; }
+        public decimal AverageRate { get; set; }
         public List<AppointmentDetailsForSiteDto> AppointmentDetailsForSiteDtos { get; set; }
     }
 }

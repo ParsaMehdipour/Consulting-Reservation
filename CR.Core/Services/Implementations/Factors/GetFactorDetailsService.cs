@@ -4,7 +4,9 @@ using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.Factors;
 using CR.Core.Services.Interfaces.Factors;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace CR.Core.Services.Implementations.Factors
@@ -22,8 +24,7 @@ namespace CR.Core.Services.Implementations.Factors
         {
             var factor = _context.Factors
                 .Include(f => f.ConsumerInformation)
-                .Include(f => f.Appointments)
-                .ThenInclude(a => a.ExpertInformation)
+                .Include(f => f.ExpertInformation)
                 .Include(a => a.Appointments)
                 .ThenInclude(a => a.TimeOfDay)
                 .ThenInclude(t => t.Day)
@@ -63,6 +64,8 @@ namespace CR.Core.Services.Implementations.Factors
                 Data = new FactorDetailsForSiteDto()
                 {
                     Id = factor.Id,
+                    RateCount = _context.Comments.Count(_ => _.TypeId == CommentType.Expert && _.CommentStatus == CommentStatus.Accepted && _.OwnerRecordId == factor.ExpertInformationId),
+                    AverageRate = Decimal.Round(factor.ExpertInformation.AverageRate),
                     AppointmentDetailsForSiteDtos = appointments,
                     price = appointments.Sum(a => a.Price),
                     expertFullName = factor.Appointments.FirstOrDefault()?.ExpertInformation.FirstName + " " + factor.Appointments.FirstOrDefault()?.ExpertInformation.LastName,
