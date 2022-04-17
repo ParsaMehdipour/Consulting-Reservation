@@ -1,16 +1,17 @@
-﻿@using CR.DataAccess.Entities.Users
+﻿@using CR.Common.States
+@using CR.DataAccess.Entities.Users
 @inject Microsoft.AspNetCore.Identity.SignInManager<User> SignInManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>شبکه یکپارچه چاله چوله</title>
+    <title>شبکه یکپارچه @SettingState.SiteTitle</title>
 
     <link rel="stylesheet" href="~/lib/imageUploader/styles.imageuploader.css" />
 
     <!-- Favicons -->
-    <link type="image/x-icon" href="~/assets/img/favicon-32x32.png" rel="icon">
+    <link type="image/x-icon" href="~/@SettingState.SiteFavicon" rel="icon">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-rtl/css/bootstrap.min.css">
@@ -69,13 +70,13 @@
                         </span>
                     </a>
                     <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand logo">
-                        <img src="~/assets/img/logo.svg" class="img-fluid" alt="Logo">
+                        <img src="~/@SettingState.SiteLogo" class="img-fluid" alt="Logo">
                     </a>
                 </div>
                 <div class="main-menu-wrapper">
                     <div class="menu-header">
                         <a asp-area="" asp-controller="Home" asp-action="Index" class="menu-logo">
-                            <img src="~/assets/img/logo.svg" class="img-fluid" alt="Logo">
+                            <img src="~/@SettingState.SiteLogo" class="img-fluid" alt="Logo">
                         </a>
                         <a id="menu_close" class="menu-close" href="javascript:void(0);">
                             <i class="fas fa-times"></i>
