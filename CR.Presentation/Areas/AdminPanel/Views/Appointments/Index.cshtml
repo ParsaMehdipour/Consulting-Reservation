@@ -78,6 +78,10 @@
                                         {
                                             <span class="badge badge-pill bg-danger inv-badge">@appointment.AppointmentStatus</span>
                                         }
+                                        else
+                                        {
+                                            <span class="badge badge-pill bg-danger inv-badge">@appointment.AppointmentStatus</span>
+                                        }
                                     </td>
                                     <td class="text-center">
                                         @if (appointment.AppointmentStatus == AppointmentStatus.Waiting.GetDisplayName())
@@ -86,6 +90,9 @@
                                                 <i class="fas fa-print"></i> لغو نوبت
                                             </a>
                                         }
+                                        <a onclick="Details(@appointment.Id)" class="btn btn-sm bg-danger-light">
+                                            <i class="fas fa-print"></i> جزییات
+                                        </a>
                                     </td>
                                 </tr>
                             }
