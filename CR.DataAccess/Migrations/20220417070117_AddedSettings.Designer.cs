@@ -4,14 +4,16 @@ using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220417070117_AddedSettings")]
+    partial class AddedSettings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,8 +89,6 @@ namespace CR.DataAccess.Migrations
                     b.HasIndex("ExpertInformationId");
 
                     b.HasIndex("FactorId");
-
-                    b.HasIndex("TimeOfDayId");
 
                     b.ToTable("TBL_Appointments");
                 });
@@ -471,6 +471,9 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long?>("AppointmentId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -512,6 +515,10 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId")
+                        .IsUnique()
+                        .HasFilter("[AppointmentId] IS NOT NULL");
 
                     b.HasIndex("DayId");
 
@@ -1339,19 +1346,11 @@ namespace CR.DataAccess.Migrations
                         .WithMany("Appointments")
                         .HasForeignKey("FactorId");
 
-                    b.HasOne("CR.DataAccess.Entities.ExpertAvailabilities.TimeOfDay", "TimeOfDay")
-                        .WithMany("Appointments")
-                        .HasForeignKey("TimeOfDayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ConsumerInformation");
 
                     b.Navigation("ExpertInformation");
 
                     b.Navigation("Factor");
-
-                    b.Navigation("TimeOfDay");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.Blogs.Blog", b =>
@@ -1451,6 +1450,10 @@ namespace CR.DataAccess.Migrations
 
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.TimeOfDay", b =>
                 {
+                    b.HasOne("CR.DataAccess.Entities.Appointments.Appointment", "Appointment")
+                        .WithOne("TimeOfDay")
+                        .HasForeignKey("CR.DataAccess.Entities.ExpertAvailabilities.TimeOfDay", "AppointmentId");
+
                     b.HasOne("CR.DataAccess.Entities.ExpertAvailabilities.Day", "Day")
                         .WithMany("TimeOfDays")
                         .HasForeignKey("DayId")
@@ -1462,6 +1465,8 @@ namespace CR.DataAccess.Migrations
                         .HasForeignKey("ExpertInformationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Appointment");
 
                     b.Navigation("Day");
 
@@ -1658,6 +1663,11 @@ namespace CR.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CR.DataAccess.Entities.Appointments.Appointment", b =>
+                {
+                    b.Navigation("TimeOfDay");
+                });
+
             modelBuilder.Entity("CR.DataAccess.Entities.Blogs.BlogCategory", b =>
                 {
                     b.Navigation("Blogs");
@@ -1685,11 +1695,6 @@ namespace CR.DataAccess.Migrations
             modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.Day", b =>
                 {
                     b.Navigation("TimeOfDays");
-                });
-
-            modelBuilder.Entity("CR.DataAccess.Entities.ExpertAvailabilities.TimeOfDay", b =>
-                {
-                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("CR.DataAccess.Entities.Factors.Factor", b =>

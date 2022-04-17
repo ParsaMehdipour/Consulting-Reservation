@@ -1,0 +1,156 @@
+﻿@model CR.Core.DTOs.Settings.SettingDto
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">تنظیمات کلی</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item"><a href="javascript:(0)">تنظیمات</a></li>
+                <li class="breadcrumb-item active">تنظیمات کلی</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+
+    <div class="col-12">
+
+        <!-- General -->
+
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">کلی</h4>
+            </div>
+            <div class="card-body">
+                <form id="settingForm">
+
+                    <div class="form-group">
+                        <label>نام سایت</label>
+                        <input type="text" class="form-control" asp-for="Title" id="title" name="title">
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>لوگو سایت</label>
+                        <input type="file" class="form-control" asp-for="Logo" id="logo" name="logo">
+                        <small class="text-secondary">اندازه تصویر پیشنهادی <b>150px x 150px</b></small>
+                    </div>
+                    <div class="form-group mb-0">
+                        <label>فایکون</label>
+                        <input type="file" class="form-control" asp-for="FavIcon" id="favicon" name="favicon">
+                        <small class="text-secondary">اندازه تصویر پیشنهادی <b>16px x 16px</b> یا <b>32px x 32px</b></small><br>
+                        <small class="text-secondary">قالب های پذیرفته شده: فقط png و ico</small>
+                    </div>
+                    <div class="submit-section">
+                        @if (Model != null)
+                        {
+                            <button onclick="Edit(@Model.Id)" class="btn btn-warning submit-btn" type="submit" name="form_submit"> ویرایش</button>
+                        }
+                        else
+                        {
+                            <button onclick="Add()" class="btn btn-primary submit-btn" type="submit" name="form_submit"> ذخیره</button>
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- /General -->
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+         function Add() {
+        if ($("#settingForm").valid()) {
+
+            var data = new FormData();
+
+            data.append("title",$("#settingForm #title").val());
+            data.append("logo",$("#settingForm #logo").get(0).files[0]);
+            data.append("favIcon",$("#settingForm #favicon").get(0).files[0]);
+
+            $("#settingForm").submit(function( event ) {
+                $.ajax({
+                    type: "POST",
+                    url: '/api/Settings/Add',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                event.preventDefault();
+            });
+        }
+    }
+
+
+    function Edit(id) {
+        if ($("#settingForm").valid()) {
+                        
+            var data = new FormData();
+
+            data.append("id",id);
+            data.append("title",$("#settingForm #title").val());
+            data.append("logo",$("#settingForm #logo").get(0).files[0]);
+            data.append("favIcon",$("#settingForm #favicon").get(0).files[0]);
+
+            $("#settingForm").submit(function( event ) {
+                $.ajax({
+                    type: "POST",
+                    url: '/api/Settings/Edit',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(x) {
+                        $('#loading').show();
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide();
+                    },
+                    fail: function() {
+                        $('#loading').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+                event.preventDefault();
+            }); 
+        }   
+    }
+    </script>
+}
