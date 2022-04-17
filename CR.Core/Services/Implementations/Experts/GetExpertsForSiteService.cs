@@ -68,6 +68,7 @@ namespace CR.Core.Services.Implementations.Experts
                 SpecialitySrc = e.ExpertInformation.Specialty.ImageSrc,
                 Tags = e.ExpertInformation.Tag.Split(",", System.StringSplitOptions.None).ToList()
             }).AsEnumerable()
+                .Randomize()
                 .ToPaged(Page, PageSize, out var rowCount)
                 .ToList();
 

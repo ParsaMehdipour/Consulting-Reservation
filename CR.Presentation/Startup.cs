@@ -1,3 +1,4 @@
+using CR.Common.States;
 using CR.Common.Utilities.PhoneTotp;
 using CR.Common.Utilities.PhoneTotp.Providers;
 using CR.Core.DTOs.FinancialTransactions;
@@ -20,6 +21,7 @@ using CR.Core.Services.Implementations.Favorites;
 using CR.Core.Services.Implementations.FinancialTransactions;
 using CR.Core.Services.Implementations.Images;
 using CR.Core.Services.Implementations.Rules;
+using CR.Core.Services.Implementations.Settings;
 using CR.Core.Services.Implementations.Specialites;
 using CR.Core.Services.Implementations.Statistics;
 using CR.Core.Services.Implementations.Timings;
@@ -44,6 +46,7 @@ using CR.Core.Services.Interfaces.Favorites;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.Core.Services.Interfaces.Images;
 using CR.Core.Services.Interfaces.Rules;
+using CR.Core.Services.Interfaces.Settings;
 using CR.Core.Services.Interfaces.Specialites;
 using CR.Core.Services.Interfaces.Statistics;
 using CR.Core.Services.Interfaces.Timings;
@@ -64,6 +67,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PersianTranslation.Identity;
 using System;
+using System.Linq;
 
 namespace CR.Presentation
 {
@@ -317,6 +321,8 @@ namespace CR.Presentation
             services.AddScoped<IGetContactUsDetailsService, GetContactUsDetailsService>();
             //PhoneTOTP
             services.AddTransient<IPhoneTotpProvider, PhoneTotpProvider>();
+            //Setting
+            services.AddScoped<ISettingServices, SettingServices>();
 
             #endregion
 
@@ -328,7 +334,7 @@ namespace CR.Presentation
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(ApplicationContext _context, IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -364,6 +370,12 @@ namespace CR.Presentation
 
                 endpoints.MapHub<SiteChatHub>("/chathub");
             });
+
+            var setting = _context.Settings.FirstOrDefault();
+
+            SettingState.SiteFavicon = setting?.FavIcon;
+            SettingState.SiteLogo = setting?.Logo;
+            SettingState.SiteTitle = setting?.Title;
         }
     }
 }

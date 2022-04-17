@@ -37,6 +37,72 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
                 };
             }
 
+            if (date.Date < DateTime.Now.Date)
+            {
+                var list2 = expertInformation.Days
+                    .Where(d => d.Date >= DateTime.Now.Date && d.Date < DateTime.Now.Date.AddDays(7))
+                    .Select(d => new DayDto()
+                    {
+                        date_String = d.Date_String,
+                        dayOfWeek = DateConvertor.GetDayOfWeek(d.Date),
+                        id = d.Id,
+                        timeOfDayDtos = d.TimeOfDays.Where(t => t.IsReserved == false && t.TimingType == timingType && t.StartTime > DateTime.Now).Select(
+                            f => new TimeOfDayDto()
+                            {
+                                id = f.Id,
+                                expertInformationId = f.ExpertInformationId,
+                                dayId = f.DayId,
+                                start = f.StartHour,
+                                finish = f.FinishHour
+                            }).OrderBy(t => t.start).ToList(),
+                    }).OrderBy(d => d.date_String.ToGeorgianDateTime()).ToList();
+
+                return new ResultDto<ResultGetExpertAvailabilitiesDetailsDto>()
+                {
+                    Data = new ResultGetExpertAvailabilitiesDetailsDto()
+                    {
+                        year = date.Year,
+                        month = date.Month,
+                        day = date.Day,
+                        dayDtos = list2
+                    },
+                    IsSuccess = true
+                };
+            }
+
+            if (date.Date > DateTime.Now.Date)
+            {
+                var list3 = expertInformation.Days
+                    .Where(d => d.Date >= date.Date && d.Date < date.Date.AddDays(7))
+                    .Select(d => new DayDto()
+                    {
+                        date_String = d.Date_String,
+                        dayOfWeek = DateConvertor.GetDayOfWeek(d.Date),
+                        id = d.Id,
+                        timeOfDayDtos = d.TimeOfDays.Where(t => t.IsReserved == false && t.TimingType == timingType).Select(
+                            f => new TimeOfDayDto()
+                            {
+                                id = f.Id,
+                                expertInformationId = f.ExpertInformationId,
+                                dayId = f.DayId,
+                                start = f.StartHour,
+                                finish = f.FinishHour
+                            }).OrderBy(t => t.start).ToList(),
+                    }).OrderBy(d => d.date_String.ToGeorgianDateTime()).ToList();
+
+                return new ResultDto<ResultGetExpertAvailabilitiesDetailsDto>()
+                {
+                    Data = new ResultGetExpertAvailabilitiesDetailsDto()
+                    {
+                        year = date.Year,
+                        month = date.Month,
+                        day = date.Day,
+                        dayDtos = list3
+                    },
+                    IsSuccess = true
+                };
+            }
+
             var list = expertInformation.Days
                 .Where(d => d.Date >= date.Date && d.Date < date.Date.AddDays(7))
                 .Select(d => new DayDto()
