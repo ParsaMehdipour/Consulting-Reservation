@@ -1,8 +1,9 @@
-﻿using System;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.DataAccess.Context;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.ExpertAvailabilities
 {
@@ -21,7 +22,8 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
 
             try
             {
-                var timeOfDay = _context.TimeOfDays.FirstOrDefault(t => t.Id == id);
+                var timeOfDay = _context.TimeOfDays
+                    .Include(_ => _.Appointments).FirstOrDefault(t => t.Id == id);
 
                 if (timeOfDay == null)
                 {
@@ -29,6 +31,15 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
                     {
                         IsSuccess = false,
                         Message = "زمانبندی یافت نشد"
+                    };
+                }
+
+                if (timeOfDay.Appointments.Any())
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "بدلیل وجود این زمان در نوبت قابلیت حذف آن وجود ندارد "
                     };
                 }
 
@@ -48,7 +59,11 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
             {
                 transaction.Rollback();
 
-                throw;
+                return new ResultDto()
+                {
+                    IsSuccess = false,
+                    Message = "خطا از سمت سرور"
+                };
             }
             finally
             {
