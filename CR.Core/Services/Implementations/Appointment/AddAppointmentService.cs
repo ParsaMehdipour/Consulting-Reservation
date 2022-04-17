@@ -108,9 +108,6 @@ namespace CR.Core.Services.Implementations.Appointment
                     appointments.Add(appointment);
 
                     _context.SaveChanges();
-
-                    timeOfDay.Appointment = appointment;
-                    timeOfDay.AppointmentId = appointment.Id;
                 }
 
                 factor.TotalPrice = appointments.Sum(a => a.Price) ?? 0;

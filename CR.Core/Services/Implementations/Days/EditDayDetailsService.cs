@@ -27,6 +27,7 @@ namespace CR.Core.Services.Implementations.Days
             {
                 var day = _context.Days
                     .Include(_ => _.TimeOfDays)
+                    .ThenInclude(_ => _.Appointments)
                     .FirstOrDefault(_ => _.Id == request.dayId && _.ExpertInformationId == request.expertInformationId);
 
                 if (day == null)
@@ -52,7 +53,9 @@ namespace CR.Core.Services.Implementations.Days
                     };
                 }
 
-                _context.TimeOfDays.RemoveRange(day.TimeOfDays.Where(_ => _.IsReserved == false));
+                _context.TimeOfDays.RemoveRange(day.TimeOfDays.Where(_ => _.IsReserved == false && !_.Appointments.Any()));
+
+                _context.SaveChanges();
 
                 if (request.timings != null)
                 {
@@ -72,27 +75,35 @@ namespace CR.Core.Services.Implementations.Days
                             };
                         }
 
-                        var startMinutes = (timing.StartTime.Hour * 60) + timing.StartTime.Minute;
-                        var endMinutes = (timing.EndTime.Hour * 60) + timing.EndTime.Minute;
-                        var pureMinutes = endMinutes - startMinutes;
-
-                        var timeOfDay = new TimeOfDay
+                        if (_context.TimeOfDays.Include(_ => _.Day).Any(_ => _.StartHour == timing.StartTime_String && _.FinishHour == timing.EndTime_String && _.DayId == day.Id))
                         {
-                            DayId = request.dayId,
-                            Day = day,
-                            ExpertInformation = expertInformation,
-                            ExpertInformationId = request.expertInformationId,
-                            StartHour = timing.StartTime_String,
-                            FinishHour = timing.EndTime_String,
-                            StartTime = day.Date.AddHours(timing.StartTime.Hour).AddMinutes(timing.StartTime.Minute),
-                            FinishTime = day.Date.AddHours(timing.EndTime.Hour).AddMinutes(timing.EndTime.Minute),
-                            TimingType = timing.TimingType,
-                            PhoneCallPrice = (pureMinutes * expertInformation.PhoneCallPrice),
-                            VoiceCallPrice = (pureMinutes * expertInformation.VoiceCallPrice),
-                            TextCallPrice = (pureMinutes * expertInformation.TextCallPrice),
-                        };
 
-                        timeOfDaysList.Add(timeOfDay);
+                        }
+                        else
+                        {
+
+                            var startMinutes = (timing.StartTime.Hour * 60) + timing.StartTime.Minute;
+                            var endMinutes = (timing.EndTime.Hour * 60) + timing.EndTime.Minute;
+                            var pureMinutes = endMinutes - startMinutes;
+
+                            var timeOfDay = new TimeOfDay
+                            {
+                                DayId = request.dayId,
+                                Day = day,
+                                ExpertInformation = expertInformation,
+                                ExpertInformationId = request.expertInformationId,
+                                StartHour = timing.StartTime_String,
+                                FinishHour = timing.EndTime_String,
+                                StartTime = day.Date.AddHours(timing.StartTime.Hour).AddMinutes(timing.StartTime.Minute),
+                                FinishTime = day.Date.AddHours(timing.EndTime.Hour).AddMinutes(timing.EndTime.Minute),
+                                TimingType = timing.TimingType,
+                                PhoneCallPrice = (pureMinutes * expertInformation.PhoneCallPrice),
+                                VoiceCallPrice = (pureMinutes * expertInformation.VoiceCallPrice),
+                                TextCallPrice = (pureMinutes * expertInformation.TextCallPrice),
+                            };
+
+                            timeOfDaysList.Add(timeOfDay);
+                        }
                     }
 
                     var list = timeOfDaysList;
@@ -134,7 +145,7 @@ namespace CR.Core.Services.Implementations.Days
                     Message = "لطفا حداقل یک زمانبندی انتخاب کنید"
                 };
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 transaction.Rollback();
 
