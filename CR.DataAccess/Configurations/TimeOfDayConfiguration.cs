@@ -14,9 +14,9 @@ namespace CR.DataAccess.Configurations
                 .WithMany(p => p.TimeOfDays)
                 .HasForeignKey(p => p.DayId);
 
-            builder.HasOne(p => p.Appointment)
+            builder.HasMany(p => p.Appointments)
                 .WithOne(p => p.TimeOfDay)
-                .HasForeignKey<TimeOfDay>(p => p.AppointmentId);
+                .HasForeignKey(_ => _.TimeOfDayId);
 
             builder.HasOne(p => p.ExpertInformation)
                 .WithMany(p => p.TimeOfDays)

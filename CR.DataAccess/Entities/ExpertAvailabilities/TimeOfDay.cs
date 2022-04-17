@@ -1,8 +1,9 @@
-﻿using System;
-using CR.DataAccess.Common.Entity;
+﻿using CR.DataAccess.Common.Entity;
 using CR.DataAccess.Entities.Appointments;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace CR.DataAccess.Entities.ExpertAvailabilities
 {
@@ -21,13 +22,12 @@ namespace CR.DataAccess.Entities.ExpertAvailabilities
         #region ForeignKeys
 
         public long DayId { get; set; }
-        public long? AppointmentId { get; set; }
         public long ExpertInformationId { get; set; }
 
         #endregion
 
         #region Navigation Properties
-        public virtual Appointment Appointment { get; set; }
+        public virtual List<Appointment> Appointments { get; set; }
         public Day Day { get; set; }
         public ExpertInformation ExpertInformation { get; set; }
 
