@@ -38,5 +38,7 @@
 
         public const string ContactUs = "contactus";
 
+        public const string Settings = "settings";
+
     }
 }
