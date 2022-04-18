@@ -17,6 +17,7 @@ namespace CR.Core.DTOs.Experts
         public List<string> ClinicImages { get; set; }
         public long? Price { get; set; }
         public bool HasTimeOfDays { get; set; }
+        public bool HasStar { get; set; }
         public List<string> Tags { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace CR.Core.Services.Implementations.Experts
             var expertsQuery = _context.Users
                 .Include(u => u.ExpertInformation)
                 .ThenInclude(e => e.Specialty)
+                .Include(e => e.ExpertInformation.Favorites)
                 .Where(u => u.UserFlag == UserFlag.Expert
                  && u.IsActive == true
                  && u.ExpertInformation != null)
@@ -57,6 +58,7 @@ namespace CR.Core.Services.Implementations.Experts
                 IconSrc = (string.IsNullOrWhiteSpace(e.ExpertInformation.IconSrc)) ? "assets/img/icon-256x256.png" : e.ExpertInformation.IconSrc,
                 expertInformationId = e.ExpertInformation.Id,
                 Bio = e.ExpertInformation.Bio,
+                HasStar = (e.ExpertInformation.Favorites.Count >= 2),
                 City = e.ExpertInformation.City,
                 Province = e.ExpertInformation.Province,
                 ClinicImages = new List<string>(),
