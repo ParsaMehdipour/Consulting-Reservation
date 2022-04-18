@@ -1,6 +1,6 @@
 ﻿using CR.Common.Convertor;
 using CR.Common.DTOs;
-using CR.Core.DTOs.ExpertAvailabilities;
+using CR.Core.DTOs.Days;
 using CR.Core.DTOs.Experts;
 using CR.Core.Services.Interfaces.Experts;
 using CR.DataAccess.Context;
@@ -32,6 +32,7 @@ namespace CR.Core.Services.Implementations.Experts
                 .Include(e => e.Specialty)
                 .Include(e => e.Days)
                 .ThenInclude(e => e.TimeOfDays)
+                .Include(_ => _.Favorites)
                 .Include(e => e.ExpertAppointments)
                 .FirstOrDefault(e => e.Id == expertInformationId);
 
@@ -50,6 +51,7 @@ namespace CR.Core.Services.Implementations.Experts
                 id = expertInformation.Id,
                 IconSrc = (string.IsNullOrWhiteSpace(expertInformation.IconSrc)) ? "assets/img/icon-256x256.png" : expertInformation.IconSrc,
                 Bio = expertInformation.Bio,
+                HasStar = (expertInformation.Favorites.Count >= 2),
                 City = expertInformation.City,
                 Province = expertInformation.Province,
                 FullName = expertInformation.FirstName + " " + expertInformation.LastName,
@@ -64,18 +66,14 @@ namespace CR.Core.Services.Implementations.Experts
                 NumberOfDoneAppointments = expertInformation.ExpertAppointments.Count(_ => _.AppointmentStatus == AppointmentStatus.Completed),
                 Speciality = (expertInformation.Specialty != null) ? expertInformation.Specialty.Name : " ",
                 DayDtos = expertInformation.Days
-                    .Where(d => d.Date >= DateTime.Now.Date && d.Date < DateTime.Now.Date.AddDays(7))
-                    .Select(d => new DayDto()
+                    .Where(d => d.Date >= DateTime.Now.Date && d.Date <= DateTime.Now.Date.AddDays(7))
+                    .Select(d => new DayForExpertDetailsDto()
                     {
                         date_String = d.Date_String,
                         dayOfWeek = DateConvertor.GetDayOfWeek(d.Date),
-                        id = d.Id,
-                        timeOfDayDtos = d.TimeOfDays.Select(f => new TimeOfDayDto()
-                        {
-                            id = f.Id,
-                            expertInformationId = f.ExpertInformationId,
-                            dayId = f.DayId
-                        }).ToList(),
+                        HasTimeOfDay = d.TimeOfDays.Count > 0,
+                        StartHour = d.TimeOfDays.FirstOrDefault()?.StartHour,
+                        FinishHour = d.TimeOfDays.LastOrDefault()?.FinishHour
                     }).ToList(),
                 experiences = (expertInformation.ExpertExperiences == null) ? new List<ExpertExperienceDto>() : expertInformation.ExpertExperiences.Select(e => new ExpertExperienceDto
                 {

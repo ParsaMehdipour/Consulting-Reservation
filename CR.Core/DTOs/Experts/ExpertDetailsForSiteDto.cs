@@ -1,4 +1,4 @@
-﻿using CR.Core.DTOs.ExpertAvailabilities;
+﻿using CR.Core.DTOs.Days;
 using System.Collections.Generic;
 
 namespace CR.Core.DTOs.Experts
@@ -19,8 +19,9 @@ namespace CR.Core.DTOs.Experts
         public decimal AverageRate { get; set; }
         public int YearsOfExperience { get; set; }
         public int NumberOfDoneAppointments { get; set; }
+        public bool HasStar { get; set; }
 
-        public List<DayDto> DayDtos { get; set; }
+        public List<DayForExpertDetailsDto> DayDtos { get; set; }
         public List<ExpertExperienceDto> experiences { get; set; }
         public List<ExpertMembershipDto> memberships { get; set; }
         public List<ExpertPrizeDto> prizes { get; set; }
