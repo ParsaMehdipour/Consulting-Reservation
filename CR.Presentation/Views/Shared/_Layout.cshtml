@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>شبکه یکپارچه @SettingState.SiteTitle</title>
+    <title>@SettingState.SiteTitle</title>
 
     <link rel="stylesheet" href="~/lib/imageUploader/styles.imageuploader.css" />
 
@@ -303,7 +303,7 @@
         <!-- /Header -->
         @RenderBody()
 
-        <div id="loading" class="lds-facebook"><div></div><div></div><div></div></div>
+        <div id="loading"><img src="/assets/img/PreLoader.svg" style="width: 100%; height: 100%; top: 0; left: 0; position: fixed; background-color: rgba(255, 255, 255, 0.7);"/></div>
 
         @RenderSection("Footer",false)
 

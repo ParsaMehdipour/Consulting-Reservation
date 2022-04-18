@@ -103,7 +103,12 @@
                                         </a>
                                     </div>
                                     <div class="doc-info-cont">
-                                        <h4 class="doc-name"><a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">مشاور @expert.FullName</a></h4>
+                                        <h4 class="doc-name"><a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">مشاور @expert.FullName</a>
+                                            @if (expert.HasStar)
+                                            {
+                                                <i class="fas fa-check-circle verified"></i>
+                                            }
+                                        </h4>
                                         <p class="doc-speciality"> @expert.Bio </p>
                                         <h5 class="doc-department">
 

@@ -32,7 +32,12 @@
                             <img src="~/@Model.ExpertDetailsForSiteDto.IconSrc" class="img-fluid" alt="User Image">
                         </div>
                         <div class="doc-info-cont">
-                            <h4 class="doc-name">مشاور @Model.ExpertDetailsForSiteDto.FullName</h4>
+                            <h4 class="doc-name">مشاور @Model.ExpertDetailsForSiteDto.FullName
+                                @if (Model.ExpertDetailsForSiteDto.HasStar)
+                                {
+                                    <i class="fas fa-check-circle verified"></i>
+                                }
+                            </h4>
                             <p class="doc-speciality"> @Model.ExpertDetailsForSiteDto.Tag </p>
                             <p class="doc-department"><img src="~/@Model.ExpertDetailsForSiteDto.SpecialityImage" class="img-fluid" alt="Speciality">‌@Model.ExpertDetailsForSiteDto.Speciality</p>
                             @if (Model.ExpertDetailsForSiteDto.AverageRate != 0)
@@ -403,7 +408,7 @@
                                                 <div class="listing-day current">
                                                     <div class="day">امروز<span>@Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault()?.date_String</span></div>
                                                     <div class="time-items">
-                                                        @if (@Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault()?.timeOfDayDtos.Count > 0)
+                                                        @if (@Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault().HasTimeOfDay)
                                                         {
                                                             <span class="open-status"><span class="badge bg-success-light"></span></span>
                                                         }
@@ -411,23 +416,17 @@
                                                         {
                                                             <span class="open-status"><span class="badge bg-danger-light"></span></span>
                                                         }
-                                                        @foreach (var timeOfDay in Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault()?.timeOfDayDtos!)
-                                                        {
-                                                            <span class="time">@timeOfDay.start - @timeOfDay.finish</span>
-                                                        }
+                                                        <span>@Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault()?.StartHour الی @Model.ExpertDetailsForSiteDto.DayDtos.FirstOrDefault()?.FinishHour</span>
                                                     </div>
                                                 </div>
                                                 @foreach (var day in Model.ExpertDetailsForSiteDto.DayDtos.Skip(1))
                                                 {
-                                                    @if (day.timeOfDayDtos.Count > 0)
+                                                    @if (day.HasTimeOfDay)
                                                     {
                                                         <div class="listing-day">
                                                             <div class="day">@day.dayOfWeek<br /><span>@day.date_String</span></div>
                                                             <div class="time-items">
-                                                                @foreach (var timeOfDay in day.timeOfDayDtos)
-                                                                {
-                                                                    <span class="time">@timeOfDay.start - @timeOfDay.finish</span>
-                                                                }
+                                                                <span>@day.StartHour الی @day.FinishHour</span>
                                                             </div>
                                                         </div>
                                                         <hr />
@@ -437,7 +436,7 @@
                                                         <div class="listing-day closed">
                                                             <div class="day">@day.dayOfWeek<br /><span>@day.date_String</span></div>
                                                             <div class="time-items">
-                                                                <span class="time"><span class="badge bg-danger-light">بسته</span></span>
+                                                                <span class="time"><span class="badge bg-danger-light"></span></span>
                                                             </div>
                                                         </div>
                                                         <hr />

@@ -95,7 +95,7 @@
                             <div class="speicality-item text-center">
                                 <div class="speicality-img">
                                     <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="@speciality.Name"><img src="~/@speciality.ImageSrc" class="img-fluid" alt="Speciality"></a>
-                                    <span><i class="fa fa-circle" aria-hidden="true"></i></span>
+                                    @*<span><i class="fa fa-circle" aria-hidden="true"></i></span>*@
                                 </div>
                                 <p>@speciality.Name</p>
                             </div>
