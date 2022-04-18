@@ -30,7 +30,7 @@ namespace CR.Core.Services.Implementations.Favorites
                 {
                     ExpertInformationId = _.ExpertInformation.Id,
                     FullName = _.ExpertInformation.FirstName + " " + _.ExpertInformation.LastName,
-                    IconSrc = _.ExpertInformation.IconSrc,
+                    IconSrc = _.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     RateCount = _context.Comments.Count(c => c.TypeId == CommentType.Expert && c.CommentStatus == CommentStatus.Accepted && c.OwnerRecordId == _.ExpertInformationId),
                     AverageRate = Decimal.Round(_.ExpertInformation.AverageRate),
                     HasStar = (_.ExpertInformation.Favorites.Count >= 2),
