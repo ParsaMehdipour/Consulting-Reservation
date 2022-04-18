@@ -42,17 +42,28 @@
                             <div class="pro-content">
                                 <h3 class="title">
                                     <a asp-area="" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@favorite.ExpertInformationId">@favorite.FullName</a>
-                                    <i class="fas fa-check-circle verified"></i>
+                                    @if (favorite.HasStar)
+                                    {
+                                        <i class="fas fa-check-circle verified"></i>
+                                    }
                                 </h3>
                                 <p class="speciality"> @favorite.Tags </p>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <span class="d-inline-block average-rating">(17)</span>
-                                </div>
+                                @if (favorite.AverageRate != 0)
+                                {
+                                    <div class="rating">
+
+                                        @for (int i = 1; i <= favorite.AverageRate; i++)
+                                        {
+                                            <i class="fas fa-star filled"></i>
+                                        }
+                                        @for (int i = 1; i <= (5 - favorite.AverageRate); i++)
+                                        {
+                                            <i class="fas fa-star"></i>
+
+                                        }
+                                        <span class="d-inline-block average-rating">(@favorite.RateCount)</span>
+                                    </div>
+                                }
                                 <ul class="available-info">
                                     <li>
                                         <p class="doc-department"><img src="~/@favorite.SpecialitySrc" class="img-fluid" alt="Speciality">‌@favorite.Speciality</p>

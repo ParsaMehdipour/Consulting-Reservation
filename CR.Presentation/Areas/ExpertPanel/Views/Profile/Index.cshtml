@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>جنسیت</label>
+                                        <label>جنسیت <span class="text-danger">*</span></label>
                                         <select class="form-control select" id="gender" asp-for="gender">
                                             <option>انتخاب</option>
                                             <option value="@GenderType.Male">مرد</option>
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="control-label">شماره شبا</label>
+                                    <label class="control-label">شماره شبا <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" asp-for="shabaNumber" id="shabaNumber" name="shabaNumber" dir="ltr" aria-describedby="sizing-addon2">
                                         <span class="input-group-text" id="sizing-addon2">IR</span>
@@ -406,7 +406,7 @@
                             <hr />
                             <h4 class="card-title">خدمات و تخصص</h4>
                             <div class="form-group">
-                                <label>تخصص</label>
+                                <label>تخصص <span class="text-danger">*</span></label>
                                 <select class="form-control" asp-items="ViewBag.Specialties" asp-for="specialtyId" id="specialtyId">
                                     <option value="0">تخصص ...</option>
                                 </select>

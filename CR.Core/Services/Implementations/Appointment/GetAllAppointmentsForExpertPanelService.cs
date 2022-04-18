@@ -1,4 +1,5 @@
-﻿using CR.Common.DTOs;
+﻿using CR.Common.Convertor;
+using CR.Common.DTOs;
 using CR.Common.Utilities;
 using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.ResultDTOs.Appointments;
@@ -39,8 +40,10 @@ namespace CR.Core.Services.Implementations.Appointment
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     AppointmentTime = a.TimeOfDay.StartHour + " - " + a.TimeOfDay.FinishHour,
-                    City = a.ConsumerInformation.City,
-                    Province = a.ConsumerInformation.Province,
+                    Degree = a.ConsumerInformation.Degree,
+                    Age = a.ConsumerInformation.BirthDate.GetAge(),
+                    AppointmentType = a.CallingType.GetDisplayName(),
+                    Gender = a.ConsumerInformation.Gender.GetDisplayName(),
                     ConsumerFullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
                     ConsumerIconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ConsumerId = a.ConsumerInformation.ConsumerId,

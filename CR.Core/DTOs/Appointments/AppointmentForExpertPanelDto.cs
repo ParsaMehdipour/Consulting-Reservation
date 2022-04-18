@@ -9,8 +9,10 @@
         public string AppointmentDate { get; set; }
         public string AppointmentTime { get; set; }
         public string AppointmentStatus { get; set; }
-        public string Province { get; set; }
-        public string City { get; set; }
+        public string Degree { get; set; }
+        public string AppointmentType { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
     }

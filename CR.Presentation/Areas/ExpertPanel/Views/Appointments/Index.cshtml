@@ -14,10 +14,10 @@
                 <nav aria-label="breadcrumb" class="page-breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">خانه</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">تنظیمات پروفایل</li>
+                        <li class="breadcrumb-item active" aria-current="page">نوبت های من</li>
                     </ol>
                 </nav>
-                <h2 class="breadcrumb-title">تنظیمات پروفایل</h2>
+                <h2 class="breadcrumb-title">نوبت های من</h2>
             </div>
         </div>
     </div>
@@ -50,8 +50,9 @@
                                         <h3><a asp-area="ExpertPanel" asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-consumerId="@appointment.ConsumerId">@appointment.ConsumerFullName</a></h3>
                                         <div class="patient-details">
                                             <h4><i class="far fa-clock"></i> @appointment.AppointmentDate ، @appointment.AppointmentTime</h4>
-                                            <h5><i class="fas fa-map-marker-alt"></i>@appointment.City، @appointment.Province</h5>
+                                            <h5><i class="fas fa-calendar"></i>@appointment.Age سال، @appointment.Gender</h5>
                                             <h5><i class="fas fa-envelope"></i> @appointment.Email</h5>
+                                            <h5><i class="fas fa-bars"></i> @appointment.AppointmentType</h5>
                                             <h5 class="mb-0"><i class="fas fa-phone"></i> @appointment.PhoneNumber</h5>
                                         </div>
                                     </div>
