@@ -1,4 +1,6 @@
 ﻿@using CR.Presentation.Areas.AdminPanel.Models.ViewModels
+@using CR.Common.Utilities
+@using CR.DataAccess.Enums
 @model AdminDashboardViewModel
 @{
 }
@@ -155,18 +157,25 @@
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/AdminTemplate/assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@expert.iconSrc" alt="@expert.firstName"></a>
                                             <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@expert.id">@expert.firstName @expert.lastName</a>
                                         </h2>
                                     </td>
                                     <td>@expert.speciality</td>
                                     <td>@expert.income تومان</td>
                                     <td>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star text-warning"></i>
-                                        <i class="fe fe-star-o text-secondary"></i>
+                                        @if (expert.AverageRate != 0)
+                                        {
+                                            @for (int i = 1; i <= expert.AverageRate; i++)
+                                            {
+                                                <i class="fe fe-star text-warning"></i>
+                                            }
+                                            @for (int i = 1; i <= (5 - expert.AverageRate); i++)
+                                            {
+                                                <i class="fe fe-star-o text-secondary"></i>
+
+                                            }
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -176,7 +185,6 @@
             </div>
         </div>
         <!-- /Recent Orders -->
-
     </div>
     <div class="col-md-6 d-flex">
 
@@ -193,7 +201,7 @@
                                 <th>نام کاربر</th>
                                 <th>شماره</th>
                                 <th>آخرین ویزیت</th>
-                                <th>پرداخت شده</th>
+                                <th>پرداختی نوبت ها</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -202,13 +210,13 @@
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/AdminTemplate/assets/img/patients/patient1.jpg" alt="User Image"></a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@consumer.id" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.iconSrc" alt="@consumer.firstName"></a>
                                             <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@consumer.id">@consumer.firstName @consumer.lastName</a>
                                         </h2>
                                     </td>
                                     <td>@consumer.phoneNumber</td>
                                     <td>@consumer.lastVisit</td>
-                                    <td class="text-right">@consumer.paidAmount تومان</td>
+                                    <td>@consumer.paidAmount تومان</td>
                                 </tr>
                             }
                         </tbody>
@@ -222,7 +230,6 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-
         <!-- Recent Orders -->
         <div class="card card-table">
             <div class="card-header">
@@ -232,13 +239,14 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-center mb-0">
                         <thead>
-                            <tr>
-                                <th>نام مشاور</th>
-                                <th>تخصص</th>
-                                <th>نام کاربر</th>
-                                <th>وقت ویزیت</th>
-                                <th class="text-right">مقدار</th>
-                            </tr>
+                        <tr>
+                            <th class="text-center">نام مشاور</th>
+                            <th class="text-center">تخصص</th>
+                            <th class="text-center">نام کاربر</th>
+                            <th class="text-center">وقت نوبت</th>
+                            <th class="text-center">وضعیت</th>
+                            <th class="text-center">مقدار</th>
+                        </tr>
                         </thead>
                         <tbody>
                             @if (Model.AppointmentForAdminDtos.Count > 0)
@@ -246,21 +254,39 @@
                                 @foreach (var appointment in Model.AppointmentForAdminDtos)
                                 {
                                     <tr>
-                                        <td>
+                                        <td class="text-center">
                                             <h2 class="table-avatar">
-                                                <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image"></a>
-                                                <a>@appointment.ExpertFullName</a>
+                                                <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@appointment.ExpertId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image"></a>
+                                                <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@appointment.ExpertId">@appointment.ExpertFullName</a>
                                             </h2>
                                         </td>
-                                        <td>@appointment.Speciality</td>
-                                        <td>
+                                        <td class="text-center">@appointment.Speciality</td>
+                                        <td class="text-center">
                                             <h2 class="table-avatar">
-                                                <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ConsumerIconSrc" alt="User Image"></a>
-                                                <a>@appointment.ConsumerFullName </a>
+                                                <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@appointment.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ConsumerIconSrc" alt="User Image"></a>
+                                                <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@appointment.ConsumerId">@appointment.ConsumerFullName </a>
                                             </h2>
                                         </td>
-                                        <td>@appointment.AppointmentDate<span class="text-primary d-block">@appointment.AppointmentTime</span></td>
-                                        <td class="text-right">
+                                        <td class="text-center">@appointment.AppointmentDate<span class="text-primary d-block">@appointment.AppointmentTime</span></td>
+                                        <td class="text-center">
+                                            @if (appointment.AppointmentStatus == AppointmentStatus.Waiting.GetDisplayName())
+                                            {
+                                                <span class="badge badge-pill bg-warning inv-badge">@appointment.AppointmentStatus</span>
+                                            }
+                                            else if (appointment.AppointmentStatus == AppointmentStatus.Completed.GetDisplayName())
+                                            {
+                                                <span class="badge badge-pill bg-success inv-badge">@appointment.AppointmentStatus</span>
+                                            }
+                                            else if (appointment.AppointmentStatus == AppointmentStatus.NotDone.GetDisplayName())
+                                            {
+                                                <span class="badge badge-pill bg-danger inv-badge">@appointment.AppointmentStatus</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-pill bg-danger inv-badge">@appointment.AppointmentStatus</span>
+                                            }
+                                        </td>
+                                        <td class="text-center">
                                             @appointment.AppointmentPrice تومان
                                         </td>
                                     </tr>
@@ -281,33 +307,33 @@
 <script>
     $(function(){
 
-        var ConsumerDisplayYear=@Html.Raw(Json.Serialize(Model.StatisticsDto.ConsumerStatisticsCountForAdminPanelDto.Display));
-        var ConsumerValueYear=@Html.Raw(Json.Serialize(Model.StatisticsDto.ConsumerStatisticsCountForAdminPanelDto.Value));
+        var ConsumerDisplayYear = @Html.Raw(Json.Serialize(Model.StatisticsDto.ConsumerStatisticsCountForAdminPanelDto.Display));
+        var ConsumerValueYear = @Html.Raw(Json.Serialize(Model.StatisticsDto.ConsumerStatisticsCountForAdminPanelDto.Value));
 
-        var ExpertValueYear=@Html.Raw(Json.Serialize(Model.StatisticsDto.ExpertStatisticsCountForAdminPanelDto.Value));
+        var incomeDisplayYear = @Html.Raw(Json.Serialize(Model.StatisticsDto.IncomeStatisticsForAdminPanelDto.Display));
+        var incomeValueYear = @Html.Raw(Json.Serialize(Model.StatisticsDto.IncomeStatisticsForAdminPanelDto.Value));
+
+        var ExpertValueYear = @Html.Raw(Json.Serialize(Model.StatisticsDto.ExpertStatisticsCountForAdminPanelDto.Value));
 
         var ExpertConsumerStatistics = [];
+        var incomeStatistics = [];
 
         for (var i = 0; i <= 4; i++) {
             ExpertConsumerStatistics.push({ y: ConsumerDisplayYear[i].toString(), a: ExpertValueYear[i], b: ConsumerValueYear[i] });
+        }
+
+        for (var j = 0; j <= 4; j++) {
+            incomeStatistics.push({ y: incomeDisplayYear[j].toString(), a: incomeValueYear[j] });
         }
 
         /* Morris Area Chart */
 
         window.mA = Morris.Area({
             element: 'morrisArea',
-            data: [
-                { y: '1390', a: 60},
-                { y: '1391', a: 100},
-                { y: '1392', a: 240},
-                { y: '1393', a: 120},
-                { y: '1394', a: 80},
-                { y: '1395', a: 100},
-                { y: '1396', a: 300},
-            ],
+            data: incomeStatistics,
             xkey: 'y',
             ykeys: ['a'],
-            labels: ['سود'],
+            labels: ['درآمد'],
             lineColors: ['#1b5a90'],
             lineWidth: 2,
 
@@ -333,6 +359,7 @@
             resize: true,
             redraw: true
         });
+
         $(window).on("resize", function(){
             mA.redraw();
             mL.redraw();
