@@ -62,7 +62,7 @@ namespace CR.Core.Services.Implementations.Experts
                 Tag = expertInformation.Tag,
                 Tags = (string.IsNullOrEmpty(expertInformation.Tag)) ? new List<string>() : expertInformation.Tag.Split(",").ToList(),
                 SpecialityImage = expertInformation.Specialty.ImageSrc,
-                YearsOfExperience = expertInformation.ExpertExperiences != null ? Convert.ToInt32(expertInformation.ExpertExperiences.Last().FinishYear) - Convert.ToInt32(expertInformation.ExpertExperiences.First().StartYear) : 0,
+                YearsOfExperience = expertInformation.ExpertExperiences.Count > 0 ? Convert.ToInt32(expertInformation.ExpertExperiences.Last().FinishYear) - Convert.ToInt32(expertInformation.ExpertExperiences.First().StartYear) : 0,
                 NumberOfDoneAppointments = expertInformation.ExpertAppointments.Count(_ => _.AppointmentStatus == AppointmentStatus.Completed),
                 Speciality = (expertInformation.Specialty != null) ? expertInformation.Specialty.Name : " ",
                 DayDtos = expertInformation.Days

@@ -8,5 +8,6 @@
         public string Income { get; set; }
         public StatisticsCountForAdminPanelDto ConsumerStatisticsCountForAdminPanelDto { get; set; }
         public StatisticsCountForAdminPanelDto ExpertStatisticsCountForAdminPanelDto { get; set; }
+        public StatisticsAmountForAdminPanelDto IncomeStatisticsForAdminPanelDto { get; set; }
     }
 }

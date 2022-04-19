@@ -1,25 +1,12 @@
-﻿var connection = new signalR.HubConnectionBuilder()
+﻿"use strict";
+
+var connection = new signalR.HubConnectionBuilder()
     .withUrl("/chathub")
     .build();
 
 connection.start();
 
-//function Init() {
-//    var NewMessageForm = $("#NewMessageForm");
-//    NewMessageForm.on("submit", function (e) {
-
-//        e.preventDefault();
-//        var message = e.target[0].value;
-//        e.target[0].value = '';
-//        sendMessage(message);
-//    });
-
-//}
-
-//function sendMessage(text) {
-//    connection.invoke('SendNewMessage', " بازدید کننده ", text);
-//}
-
-//$(document).ready(function () {
-//    Init();
-//});
+connection.on("ReceiveMessageHandler", function (message) {
+    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    alert(msg);
+});

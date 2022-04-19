@@ -1,4 +1,5 @@
-﻿@model List<CR.Core.DTOs.ChatUsers.ChatUserForConsumerDto>
+﻿@using CR.DataAccess.Enums
+@model List<CR.Core.DTOs.ChatUsers.ChatUserForConsumerDto>
 <!-- Page Content -->
 <div class="container-fluid">
     <div class="row">
@@ -92,7 +93,7 @@
                             </div>
                             <input id="message" type="text" class="input-msg-send form-control" placeholder="چیزی تایپ کنید ">
                             <div class="input-group-append">
-                                <button onclick="AddNewMessage()" type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
+                                <button@* onclick="AddNewMessage()"*@ id="sendButton" type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
                             </div>
                         </div>
                     </div>
@@ -300,48 +301,58 @@
         });
     }
 
-    function AddNewMessage() {
-        console.log($("#adioPlay"));
+    //function AddNewMessage() {
+    //    console.log($("#adioPlay"));
 
-        var addNewMessageForm = new FormData();
+    //    var addNewMessageForm = new FormData();
 
-        addNewMessageForm.append("chatUserId",ChatUserId);
-        addNewMessageForm.append("message",$("#message").val());
-        addNewMessageForm.append("file",$("#image").get(0).files[0]);
-        addNewMessageForm.append("messageFlag",0);
+    //    addNewMessageForm.append("chatUserId",ChatUserId);
+    //    addNewMessageForm.append("message",$("#message").val());
+    //    addNewMessageForm.append("file",$("#image").get(0).files[0]);
+    //    addNewMessageForm.append("messageFlag",0);
 
-        $.ajax({
-            type: "POST",
-            url: '/api/Chat/AddNewConsumerMessage',
-            data: addNewMessageForm,
-            processData: false,
-            contentType: false,
-            beforeSend: function(x) {
-                $('#loading').show();
-            },
-            success: function(data) {
-                if (data.isSuccess === true) {
-                    location.reload();
-                }
-                else {
-                    swal.fire(
-                        'هشدار!',
-                        data.message,
-                        'warning'
-                    );
+    //    $.ajax({
+    //        type: "POST",
+    //        url: '/api/Chat/AddNewConsumerMessage',
+    //        data: addNewMessageForm,
+    //        processData: false,
+    //        contentType: false,
+    //        beforeSend: function(x) {
+    //            $('#loading').show();
+    //        },
+    //        success: function(data) {
+    //            if (data.isSuccess === true) {
+    //                location.reload();
+    //            }
+    //            else {
+    //                swal.fire(
+    //                    'هشدار!',
+    //                    data.message,
+    //                    'warning'
+    //                );
 
-                }
-            },
-            complete: function() {
-                $('#loading').hide();
-            },
-            fail: function() {
-                $('#loading').hide();
-            },
-            error: function(request, status, error) {
-                alert(request.responseText);
-            }
+    //            }
+    //        },
+    //        complete: function() {
+    //            $('#loading').hide();
+    //        },
+    //        fail: function() {
+    //            $('#loading').hide();
+    //        },
+    //        error: function(request, status, error) {
+    //            alert(request.responseText);
+    //        }
+    //    });
+    //}
+
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        var user = ChatUserId;
+        var message = $("#message").val();
+        var messageFlag = 0;
+        connection.invoke("SendMessage", user, message,messageFlag).catch(function (err) {
+            return console.error(err.toString());
         });
-    }
+        event.preventDefault();
+    });
 </script>
 }

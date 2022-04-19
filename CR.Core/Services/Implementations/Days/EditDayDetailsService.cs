@@ -126,6 +126,17 @@ namespace CR.Core.Services.Implementations.Days
                         };
                     }
 
+                    var result = DoesNotOverlap(list);
+
+                    if (result is false)
+                    {
+                        return new ResultDto()
+                        {
+                            IsSuccess = false,
+                            Message = "در زمان بندی ها تداخل وجود دارد"
+                        };
+                    }
+
                     _context.TimeOfDays.AddRange(timeOfDaysList);
 
                     _context.SaveChanges();
@@ -159,6 +170,20 @@ namespace CR.Core.Services.Implementations.Days
             {
                 transaction.Dispose();
             }
+        }
+        public static bool DoesNotOverlap(IEnumerable<TimeOfDay> list)
+        {
+            DateTime endPrior = DateTime.MinValue;
+            foreach (TimeOfDay timeOfDay in list.OrderBy(x => x.StartTime))
+            {
+                if (timeOfDay.StartTime > timeOfDay.FinishTime)
+                    return false;
+                if (timeOfDay.StartTime < endPrior)
+                    return false;
+                endPrior = timeOfDay.FinishTime;
+            }
+
+            return true;
         }
     }
 }
