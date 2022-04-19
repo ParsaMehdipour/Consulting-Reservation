@@ -1,4 +1,5 @@
 ﻿using CR.Common.DTOs;
+using CR.Common.Utilities;
 using CR.Core.DTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
@@ -31,10 +32,14 @@ namespace CR.Core.Services.Implementations.Appointment
                     AppointmentDate = a.TimeOfDay.Day.Date_String,
                     AppointmentTime = a.TimeOfDay.StartHour + " - " + a.TimeOfDay.FinishHour,
                     Speciality = a.ExpertInformation.Specialty.Name,
+                    ConsumerId = a.ConsumerInformation.ConsumerId,
                     ConsumerFullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
+                    ExpertId = a.ExpertInformation.ExpertId,
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,
                     ConsumerIconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ExpertIconSrc = a.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
+                    AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
+                    AppointmentPrice = a.Price.ToString(),
                     Id = a.Id
                 }).OrderByDescending(a => a.AppointmentDate).Take(10).ToList();
 
