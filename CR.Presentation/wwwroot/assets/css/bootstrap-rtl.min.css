@@ -1,7 +1,7 @@
 body {
     direction: rtl;
     text-align: right;
-     font-family:IRANSans-web;
+    font-family: IRANSans-web;
     font-weight: normal;
     font-style: normal;
     font-size: 14px;
@@ -104,7 +104,7 @@ body {
 
 .custom-control-label::before, .custom-control-label::after {
     left: auto;
-    right: 0;
+    /*right: 0;*/
 }
 
 .form-check-input {
