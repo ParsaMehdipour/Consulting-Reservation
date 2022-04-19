@@ -22,9 +22,6 @@ namespace CR.Core.Services.Implementations.Appointment
 
         public ResultDto<ResultGetConsumerAppointmentsForExpertPanel> Execute(long expertId, long consumerId, int Page = 1, int PageSize = 20)
         {
-
-            int rowCount = 0;
-
             var consumerAppointments = _context.Appointments
                 .Include(a => a.ExpertInformation)
                 .ThenInclude(e => e.Specialty)
@@ -45,7 +42,7 @@ namespace CR.Core.Services.Implementations.Appointment
                     ExpertIconSrc = a.ExpertInformation.IconSrc,
                     ExpertSpeciality = a.ExpertInformation.Specialty.Name,
                 }).AsEnumerable()
-                .ToPaged(Page, PageSize, out rowCount)
+                .ToPaged(Page, PageSize, out var rowCount)
                 .ToList();
 
             var consumer = _context.Appointments

@@ -195,6 +195,7 @@
                     $('#loading').show();
                 },
                 success: function(response) {
+                    $('#loading').hide();
                     if (response.isSuccess === true) {
                         document.getElementById('balance').innerHTML = response.data + " تومان ";
                     }
