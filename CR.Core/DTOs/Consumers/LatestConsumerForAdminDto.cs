@@ -8,5 +8,6 @@
         public string phoneNumber { get; set; }
         public string lastVisit { get; set; }
         public string paidAmount { get; set; }
+        public string iconSrc { get; set; }
     }
 }
