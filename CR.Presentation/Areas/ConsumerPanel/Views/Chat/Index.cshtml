@@ -69,7 +69,7 @@
                     </div>
                     <div class="chat-body">
                         <div class="chat-scroll">
-                            <ul id="messages-Body" class="list-unstyled">
+                            <ul id="messages-Body-Consumer" class="list-unstyled">
                             </ul>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
             success: function (response) {
                 if (response.isSuccess === true) {
                     var model = response.data;
-                    $("#messages-Body").html("");
+                    $("#messages-Body-Consumer").html("");
                     var body = "";
 
                     for (let i = 0; i < model.chatMessageDtos.length; i++) {
@@ -275,7 +275,7 @@
                         }
                         document.getElementById("consumerName").innerHTML = model.receiverFullName;
                         document.getElementById("consumerImage").src = "/" + model.receiverIconSrc;
-                        $("#messages-Body").html(body);
+                        $("#messages-Body-Consumer").html(body);
                     }
                 }
                 else {
@@ -346,12 +346,40 @@
     //}
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
+        var time = "@DateTime.Now.Minute : @DateTime.Now.Hour";
         var user = ChatUserId;
         var message = $("#message").val();
         var messageFlag = 0;
         connection.invoke("SendMessage", user, message,messageFlag).catch(function (err) {
             return console.error(err.toString());
         });
+
+        var body2 = $("#messages-Body-Consumer").html();
+
+        body2 += '<li class="media received">';
+        body2 += '<div class="media-body">';
+        body2 += '<div class="msg-box">';
+        body2 += '<div>';
+        body2 += '<p>';
+        body2 += message;
+        body2 += '</p>';
+        body2 += '<ul class="chat-msg-info">';
+        body2 += '<li>';
+        body2 += '<div class="chat-time">';
+        body2 += '<span>';
+        body2 += time;
+        body2 += '</span>';
+        body2 += '</div>';
+        body2 += '</li>';
+        body2 += '</ul>';
+        body2 += '</div>';
+        body2 += '</div>';
+        body2 += '</div>';
+        body2 += '</li>';
+
+        $("#messages-Body-Consumer").html("");
+        $("#messages-Body-Consumer").html(body2);
+
         event.preventDefault();
     });
 </script>

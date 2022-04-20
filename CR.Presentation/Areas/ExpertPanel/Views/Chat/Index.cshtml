@@ -70,7 +70,7 @@
                         </div>
                         <div class="chat-body">
                             <div class="chat-scroll">
-                                <ul id="messages-Body" class="list-unstyled">
+                                <ul id="messages-Body-Expert" class="list-unstyled">
                                 </ul>
                             </div>
                         </div>
@@ -149,6 +149,7 @@
             success: function (response) {
                 if (response.isSuccess === true) {
                     var model = response.data;
+                    $("#messages-Body-Expert").html("");
                     var body = "";
 
                     console.log(model);
@@ -283,7 +284,7 @@
                         }
                         document.getElementById("consumerName").innerHTML = model.receiverFullName;
                         document.getElementById("consumerImage").src = "/" + model.receiverIconSrc;
-                        $("#messages-Body").html(body);
+                        $("#messages-Body-Expert").html(body);
                     }
                 }
                 else {
@@ -353,12 +354,39 @@
     //}
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
+        var time = "@DateTime.Now.Minute : @DateTime.Now.Hour";
         var user = ChatUserId;
         var message = $("#message").val();
         var messageFlag = 1;
         connection.invoke("SendMessage", user, message,messageFlag).catch(function (err) {
             return console.error(err.toString());
         });
+
+        var body = $("#messages-Body-Expert").html();
+
+        body += '<li class="media received">';
+        body += '<div class="media-body">';
+        body += '<div class="msg-box">';
+        body += '<div>';
+        body += '<p>';
+        body += message;
+        body += '</p>';
+        body += '<ul class="chat-msg-info">';
+        body += '<li>';
+        body += '<div class="chat-time">';
+        body += '<span>';
+        body += time;
+        body += '</span>';
+        body += '</div>';
+        body += '</li>';
+        body += '</ul>';
+        body += '</div>';
+        body += '</div>';
+        body += '</div>';
+        body += '</li>';
+        $("#messages-Body-Expert").html("");
+        $("#messages-Body-Expert").html(body);
+
         event.preventDefault();
     });
 </script>
