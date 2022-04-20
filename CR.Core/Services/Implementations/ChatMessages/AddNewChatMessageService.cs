@@ -1,11 +1,15 @@
 ﻿using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs.Chat;
+using CR.Core.DTOs.ResultDTOs.ChatMessages;
 using CR.Core.Services.Interfaces.ChatMessages;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.ChatUserMessages;
+using CR.DataAccess.Enums;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.ChatMessages
 {
@@ -21,12 +25,23 @@ namespace CR.Core.Services.Implementations.ChatMessages
             _imageUploaderService = imageUploaderService;
         }
 
-        public ResultDto Execute(RequestAddNewChatMessageDto request)
+        public ResultDto<ResultAddChatMessageDto> Execute(RequestAddNewChatMessageDto request)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
+                string userId = "";
+
+                if (string.IsNullOrWhiteSpace(request.message) && request.file == null)
+                {
+                    return new ResultDto<ResultAddChatMessageDto>()
+                    {
+                        IsSuccess = false,
+                        Message = "لطفا مطلبی جهت ارسال وارد کنید",
+                        Data = null
+                    };
+                }
 
                 var chatMessage = new ChatUserMessage()
                 {
@@ -35,13 +50,15 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     MessageFlag = request.messageFlag,
                 };
 
-                if (string.IsNullOrWhiteSpace(request.message) && request.file == null)
+                if (request.messageFlag == MessageFlag.ConsumerMessage)
                 {
-                    return new ResultDto()
-                    {
-                        IsSuccess = false,
-                        Message = "لطفا مطلبی جهت ارسال وارد کنید"
-                    };
+                    userId = _context.ChatUsers.Include(_ => _.ExpertInformation)
+                        .FirstOrDefault(_ => _.Id == request.chatUserId)?.ExpertInformation.ExpertId.ToString();
+                }
+                else
+                {
+                    userId = _context.ChatUsers.Include(_ => _.Consumer)
+                        .FirstOrDefault(_ => _.Id == request.chatUserId)?.Consumer.Id.ToString();
                 }
 
                 if (!string.IsNullOrWhiteSpace(request.message))
@@ -58,35 +75,32 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     });
                 }
 
-                //if (request.Audio != null)
-                //{
-                //    chatMessage.File = _imageUploaderService.Execute(new UploadImageDto()
-                //    {
-                //        File = request.file,
-                //        Folder = "ChatVoices"
-                //    });
-                //}
-
                 _context.ChatUserMessages.Add(chatMessage);
 
                 _context.SaveChanges();
 
                 transaction.Commit();
 
-                return new ResultDto()
+                return new ResultDto<ResultAddChatMessageDto>()
                 {
                     IsSuccess = true,
-                    Message = string.Empty
+                    Message = string.Empty,
+                    Data = new ResultAddChatMessageDto()
+                    {
+                        userId = userId,
+                        messageHour = $"{chatMessage.CreateDate.Minute} : {chatMessage.CreateDate.Hour}"
+                    }
                 };
             }
             catch (Exception)
             {
                 transaction.Rollback();
 
-                return new ResultDto()
+                return new ResultDto<ResultAddChatMessageDto>()
                 {
                     Message = "پیام شما با موفقیت ارسال نشد!!",
-                    IsSuccess = false
+                    IsSuccess = false,
+                    Data = null
                 };
             }
             finally
