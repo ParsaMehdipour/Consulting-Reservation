@@ -12,8 +12,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
     [Area("ConsumerPanel")]
     public class PaymentController : Controller
     {
-        private readonly IUpdateFinancialTransactionSaleReferenceIdService
-            _updateFinancialTransactionSaleReferenceIdService;
+        private readonly IUpdateFinancialTransactionSaleReferenceIdService _updateFinancialTransactionSaleReferenceIdService;
 
         private readonly IUpdateFinancialTransactionCarHolderPANService _updateFinancialTransactionCarHolderPanService;
         private readonly IUpdateFinancialTransactionStatusService _updateFinancialTransactionStatusService;

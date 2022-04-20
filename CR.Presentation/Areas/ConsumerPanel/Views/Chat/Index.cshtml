@@ -346,6 +346,7 @@
     //}
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
+
         var time = "@DateTime.Now.Minute : @DateTime.Now.Hour";
         var user = ChatUserId;
         var message = $("#message").val();
@@ -353,6 +354,8 @@
         connection.invoke("SendMessage", user, message,messageFlag).catch(function (err) {
             return console.error(err.toString());
         });
+
+        document.getElementById('message').value = '';
 
         var body2 = $("#messages-Body-Consumer").html();
 
