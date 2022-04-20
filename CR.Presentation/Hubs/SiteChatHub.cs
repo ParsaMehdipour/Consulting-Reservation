@@ -16,16 +16,11 @@ namespace CR.Presentation.Hubs
             _addNewChatMessageService = addNewChatMessageService;
         }
 
-        public async Task SendMessage(long user, string message, MessageFlag messageFlag)
+        public async Task SendMessage(long chatUserId, string message, MessageFlag messageFlag)
         {
-            //if (user == 0)
-            //    await Clients.All.SendAsync("ReceiveMessageHandler", message);
-            //else
-            //    await Clients.User(user.ToString()).SendAsync("ReceiveMessageHandler", message);
-
             var request = new RequestAddNewChatMessageDto()
             {
-                chatUserId = user,
+                chatUserId = chatUserId,
                 message = message,
                 messageFlag = messageFlag
             };
@@ -34,7 +29,7 @@ namespace CR.Presentation.Hubs
 
             if (result.IsSuccess)
             {
-                await Clients.User(user.ToString()).SendAsync("ReceiveMessageHandler", message);
+                await Clients.User(result.Data.userId).SendAsync("ReceiveMessageHandler", message, messageFlag, result.Data.messageHour);
             }
         }
 
