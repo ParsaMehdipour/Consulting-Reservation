@@ -31,7 +31,9 @@ namespace CR.Core.Services.Implementations.ChatUsers
                     ExpertInformationId = request.expertInformationId,
                     MessageType = request.messageType,
                     AppointmentDate = request.appointmentDate,
-                    AppointmentDate_String = request.appointmentDate.ToShamsi()
+                    AppointmentDate_String = request.appointmentDate.ToShamsi(),
+                    AppointmentId = request.appointmentId,
+                    Appointment = _context.Appointments.Find(request.appointmentId)
                 };
 
                 _context.ChatUsers.Add(chatUser);
@@ -51,7 +53,7 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 return new ResultDto()
                 {
                     IsSuccess = false,
-                    Message = "خطا!!"
+                    Message = "خطا از سمت سرور"
                 };
             }
         }
