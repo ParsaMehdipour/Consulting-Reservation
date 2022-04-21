@@ -116,6 +116,7 @@ namespace CR.Presentation.Controllers.View
                             {
                                 _addNewChatUserService.Execute(new RequestAddNewChatUserDto()
                                 {
+                                    appointmentId = chatAppointment.Id,
                                     consumerId = updateStatusResult.Data.ConsumerId,
                                     expertInformationId = updateStatusResult.Data.ExpertInformationId,
                                     messageType = chatAppointment.CallingType,

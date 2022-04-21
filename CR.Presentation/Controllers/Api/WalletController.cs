@@ -56,6 +56,7 @@ namespace CR.Presentation.Controllers.Api
                     {
                         _addNewChatUserService.Execute(new RequestAddNewChatUserDto()
                         {
+                            appointmentId = chatAppointment.Id,
                             consumerId = result.Data.ConsumerId,
                             expertInformationId = result.Data.ExpertInformationId,
                             messageType = chatAppointment.CallingType,
