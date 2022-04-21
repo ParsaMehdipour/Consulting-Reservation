@@ -3,7 +3,7 @@
  */
 /* global jQuery FormData FileReader */
 (function ($) {
-    $.fn.uploader1 = function (options, testMode) {
+    $.fn.uploader3 = function (options, testMode) {
         return this.each(function (index) {
             options = $.extend({
                 submitButtonCopy: 'انتخاب تصویر',
@@ -52,7 +52,7 @@
             // set up event handling
             bindUIEvents();
 
-            function setupDOM (dom) {
+            function setupDOM(dom) {
                 dom.contentsContainer
                     .append(dom.instructions)
                     .append(dom.selectButton);
@@ -65,7 +65,7 @@
                     .after(dom.furtherInstructions);
             }
 
-            function bindUIEvents () {
+            function bindUIEvents() {
                 // handle drag and drop
                 options.dropZone.on('dragover dragleave', function (e) {
                     e.preventDefault();
@@ -89,14 +89,14 @@
                 if (options.testMode) {
                     options.dropZone.on('uploaderTestEvent', function (e) {
                         switch (e.functionName) {
-                        case 'selectFilesHandler':
-                            selectFilesHandler(e);
-                            break;
-                        case 'uploadSubmitHandler':
-                            uploadSubmitHandler(e);
-                            break;
-                        default:
-                            break;
+                            case 'selectFilesHandler':
+                                selectFilesHandler(e);
+                                break;
+                            case 'uploadSubmitHandler':
+                                uploadSubmitHandler(e);
+                                break;
+                            default:
+                                break;
                         }
                     });
                 }
@@ -104,9 +104,9 @@
 
             function addItem(file) {
 
-                alert("uploader1");
+                alert("uploader3");
 
-                addResumeFileToList(file);
+                addDegreeFileToList(file);
 
                 var fileName = cleanName(file.name);
                 var fileSize = file.size;
@@ -124,7 +124,7 @@
                 // validate the file
                 if (options.fileTypeWhiteList.indexOf(getExtension(file.name).toLowerCase()) !== -1) {
                     // file is ok, add it to the batch
-                    state.fileBatch.push({file: file, id: id, fileName: fileName, fileSize: fileSize});
+                    state.fileBatch.push({ file: file, id: id, fileName: fileName, fileSize: fileSize });
                     sizeWrapper = $('<span class="uploader__file-list__size">' + formatBytes(fileSize) + '</span>');
                 } else {
                     // file is not ok, only add it to the dom
@@ -157,7 +157,7 @@
                 dom.fileList.append(listItem);
             }
 
-            function getExtension (path) {
+            function getExtension(path) {
                 var basename = path.split(/[\\/]/).pop();
                 var pos = basename.lastIndexOf('.');
 
@@ -167,7 +167,7 @@
                 return basename.slice(pos + 1);
             }
 
-            function formatBytes (bytes, decimals) {
+            function formatBytes(bytes, decimals) {
                 if (bytes === 0) return '0 Bytes';
                 var k = 1024;
                 var dm = decimals + 1 || 3;
@@ -176,12 +176,12 @@
                 return (bytes / Math.pow(k, i)).toPrecision(dm) + ' ' + sizes[i];
             }
 
-            function cleanName (name) {
+            function cleanName(name) {
                 name = name.replace(/\s+/gi, '-'); // Replace white space with dash
                 return name.replace(/[^a-zA-Z0-9.\-]/gi, ''); // Strip any special characters
             }
 
-            function uploadSubmitHandler () {
+            function uploadSubmitHandler() {
                 if (state.fileBatch.length !== 0) {
                     var data = new FormData();
                     for (var i = 0; i < state.fileBatch.length; i++) {
@@ -198,7 +198,7 @@
                 }
             }
 
-            function selectFilesHandler (e) {
+            function selectFilesHandler(e) {
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -214,7 +214,7 @@
                 renderControls();
             }
 
-            function renderControls () {
+            function renderControls() {
                 if (dom.fileList.children().length !== 0) {
                     dom.submitButton.removeClass('uploader__hide');
                     dom.furtherInstructions.removeClass('uploader__hide');
@@ -226,7 +226,7 @@
                 }
             }
 
-            function removeItemHandler (e) {
+            function removeItemHandler(e) {
                 e.preventDefault();
 
                 if (!state.isUploading) {
@@ -505,7 +505,7 @@
             }
         });
     };
-    $.fn.uploader3 = function (options, testMode) {
+    $.fn.uploader1 = function (options, testMode) {
         return this.each(function (index) {
             options = $.extend({
                 submitButtonCopy: 'انتخاب تصویر',
@@ -554,7 +554,7 @@
             // set up event handling
             bindUIEvents();
 
-            function setupDOM(dom) {
+            function setupDOM (dom) {
                 dom.contentsContainer
                     .append(dom.instructions)
                     .append(dom.selectButton);
@@ -567,7 +567,7 @@
                     .after(dom.furtherInstructions);
             }
 
-            function bindUIEvents() {
+            function bindUIEvents () {
                 // handle drag and drop
                 options.dropZone.on('dragover dragleave', function (e) {
                     e.preventDefault();
@@ -591,14 +591,14 @@
                 if (options.testMode) {
                     options.dropZone.on('uploaderTestEvent', function (e) {
                         switch (e.functionName) {
-                            case 'selectFilesHandler':
-                                selectFilesHandler(e);
-                                break;
-                            case 'uploadSubmitHandler':
-                                uploadSubmitHandler(e);
-                                break;
-                            default:
-                                break;
+                        case 'selectFilesHandler':
+                            selectFilesHandler(e);
+                            break;
+                        case 'uploadSubmitHandler':
+                            uploadSubmitHandler(e);
+                            break;
+                        default:
+                            break;
                         }
                     });
                 }
@@ -606,9 +606,9 @@
 
             function addItem(file) {
 
-                alert("uploader3");
+                alert("uploader1");
 
-                addDegreeFileToList(file);
+                addResumeFileToList(file);
 
                 var fileName = cleanName(file.name);
                 var fileSize = file.size;
@@ -626,7 +626,7 @@
                 // validate the file
                 if (options.fileTypeWhiteList.indexOf(getExtension(file.name).toLowerCase()) !== -1) {
                     // file is ok, add it to the batch
-                    state.fileBatch.push({ file: file, id: id, fileName: fileName, fileSize: fileSize });
+                    state.fileBatch.push({file: file, id: id, fileName: fileName, fileSize: fileSize});
                     sizeWrapper = $('<span class="uploader__file-list__size">' + formatBytes(fileSize) + '</span>');
                 } else {
                     // file is not ok, only add it to the dom
@@ -659,7 +659,7 @@
                 dom.fileList.append(listItem);
             }
 
-            function getExtension(path) {
+            function getExtension (path) {
                 var basename = path.split(/[\\/]/).pop();
                 var pos = basename.lastIndexOf('.');
 
@@ -669,7 +669,7 @@
                 return basename.slice(pos + 1);
             }
 
-            function formatBytes(bytes, decimals) {
+            function formatBytes (bytes, decimals) {
                 if (bytes === 0) return '0 Bytes';
                 var k = 1024;
                 var dm = decimals + 1 || 3;
@@ -678,12 +678,12 @@
                 return (bytes / Math.pow(k, i)).toPrecision(dm) + ' ' + sizes[i];
             }
 
-            function cleanName(name) {
+            function cleanName (name) {
                 name = name.replace(/\s+/gi, '-'); // Replace white space with dash
                 return name.replace(/[^a-zA-Z0-9.\-]/gi, ''); // Strip any special characters
             }
 
-            function uploadSubmitHandler() {
+            function uploadSubmitHandler () {
                 if (state.fileBatch.length !== 0) {
                     var data = new FormData();
                     for (var i = 0; i < state.fileBatch.length; i++) {
@@ -700,7 +700,7 @@
                 }
             }
 
-            function selectFilesHandler(e) {
+            function selectFilesHandler (e) {
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -716,7 +716,7 @@
                 renderControls();
             }
 
-            function renderControls() {
+            function renderControls () {
                 if (dom.fileList.children().length !== 0) {
                     dom.submitButton.removeClass('uploader__hide');
                     dom.furtherInstructions.removeClass('uploader__hide');
@@ -728,7 +728,7 @@
                 }
             }
 
-            function removeItemHandler(e) {
+            function removeItemHandler (e) {
                 e.preventDefault();
 
                 if (!state.isUploading) {
@@ -756,5 +756,4 @@
             }
         });
     };
-
 }(jQuery));
