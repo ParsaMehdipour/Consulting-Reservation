@@ -26,6 +26,10 @@ namespace CR.DataAccess.Configurations
                 .WithMany(a => a.Appointments)
                 .HasForeignKey(a => a.FactorId);
 
+            builder.HasMany(a => a.ChatUsers)
+                .WithOne(a => a.Appointment)
+                .HasForeignKey(a => a.AppointmentId);
+
             builder.Property(_ => _.Reason);
 
             builder.Property(_ => _.AppointmentStatus);

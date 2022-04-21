@@ -138,6 +138,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                         IsChat = factor.Appointments.Any(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall),
                         chatAppointments = factor.Appointments.Where(_ => _.CallingType == CallingType.TextCall || _.CallingType == CallingType.VoiceCall).Select(_ => new ChatAppointmentDto()
                         {
+                            Id = _.Id,
                             CallingType = _.CallingType,
                             AppointmentDate = _.TimeOfDay.Day.Date
                         }).ToList(),

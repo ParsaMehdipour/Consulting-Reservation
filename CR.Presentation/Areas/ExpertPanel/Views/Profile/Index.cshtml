@@ -140,11 +140,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    @if (Model.otherImages.Count > 0)
+                                    @if (Model.degreeImages.Count > 0)
                                     {
-                                        <label>سایر تصاویر</label>
+                                        <label>تصاویر مدارک هویتی</label>
                                         <div class="upload-wrap">
-                                            @foreach (var image in Model.otherImages)
+                                            @foreach (var image in Model.degreeImages)
                                             {
                                                 <div class="upload-images">
                                                     <a href="~/@image.Src" data-fancybox="gallery">
@@ -157,44 +157,13 @@
                                         <br />
                                     }
                                     <div class="form-group">
-                                        <label>بارگذاری سایر تصاویر</label>
-                                        <span id="otherImageUploadContainer" style="width: 100%">
+                                        <label>بارگذاری تصاویر مدارک هویتی</label>
+                                        <span id="degreeImageUploadContainer" style="width: 100%">
                                             <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box_other l-center-box">
+                                                <div class="uploader__box js-uploader__box l-center-box">
                                                     <div class="uploader__contents">
-                                                        <label class="button button--secondary" for="fileinputOther">انتخاب تصویر</label>
-                                                        <input id="fileinputOther" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </span>
-                                    </div>
-                                </div><br />
-                                <div class="col-md-12">
-                                    @if (Model.resumeImages.Count > 0)
-                                    {
-                                        <label>تصاویر رزومه</label>
-                                        <div class="upload-wrap">
-                                            @foreach (var image in Model.resumeImages)
-                                            {
-                                                <div class="upload-images">
-                                                    <a href="~/@image.Src" data-fancybox="gallery">
-                                                        <img src="~/@image.Src" alt="Upload Image">
-                                                    </a>
-                                                    <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-                                                </div>
-                                            }
-                                        </div>
-                                        <br />
-                                    }
-                                    <div class="form-group">
-                                        <label>بارگذاری تصاویر رزومه</label>
-                                        <span id="rseumeImageUploadContainer" style="width: 100%">
-                                            <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box_Resume l-center-box">
-                                                    <div class="uploader__contents">
-                                                        <label class="button button--secondary" for="fileinputResume">انتخاب تصویر</label>
-                                                        <input id="fileinputResume" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
+                                                        <label class="button button--secondary" for="fileinputDegree">انتخاب تصویر</label>
+                                                        <input id="fileinputDegree" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
                                                     </div>
                                                 </div>
                                             </div>
@@ -222,10 +191,72 @@
                                         <label>بارگذاری تصاویر مدرک</label>
                                         <span id="degreeImageUploadContainer" style="width: 100%">
                                             <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box_Degree l-center-box">
+                                                <div class="uploader__box js-uploader__box l-center-box">
                                                     <div class="uploader__contents">
                                                         <label class="button button--secondary" for="fileinputDegree">انتخاب تصویر</label>
                                                         <input id="fileinputDegree" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div><br />
+                                <div class="col-md-12">
+                                    @if (Model.resumeImages.Count > 0)
+                                    {
+                                        <label>تصاویر رزومه</label>
+                                        <div class="upload-wrap">
+                                            @foreach (var image in Model.resumeImages)
+                                            {
+                                                <div class="upload-images">
+                                                    <a href="~/@image.Src" data-fancybox="gallery">
+                                                        <img src="~/@image.Src" alt="Upload Image">
+                                                    </a>
+                                                    <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                                                </div>
+                                            }
+                                        </div>
+                                        <br />
+                                    }
+                                    <div class="form-group">
+                                        <label>بارگذاری تصاویر رزومه</label>
+                                        <span id="rseumeImageUploadContainer" style="width: 100%">
+                                            <div class="col-lg-12 ">
+                                                <div class="uploader__box js-uploader__box l-center-box">
+                                                    <div class="uploader__contents">
+                                                        <label class="button button--secondary" for="fileinputResume">انتخاب تصویر</label>
+                                                        <input id="fileinputResume" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div><br />
+                                <div class="col-md-12">
+                                    @if (Model.otherImages.Count > 0)
+                                    {
+                                        <label>سایر تصاویر</label>
+                                        <div class="upload-wrap">
+                                            @foreach (var image in Model.otherImages)
+                                            {
+                                                <div class="upload-images">
+                                                    <a href="~/@image.Src" data-fancybox="gallery">
+                                                        <img src="~/@image.Src" alt="Upload Image">
+                                                    </a>
+                                                    <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                                                </div>
+                                            }
+                                        </div>
+                                        <br />
+                                    }
+                                    <div class="form-group">
+                                        <label>بارگذاری سایر تصاویر</label>
+                                        <span id="otherImageUploadContainer" style="width: 100%">
+                                            <div class="col-lg-12 ">
+                                                <div class="uploader__box js-uploader__box l-center-box">
+                                                    <div class="uploader__contents">
+                                                        <label class="button button--secondary" for="fileinputOther">انتخاب تصویر</label>
+                                                        <input id="fileinputOther" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
                                                     </div>
                                                 </div>
                                             </div>

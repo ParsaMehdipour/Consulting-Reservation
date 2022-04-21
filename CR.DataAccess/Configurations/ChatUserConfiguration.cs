@@ -22,6 +22,10 @@ namespace CR.DataAccess.Configurations
                 .WithOne(_ => _.ChatUser)
                 .HasForeignKey(_ => _.ChatUserId);
 
+            builder.HasOne(_ => _.Appointment)
+                .WithMany(_ => _.ChatUsers)
+                .HasForeignKey(_ => _.AppointmentId);
+
             builder.Property(_ => _.AppointmentDate_String)
                 .HasMaxLength(150)
                 .IsRequired();

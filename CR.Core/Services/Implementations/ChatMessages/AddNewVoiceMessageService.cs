@@ -5,7 +5,10 @@ using CR.Core.Services.Interfaces.ChatMessages;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.ChatUserMessages;
+using CR.DataAccess.Enums;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.ChatMessages
 {
@@ -27,10 +30,36 @@ namespace CR.Core.Services.Implementations.ChatMessages
 
             try
             {
+                var chatUser = _context.ChatUsers
+                    .Include(_ => _.Appointment)
+                    .ThenInclude(_ => _.TimeOfDay)
+                    .FirstOrDefault(_ => _.Id == request.chatUserId);
+
+                if (request.messageFlag == MessageFlag.ConsumerMessage)
+                {
+                    if (DateTime.Now < chatUser?.Appointment.TimeOfDay.StartTime)
+                    {
+                        return new ResultDto()
+                        {
+                            IsSuccess = false,
+                            Message = "زمان شروع نوبت شما نرسیده است"
+                        };
+                    }
+
+                    if (DateTime.Now > chatUser?.Appointment.TimeOfDay.FinishTime)
+                    {
+                        return new ResultDto()
+                        {
+                            IsSuccess = false,
+                            Message = "زمان نوبت شما پایان یافت"
+                        };
+                    }
+                }
+
                 var chatMessage = new ChatUserMessage()
                 {
                     ChatUserId = request.chatUserId,
-                    ChatUser = _context.ChatUsers.Find(request.chatUserId),
+                    ChatUser = chatUser,
                     MessageFlag = request.messageFlag,
                 };
 
@@ -66,7 +95,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
                 return new ResultDto()
                 {
                     IsSuccess = false,
-                    Message = "خطا!!"
+                    Message = "خطا از سمت سرور"
                 };
             }
         }

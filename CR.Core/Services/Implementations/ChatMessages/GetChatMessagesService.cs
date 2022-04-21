@@ -3,6 +3,7 @@ using CR.Core.DTOs.ChatMessages;
 using CR.Core.DTOs.ResultDTOs.ChatMessages;
 using CR.Core.Services.Interfaces.ChatMessages;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -19,7 +20,10 @@ namespace CR.Core.Services.Implementations.ChatMessages
 
         public ResultDto<ResultGetChatMessagesDto> Execute(long chatUserId, bool isExpert)
         {
-            var chatUser = _context.ChatUsers.Include(_ => _.Consumer).Include(_ => _.ExpertInformation).FirstOrDefault(_ => _.Id == chatUserId);
+            var chatUser = _context.ChatUsers.Include(_ => _.Consumer)
+                .Include(_ => _.ExpertInformation)
+                .Include(_ => _.Appointment)
+                .FirstOrDefault(_ => _.Id == chatUserId);
 
             if (chatUser == null)
             {
@@ -53,6 +57,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
             {
                 Data = new ResultGetChatMessagesDto()
                 {
+                    isVoice = chatUser.Appointment.CallingType == CallingType.VoiceCall,
                     chatMessageDtos = chatMessages,
                     receiverFullName = (isExpert) ? chatUser.Consumer.FirstName + " " + chatUser.Consumer.LastName : chatUser.ExpertInformation.FirstName + " " + chatUser.ExpertInformation.LastName,
                     receiverIconSrc = (isExpert) ? (string.IsNullOrWhiteSpace(chatUser.Consumer.IconSrc) ? "assets/img/icon-256x256.png" : chatUser.Consumer.IconSrc) : (string.IsNullOrWhiteSpace(chatUser.ExpertInformation.IconSrc) ? "assets/img/icon-256x256.png" : chatUser.ExpertInformation.IconSrc)

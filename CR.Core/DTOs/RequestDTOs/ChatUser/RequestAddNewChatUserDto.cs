@@ -9,5 +9,6 @@ namespace CR.Core.DTOs.RequestDTOs.ChatUser
         public long consumerId { get; set; }
         public CallingType messageType { get; set; }
         public DateTime appointmentDate { get; set; }
+        public long appointmentId { get; set; }
     }
 }

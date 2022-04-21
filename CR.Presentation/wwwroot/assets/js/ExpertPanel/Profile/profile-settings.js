@@ -6,20 +6,14 @@ Version      : 1.0
 
 $(document).ready(function () {
 
-	var optionsResume = {};
-	var resumeUploader = $('.js-uploader__box_Resume').uploader1(optionsResume);
-
-	console.log(resumeUploader);
+	var optionsDegree = {};
+	var degreeUploader = $('.js-uploader__box').uploader3(optionsDegree);
 
 	var optionsOther = {};
-	var otherUploader = $('.js-uploader__box_other').uploader3(optionsOther);
+	var otherUploader = $('.js-uploader__box').uploader2(optionsOther);
 
-	console.log(otherUploader);
-
-	var optionsDegree = {};
-	var degreeUploader = $('.js-uploader__box_Degree').uploader3(optionsDegree);
-
-	console.log(degreeUploader);
+	var optionsResume = {};
+	var resumeUploader = $('.js-uploader__box').uploader1(optionsResume);
 
 	$("#ExpertPanelMenu .active").removeClass("active");
 	$("#ExpertPanelMenu #Profile").addClass("active");

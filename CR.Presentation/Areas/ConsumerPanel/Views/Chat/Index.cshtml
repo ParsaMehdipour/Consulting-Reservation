@@ -74,14 +74,13 @@
                         </div>
                     </div>
                     <div class="chat-footer">
-                        <div class="input-group">
+                        <div id="voice" class="input-group">
                             <div id="controls">
                                 <button id="recordButton">شروع</button>
                                 <button id="pauseButton" disabled>توقف</button>
                                 <button id="stopButton" disabled>پایان</button>
                             </div>
                             <div id="formats"></div>
-                            @*<p><strong>پیام ها:</strong></p>*@
                             <ol id="recordingsList"></ol>
                         </div>
                         <div class="input-group">
@@ -110,6 +109,12 @@
 <script src="~/assets/js/RecorderForConsumer/app.js"></script>
 
 <script>
+
+    $(document).ready(function() {
+        var element = document.getElementById("voice");
+        element.style.visibility = 'hidden';
+    });
+
     var ChatUserId = 0;
 
     function SetChatUserId(chatUserId) {
@@ -141,6 +146,18 @@
             success: function (response) {
                 if (response.isSuccess === true) {
                     var model = response.data;
+                    var element = document.getElementById("voice");
+
+                    if (model.isVoice === true) {
+                        
+                        element.style.visibility = 'visible';
+                    }
+                    else{
+
+                        element.style.visibility = 'hidden';
+                    }
+
+
                     $("#messages-Body-Consumer").html("");
                     var body = "";
 
@@ -285,7 +302,6 @@
                         data.message,
                         'warning'
                     );
-
                 }
             },
             complete: function() {
@@ -301,89 +317,83 @@
         });
     }
 
-    //function AddNewMessage() {
-    //    console.log($("#adioPlay"));
-
-    //    var addNewMessageForm = new FormData();
-
-    //    addNewMessageForm.append("chatUserId",ChatUserId);
-    //    addNewMessageForm.append("message",$("#message").val());
-    //    addNewMessageForm.append("file",$("#image").get(0).files[0]);
-    //    addNewMessageForm.append("messageFlag",0);
-
-    //    $.ajax({
-    //        type: "POST",
-    //        url: '/api/Chat/AddNewConsumerMessage',
-    //        data: addNewMessageForm,
-    //        processData: false,
-    //        contentType: false,
-    //        beforeSend: function(x) {
-    //            $('#loading').show();
-    //        },
-    //        success: function(data) {
-    //            if (data.isSuccess === true) {
-    //                location.reload();
-    //            }
-    //            else {
-    //                swal.fire(
-    //                    'هشدار!',
-    //                    data.message,
-    //                    'warning'
-    //                );
-
-    //            }
-    //        },
-    //        complete: function() {
-    //            $('#loading').hide();
-    //        },
-    //        fail: function() {
-    //            $('#loading').hide();
-    //        },
-    //        error: function(request, status, error) {
-    //            alert(request.responseText);
-    //        }
-    //    });
-    //}
-
     document.getElementById("sendButton").addEventListener("click", function (event) {
 
-        var time = "@DateTime.Now.Minute : @DateTime.Now.Hour";
-        var user = ChatUserId;
-        var message = $("#message").val();
-        var messageFlag = 0;
-        connection.invoke("SendMessage", user, message,messageFlag).catch(function (err) {
-            return console.error(err.toString());
+        var addNewMessageForm = new FormData();
+
+        addNewMessageForm.append("chatUserId",ChatUserId);
+        addNewMessageForm.append("message",$("#message").val());
+        addNewMessageForm.append("file",$("#image").get(0).files[0]);
+
+        $.ajax({
+            type: "POST",
+            url: '/api/Chat/CheckTime',
+            data: addNewMessageForm,
+            processData: false,
+            contentType: false,
+            beforeSend: function(x) {
+                $('#loading').show();
+            },
+            success: function(data) {
+                if (data.isSuccess === true) {
+
+                    var time = "@DateTime.Now.Minute : @DateTime.Now.Hour";
+                    var user = ChatUserId;
+                    var message = $("#message").val();
+                    var messageFlag = 0;
+                    connection.invoke("SendMessage", user, message,messageFlag).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+
+                    document.getElementById('message').value = '';
+
+                    var body2 = $("#messages-Body-Consumer").html();
+
+                    body2 += '<li class="media received">';
+                    body2 += '<div class="media-body">';
+                    body2 += '<div class="msg-box">';
+                    body2 += '<div>';
+                    body2 += '<p>';
+                    body2 += message;
+                    body2 += '</p>';
+                    body2 += '<ul class="chat-msg-info">';
+                    body2 += '<li>';
+                    body2 += '<div class="chat-time">';
+                    body2 += '<span>';
+                    body2 += time;
+                    body2 += '</span>';
+                    body2 += '</div>';
+                    body2 += '</li>';
+                    body2 += '</ul>';
+                    body2 += '</div>';
+                    body2 += '</div>';
+                    body2 += '</div>';
+                    body2 += '</li>';
+
+                    $("#messages-Body-Consumer").html("");
+                    $("#messages-Body-Consumer").html(body2);
+
+                    event.preventDefault();
+                }
+                else {
+                    swal.fire(
+                        'هشدار!',
+                        data.message,
+                        'warning'
+                    );
+
+                }
+            },
+            complete: function() {
+                $('#loading').hide();
+            },
+            fail: function() {
+                $('#loading').hide();
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
         });
-
-        document.getElementById('message').value = '';
-
-        var body2 = $("#messages-Body-Consumer").html();
-
-        body2 += '<li class="media received">';
-        body2 += '<div class="media-body">';
-        body2 += '<div class="msg-box">';
-        body2 += '<div>';
-        body2 += '<p>';
-        body2 += message;
-        body2 += '</p>';
-        body2 += '<ul class="chat-msg-info">';
-        body2 += '<li>';
-        body2 += '<div class="chat-time">';
-        body2 += '<span>';
-        body2 += time;
-        body2 += '</span>';
-        body2 += '</div>';
-        body2 += '</li>';
-        body2 += '</ul>';
-        body2 += '</div>';
-        body2 += '</div>';
-        body2 += '</div>';
-        body2 += '</li>';
-
-        $("#messages-Body-Consumer").html("");
-        $("#messages-Body-Consumer").html(body2);
-
-        event.preventDefault();
     });
 </script>
 }
