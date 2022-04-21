@@ -1,8 +1,10 @@
 ﻿using CR.DataAccess.Common.Entity;
+using CR.DataAccess.Entities.ChatUsers;
 using CR.DataAccess.Entities.ExpertAvailabilities;
 using CR.DataAccess.Entities.Factors;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Enums;
+using System.Collections.Generic;
 
 namespace CR.DataAccess.Entities.Appointments
 {
@@ -32,6 +34,7 @@ namespace CR.DataAccess.Entities.Appointments
         public ExpertInformation ExpertInformation { get; set; }
         public ConsumerInfromation ConsumerInformation { get; set; }
         public virtual Factor Factor { get; set; }
+        public ICollection<ChatUser> ChatUsers { get; set; }
 
         #endregion
 

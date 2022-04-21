@@ -1,4 +1,5 @@
 ﻿using CR.DataAccess.Common.Entity;
+using CR.DataAccess.Entities.Appointments;
 using CR.DataAccess.Entities.ChatUserMessages;
 using CR.DataAccess.Entities.IndividualInformations;
 using CR.DataAccess.Entities.Users;
@@ -19,12 +20,14 @@ namespace CR.DataAccess.Entities.ChatUsers
 
         public long ConsumerId { get; set; }
         public long ExpertInformationId { get; set; }
+        public long AppointmentId { get; set; }
 
         #endregion
 
         #region Navigation Properties
 
         public User Consumer { get; set; }
+        public Appointment Appointment { get; set; }
         public ExpertInformation ExpertInformation { get; set; }
         public ICollection<ChatUserMessage> ChatUserMessages { get; set; }
 
