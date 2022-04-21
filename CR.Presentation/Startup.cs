@@ -298,6 +298,7 @@ namespace CR.Presentation
             services.AddScoped<IGetExpertChatUsersService, GetExpertChatUsersService>();
             services.AddScoped<IAddNewChatUserService, AddNewChatUserService>();
             services.AddScoped<IGetConsumerChatUsersService, GetConsumerChatUsersService>();
+            services.AddScoped<ICheckForAppointmentTimeService, CheckForAppointmentTimeService>();
             //ChatMessages
             services.AddScoped<IGetChatMessagesService, GetChatMessagesService>();
             services.AddScoped<IAddNewChatMessageService, AddNewChatMessageService>();
