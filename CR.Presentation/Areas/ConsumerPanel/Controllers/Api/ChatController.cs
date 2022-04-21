@@ -1,25 +1,29 @@
 ﻿using CR.Core.DTOs.RequestDTOs.Chat;
+using CR.Core.DTOs.RequestDTOs.ChatUser;
 using CR.Core.Services.Interfaces.ChatMessages;
+using CR.Core.Services.Interfaces.ChatUsers;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class ChatController : ControllerBase
     {
         private readonly IGetChatMessagesService _getChatMessagesService;
         private readonly IAddNewChatMessageService _addNewChatMessageService;
         private readonly IAddNewVoiceMessageService _addNewVoiceMessageService;
+        private readonly ICheckForAppointmentTimeService _checkForAppointmentTimeService;
 
         public ChatController(IGetChatMessagesService getChatMessagesService
-        , IAddNewChatMessageService addNewChatMessageService,
-        IAddNewVoiceMessageService addNewVoiceMessageService)
+        , IAddNewChatMessageService addNewChatMessageService
+        , IAddNewVoiceMessageService addNewVoiceMessageService
+        , ICheckForAppointmentTimeService checkForAppointmentTimeService)
         {
             _getChatMessagesService = getChatMessagesService;
             _addNewChatMessageService = addNewChatMessageService;
             _addNewVoiceMessageService = addNewVoiceMessageService;
+            _checkForAppointmentTimeService = checkForAppointmentTimeService;
         }
 
         [Route("/api/Chat/GetConsumerMessages")]
@@ -47,6 +51,15 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
         public IActionResult AddNewVoiceMessage([FromForm] RequestAddNewVoiceMessageDto request)
         {
             var result = _addNewVoiceMessageService.Execute(request);
+
+            return new JsonResult(result);
+        }
+
+        [Route("/api/Chat/CheckTime")]
+        [HttpPost]
+        public IActionResult CheckTime([FromForm] RequestCheckForAppointmentTimeDto request)
+        {
+            var result = _checkForAppointmentTimeService.Execute(request);
 
             return new JsonResult(result);
         }
