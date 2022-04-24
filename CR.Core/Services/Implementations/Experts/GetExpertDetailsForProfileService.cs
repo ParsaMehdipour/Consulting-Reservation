@@ -109,6 +109,14 @@ namespace CR.Core.Services.Implementations.Experts
                             Src = i.Src
                         }
                         ).ToList(),
+                    identityImages = (expertInformation.ExpertImages == null) ? new List<ExpertImageDto>() : expertInformation.ExpertImages
+                        .Where(i => i.ImageType == ImageType.Identity)
+                        .Select(i => new ExpertImageDto
+                        {
+                            Id = i.Id,
+                            Src = i.Src
+                        }
+                        ).ToList(),
                     experiences = (expertInformation.ExpertExperiences == null) ? new List<ExpertExperienceDto>() : expertInformation.ExpertExperiences.Select(e => new ExpertExperienceDto
                     {
                         clinicName = e.ClinicName,

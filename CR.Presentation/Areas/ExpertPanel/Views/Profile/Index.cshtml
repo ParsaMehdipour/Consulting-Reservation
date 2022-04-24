@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Style
+{
+    <link rel="stylesheet" href="~/lib/imageUploader/styles.imageuploader.css" />
+}
+
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
     <div class="container-fluid">
@@ -144,7 +149,7 @@
                                     {
                                         <label>تصاویر مدارک هویتی</label>
                                         <div class="upload-wrap">
-                                            @foreach (var image in Model.degreeImages)
+                                            @foreach (var image in Model.identityImages)
                                             {
                                                 <div class="upload-images">
                                                     <a href="~/@image.Src" data-fancybox="gallery">
@@ -158,12 +163,12 @@
                                     }
                                     <div class="form-group">
                                         <label>بارگذاری تصاویر مدارک هویتی</label>
-                                        <span id="degreeImageUploadContainer" style="width: 100%">
+                                        <span id="identityImageUploadContainer" style="width: 100%">
                                             <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box l-center-box">
+                                                <div class="uploader__box js-uploader__box_identity l-center-box">
                                                     <div class="uploader__contents">
-                                                        <label class="button button--secondary" for="fileinputDegree">انتخاب تصویر</label>
-                                                        <input id="fileinputDegree" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
+                                                        <label class="button button--secondary" for="fileinputIdentity">انتخاب تصویر</label>
+                                                        <input id="fileinputIdentity" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
                                                     </div>
                                                 </div>
                                             </div>
@@ -191,7 +196,7 @@
                                         <label>بارگذاری تصاویر مدرک</label>
                                         <span id="degreeImageUploadContainer" style="width: 100%">
                                             <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box l-center-box">
+                                                <div class="uploader__box js-uploader__box_degree l-center-box">
                                                     <div class="uploader__contents">
                                                         <label class="button button--secondary" for="fileinputDegree">انتخاب تصویر</label>
                                                         <input id="fileinputDegree" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
@@ -222,7 +227,7 @@
                                         <label>بارگذاری تصاویر رزومه</label>
                                         <span id="rseumeImageUploadContainer" style="width: 100%">
                                             <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box l-center-box">
+                                                <div class="uploader__box js-uploader__box_resume l-center-box">
                                                     <div class="uploader__contents">
                                                         <label class="button button--secondary" for="fileinputResume">انتخاب تصویر</label>
                                                         <input id="fileinputResume" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
@@ -253,7 +258,7 @@
                                         <label>بارگذاری سایر تصاویر</label>
                                         <span id="otherImageUploadContainer" style="width: 100%">
                                             <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box l-center-box">
+                                                <div class="uploader__box js-uploader__box_other l-center-box">
                                                     <div class="uploader__contents">
                                                         <label class="button button--secondary" for="fileinputOther">انتخاب تصویر</label>
                                                         <input id="fileinputOther" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
@@ -793,20 +798,19 @@
             expertProfileData.append("id", id);
 
             for (var i = 0; i < otherImageFileList.length; i++) {
-                alert("otherImageFileList");
                 expertProfileData.append("otherImage",otherImageFileList[i]);
             }
 
             for (var j = 0; j < resumeImageFileList.length; j++) {
-                alert("resumeImageFileList");
-
                 expertProfileData.append("resumeImage",resumeImageFileList[j]);
             }
 
             for (var k = 0; k < degreeImageFileList.length; k++) {
-                alert("degreeImageFileList");
-
                 expertProfileData.append("degreeImage",degreeImageFileList[k]);
+            }
+
+            for (var l = 0; l < identityImageFileList.length; l++) {
+                expertProfileData.append("identityImage",identityImageFileList[l]);
             }
 
             if (document.getElementById('price_free_phoneCallPrice').checked) {
