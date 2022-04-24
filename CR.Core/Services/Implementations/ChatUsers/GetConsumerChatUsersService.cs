@@ -21,6 +21,7 @@ namespace CR.Core.Services.Implementations.ChatUsers
         {
             var chatUsers = _context.ChatUsers
                 .Include(_ => _.ExpertInformation)
+                .ThenInclude(_ => _.Expert)
                 .Include(_ => _.Consumer)
                 .Include(_ => _.ChatUserMessages)
                 .Where(_ => _.ConsumerId == consumerId);
@@ -39,7 +40,8 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 AppointmentDate = _.AppointmentDate_String,
                 LastMessage = _.ChatUserMessages.OrderBy(_ => _.CreateDate).Last().Message,
                 NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false),
-                MessageType = _.MessageType.GetDisplayName()
+                MessageType = _.MessageType.GetDisplayName(),
+                OnlineFlag = _.ExpertInformation.Expert.OnlineFlag
             }).ToList();
 
             return new ResultDto<List<ChatUserForConsumerDto>>()

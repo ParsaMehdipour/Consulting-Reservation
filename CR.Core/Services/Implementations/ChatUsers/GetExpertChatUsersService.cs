@@ -40,7 +40,8 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 AppointmentDate = _.AppointmentDate_String,
                 LastMessage = _.ChatUserMessages.OrderBy(c => c.CreateDate).Last().Message,
                 NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false),
-                MessageType = _.MessageType.GetDisplayName()
+                MessageType = _.MessageType.GetDisplayName(),
+                OnlineStatus = _.Consumer.OnlineFlag
             }).ToList();
 
             return new ResultDto<List<ChatUserForExpertPanelDto>>()
