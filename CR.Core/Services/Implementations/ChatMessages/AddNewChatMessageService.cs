@@ -1,5 +1,4 @@
 ﻿using CR.Common.DTOs;
-using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs.Chat;
 using CR.Core.DTOs.ResultDTOs.ChatMessages;
 using CR.Core.Services.Interfaces.ChatMessages;
@@ -33,7 +32,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
             {
                 string userId = "";
 
-                if (string.IsNullOrWhiteSpace(request.message) && request.file == null)
+                if (string.IsNullOrWhiteSpace(request.message) && string.IsNullOrWhiteSpace(request.filePath))
                 {
                     return new ResultDto<ResultAddChatMessageDto>()
                     {
@@ -66,13 +65,9 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     chatMessage.Message = request.message;
                 }
 
-                if (request.file != null)
+                if (!string.IsNullOrWhiteSpace(request.filePath))
                 {
-                    chatMessage.File = _imageUploaderService.Execute(new UploadImageDto()
-                    {
-                        File = request.file,
-                        Folder = "ChatImages"
-                    });
+                    chatMessage.File = request.filePath;
                 }
 
                 _context.ChatUserMessages.Add(chatMessage);

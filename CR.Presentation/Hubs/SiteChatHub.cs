@@ -16,20 +16,21 @@ namespace CR.Presentation.Hubs
             _addNewChatMessageService = addNewChatMessageService;
         }
 
-        public async Task SendMessage(long chatUserId, string message, MessageFlag messageFlag)
+        public async Task SendMessage(long chatUserId, string message, MessageFlag messageFlag, string filePath)
         {
             var request = new RequestAddNewChatMessageDto()
             {
                 chatUserId = chatUserId,
                 message = message,
-                messageFlag = messageFlag
+                messageFlag = messageFlag,
+                filePath = filePath
             };
 
             var result = _addNewChatMessageService.Execute(request);
 
             if (result.IsSuccess)
             {
-                await Clients.User(result.Data.userId).SendAsync("ReceiveMessageHandler", message, messageFlag, result.Data.messageHour);
+                await Clients.User(result.Data.userId).SendAsync("ReceiveMessageHandler", message, messageFlag, result.Data.messageHour, filePath);
             }
         }
 

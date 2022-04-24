@@ -1,6 +1,8 @@
-﻿using CR.Core.DTOs.RequestDTOs.Chat;
+﻿using CR.Common.DTOs;
+using CR.Core.DTOs.Images;
+using CR.Core.DTOs.RequestDTOs.Chat;
 using CR.Core.Services.Interfaces.ChatMessages;
-using CR.DataAccess.Enums;
+using CR.Core.Services.Interfaces.Images;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
@@ -11,14 +13,17 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
         private readonly IGetChatMessagesService _getChatMessagesService;
         private readonly IAddNewChatMessageService _addNewChatMessageService;
         private readonly IAddNewVoiceMessageService _addNewVoiceMessageService;
+        private readonly IImageUploaderService _imageUploaderService;
 
         public ChatController(IGetChatMessagesService getChatMessagesService
         , IAddNewChatMessageService addNewChatMessageService
-        , IAddNewVoiceMessageService addNewVoiceMessageService)
+        , IAddNewVoiceMessageService addNewVoiceMessageService
+        , IImageUploaderService imageUploaderService)
         {
             _getChatMessagesService = getChatMessagesService;
             _addNewChatMessageService = addNewChatMessageService;
             _addNewVoiceMessageService = addNewVoiceMessageService;
+            _imageUploaderService = imageUploaderService;
         }
 
         [Route("/api/Chat/GetMessages")]
@@ -30,13 +35,25 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
             return new JsonResult(result);
         }
 
-        [Route("/api/Chat/AddNewMessage")]
+        [Route("/api/Chat/UploadImage")]
         [HttpPost]
-        public IActionResult AddNewMessage([FromForm] RequestAddNewChatMessageDto request)
+        public IActionResult UploadImage([FromForm] RequestAddNewMessageWithImageDto request)
         {
-            request.messageFlag = MessageFlag.ExpertMessage;
+            var result = new ResultDto<string>()
+            {
+                IsSuccess = true,
+            };
 
-            var result = _addNewChatMessageService.Execute(request);
+            if (request.file != null)
+            {
+                var filePath = _imageUploaderService.Execute(new UploadImageDto()
+                {
+                    File = request.file,
+                    Folder = "Chat"
+                });
+
+                result.Data = filePath;
+            }
 
             return new JsonResult(result);
         }

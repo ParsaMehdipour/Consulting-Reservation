@@ -1,9 +1,10 @@
 ﻿using CR.Common.DTOs;
+using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs.ChatUser;
 using CR.Core.Services.Interfaces.ChatUsers;
+using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 
 namespace CR.Core.Services.Implementations.ChatUsers
@@ -11,18 +12,21 @@ namespace CR.Core.Services.Implementations.ChatUsers
     public class CheckForAppointmentTimeService : ICheckForAppointmentTimeService
     {
         private readonly ApplicationContext _context;
+        private readonly IImageUploaderService _imageUploaderService;
 
-        public CheckForAppointmentTimeService(ApplicationContext context)
+        public CheckForAppointmentTimeService(ApplicationContext context
+        , IImageUploaderService imageUploaderService)
         {
             _context = context;
+            _imageUploaderService = imageUploaderService;
         }
 
-        public ResultDto Execute(RequestCheckForAppointmentTimeDto request)
+        public ResultDto<string> Execute(RequestCheckForAppointmentTimeDto request)
         {
 
             if (string.IsNullOrWhiteSpace(request.message) && request.file == null)
             {
-                return new ResultDto()
+                return new ResultDto<string>()
                 {
                     IsSuccess = false,
                     Message = "لطفا مطلبی جهت ارسال وارد کنید",
@@ -34,26 +38,41 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 .ThenInclude(_ => _.TimeOfDay)
                 .FirstOrDefault(_ => _.Id == request.chatUserId);
 
-            if (DateTime.Now < chatUser?.Appointment.TimeOfDay.StartTime)
+            //if (DateTime.Now < chatUser?.Appointment.TimeOfDay.StartTime)
+            //{
+            //    return new ResultDto<string>()
+            //    {
+            //        IsSuccess = false,
+            //        Message = "زمان شروع نوبت شما نرسیده است"
+            //    };
+            //}
+
+            //if (DateTime.Now > chatUser?.Appointment.TimeOfDay.FinishTime)
+            //{
+            //    return new ResultDto<string>()
+            //    {
+            //        IsSuccess = false,
+            //        Message = "زمان نوبت شما پایان یافت"
+            //    };
+            //}
+
+            if (request.file != null)
             {
-                return new ResultDto()
+                var fileName = _imageUploaderService.Execute(new UploadImageDto()
                 {
-                    IsSuccess = false,
-                    Message = "زمان شروع نوبت شما نرسیده است"
+                    File = request.file,
+                    Folder = "Chat"
+                });
+
+                return new ResultDto<string>()
+                {
+                    Data = fileName,
+                    IsSuccess = true,
+                    Message = string.Empty
                 };
             }
 
-            if (DateTime.Now > chatUser?.Appointment.TimeOfDay.FinishTime)
-            {
-                return new ResultDto()
-                {
-                    IsSuccess = false,
-                    Message = "زمان نوبت شما پایان یافت"
-                };
-            }
-
-
-            return new ResultDto()
+            return new ResultDto<string>()
             {
                 IsSuccess = true,
                 Message = string.Empty
