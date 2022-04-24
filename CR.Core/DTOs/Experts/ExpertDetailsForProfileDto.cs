@@ -100,5 +100,6 @@ namespace CR.Core.DTOs.Experts
         public List<ExpertImageDto> resumeImages { get; set; }
         public List<ExpertImageDto> degreeImages { get; set; }
         public List<ExpertImageDto> otherImages { get; set; }
+        public List<ExpertImageDto> identityImages { get; set; }
     }
 }

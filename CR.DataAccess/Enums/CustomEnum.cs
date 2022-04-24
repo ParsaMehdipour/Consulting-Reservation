@@ -132,6 +132,8 @@ namespace CR.DataAccess.Enums
         Degree = 1,
         [Display(Name = "سایر")]
         Other = 2,
+        [Display(Name = "هویتی")]
+        Identity = 3,
     }
     public enum RuleType
     {

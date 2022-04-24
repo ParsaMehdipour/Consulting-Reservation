@@ -151,6 +151,27 @@ namespace CR.Core.Services.Implementations.Experts
                     }
                 }
 
+
+                if (request.identityImage != null)
+                {
+                    foreach (var file in request.identityImage)
+                    {
+                        var expertImage = new ExpertImage()
+                        {
+                            ExpertInformationId = expertInformation.Id,
+                            ExpertInformation = expertInformation,
+                            ImageType = ImageType.Identity,
+                            Src = _imageUploaderService.Execute(new UploadImageDto()
+                            {
+                                File = file,
+                                Folder = "ExpertImages"
+                            })
+                        };
+
+                        _context.ExpertImages.Add(expertImage);
+                    }
+                }
+
                 var speciality = _context.Specialties.FirstOrDefault(s => s.Id == request.specialtyId);
 
                 expertInformation.FirstName = request.firstName;

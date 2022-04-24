@@ -83,5 +83,8 @@ namespace CR.Core.DTOs.RequestDTOs
 
         [DisplayName("degreeImage")]
         public List<IFormFile> degreeImage { get; set; }
+
+        [DisplayName("identityImage")]
+        public List<IFormFile> identityImage { get; set; }
     }
 }

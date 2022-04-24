@@ -7,13 +7,16 @@ Version      : 1.0
 $(document).ready(function () {
 
 	var optionsDegree = {};
-	var degreeUploader = $('.js-uploader__box').uploader3(optionsDegree);
-
-	var optionsOther = {};
-	var otherUploader = $('.js-uploader__box').uploader2(optionsOther);
+	var degreeUploader = $('.js-uploader__box_degree').uploader1(optionsDegree);
 
 	var optionsResume = {};
-	var resumeUploader = $('.js-uploader__box').uploader1(optionsResume);
+	var resumeUploader = $('.js-uploader__box_resume').uploader2(optionsResume);
+
+	var optionsOther = {};
+	var otherUploader = $('.js-uploader__box_other').uploader3(optionsOther);
+
+	var optionsIdentity = {};
+	var identityUploader = $('.js-uploader__box_identity').uploader4(optionsIdentity);
 
 	$("#ExpertPanelMenu .active").removeClass("active");
 	$("#ExpertPanelMenu #Profile").addClass("active");
@@ -237,9 +240,9 @@ $(document).ready(function () {
 var otherImageFileList = [];
 var resumeImageFileList = [];
 var degreeImageFileList = [];
+var identityImageFileList = [];
 
 function addOtherFileToList(file) {
-	alert("addOtherFileToList");
 	otherImageFileList.push(file);
 }
 
@@ -252,8 +255,20 @@ function removeOtherFileFromList(id) {
 	}
 }
 
+function addIdentityFileToList(file) {
+	identityImageFileList.push(file);
+}
+
+function removeIdentityFileFromList(id) {
+	for (var i = 0; i < identityImageFileList.length; i++) {
+		if (i === parseInt(id)) {
+			identityImageFileList.splice(i, 1);
+			break;
+		}
+	}
+}
+
 function addResumeFileToList(file) {
-	alert("addResumeFileToList");
 	resumeImageFileList.push(file);
 }
 
@@ -267,7 +282,6 @@ function removeResumeFileFromList(id) {
 }
 
 function addDegreeFileToList(file) {
-	alert("addDegreeFileToList");
 	degreeImageFileList.push(file);
 }
 
