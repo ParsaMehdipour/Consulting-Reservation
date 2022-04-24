@@ -7,5 +7,6 @@
         public string appointmentTime { get; set; }
         public string appointmentStatus { get; set; }
         public string appointmentPrice { get; set; }
+        public string appointmentType { get; set; }
     }
 }

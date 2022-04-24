@@ -59,7 +59,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-												
+
                                                     <div class="col-md-12 col-lg-4">
                                                         <div class="dash-widget dct-border-rht">
                                                             <div class="circle-bar circle-bar2">
@@ -74,7 +74,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-												
+
                                                     <div class="col-md-12 col-lg-4">
                                                         <div class="dash-widget">
                                                             <div class="circle-bar circle-bar3">
@@ -303,20 +303,19 @@
     </div>
 </div>
 <!-- /Page Content -->
-
 @section Footer{
-    <partial name="Footer"/>
+<partial name="Footer" />
 }
 
 @section Scripts
 {
-    <script src="~/assets/js/ConusmerPanel/Home/Home.js"></script>
-    <script src="~/assets/js/ExpertPanel/layout.js"></script>
-    
-    <!-- Circle Progress JS -->
-    <script src="~/assets/js/circle-progress.min.js"></script>
+<script src="~/assets/js/ConusmerPanel/Home/Home.js"></script>
+<script src="~/assets/js/ExpertPanel/layout.js"></script>
 
-    <script>
+<!-- Circle Progress JS -->
+<script src="~/assets/js/circle-progress.min.js"></script>
+
+<script>
 
     $(document).ready(function () {
 
@@ -363,6 +362,10 @@
                 body += '</div>';
                 body += '</div>';
                 body += '</div>';
+                body += '</li>';
+                body += '<li>';
+                body += '<span class="title">نوع نوبت:</span>';
+                body += '<span class="text">' + data.appointmentType + '</span>';
                 body += '</li>';
                 body += '<li>';
                 body += '<span class="title">وضعیت:</span>';
@@ -562,7 +565,7 @@
             }
         });
      }
-    </script>
+</script>
 }
 
 @section ModalAppointmentInformation{
