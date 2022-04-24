@@ -50,7 +50,6 @@ namespace CR.Core.Services.Implementations.Experts
             {
                 id = expertInformation.Id,
                 IconSrc = (string.IsNullOrWhiteSpace(expertInformation.IconSrc)) ? "assets/img/icon-256x256.png" : expertInformation.IconSrc,
-                Bio = expertInformation.Bio,
                 HasStar = (expertInformation.Favorites.Count >= 2),
                 City = expertInformation.City,
                 Province = expertInformation.Province,

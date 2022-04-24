@@ -7,7 +7,6 @@ namespace CR.Core.DTOs.Experts
     {
         public long id { get; set; }
         public string FullName { get; set; }
-        public string Bio { get; set; }
         public string Speciality { get; set; }
         public string SpecialityImage { get; set; }
         public int RateCount { get; set; }

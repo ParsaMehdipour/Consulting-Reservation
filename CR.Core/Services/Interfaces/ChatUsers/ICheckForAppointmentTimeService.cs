@@ -5,6 +5,6 @@ namespace CR.Core.Services.Interfaces.ChatUsers
 {
     public interface ICheckForAppointmentTimeService
     {
-        ResultDto Execute(RequestCheckForAppointmentTimeDto request);
+        ResultDto<string> Execute(RequestCheckForAppointmentTimeDto request);
     }
 }

@@ -678,7 +678,7 @@
                                     <div class="col-12 col-md-5">
                                         <div class="form-group">
                                             <label>سال</label>
-                                            <input type="text" class="form-contro numberl" id="subscriptionYear" name="subscriptionYear" value="@subscription?.subscriptionYear">
+                                            <input type="text" class="form-control number" id="subscriptionYear" name="subscriptionYear" value="@subscription?.subscriptionYear">
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-2">
@@ -911,8 +911,9 @@
 
         for (let  i = 0; i < degreesOfEducation.length; i++) {
 
-            studies.push({ degreeOfEducation: degreesOfEducation[i], university: universities[i], endDate: endDates[i] });
-
+            if (degreesOfEducation[i] !== "") {
+                studies.push({ degreeOfEducation: degreesOfEducation[i], university: universities[i], endDate: endDates[i] });
+            }
         }
 
         return studies;
@@ -939,8 +940,9 @@
 
         for (let  i = 0; i < clinicNames.length; i++) {
 
-            experiences.push({ clinicName: clinicNames[i], startYear: startYears[i], finishYear: finishYears[i], role: roles[i] });
-
+            if (clinicNames[i] !== "") {
+                experiences.push({ clinicName: clinicNames[i], startYear: startYears[i], finishYear: finishYears[i], role: roles[i] });
+            }
         }
 
         return experiences;
@@ -959,8 +961,9 @@
 
         for (let  i = 0; i < prizeNames.length; i++) {
 
-            prizes.push({ prizeName: prizeNames[i], year: years[i] });
-
+            if (prizeNames[i] !== "") {
+                prizes.push({ prizeName: prizeNames[i], year: years[i] });
+            }
         }
 
         return prizes;
@@ -975,8 +978,9 @@
 
         for (let  i = 0; i < membershipNames.length; i++) {
 
-            memberships.push({ membershipName: membershipNames[i] });
-
+            if (membershipNames[i] !== "") {
+                memberships.push({ membershipName: membershipNames[i] });
+            }
         }
 
         return memberships;
@@ -995,8 +999,9 @@
 
         for (let  i = 0; i < subscriptionNames.length; i++) {
 
-            subscriptions.push({ subscriptionName: subscriptionNames[i], subscriptionYear: subscriptionYears[i] });
-
+            if (subscriptionNames[i] !== "") {
+                subscriptions.push({ subscriptionName: subscriptionNames[i], subscriptionYear: subscriptionYears[i] });
+            }
         }
 
         return subscriptions;

@@ -41,7 +41,8 @@ namespace CR.Core.Services.Implementations.Appointment
                     appointmentTime = appointment.TimeOfDay.StartHour + " - " + appointment.TimeOfDay.FinishHour,
                     appointmentStatus = appointment.AppointmentStatus.GetDisplayName(),
                     appointmentPrice = appointment.RawPrice.ToString("n0"),
-                    id = appointment.Id
+                    id = appointment.Id,
+                    appointmentType = appointment.CallingType.GetDisplayName()
                 },
                 IsSuccess = true
             };

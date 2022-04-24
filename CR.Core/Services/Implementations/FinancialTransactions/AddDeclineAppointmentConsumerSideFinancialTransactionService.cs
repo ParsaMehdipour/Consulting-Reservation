@@ -54,9 +54,20 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     };
                 }
 
-                var differenceInHours = appointment.TimeOfDay.StartTime - DateTime.Now;
+                var differenceInHours = (appointment.TimeOfDay.StartTime - DateTime.Now).TotalHours;
+                var differenceInDays = (appointment.TimeOfDay.StartTime - DateTime.Now).TotalDays;
 
-                if (differenceInHours.Hours < 1)
+                if (differenceInDays < 0)
+                {
+                    return new ResultDto<ResultDeclineAppointmentConsumerSideDto>()
+                    {
+                        Data = new ResultDeclineAppointmentConsumerSideDto(),
+                        IsSuccess = false,
+                        Message = "به دلیل اینکه زمان مشاوره گذشته است، امکان لغو نوبت وجود ندارد"
+                    };
+                }
+
+                if (differenceInHours < 1)
                 {
                     return new ResultDto<ResultDeclineAppointmentConsumerSideDto>()
                     {
@@ -82,7 +93,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
 
                 timeOfDay.IsReserved = false;
 
-                if (differenceInHours.Hours < 24)
+                if (differenceInHours < 24)
                 {
                     var financialTransactionWithLessPrice = new FinancialTransaction()
                     {

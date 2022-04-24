@@ -1,5 +1,4 @@
 ﻿using CR.DataAccess.Enums;
-using Microsoft.AspNetCore.Http;
 
 namespace CR.Core.DTOs.RequestDTOs.Chat
 {
@@ -9,7 +8,7 @@ namespace CR.Core.DTOs.RequestDTOs.Chat
 
         public string message { get; set; }
 
-        public IFormFile file { get; set; }
+        public string filePath { get; set; }
 
         public MessageFlag messageFlag { get; set; }
     }

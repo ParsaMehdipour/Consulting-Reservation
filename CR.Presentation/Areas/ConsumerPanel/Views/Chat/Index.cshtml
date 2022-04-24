@@ -87,7 +87,7 @@
                             <div class="input-group-prepend">
                                 <div class="btn-file btn">
                                     <i class="fa fa-paperclip"></i>
-                                    <input type="file" id="image">
+                                    <input type="file" id="image" multiple accept=".png , .jpeg">
                                 </div>
                             </div>
                             <input id="message" type="text" class="input-msg-send form-control" placeholder="چیزی تایپ کنید ">
@@ -190,7 +190,7 @@
                                 body += '<div class="chat-attachment">';
                                 body += '<img src="/' + model.chatMessageDtos[i].file + '" alt="Attachment">';
                                 body += '<div class="chat-attach-caption"></div>';
-                                body += '<a href="#" class="chat-attach-download">';
+                                body += '<a href="/' + model.chatMessageDtos[i].file + '" class="chat-attach-download" download>';
                                 body += '<i class="fas fa-download"></i>';
                                 body += '</a>';
                                 body += '</div>';
@@ -254,7 +254,7 @@
                                 body += '<div class="chat-attachment">';
                                 body += '<img src="/' + model.chatMessageDtos[i].file + '" alt="Attachment">';
                                 body += '<div class="chat-attach-caption"></div>';
-                                body += '<a href="#" class="chat-attach-download">';
+                                body += '<a href="/' + model.chatMessageDtos[i].file + '" class="chat-attach-download" download>';
                                 body += '<i class="fas fa-download"></i>';
                                 body += '</a>';
                                 body += '</div>';
@@ -341,38 +341,70 @@
                     var user = ChatUserId;
                     var message = $("#message").val();
                     var messageFlag = 0;
-                    connection.invoke("SendMessage", user, message,messageFlag).catch(function (err) {
+                    connection.invoke("SendMessage", user, message,messageFlag,data.data).catch(function (err) {
                         return console.error(err.toString());
                     });
 
                     document.getElementById('message').value = '';
 
-                    var body2 = $("#messages-Body-Consumer").html();
+                    if (data.data == null) {
+                        var body2 = $("#messages-Body-Consumer").html();
 
-                    body2 += '<li class="media received">';
-                    body2 += '<div class="media-body">';
-                    body2 += '<div class="msg-box">';
-                    body2 += '<div>';
-                    body2 += '<p>';
-                    body2 += message;
-                    body2 += '</p>';
-                    body2 += '<ul class="chat-msg-info">';
-                    body2 += '<li>';
-                    body2 += '<div class="chat-time">';
-                    body2 += '<span>';
-                    body2 += time;
-                    body2 += '</span>';
-                    body2 += '</div>';
-                    body2 += '</li>';
-                    body2 += '</ul>';
-                    body2 += '</div>';
-                    body2 += '</div>';
-                    body2 += '</div>';
-                    body2 += '</li>';
+                        body2 += '<li class="media received">';
+                        body2 += '<div class="media-body">';
+                        body2 += '<div class="msg-box">';
+                        body2 += '<div>';
+                        body2 += '<p>';
+                        body2 += message;
+                        body2 += '</p>';
+                        body2 += '<ul class="chat-msg-info">';
+                        body2 += '<li>';
+                        body2 += '<div class="chat-time">';
+                        body2 += '<span>';
+                        body2 += time;
+                        body2 += '</span>';
+                        body2 += '</div>';
+                        body2 += '</li>';
+                        body2 += '</ul>';
+                        body2 += '</div>';
+                        body2 += '</div>';
+                        body2 += '</div>';
+                        body2 += '</li>';
 
-                    $("#messages-Body-Consumer").html("");
-                    $("#messages-Body-Consumer").html(body2);
+                        $("#messages-Body-Consumer").html("");
+                        $("#messages-Body-Consumer").html(body2);
+                    } 
+                    else {
+                        var body = $("#messages-Body-Consumer").html();
 
+                        body += '<li class="media received">';
+                        body += '<div class="media-body">';
+                        body += '<div class="msg-box">';
+                        body += '<div>';
+                        body += '<div class="chat-msg-attachments">';
+                        body += '<div class="chat-attachment">';
+                        body += '<img src="/' + data.data + '" alt="Attachment">';
+                        body += '<div class="chat-attach-caption"></div>';
+                        body += '<a href="/' + data.data + '" class="chat-attach-download" download>';
+                        body += '<i class="fas fa-download"></i>';
+                        body += '</a>';
+                        body += '</div>';
+                        body += '</div>';
+                        body += '<ul class="chat-msg-info">';
+                        body += '<li>';
+                        body += '<div class="chat-time">';
+                        body += '<span>' + time + '</span>';
+                        body += '</div>';
+                        body += '</li>';
+                        body += '</ul>';
+                        body += '</div>';
+                        body += '</div>';
+                        body += '</div>';
+                        body += '</li>';
+
+                        $("#messages-Body-Consumer").html("");
+                        $("#messages-Body-Consumer").html(body);
+                    }
                     event.preventDefault();
                 }
                 else {
@@ -381,7 +413,6 @@
                         data.message,
                         'warning'
                     );
-
                 }
             },
             complete: function() {

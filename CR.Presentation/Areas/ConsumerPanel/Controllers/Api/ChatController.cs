@@ -2,6 +2,7 @@
 using CR.Core.DTOs.RequestDTOs.ChatUser;
 using CR.Core.Services.Interfaces.ChatMessages;
 using CR.Core.Services.Interfaces.ChatUsers;
+using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,16 +15,19 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
         private readonly IAddNewChatMessageService _addNewChatMessageService;
         private readonly IAddNewVoiceMessageService _addNewVoiceMessageService;
         private readonly ICheckForAppointmentTimeService _checkForAppointmentTimeService;
+        private readonly IImageUploaderService _imageUploaderService;
 
         public ChatController(IGetChatMessagesService getChatMessagesService
         , IAddNewChatMessageService addNewChatMessageService
         , IAddNewVoiceMessageService addNewVoiceMessageService
-        , ICheckForAppointmentTimeService checkForAppointmentTimeService)
+        , ICheckForAppointmentTimeService checkForAppointmentTimeService
+        , IImageUploaderService imageUploaderService)
         {
             _getChatMessagesService = getChatMessagesService;
             _addNewChatMessageService = addNewChatMessageService;
             _addNewVoiceMessageService = addNewVoiceMessageService;
             _checkForAppointmentTimeService = checkForAppointmentTimeService;
+            _imageUploaderService = imageUploaderService;
         }
 
         [Route("/api/Chat/GetConsumerMessages")]
