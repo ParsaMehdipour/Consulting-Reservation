@@ -89,7 +89,7 @@
                                 <div class="input-group-prepend">
                                     <div class="btn-file btn">
                                         <i class="fa fa-paperclip"></i>
-                                        <input type="file" id="image">
+                                        <input type="file" id="image" multiple accept=".png , .jpeg">
                                     </div>
                                 </div>
                                 <input id="message" type="text" class="input-msg-send form-control" placeholder="چیزی تایپ کنید ">
@@ -183,7 +183,7 @@
                                 body += '<div class="chat-attachment">';
                                 body += '<img src="/' + model.chatMessageDtos[i].file + '" alt="Attachment">';
                                 body += '<div class="chat-attach-caption"></div>';
-                                body += '<a href="#" class="chat-attach-download">';
+                                body += '<a href="/' + model.chatMessageDtos[i].file + '" class="chat-attach-download" download>';
                                 body += '<i class="fas fa-download"></i>';
                                 body += '</a>';
                                 body += '</div>';
@@ -246,7 +246,7 @@
                                 body += '<div class="chat-attachment">';
                                 body += '<img src="/' + model.chatMessageDtos[i].file + '" alt="Attachment">';
                                 body += '<div class="chat-attach-caption"></div>';
-                                body += '<a href="#" class="chat-attach-download">';
+                                body += '<a href="/' + model.chatMessageDtos[i].file + '" class="chat-attach-download" download>';
                                 body += '<i class="fas fa-download"></i>';
                                 body += '</a>';
                                 body += '</div>';
@@ -377,7 +377,7 @@
                         body += '<div class="chat-attachment">';
                         body += '<img src="/' + data.data + '" alt="Attachment">';
                         body += '<div class="chat-attach-caption"></div>';
-                        body += '<a href="#" class="chat-attach-download">';
+                        body += '<a href="/' + data.data + '" class="chat-attach-download" download>';
                         body += '<i class="fas fa-download"></i>';
                         body += '</a>';
                         body += '</div>';

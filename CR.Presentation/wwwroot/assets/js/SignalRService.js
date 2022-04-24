@@ -46,7 +46,7 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
             body += '<div class="chat-attachment">';
             body += '<img src="/' + filePath + '" alt="Attachment">';
             body += '<div class="chat-attach-caption"></div>';
-            body += '<a href="#" class="chat-attach-download">';
+            body += '<a href="/' + filePath + '" class="chat-attach-download" download>';
             body += '<i class="fas fa-download"></i>';
             body += '</a>';
             body += '</div>';
@@ -54,7 +54,7 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
             body += '<ul class="chat-msg-info">';
             body += '<li>';
             body += '<div class="chat-time">';
-            body += '<span>' + filePath + '</span>';
+            body += '<span>' + messageHour + '</span>';
             body += '</div>';
             body += '</li>';
             body += '</ul>';
@@ -101,7 +101,7 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
             body2 += '<div class="chat-attachment">';
             body2 += '<img src="/' + filePath + '" alt="Attachment">';
             body2 += '<div class="chat-attach-caption"></div>';
-            body2 += '<a href="#" class="chat-attach-download">';
+            body2 += '<a href="/' + filePath + '" class="chat-attach-download" download>';
             body2 += '<i class="fas fa-download"></i>';
             body2 += '</a>';
             body2 += '</div>';
