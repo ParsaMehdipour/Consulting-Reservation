@@ -1,5 +1,7 @@
-﻿using CR.Core.DTOs.RequestDTOs.Chat;
+﻿using CR.Common.Utilities;
+using CR.Core.DTOs.RequestDTOs.Chat;
 using CR.Core.Services.Interfaces.ChatMessages;
+using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.SignalR;
 using System;
@@ -10,10 +12,13 @@ namespace CR.Presentation.Hubs
     public class SiteChatHub : Hub
     {
         private readonly IAddNewChatMessageService _addNewChatMessageService;
+        private readonly ApplicationContext _context;
 
-        public SiteChatHub(IAddNewChatMessageService addNewChatMessageService)
+        public SiteChatHub(IAddNewChatMessageService addNewChatMessageService
+        , ApplicationContext context)
         {
             _addNewChatMessageService = addNewChatMessageService;
+            _context = context;
         }
 
         public async Task SendMessage(long chatUserId, string message, MessageFlag messageFlag, string filePath)
@@ -36,12 +41,34 @@ namespace CR.Presentation.Hubs
 
         public override Task OnConnectedAsync()
         {
-            var s = Context.ConnectionId;
+            var userId = ClaimUtility.GetUserId(Context.User).Value;
+
+            if (userId != 0)
+            {
+                var user = _context.Users.Find(userId);
+
+                user.OnlineFlag = true;
+
+                _context.SaveChanges();
+            }
+
             return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
+
+            var userId = ClaimUtility.GetUserId(Context.User).Value;
+
+            if (userId != 0)
+            {
+                var user = _context.Users.Find(userId);
+
+                user.OnlineFlag = false;
+
+                _context.SaveChanges();
+            }
+
             return base.OnDisconnectedAsync(exception);
         }
     }

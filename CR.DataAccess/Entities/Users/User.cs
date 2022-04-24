@@ -17,6 +17,7 @@ namespace CR.DataAccess.Entities.Users
         public DateTime CreationDate { get; set; } = DateTime.Now;
         public UserFlag UserFlag { get; set; } = 0;
         public bool IsActive { get; set; } = true;
+        public bool OnlineFlag { get; set; } = false;
 
         #region Foreign Keys 
 

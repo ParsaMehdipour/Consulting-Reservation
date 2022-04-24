@@ -9,5 +9,6 @@
         public int NotReadMessagesCount { get; set; }
         public string AppointmentDate { get; set; }
         public string MessageType { get; set; }
+        public bool OnlineFlag { get; set; }
     }
 }
