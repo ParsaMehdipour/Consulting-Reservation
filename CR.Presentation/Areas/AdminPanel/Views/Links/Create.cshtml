@@ -1,0 +1,114 @@
+﻿@model CR.Core.DTOs.RequestDTOs.Links.RequestAddNewLinkDto
+
+<link rel="stylesheet" href="~/assets/css/style.css">
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">افزودن لینک</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item"><a href="javascript:(0);">صفحات</a></li>
+                <li class="breadcrumb-item active">افزودن لینک</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <input type="hidden" id="parentId" value="@ViewBag.parentId" />
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body custom-edit-service">
+                <!-- Add Blog -->
+                <form id="addNewLinkForm">
+                    <div class="service-fields mb-3">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>عنوان <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" asp-for="Name" id="name" name="name">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>مقدار <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" asp-for="SearchKey" id="searchKey" name="searchKey">
+                                    <span asp-validation-for="SearchKey" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>ترتیب نمایش <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="number" asp-for="OrderNumber" id="orderNumber" name="orderNumber">
+                                    <span asp-validation-for="OrderNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-section">
+                        <button onclick="AddNewLink()" type="submit" class="btn btn-primary submit-btn"> ایجاد</button>
+                    </div>
+                </form>
+                <!-- /Add Blog -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script>
+
+    function AddNewLink() {
+
+        if ($("#addNewLinkForm").valid()) {
+
+            var addNewLinkForm = new FormData();
+            addNewLinkForm.append("name",$("#addNewLinkForm #name").val());
+            addNewLinkForm.append("parentId",$("#parentId").val());
+            addNewLinkForm.append("searchKey",$("#addNewLinkForm #searchKey").val());
+            addNewLinkForm.append("orderNumber",$("#addNewLinkForm #orderNumber").val());
+
+            $("#addNewLinkForm").submit(function(event) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/LinksController/AddNewLink',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    cache: false,
+                    data: addNewLinkForm,
+                    beforeSend: function(x) {
+                        $('#loading').show(0);
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                location.reload();
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide(0);
+                    },
+                    fail: function() {
+                        $('#loading').hide(0);
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+
+                event.preventDefault();
+            });
+       }
+    }
+
+</script>
+}

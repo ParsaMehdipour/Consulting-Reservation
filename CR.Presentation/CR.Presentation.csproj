@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\AdminPanel\Data\**" />
     <Compile Remove="Connected Services\ServiceReference1\**" />
+    <Content Remove="Areas\AdminPanel\Data\**" />
     <Content Remove="Connected Services\ServiceReference1\**" />
+    <EmbeddedResource Remove="Areas\AdminPanel\Data\**" />
     <EmbeddedResource Remove="Connected Services\ServiceReference1\**" />
+    <None Remove="Areas\AdminPanel\Data\**" />
     <None Remove="Connected Services\ServiceReference1\**" />
   </ItemGroup>
 
@@ -40,7 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\AdminPanel\Data\" />
     <Folder Include="Areas\ConsumerPanel\Data\" />
     <Folder Include="Areas\ExpertPanel\Data\" />
   </ItemGroup>
