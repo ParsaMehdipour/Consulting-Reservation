@@ -12,6 +12,7 @@ using CR.DataAccess.Entities.Factors;
 using CR.DataAccess.Entities.Favorites;
 using CR.DataAccess.Entities.FinancialTransactions;
 using CR.DataAccess.Entities.IndividualInformations;
+using CR.DataAccess.Entities.Links;
 using CR.DataAccess.Entities.Roles;
 using CR.DataAccess.Entities.Rules;
 using CR.DataAccess.Entities.Settings;
@@ -59,6 +60,7 @@ namespace CR.DataAccess.Context
         public DbSet<ContactUsContent> ContactUsContents { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<Link> Links { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
