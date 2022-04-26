@@ -20,7 +20,6 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
         {
             TempData["activemenu"] = ActiveMenu.Rules;
 
-
             var model = _getRulesContentService.Execute().Data;
 
             return View(model);

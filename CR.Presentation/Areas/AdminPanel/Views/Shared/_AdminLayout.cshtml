@@ -183,6 +183,9 @@
                         <li @(TempData["activemenu"].ToString() == ActiveMenu.Blogs ? @"class=active" : "")>
                             <a asp-controller="Blogs" asp-action="Index"><i class="fe fe-user"></i> <span>مقالات</span></a>
                         </li>
+                        <li @(TempData["activemenu"].ToString() == ActiveMenu.Links ? @"class=active" : "")>
+                            <a asp-controller="Links" asp-action="Index"><i class="fe fe-user"></i> <span>لینک ها</span></a>
+                        </li>
                         <li @(TempData["activemenu"].ToString() == ActiveMenu.Settings ? @"class=active" : "")>
                             <a asp-controller="Settings" asp-action="Index"><i class="fe fe-user"></i> <span>تنظیمات سایت</span></a>
                         </li>

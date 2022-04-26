@@ -20,6 +20,7 @@ using CR.Core.Services.Implementations.Factors;
 using CR.Core.Services.Implementations.Favorites;
 using CR.Core.Services.Implementations.FinancialTransactions;
 using CR.Core.Services.Implementations.Images;
+using CR.Core.Services.Implementations.Links;
 using CR.Core.Services.Implementations.Rules;
 using CR.Core.Services.Implementations.Settings;
 using CR.Core.Services.Implementations.Specialites;
@@ -45,6 +46,7 @@ using CR.Core.Services.Interfaces.Factors;
 using CR.Core.Services.Interfaces.Favorites;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.Core.Services.Interfaces.Images;
+using CR.Core.Services.Interfaces.Links;
 using CR.Core.Services.Interfaces.Rules;
 using CR.Core.Services.Interfaces.Settings;
 using CR.Core.Services.Interfaces.Specialites;
@@ -324,6 +326,8 @@ namespace CR.Presentation
             services.AddTransient<IPhoneTotpProvider, PhoneTotpProvider>();
             //Setting
             services.AddScoped<ISettingServices, SettingServices>();
+            //Links
+            services.AddScoped<ILinkServices, LinkServices>();
 
             #endregion
 
