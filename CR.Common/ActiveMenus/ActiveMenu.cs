@@ -40,5 +40,7 @@
 
         public const string Settings = "settings";
 
+        public const string Links = "links";
+
     }
 }

@@ -1,0 +1,135 @@
+﻿@model CR.Core.DTOs.ResultDTOs.Links.ResultGetLinksForAdminPanelDto
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-7 col-auto">
+            <h3 class="page-title">مدیریت لینک های سایت</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item active">مدیریت لینک ها</li>
+            </ul>
+        </div>
+        <div class="col-sm-5 col">
+            <a asp-area="AdminPanel" asp-controller="Links" asp-action="Create" asp-route-parentId="@ViewData["parentId"]" class="btn btn-primary float-right mt-2">افزودن</a>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="datatable table table-hover table-center mb-0">
+                        <thead>
+                        <tr>
+                            <th>نام دسته بندی</th>
+                            <th>پدر</th>
+                            <th>تاریخ ایجاد</th>
+                            <th class="text-right"> اقدامات </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (Model.LinkForAdminPanelDtos.Count > 0)
+                        {
+                            @foreach (var link in Model.LinkForAdminPanelDtos)
+                            {
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <p>@link.PersianTitle</p>
+                                        </h2>
+                                    </td>
+
+                                    <td>
+                                        @{
+                                            string parent = link.Parent != null ? link.Parent.PersianTitle : "-";
+                                        }
+
+                                        <text> @parent </text>
+                                    </td>
+
+                                    <td>@link.CreatedDate</td>
+
+                                    <td class="text-right">
+                                        <div class="actions">
+
+                                            <a asp-controller="Links" asp-action="Create" asp-route-parentId="@link.Id" class="btn btn-success">افزودن فرزند</a>
+
+                                            @if (link.HasChildren)
+                                            {
+                                                <a asp-controller="Links" asp-action="Index" asp-route-parentId="@link.Id" class="btn btn-info">مشاهده لیست فرزند ها </a>
+                                            }
+                                            <a class="btn btn-sm bg-success-light" asp-controller="BlogCategories" asp-action="Details" asp-route-id="@link.Id">
+                                                <i class="fe fe-pencil"></i> ویرایش
+                                            </a>
+                                            <a onclick="Delete(@link.Id)" class="btn btn-sm bg-danger-light">
+                                                <i class="fe fe-trash"></i> حذف
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+
+        function Delete(Id){
+            swal.fire({
+                title: 'حذف گروه',
+                text: "مدیریت گرامی از حذف لینک مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'تایید',
+                cancelButtonText: 'انصراف'
+            }).then((result) => {
+                if (result.value) {
+                    var data = {};
+                    data["id"] = Number(Id);
+                    $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: "POST",
+                        enctype: 'application/json',
+                        url: '/api/BlogCategories/DeleteBlogCategory',
+                        data: JSON.stringify(data),
+                        success: function(data) {
+                            if (data.isSuccess === true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function(isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function(request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+                }
+            });
+        }
+
+    </script>
+}
