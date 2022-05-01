@@ -8,5 +8,8 @@ namespace CR.Core.Services.Interfaces.Links
     {
         ResultDto<ResultGetLinksForAdminPanelDto> GetAllLinksForAdminPanel(string searchKey, int Page = 1, int PageSize = 20);
         ResultDto AddNewLink(RequestAddNewLinkDto request);
+        ResultDto DeleteLink(long linkId);
+        ResultDto EditLink(RequestEditLinkDto request);
+        ResultDto<RequestEditLinkDto> GetLink(long id);
     }
 }

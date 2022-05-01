@@ -33,5 +33,15 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Edit(long linkId)
+        {
+            TempData["activemenu"] = ActiveMenu.Links;
+
+            var model = _linkServices.GetLink(linkId).Data;
+
+            return View(model);
+        }
+
     }
 }
