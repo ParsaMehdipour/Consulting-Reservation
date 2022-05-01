@@ -22,5 +22,23 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.Api
 
             return new JsonResult(result);
         }
+
+        [HttpPost]
+        [Route("/api/LinksController/DeleteLink")]
+        public IActionResult DeleteLink(RequestDeleteLinkDto request)
+        {
+            var result = _linkServices.DeleteLink(request.id);
+
+            return new JsonResult(result);
+        }
+
+        [HttpPost]
+        [Route("/api/LinksController/EditLink")]
+        public IActionResult EditLink([FromForm] RequestEditLinkDto request)
+        {
+            var result = _linkServices.EditLink(request);
+
+            return new JsonResult(result);
+        }
     }
 }

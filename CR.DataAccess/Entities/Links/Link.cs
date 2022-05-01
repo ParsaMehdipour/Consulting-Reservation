@@ -38,6 +38,14 @@ namespace CR.DataAccess.Entities.Links
             OrderNumber = orderNumber;
         }
 
+        public void SetSearchKey(string searchKey)
+        {
+            if (SearchKey == searchKey)
+                return;
+
+            SearchKey = searchKey;
+        }
+
         public void SetParent(long parentId)
         {
             if (ParentLinkId == parentId)

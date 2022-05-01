@@ -60,7 +60,7 @@
                                             {
                                                 <a asp-controller="Links" asp-action="Index" asp-route-parentId="@link.Id" class="btn btn-info">مشاهده لیست فرزند ها </a>
                                             }
-                                            <a class="btn btn-sm bg-success-light" asp-controller="BlogCategories" asp-action="Details" asp-route-id="@link.Id">
+                                            <a class="btn btn-sm bg-success-light" asp-controller="Links" asp-action="Edit" asp-route-linkId="@link.Id">
                                                 <i class="fe fe-pencil"></i> ویرایش
                                             </a>
                                             <a onclick="Delete(@link.Id)" class="btn btn-sm bg-danger-light">
@@ -102,7 +102,7 @@
                         dataType: 'json',
                         type: "POST",
                         enctype: 'application/json',
-                        url: '/api/BlogCategories/DeleteBlogCategory',
+                        url: '/api/LinksController/DeleteLink',
                         data: JSON.stringify(data),
                         success: function(data) {
                             if (data.isSuccess === true) {

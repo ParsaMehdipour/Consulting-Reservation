@@ -66,7 +66,7 @@ namespace CR.Core.Services.Implementations.Links
                 };
 
                 if (request.ParentId != null)
-                    link.ParentLinkId = request.ParentId;
+                    link.SetParent(request.ParentId.Value);
 
                 _context.Links.Add(link);
 
@@ -83,12 +83,139 @@ namespace CR.Core.Services.Implementations.Links
             }
             catch (Exception e)
             {
+                transaction.Rollback();
+
                 return new ResultDto()
                 {
                     IsSuccess = false,
                     Message = "خطا از سمت سرور"
                 };
             }
+            finally
+            {
+                transaction.Dispose();
+            }
+        }
+
+        public ResultDto DeleteLink(long linkId)
+        {
+            using var transaction = _context.Database.BeginTransaction();
+
+            try
+            {
+                var link = _context.Links.Include(_ => _.Children).FirstOrDefault(_ => _.Id == linkId);
+
+                if (link == null)
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "لینک یافت نشد"
+                    };
+                }
+
+                if (link.Children.Count > 0)
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "ابتدا لینک های فرزند را حذف کنید"
+                    };
+                }
+
+                _context.Links.Remove(link);
+
+                _context.SaveChanges();
+
+                transaction.Commit();
+
+                return new ResultDto()
+                {
+                    IsSuccess = true,
+                    Message = "لینک با موفقیت حذف شد"
+                };
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+
+                return new ResultDto()
+                {
+                    IsSuccess = false,
+                    Message = "خطا از سمت سرور"
+                };
+            }
+            finally
+            {
+                transaction.Dispose();
+            }
+        }
+
+        public ResultDto EditLink(RequestEditLinkDto request)
+        {
+            using var transaction = _context.Database.BeginTransaction();
+
+            try
+            {
+                var link = _context.Links.Find(request.Id);
+
+                link.SetPersianTile(request.Name);
+                link.SetOrderNumber(request.OrderNumber);
+                link.SetSearchKey(request.SearchKey);
+
+                _context.SaveChanges();
+
+                transaction.Commit();
+
+                return new ResultDto()
+                {
+                    IsSuccess = true,
+                    Message = "ویرایش با موفقیت انجام شد"
+                };
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+
+                return new ResultDto()
+                {
+                    IsSuccess = false,
+                    Message = "خطا از سمت سرور"
+                };
+            }
+            finally
+            {
+                transaction.Dispose();
+            }
+        }
+
+        public ResultDto<RequestEditLinkDto> GetLink(long id)
+        {
+            var link = _context.Links.Find(id);
+
+            if (link == null)
+            {
+                return new ResultDto<RequestEditLinkDto>()
+                {
+                    Data = null,
+                    Message = "لینک یافت نشد",
+                    IsSuccess = false
+                };
+            }
+
+            var result = new RequestEditLinkDto()
+            {
+                Id = link.Id,
+                Name = link.PersianTitle,
+                OrderNumber = link.OrderNumber,
+                SearchKey = link.SearchKey
+            };
+
+            return new ResultDto<RequestEditLinkDto>()
+            {
+                IsSuccess = true,
+                Data = result
+            };
         }
     }
 }
