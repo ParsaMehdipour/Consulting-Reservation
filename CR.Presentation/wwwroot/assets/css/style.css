@@ -8900,7 +8900,7 @@ ul.benifits-col li i {
     }
 
     .header-navbar-rht {
-        display: none;
+       /* display: none;*/
     }
 
     .main-nav li.login-link {
@@ -8908,7 +8908,7 @@ ul.benifits-col li i {
     }
 
     .navbar-header {
-        width: 100%;
+        width: 70%;
     }
 
     #mobile_btn {
