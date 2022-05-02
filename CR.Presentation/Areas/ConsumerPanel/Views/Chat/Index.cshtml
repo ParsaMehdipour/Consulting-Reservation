@@ -29,7 +29,7 @@
                                 {
                                     <a id="chatUser_@chatUser.Id" onclick="SetChatUserId(@chatUser.Id)" class="media read-chat">
                                         <div class="media-img-wrap">
-                                            <div class="avatar @(chatUser.OnlineFlag ? "avatar-online" : "") " >
+                                            <div class="avatar @(chatUser.OnlineFlag ? "avatar-online" : "avatar-offline") " >
                                                 <img src="~/@chatUser.ExpertIconSrc" alt="@chatUser.ExpertIconSrc" class="avatar-img rounded-circle">
                                             </div>
                                         </div>
@@ -58,7 +58,7 @@
                         </a>
                         <div class="media">
                             <div class="media-img-wrap">
-                                <div class="avatar avatar-online">
+                                <div class="avatar">
                                     <img id="consumerImage" src="~/assets/img/favicon-32x32.png" alt="User Image" class="avatar-img rounded-circle">
                                 </div>
                             </div>
@@ -76,9 +76,18 @@
                     <div class="chat-footer">
                         <div id="voice" class="input-group">
                             <div id="controls">
-                                <button id="recordButton">شروع</button>
-                                <button id="pauseButton" disabled>توقف</button>
-                                <button id="stopButton" disabled>پایان</button>
+                                <button id="recordButton">
+                                    شروع
+                                    <i class="fa fa-microphone microphone"></i>
+                                </button>
+                                <button id="pauseButton" disabled>
+                                    توقف
+                                    <i class="fa fa-pause pause"></i>
+                                </button>
+                                <button id="stopButton" disabled>
+                                    پایان
+                                    <i class="fa fa-stop stop"></i>
+                                </button>
                             </div>
                             <div id="formats"></div>
                             <ol id="recordingsList"></ol>
