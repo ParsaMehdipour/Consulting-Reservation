@@ -41,7 +41,8 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 LastMessage = _.ChatUserMessages.OrderBy(_ => _.CreateDate).Last().Message,
                 NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false),
                 MessageType = _.MessageType.GetDisplayName(),
-                OnlineFlag = _.ExpertInformation.Expert.OnlineFlag
+                OnlineFlag = _.ExpertInformation.Expert.OnlineFlag,
+                ChatStatus = _.ChatStatus.GetDisplayName()
             }).ToList();
 
             return new ResultDto<List<ChatUserForConsumerDto>>()

@@ -5,6 +5,7 @@ using CR.Core.Services.Interfaces.ChatUsers;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace CR.Core.Services.Implementations.ChatUsers
@@ -24,6 +25,15 @@ namespace CR.Core.Services.Implementations.ChatUsers
         public ResultDto<string> Execute(RequestCheckForAppointmentTimeDto request)
         {
 
+            if (request.chatUserId == 0)
+            {
+                return new ResultDto<string>()
+                {
+                    IsSuccess = false,
+                    Message = "لطفا یکی از مخاطبین را انتخاب نمایید",
+                };
+            }
+
             if (string.IsNullOrWhiteSpace(request.message) && request.file == null)
             {
                 return new ResultDto<string>()
@@ -38,23 +48,32 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 .ThenInclude(_ => _.TimeOfDay)
                 .FirstOrDefault(_ => _.Id == request.chatUserId);
 
-            //if (DateTime.Now < chatUser?.Appointment.TimeOfDay.StartTime)
-            //{
-            //    return new ResultDto<string>()
-            //    {
-            //        IsSuccess = false,
-            //        Message = "زمان شروع نوبت شما نرسیده است"
-            //    };
-            //}
+            if (chatUser!.Appointment.IsClosed)
+            {
+                return new ResultDto<string>()
+                {
+                    IsSuccess = false,
+                    Message = "نوبت شما شما توسط سیستم بسته شده است"
+                };
+            }
 
-            //if (DateTime.Now > chatUser?.Appointment.TimeOfDay.FinishTime)
-            //{
-            //    return new ResultDto<string>()
-            //    {
-            //        IsSuccess = false,
-            //        Message = "زمان نوبت شما پایان یافت"
-            //    };
-            //}
+            if (DateTime.Now < chatUser?.Appointment.TimeOfDay.StartTime)
+            {
+                return new ResultDto<string>()
+                {
+                    IsSuccess = false,
+                    Message = "زمان شروع نوبت شما نرسیده است"
+                };
+            }
+
+            if (DateTime.Now > chatUser?.Appointment.TimeOfDay.FinishTime)
+            {
+                return new ResultDto<string>()
+                {
+                    IsSuccess = false,
+                    Message = "زمان نوبت شما پایان یافت"
+                };
+            }
 
             if (request.file != null)
             {

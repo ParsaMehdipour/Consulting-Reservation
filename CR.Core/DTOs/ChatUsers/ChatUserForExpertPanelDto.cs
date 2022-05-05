@@ -9,6 +9,7 @@
         public int NotReadMessagesCount { get; set; }
         public string AppointmentDate { get; set; }
         public string MessageType { get; set; }
+        public string ChatStatus { get; set; }
         public bool OnlineStatus { get; set; }
 
     }
