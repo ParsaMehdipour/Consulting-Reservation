@@ -7,5 +7,6 @@
         public LinkForAdminPanelDto Parent { get; set; }
         public string CreatedDate { get; set; }
         public bool HasChildren { get; set; }
+        public int OrderNumber { get; set; }
     }
 }
