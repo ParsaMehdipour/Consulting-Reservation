@@ -1,0 +1,19 @@
+﻿@model IEnumerable<CR.DataAccess.Entities.Links.Link>
+@foreach (var link in Model)
+{
+    if (link.Children.Count > 0)
+    {
+        <li class="has-submenu">
+            <a href="#">@link.PersianTitle</a>
+            <ul class="submenu">
+                <partial name="LinksPartialView" model="link.Children.OrderBy(_=>_.OrderNumber)" />
+            </ul>
+        </li>
+    }
+    else
+    {
+        <li>
+            <a asp-area="" asp-controller="Experts" asp-action="Index" asp-route-searchKey="@link.SearchKey">@link.PersianTitle</a>
+        </li>
+    }
+}

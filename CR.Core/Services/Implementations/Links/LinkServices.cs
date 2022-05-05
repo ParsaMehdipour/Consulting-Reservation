@@ -38,7 +38,8 @@ namespace CR.Core.Services.Implementations.Links
                 Parent = new LinkForAdminPanelDto()
                 {
                     PersianTitle = _.Parent.PersianTitle,
-                }
+                },
+                OrderNumber = _.OrderNumber
             }).AsEnumerable().ToPaged(Page, PageSize, out var rowsCount).ToList();
 
             return new ResultDto<ResultGetLinksForAdminPanelDto>()
@@ -57,6 +58,7 @@ namespace CR.Core.Services.Implementations.Links
         {
             var links = _context.Links.AsNoTrackingWithIdentityResolution()
                 .Include(_ => _.Children)
+                .OrderBy(_ => _.OrderNumber)
                 .ToList();
 
             var result = links.Where(_ => _.ParentLinkId == null)

@@ -404,4 +404,12 @@
     <None Include="wwwroot\assets\js\ckeditor\vendor\promise.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\Components\Links\Default.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\Components\Links\Default.cshtml" />
+  </ItemGroup>
+
 </Project>

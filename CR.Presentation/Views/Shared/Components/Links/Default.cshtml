@@ -1,0 +1,10 @@
+﻿@model List<CR.DataAccess.Entities.Links.Link>
+@foreach (var link in Model)
+{
+    <li class="has-submenu">
+        <a href="#">@link.PersianTitle<i class="fas fa-chevron-down"></i></a>
+        <ul class="submenu">
+        <partial name="LinksPartialView" model="link.Children.OrderBy(_=>_.OrderNumber)"/>
+        </ul>
+    </li>
+}
