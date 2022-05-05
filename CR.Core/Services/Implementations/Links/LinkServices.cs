@@ -9,6 +9,7 @@ using CR.DataAccess.Context;
 using CR.DataAccess.Entities.Links;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CR.Core.Services.Implementations.Links
@@ -48,6 +49,23 @@ namespace CR.Core.Services.Implementations.Links
                     PageSize = PageSize,
                     CurrentPage = Page
                 },
+                IsSuccess = true
+            };
+        }
+
+        public ResultDto<List<Link>> GetAllLinksForSite()
+        {
+            var links = _context.Links.AsNoTrackingWithIdentityResolution()
+                .Include(_ => _.Children)
+                .ToList();
+
+            var result = links.Where(_ => _.ParentLinkId == null)
+                .AsParallel()
+                .ToList();
+
+            return new ResultDto<List<Link>>()
+            {
+                Data = result,
                 IsSuccess = true
             };
         }
