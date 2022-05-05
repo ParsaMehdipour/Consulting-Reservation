@@ -54,6 +54,14 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 foreach (var appointment in factor.Appointments)
                 {
                     appointment.AppointmentStatus = AppointmentStatus.Declined;
+
+                    appointment.IsClosed = true;
+
+                    if (appointment.ChatUsers.Count > 0)
+                    {
+                        appointment.ChatUsers.FirstOrDefault()!.ChatStatus = ChatStatus.Closed;
+                    }
+
                     appointment.TimeOfDay.IsReserved = false;
                 }
 

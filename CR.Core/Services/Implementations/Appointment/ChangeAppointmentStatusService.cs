@@ -3,6 +3,7 @@ using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs.Appointments;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace CR.Core.Services.Implementations.Appointment
             try
             {
                 var appointment = _context.Appointments
+                    .Include(_ => _.ChatUsers)
                     .Include(_ => _.ConsumerInformation)
                     .ThenInclude(_ => _.Consumer)
                     .Include(a => a.ExpertInformation)
@@ -53,6 +55,11 @@ namespace CR.Core.Services.Implementations.Appointment
                 }
 
                 appointment.AppointmentStatus = request.AppointmentStatus;
+
+                if (appointment.ChatUsers.Count > 0)
+                {
+                    appointment.ChatUsers.FirstOrDefault()!.ChatStatus = ChatStatus.Ended;
+                }
 
                 if (!string.IsNullOrWhiteSpace(request.Reason))
                 {

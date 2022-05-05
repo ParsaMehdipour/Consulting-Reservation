@@ -17,6 +17,7 @@ namespace CR.DataAccess.Entities.Appointments
         public long CommissionPrice { get; set; }
         public long DiscountPrice { get; set; }
         public long RawPrice { get; set; }
+        public bool IsClosed { get; set; }
 
 
         #region Foreign Keys

@@ -2,6 +2,7 @@
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs.Chat;
 using CR.Core.Services.Interfaces.ChatMessages;
+using CR.Core.Services.Interfaces.ChatUsers;
 using CR.Core.Services.Interfaces.Images;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
         private readonly IAddNewChatMessageService _addNewChatMessageService;
         private readonly IAddNewVoiceMessageService _addNewVoiceMessageService;
         private readonly IImageUploaderService _imageUploaderService;
+        private readonly ICheckForAppointmentTimeService _checkForAppointmentTimeService;
 
         public ChatController(IGetChatMessagesService getChatMessagesService
         , IAddNewChatMessageService addNewChatMessageService

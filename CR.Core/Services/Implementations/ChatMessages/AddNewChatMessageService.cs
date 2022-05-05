@@ -43,6 +43,13 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     };
                 }
 
+                var chatUser = _context.ChatUsers.Find(request.chatUserId);
+
+                if (request.messageFlag == MessageFlag.ExpertMessage && (chatUser.ChatStatus != ChatStatus.Closed && chatUser.ChatStatus != ChatStatus.Ended))
+                {
+                    chatUser.ChatStatus = ChatStatus.Started;
+                }
+
                 var chatMessage = new ChatUserMessage()
                 {
                     ChatUserId = request.chatUserId,

@@ -150,5 +150,18 @@ namespace CR.DataAccess.Enums
         [Display(Name = "مشاوره صوتی")]
         Voice = 1
     }
+
+    public enum ChatStatus
+    {
+        [Display(Name = "شروع نشده")]
+        Waiting = 0,
+        [Display(Name = "شروع شده")]
+        Started = 1,
+        [Display(Name = "پایان یافته")]
+        Ended = 2,
+        [Display(Name = "بسته شده")]
+        Closed = 3,
+
+    }
 }
 

@@ -55,6 +55,12 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 }
 
                 appointment.AppointmentStatus = AppointmentStatus.Declined;
+                appointment.IsClosed = true;
+
+                if (appointment.ChatUsers.Count > 0)
+                {
+                    appointment.ChatUsers.FirstOrDefault()!.ChatStatus = ChatStatus.Closed;
+                }
 
                 var timeOfDay = _context.TimeOfDays.Find(appointment.TimeOfDayId);
 

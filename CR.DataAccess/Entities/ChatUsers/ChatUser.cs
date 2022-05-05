@@ -13,6 +13,7 @@ namespace CR.DataAccess.Entities.ChatUsers
     {
         public DateTime lastChangeDate { get; set; } = DateTime.Now;
         public CallingType MessageType { get; set; }
+        public ChatStatus ChatStatus { get; set; }
         public DateTime AppointmentDate { get; set; }
         public string AppointmentDate_String { get; set; }
 

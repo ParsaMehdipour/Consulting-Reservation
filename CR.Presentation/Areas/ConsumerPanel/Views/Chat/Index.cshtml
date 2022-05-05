@@ -1,116 +1,111 @@
 ﻿@using CR.DataAccess.Enums
 @model List<CR.Core.DTOs.ChatUsers.ChatUserForConsumerDto>
 <!-- Page Content -->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="chat-window">
-                <!-- Chat Left -->
-                <div class="chat-cont-left">
-                    <div class="chat-header">
-                        <span>چت </span>
-                        <a href="javascript:void(0)" class="chat-compose">
-                            <i class="material-icons">control_point</i>
-                        </a>
-                    </div>
-                    <form class="chat-search">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <i class="fas fa-search"></i>
-                            </div>
-                            <input type="text" class="form-control" placeholder="جستجو" id="searchKey" name="searchKey">
+<div class="row">
+    <div class="col-xl-12">
+        <div class="chat-window">
+            <!-- Chat Left -->
+            <div class="chat-cont-left">
+                <div class="chat-header">
+                    <span>صفحه پیام ها </span>
+                </div>
+                <form class="chat-search">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <i class="fas fa-search"></i>
                         </div>
-                    </form>
-                    <div class="chat-users-list">
-                        <div id="chatUser-List" class="chat-scroll">
-                            @if (Model.Count > 0)
+                        <input type="text" class="form-control" placeholder="جستجو" id="searchKey" name="searchKey">
+                    </div>
+                </form>
+                <div class="chat-users-list">
+                    <div id="chatUser-List" class="chat-scroll">
+                        @if (Model.Count > 0)
+                        {
+                            @foreach (var chatUser in Model)
                             {
-                                @foreach (var chatUser in Model)
-                                {
-                                    <a id="chatUser_@chatUser.Id" onclick="SetChatUserId(@chatUser.Id)" class="media read-chat">
-                                        <div class="media-img-wrap">
-                                            <div class="avatar @(chatUser.OnlineFlag ? "avatar-online" : "avatar-offline") " >
-                                                <img src="~/@chatUser.ExpertIconSrc" alt="@chatUser.ExpertIconSrc" class="avatar-img rounded-circle">
-                                            </div>
+                                <a id="chatUser_@chatUser.Id" onclick="SetChatUserId(@chatUser.Id)" class="media read-chat">
+                                    <div class="media-img-wrap">
+                                        <div class="avatar @(chatUser.OnlineFlag ? "avatar-online" : "avatar-offline") ">
+                                            <img src="~/@chatUser.ExpertIconSrc" alt="@chatUser.ExpertIconSrc" class="avatar-img rounded-circle">
                                         </div>
-                                        <div class="media-body">
-                                            <div>
-                                                <div class="user-name">@chatUser.ExpertName</div>
-                                                <div class="user-last-chat">@chatUser.LastMessage</div>
-                                            </div>
-                                            <div>
-                                                <div class="last-chat-time block">@chatUser.AppointmentDate</div>
-                                                <div class="last-chat-time block">@chatUser.MessageType</div>
-                                            </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <div>
+                                            <div class="user-name">@chatUser.ExpertName</div>
+                                            <div class="user-last-chat">@chatUser.LastMessage</div>
                                         </div>
-                                    </a>
-                                }
+                                        <div>
+                                            <div class="last-chat-time block">@chatUser.AppointmentDate</div>
+                                            <div class="last-chat-time block">@chatUser.MessageType - @chatUser.ChatStatus</div>
+                                        </div>
+                                    </div>
+                                </a>
                             }
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /Chat Left -->
+            <!-- Chat Right -->
+            <div class="chat-cont-right">
+                <div class="chat-header">
+                    <a id="back_user_list" class="back-user-list">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                    <div class="media">
+                        <div class="media-img-wrap">
+                            <div class="avatar">
+                                <img id="consumerImage" src="~/assets/img/favicon-32x32.png" alt="User Image" class="avatar-img rounded-circle">
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <div id="consumerName" class="user-name"></div>
                         </div>
                     </div>
                 </div>
-                <!-- /Chat Left -->
-                <!-- Chat Right -->
-                <div class="chat-cont-right">
-                    <div class="chat-header">
-                        <a id="back_user_list" class="back-user-list">
-                            <i class="material-icons">chevron_left</i>
-                        </a>
-                        <div class="media">
-                            <div class="media-img-wrap">
-                                <div class="avatar">
-                                    <img id="consumerImage" src="~/assets/img/favicon-32x32.png" alt="User Image" class="avatar-img rounded-circle">
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div id="consumerName" class="user-name"></div>
-                            </div>
-                        </div>
+                <div class="chat-body">
+                    <div class="chat-scroll">
+                        <ul id="messages-Body-Consumer" class="list-unstyled">
+                        </ul>
                     </div>
-                    <div class="chat-body">
-                        <div class="chat-scroll">
-                            <ul id="messages-Body-Consumer" class="list-unstyled">
-                            </ul>
+                </div>
+                <div class="chat-footer">
+                    <div id="voice" class="input-group">
+                        <div id="controls">
+                            <button id="recordButton">
+                                شروع
+                                <i class="fa fa-microphone microphone"></i>
+                            </button>
+                            <button id="pauseButton" disabled>
+                                توقف
+                                <i class="fa fa-pause pause"></i>
+                            </button>
+                            <button id="stopButton" disabled>
+                                پایان
+                                <i class="fa fa-stop stop"></i>
+                            </button>
                         </div>
+                        <div id="formats"></div>
+                        <ol id="recordingsList"></ol>
                     </div>
-                    <div class="chat-footer">
-                        <div id="voice" class="input-group">
-                            <div id="controls">
-                                <button id="recordButton">
-                                    شروع
-                                    <i class="fa fa-microphone microphone"></i>
-                                </button>
-                                <button id="pauseButton" disabled>
-                                    توقف
-                                    <i class="fa fa-pause pause"></i>
-                                </button>
-                                <button id="stopButton" disabled>
-                                    پایان
-                                    <i class="fa fa-stop stop"></i>
-                                </button>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="btn-file btn">
+                                <i class="fa fa-paperclip"></i>
+                                <input type="file" id="image" multiple accept=".png , .jpeg">
                             </div>
-                            <div id="formats"></div>
-                            <ol id="recordingsList"></ol>
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="btn-file btn">
-                                    <i class="fa fa-paperclip"></i>
-                                    <input type="file" id="image" multiple accept=".png , .jpeg">
-                                </div>
-                            </div>
-                            <input id="message" type="text" class="input-msg-send form-control" placeholder="چیزی تایپ کنید ">
-                            <div class="input-group-append">
-                                <button@* onclick="AddNewMessage()"*@ id="sendButton" type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
-                            </div>
+                        <input id="message" type="text" class="input-msg-send form-control" placeholder="چیزی تایپ کنید ">
+                        <div class="input-group-append">
+                            <button@* onclick="AddNewMessage()"*@ id="sendButton" type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /Row -->
 </div>
+<!-- /Row -->
 <!-- /Page Content -->
 @section Scripts
 {
@@ -158,7 +153,7 @@
                     var element = document.getElementById("voice");
 
                     if (model.isVoice === true) {
-                        
+
                         element.style.visibility = 'visible';
                     }
                     else{
@@ -382,7 +377,7 @@
 
                         $("#messages-Body-Consumer").html("");
                         $("#messages-Body-Consumer").html(body2);
-                    } 
+                    }
                     else {
                         var body = $("#messages-Body-Consumer").html();
 

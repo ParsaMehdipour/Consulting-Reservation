@@ -2,6 +2,8 @@ using CR.Common.States;
 using CR.Common.Utilities.PhoneTotp;
 using CR.Common.Utilities.PhoneTotp.Providers;
 using CR.Core.DTOs.FinancialTransactions;
+using CR.Core.JobServices;
+using CR.Core.JobServices.Core;
 using CR.Core.Services.Implementations.AboutUs;
 using CR.Core.Services.Implementations.Appointment;
 using CR.Core.Services.Implementations.BlogCategories;
@@ -68,6 +70,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PersianTranslation.Identity;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 using System;
 using System.Linq;
 
@@ -205,7 +210,8 @@ namespace CR.Presentation
             services.AddScoped<IGetSpecialtiesForExpertProfileDropDownService, GetSpecialtiesForExpertProfileDropDownService>();
             services.AddScoped<IGetSpecialitiesForPresentationService, GetSpecialitiesForPresentationService>();
             services.AddScoped<IGetSpecialitiesForSearchService, GetSpecialitiesForSearchService>();
-            //Appointments
+            //Appointments\
+            services.AddScoped<IResetAppointmentStatusService, ResetAppointmentStatusService>();
             services.AddScoped<IAddAppointmentService, AddAppointmentService>();
             services.AddScoped<IGetAllAppointmentsForAdminPanelService, GetAllAppointmentsForAdminPanelService>();
             //services.AddScoped<IChangeAppointmentStatusServiceBool, ChangeAppointmentStatusServiceBool>();
@@ -328,6 +334,19 @@ namespace CR.Presentation
             services.AddScoped<ISettingServices, SettingServices>();
             //Links
             services.AddScoped<ILinkServices, LinkServices>();
+
+            #endregion
+
+            #region Job Services
+            services.AddSingleton<IJobFactory, JobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            services.AddSingleton<QuartzJobRunner>();
+            services.AddHostedService<QuartzHostedService>();
+
+            services.AddScoped<ResetAppointmentStatus>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(ResetAppointmentStatus),
+                cronExpression: "0 0/30 0 ? * * *"));
 
             #endregion
 
