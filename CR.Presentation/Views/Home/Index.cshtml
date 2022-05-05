@@ -2,7 +2,9 @@
 @{
     Layout = "_Layout";
 }
-
+<style>
+    html.no-js body div.container-fluid.p-x-200--lg.text-center.p-y-30--xs.m-b-70--xs.p-x-35--md.p-x-10--xs.ov-hidden div.col-md-4.m-b-0--md.m-b-40--xs.p-x-80--md.p-x-100--lg.p-x-30--xs.g-bg-color--white.g-radius--10.promoBox.promoBoxLarge
+</style>
 <!-- Home Banner -->
 <section class="section section-search">
     <div class="container-fluid">
@@ -29,6 +31,7 @@
 </section>
 <!-- /Home Banner -->
 
+
 <section class="section home-tile-section">
     <div class="container-fluid">
         <div class="row">
@@ -39,34 +42,34 @@
                 <div class="row">
                     <div class="col-lg-4 mb-3">
                         <div class="card text-center doctor-book-card pakh">
-                            <img src="~/assets/img/doctors/doctor-07.jpg" alt="" class="img-fluid">
-                            <div class="doctor-book-card-content tile-card-content-1">
-                                <div>
-                                    <h3 class="card-title mb-0">مشاوره تحصیلی</h3>
-                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="تحصیلی" class="btn book-btn1 px-3 py-2 mt-3 pakh25" tabindex="0">پیدا کن</a>
-                                </div>
+                            <div class="doc-img" style="margin-bottom:10px;">
+                                <img src="~/assets/img/chat-conversation.svg" alt="" class="img-fluid">
+                            </div>
+                            <div style="margin-bottom:10px;">
+                                <h3 class="card-title mb-0" style="color:black;">مشاوره تحصیلی</h3>
+                                <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="تحصیلی" class="btn book-btn1 px-3 py-2 mt-3 pakh25" tabindex="0">دریافت مشاوره</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-3">
                         <div class="card text-center doctor-book-card pakh">
-                            <img src="~/assets/img/img-pharmacy1.jpg" alt="" class="img-fluid">
-                            <div class="doctor-book-card-content tile-card-content-1">
-                                <div>
-                                    <h3 class="card-title mb-0">مشاوره کسب و کار</h3>
-                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="کسب و کار" class="btn book-btn1 px-3 py-2 mt-3 pakh25" tabindex="0">پیدا کن</a>
-                                </div>
+                            <div class="doc-img" style="margin-bottom:10px;">
+                                <img src="~/assets/img/call-communication.svg" alt="" class="img-fluid">
+                            </div>
+                            <div style="margin-bottom:10px;">
+                                <h3 class="card-title mb-0" style="color:black;">مشاوره کسب و کار</h3>
+                                <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="کسب و کار" class="btn book-btn1 px-3 py-2 mt-3 pakh25" tabindex="0">دریافت مشاوره</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 mb-3">
                         <div class="card text-center doctor-book-card pakh">
-                            <img src="~/assets/img/lab-image.jpg" alt="" class="img-fluid">
-                            <div class="doctor-book-card-content tile-card-content-1">
-                                <div>
-                                    <h3 class="card-title mb-0">مشاوره شغلی</h3>
-                                    <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="شغلی" class="btn book-btn1 px-3 py-2 mt-3 pakh25" tabindex="0">پیدا کن</a>
-                                </div>
+                            <div class="doc-img" style="margin-bottom:10px;">
+                                <img src="~/assets/img/chat-communication.svg" alt="" class="img-fluid">
+                            </div>
+                            <div style="margin-bottom:10px;">
+                                <h3 class="card-title mb-0" style="color:black;">مشاوره شغلی</h3>
+                                <a asp-controller="Experts" asp-action="Index" asp-route-searchKey="شغلی" class="btn book-btn1 px-3 py-2 mt-3 pakh25" tabindex="0">دریافت مشاوره</a>
                             </div>
                         </div>
                     </div>
@@ -88,7 +91,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-9">
                     <!-- Slider -->
-                <div class="specialities-slider slider" dir="rtl">
+                    <div class="specialities-slider slider" dir="rtl">
                         @foreach (var speciality in Model.SpecialityDtos)
                         {
                             <!-- Slider Item -->
@@ -104,7 +107,7 @@
                     </div>
                     <!-- /Slider -->
 
-            </div>
+                </div>
             </div>
         </div>
     </section>
@@ -257,7 +260,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="doctor-slider slider" dir="rtl" style="width: auto;height: auto">
-                        @foreach (var comment in Model.CommentForMainViewDtos)
+                       @foreach (var comment in Model.CommentForMainViewDtos)
                         {
                             <!-- Doctor Widget -->
                             <div class="profile-widget pakh" style="box-shadow: 1px 6px 14px rgba(0, 0, 0, 0.2);">
@@ -284,19 +287,19 @@
         <div class="container-fluid">
 
             <!-- Section Header -->
-        <div class="section-header text-center">
+            <div class="section-header text-center">
                 <h2>بلاگ و اخبار</h2>
                 <p class="sub-title">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
             </div>
             <!-- /Section Header -->
 
-        <div class="row blog-grid-row">
+            <div class="row blog-grid-row">
                 @foreach (var blog in Model.BlogForPresentationDtos)
                 {
                     <div class="col-md-6 col-lg-3 col-sm-12">
 
                         <!-- Blog Post -->
-                <div class="blog grid-blog">
+                        <div class="blog grid-blog">
                             <div class="blog-image">
                                 <a asp-controller="Blogs" asp-action="BlogDetails" asp-route-slug="@blog.Slug"><img class="img-fluid" src="~/@blog.PictureSrc" alt="@blog.Title"></a>
                             </div>
@@ -314,7 +317,7 @@
                             </div>
                         </div>
                         <!-- /Blog Post -->
-            </div>
+                    </div>
                 }
             </div>
             <div class="view-all text-center">
@@ -325,5 +328,5 @@
 }
 <!-- /Blog Section -->
 @section Footer{
-<partial name="Footer" />
+    <partial name="Footer" />
 }

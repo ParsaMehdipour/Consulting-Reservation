@@ -2554,7 +2554,7 @@ html.menu-opened body {
 -----------------------*/
 
 .section-search {
-    background: #6183c8 url(../img/banner.png) no-repeat bottom center;
+    background: #2397c1 url(../img/banner.png) no-repeat bottom center;
     min-height: 450px;
     background-size: 100% auto;
     position: relative;
@@ -8200,7 +8200,7 @@ ul.benifits-col li i {
 
 
     .section-search {
-        background: #6183c8 url(../img/banner.png) no-repeat bottom center;
+        background: #2397c1 url(../img/banner.png) no-repeat bottom center;
         min-height: 410px;
         padding: 30px 15px;
         background-size: 100% auto;
@@ -8364,12 +8364,11 @@ ul.benifits-col li i {
         max-width: 100%;
     }
     .section-search {
-        background: #6183c8 url(../img/banner.png) no-repeat bottom center;
+        background: #2397c1 url(../img/banner.png) no-repeat bottom center;
         min-height: 410px;
         padding: 30px 15px;
         background-size: 100% auto;
     }
-
 }
 
 
@@ -8521,12 +8520,11 @@ ul.benifits-col li i {
 
 
     .section-search {
-        background: #6183c8 url(../img/banner.png) no-repeat bottom center;
+        background: #2397c1 url(../img/banner.png) no-repeat bottom center;
         min-height: 410px;
         padding: 30px 15px;
         background-size: 100% auto;
     }
-
 
     .day-slot li span {
         font-size: 16px;
@@ -8840,10 +8838,16 @@ ul.benifits-col li i {
 
 @media only screen and (max-width: 575.98px) {
     .section-search {
-        background: #6183c8 url(../img/banner.png) no-repeat bottom center;
+        background: #2397c1 url(../img/banner.png) no-repeat bottom center;
         min-height: 410px;
         padding: 30px 15px;
         background-size: 100% auto;
+    }
+    .doctor-slider .slick-slide {
+        display: block;
+        margin-left: 0;
+        padding: 10px;
+        width: 285px;
     }
 
     body {
@@ -8896,7 +8900,7 @@ ul.benifits-col li i {
     }
 
     .header-navbar-rht {
-        display: none;
+       /* display: none;*/
     }
 
     .main-nav li.login-link {
@@ -8904,7 +8908,7 @@ ul.benifits-col li i {
     }
 
     .navbar-header {
-        width: 100%;
+        width: 70%;
     }
 
     #mobile_btn {
@@ -9130,10 +9134,16 @@ ul.benifits-col li i {
 
 @media only screen and (max-width:479px) {
     .section-search {
-        background: #6183c8 url(../img/banner.png) no-repeat bottom center;
+        background: #2397c1 url(../img/banner.png) no-repeat bottom center;
         min-height: 410px;
         padding: 30px 15px;
         background-size: 100% auto;
+    }
+    .doctor-slider .slick-slide {
+        display: block;
+        margin-left: 0;
+        padding: 10px;
+        width: 285px;
     }
 
     .specialities-slider .slick-slide {
