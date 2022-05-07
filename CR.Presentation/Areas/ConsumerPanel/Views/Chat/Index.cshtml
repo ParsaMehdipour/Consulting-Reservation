@@ -124,17 +124,17 @@
     function SetChatUserId(chatUserId) {
         ChatUserId = chatUserId;
 
-        GetMessages(chatUserId);
+        GetMessages();
     }
 
-    function GetMessages(chatUserId) {
+    function GetMessages() {
 
         $("#chatUser-List .active").removeClass("active");
-        $("#chatUser_" + chatUserId).addClass("active");
+        $("#chatUser_" + ChatUserId).addClass("active");
 
         var data = {};
 
-        data["chatUserId"] = chatUserId;
+        data["chatUserId"] = ChatUserId;
 
         $.ajax({
             type: 'POST',

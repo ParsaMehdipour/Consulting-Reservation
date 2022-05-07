@@ -6,7 +6,7 @@ var connection = new signalR.HubConnectionBuilder()
 
 connection.start();
 
-connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHour,filePath) {
+connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHour, filePath) {
 
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -118,6 +118,64 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
             body2 += '</div>';
             body2 += '</li>';
         }
+
+        $("#messages-Body-Consumer").html("");
+        $("#messages-Body-Consumer").html(body2);
+    }
+});
+
+connection.on("ReceiveVoiceHandler", function (messageFlag, messageHour, filePath) {
+
+    var body = $("#messages-Body-Expert").html();
+    var body2 = $("#messages-Body-Consumer").html();
+
+    if (messageFlag === 0) {
+        body += '<li class="media sent">';
+        body += '<div class="media-body">';
+        body += '<div class="msg-box">';
+        body += '<div>';
+        body += '<div class="chat-msg-attachments">';
+        body += '<audio controls>';
+        body += '<source src="/' + filePath + '" type="audio/ogg">';
+        body += '</audio>';
+        body += '</div>';
+        body += '<ul class="chat-msg-info">';
+        body += '<li>';
+        body += '<div class="chat-time">';
+        body += '<span>' + messageHour + '</span>';
+        body += '</div>';
+        body += '</li>';
+        body += '</ul>';
+        body += '</div>';
+        body += '</div>';
+        body += '</div>';
+        body += '</li>';
+
+        $("#messages-Body-Expert").html("");
+        $("#messages-Body-Expert").html(body);
+
+    }
+    else {
+        body2 += '<li class="media sent">';
+        body2 += '<div class="media-body">';
+        body2 += '<div class="msg-box">';
+        body2 += '<div>';
+        body2 += '<div class="chat-msg-attachments">';
+        body2 += '<audio controls>';
+        body2 += '<source src="/' + filePath + '" type="audio/ogg">';
+        body2 += '</audio>';
+        body2 += '</div>';
+        body2 += '<ul class="chat-msg-info">';
+        body2 += '<li>';
+        body2 += '<div class="chat-time">';
+        body2 += '<span>' + messageHour + '</span>';
+        body2 += '</div>';
+        body2 += '</li>';
+        body2 += '</ul>';
+        body2 += '</div>';
+        body2 += '</div>';
+        body2 += '</div>';
+        body2 += '</li>';
 
         $("#messages-Body-Consumer").html("");
         $("#messages-Body-Consumer").html(body2);

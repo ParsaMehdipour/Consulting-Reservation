@@ -1,123 +1,114 @@
 ﻿@model List<CR.Core.DTOs.ChatUsers.ChatUserForExpertPanelDto>
 <!-- Page Content -->
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="chat-window">
+<div class="row">
+    <div class="col-xl-12">
+        <div class="chat-window">
 
-                    <!-- Chat Left -->
-                    <div class="chat-cont-left">
-                        <div class="chat-header">
-                            <span>چت </span>
-                            <a href="javascript:void(0)" class="chat-compose">
-                                <i class="material-icons">control_point</i>
-                            </a>
+            <!-- Chat Left -->
+            <div class="chat-cont-left">
+                <div class="chat-header">
+                    <span>صفجه پیام ها </span>«ِ
+                </div>
+                <form class="chat-search">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <i class="fas fa-search"></i>
                         </div>
-                        <form class="chat-search">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <i class="fas fa-search"></i>
-                                </div>
-                                <input type="text" class="form-control" placeholder="جستجو" id="searchKey" name="searchKey">
-                            </div>
-                        </form>
-                        <div class="chat-users-list">
-                            <div id="chatUser-List" class="chat-scroll">
-                                @if (Model.Count > 0)
-                                {
-                                    @foreach (var chatUser in Model)
-                                    {
-                                        <a id="chatUser_@chatUser.Id" onclick="SetChatUserId(@chatUser.Id)" class="media read-chat">
-                                            <div class="media-img-wrap">
-                                                <div class="avatar @(chatUser.OnlineStatus ? "avatar-online" : "avatar-offline") ">
-                                                    <img src="~/@chatUser.ConsumerIconSrc" alt="@chatUser.ConsumerName" class="avatar-img rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="media-body">
-                                                <div>
-                                                    <div class="user-name">@chatUser.ConsumerName</div>
-                                                    <div class="user-last-chat">@chatUser.LastMessage</div>
-                                                </div>
-                                                <div>
-                                                    <div class="last-chat-time block">@chatUser.AppointmentDate</div>
-                                                    <div class="last-chat-time block">@chatUser.MessageType - @chatUser.ChatStatus</div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    }
-                                }
-                            </div>
-                        </div>
+                        <input type="text" class="form-control" placeholder="جستجو" id="searchKey" name="searchKey">
                     </div>
-                    <!-- /Chat Left -->
-                    <!-- Chat Right -->
-                    <div class="chat-cont-right">
-                        <div class="chat-header">
-                            <a id="back_user_list" class="back-user-list">
-                                <i class="material-icons">chevron_left</i>
-                            </a>
-                            <div class="media">
-                                <div class="media-img-wrap">
-                                    <div class="avatar">
-                                        <img id="consumerImage" src="~/assets/img/favicon-32x32.png" alt="User Image" class="avatar-img rounded-circle">
+                </form>
+                <div class="chat-users-list">
+                    <div id="chatUser-List" class="chat-scroll">
+                        @if (Model.Count > 0)
+                        {
+                            @foreach (var chatUser in Model)
+                            {
+                                <a id="chatUser_@chatUser.Id" onclick="SetChatUserId(@chatUser.Id)" class="media read-chat">
+                                    <div class="media-img-wrap">
+                                        <div class="avatar @(chatUser.OnlineStatus ? "avatar-online" : "avatar-offline") ">
+                                            <img src="~/@chatUser.ConsumerIconSrc" alt="@chatUser.ConsumerName" class="avatar-img rounded-circle">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="media-body">
-                                    <div id="consumerName" class="user-name"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat-body">
-                            <div class="chat-scroll">
-                                <ul id="messages-Body-Expert" class="list-unstyled">
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="chat-footer">
-                            <div class="input-group">
-                                <div id="controls">
-                                    <button id="recordButton">
-                                        شروع
-                                        <i class="fa fa-microphone microphone"></i>
-                                    </button>
-                                    <button id="pauseButton" disabled>
-                                        توقف
-                                        <i class="fa fa-pause pause"></i>
-                                    </button>
-                                    <button id="stopButton" disabled>
-                                        پایان
-                                        <i class="fa fa-stop stop"></i>
-                                    </button>
-                                </div>
-                                <div id="formats"></div>
-                                @*<p><strong>پیام ها:</strong></p>*@
-                                <ol id="recordingsList"></ol>
-                            </div>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="btn-file btn">
-                                        <i class="fa fa-paperclip"></i>
-                                        <input type="file" id="image" multiple accept=".png , .jpeg">
+                                    <div class="media-body">
+                                        <div>
+                                            <div class="user-name">@chatUser.ConsumerName</div>
+                                            <div class="user-last-chat">@chatUser.LastMessage</div>
+                                        </div>
+                                        <div>
+                                            <div class="last-chat-time block">@chatUser.AppointmentDate</div>
+                                            <div class="last-chat-time block">@chatUser.MessageType - @chatUser.ChatStatus</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <input id="message" type="text" class="input-msg-send form-control" placeholder="چیزی تایپ کنید ">
-                                <div class="input-group-append">
-                                    <button id="sendButton" type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
-                                </div>
-                            </div>
-                        </div>
+                                </a>
+                            }
+                        }
                     </div>
-                    <!-- /Chat Right -->
-
                 </div>
             </div>
+            <!-- /Chat Left -->
+            <!-- Chat Right -->
+            <div class="chat-cont-right">
+                <div class="chat-header">
+                    <a id="back_user_list" class="back-user-list">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                    <div class="media">
+                        <div class="media-img-wrap">
+                            <div class="avatar">
+                                <img id="consumerImage" src="~/assets/img/favicon-32x32.png" alt="User Image" class="avatar-img rounded-circle">
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <div id="consumerName" class="user-name"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-body">
+                    <div class="chat-scroll">
+                        <ul id="messages-Body-Expert" class="list-unstyled">
+                        </ul>
+                    </div>
+                </div>
+                <div class="chat-footer">
+                    <div class="input-group">
+                        <div id="controls">
+                            <button id="recordButton">
+                                شروع
+                                <i class="fa fa-microphone microphone"></i>
+                            </button>
+                            <button id="pauseButton" disabled>
+                                توقف
+                                <i class="fa fa-pause pause"></i>
+                            </button>
+                            <button id="stopButton" disabled>
+                                پایان
+                                <i class="fa fa-stop stop"></i>
+                            </button>
+                        </div>
+                        <div id="formats"></div>
+                        @*<p><strong>پیام ها:</strong></p>*@
+                        <ol id="recordingsList"></ol>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="btn-file btn">
+                                <i class="fa fa-paperclip"></i>
+                                <input type="file" id="image" multiple accept=".png , .jpeg">
+                            </div>
+                        </div>
+                        <input id="message" type="text" class="input-msg-send form-control" placeholder="چیزی تایپ کنید ">
+                        <div class="input-group-append">
+                            <button id="sendButton" type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Chat Right -->
+
         </div>
-        <!-- /Row -->
-
     </div>
-
 </div>
+<!-- /Row -->
 <!-- /Page Content -->
 @section Scripts
 {
@@ -132,17 +123,17 @@
     function SetChatUserId(chatUserId) {
         ChatUserId = chatUserId;
 
-        GetMessages(chatUserId);
+        GetMessages();
     }
 
-    function GetMessages(chatUserId) {
+    function GetMessages() {
 
         $("#chatUser-List .active").removeClass("active");
-        $("#chatUser_" + chatUserId).addClass("active");
+        $("#chatUser_" + ChatUserId).addClass("active");
 
         var data = {};
 
-        data["chatUserId"] = chatUserId;
+        data["chatUserId"] = ChatUserId;
 
         $.ajax({
             type: 'POST',
@@ -373,7 +364,7 @@
 
                         $("#messages-Body-Expert").html("");
                         $("#messages-Body-Expert").html(body2);
-                    } 
+                    }
                     else {
 
                         var body = $("#messages-Body-Expert").html();

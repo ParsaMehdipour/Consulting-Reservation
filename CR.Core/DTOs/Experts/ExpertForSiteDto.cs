@@ -17,6 +17,9 @@ namespace CR.Core.DTOs.Experts
         public long? Price { get; set; }
         public bool HasTimeOfDays { get; set; }
         public bool HasStar { get; set; }
+        public bool PhoneCall { get; set; }
+        public bool VoiceCall { get; set; }
+        public bool TextCall { get; set; }
         public List<string> Tags { get; set; }
     }
 }

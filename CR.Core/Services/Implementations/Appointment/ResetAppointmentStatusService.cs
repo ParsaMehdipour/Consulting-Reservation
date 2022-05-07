@@ -39,7 +39,7 @@ namespace CR.Core.Services.Implementations.Appointment
                             && _.IsClosed == false
                             && !(_.ChatUsers.FirstOrDefault().ChatUserMessages.Any(cm =>
                                 cm.MessageFlag == MessageFlag.ExpertMessage
-                                && cm.CreateDate > _.TimeOfDay.StartTime.AddMinutes(15)))).ToList();
+                                && cm.CreateDate > _.TimeOfDay.StartTime.AddMinutes(5)))).ToList();
 
             foreach (var appointment in appoinments)
             {

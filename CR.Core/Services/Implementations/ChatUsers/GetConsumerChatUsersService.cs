@@ -28,7 +28,7 @@ namespace CR.Core.Services.Implementations.ChatUsers
 
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                chatUsers = chatUsers.Where(_ => _.Consumer.FirstName.Contains(searchKey) || _.Consumer.LastName.Contains(searchKey));
+                chatUsers = chatUsers.Where(_ => _.ExpertInformation.FirstName.Contains(searchKey) || _.ExpertInformation.LastName.Contains(searchKey));
             }
 
 

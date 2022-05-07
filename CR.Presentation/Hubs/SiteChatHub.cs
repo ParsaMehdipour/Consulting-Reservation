@@ -13,12 +13,15 @@ namespace CR.Presentation.Hubs
     {
         private readonly IAddNewChatMessageService _addNewChatMessageService;
         private readonly ApplicationContext _context;
+        private readonly IAddNewVoiceMessageService _addNewVoiceMessageService;
 
         public SiteChatHub(IAddNewChatMessageService addNewChatMessageService
-        , ApplicationContext context)
+        , ApplicationContext context
+        , IAddNewVoiceMessageService addNewVoiceMessageService)
         {
             _addNewChatMessageService = addNewChatMessageService;
             _context = context;
+            _addNewVoiceMessageService = addNewVoiceMessageService;
         }
 
         public async Task SendMessage(long chatUserId, string message, MessageFlag messageFlag, string filePath)
@@ -36,6 +39,23 @@ namespace CR.Presentation.Hubs
             if (result.IsSuccess)
             {
                 await Clients.User(result.Data.userId).SendAsync("ReceiveMessageHandler", message, messageFlag, result.Data.messageHour, filePath);
+            }
+        }
+
+        public async Task SendVoice(long chatUserId, MessageFlag messageFlag, string audioPath)
+        {
+            var request = new RequestAddNewVoiceMessageDto()
+            {
+                chatUserId = chatUserId,
+                messageFlag = messageFlag,
+                filePath = audioPath
+            };
+
+            var result = _addNewVoiceMessageService.Execute(request);
+
+            if (result.IsSuccess)
+            {
+                await Clients.User(result.Data.userId).SendAsync("ReceiveVoiceHandler", messageFlag, result.Data.messageHour, audioPath);
             }
         }
 

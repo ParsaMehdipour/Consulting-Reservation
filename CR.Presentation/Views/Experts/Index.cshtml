@@ -16,20 +16,6 @@
                 </nav>
                 <h2 class="breadcrumb-title">مشاورین</h2>
             </div>
-         @*   <div class="col-md-4 col-12 d-md-block d-none">
-                <div class="sort-by">
-                    <span class="sort-title">مرتب سازی</span>
-                    <span class="sortby-fliter">
-                        <select class="select">
-                            <option>انتخاب</option>
-                            <option class="sorting">رتبه</option>
-                            <option class="sorting">محبوبیت</option>
-                            <option class="sorting">آخرین</option>
-                            <option class="sorting">رایگان</option>
-                        </select>
-                    </span>
-                </div>
-            </div>*@
         </div>
     </div>
 </div>
@@ -41,50 +27,50 @@
         <div class="row">
             <div class="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">
                 <form>
-                <!-- Search Filter -->
-                <div class="card search-filter">
-                    <div class="card-header">
-                        <h4 class="card-title mb-0">فیلتر جستجو</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="filter-widget">
-                            <div>
-                                <input type="text" class="form-control" placeholder="جستحو" name="searchKey" id="searchKey">
-                            </div>
+                    <!-- Search Filter -->
+                    <div class="card search-filter">
+                        <div class="card-header">
+                            <h4 class="card-title mb-0">فیلتر جستجو</h4>
                         </div>
-                        <div class="filter-widget">
-                            <h4>جنسیت</h4>
-                            <div>
-                                <label class="custom_check">
-                                    <input type="checkbox" name="gender" id="gender_male" value="1">
-                                    <span class="checkmark"></span> مشاور مرد
-                                </label>
+                        <div class="card-body">
+                            <div class="filter-widget">
+                                <div>
+                                    <input type="text" class="form-control" placeholder="جستحو" name="searchKey" id="searchKey">
+                                </div>
                             </div>
-                            <div>
-                                <label class="custom_check">
-                                    <input type="checkbox" name="gender" id="gender_female" value="2">
-                                    <span class="checkmark"></span> مشاور زن
-                                </label>
-                            </div>
-                        </div>
-                        <div class="filter-widget">
-                            <h4> مشاور را انتخاب کنید </h4>
-                            @foreach (var speciality in Model.Specialities)
-                            {
+                            <div class="filter-widget">
+                                <h4>جنسیت</h4>
                                 <div>
                                     <label class="custom_check">
-                                        <input type="checkbox" name="speciality" id="speciality" value="@speciality">
-                                        <span class="checkmark"></span> @speciality
+                                        <input type="checkbox" name="gender" id="gender_male" value="1">
+                                        <span class="checkmark"></span> مشاور مرد
                                     </label>
                                 </div>
-                            }
-                        </div>
-                        <div class="btn-search">
-                            <button type="submit" class="btn btn-block">جستجو</button>
+                                <div>
+                                    <label class="custom_check">
+                                        <input type="checkbox" name="gender" id="gender_female" value="2">
+                                        <span class="checkmark"></span> مشاور زن
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-widget">
+                                <h4> مشاور را انتخاب کنید </h4>
+                                @foreach (var speciality in Model.Specialities)
+                                {
+                                    <div>
+                                        <label class="custom_check">
+                                            <input type="checkbox" name="speciality" id="speciality" value="@speciality">
+                                            <span class="checkmark"></span> @speciality
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            <div class="btn-search">
+                                <button type="submit" class="btn btn-block">جستجو</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- /Search Filter -->
+                    <!-- /Search Filter -->
                 </form>
             </div>
 
@@ -103,18 +89,22 @@
                                         </a>
                                     </div>
                                     <div class="doc-info-cont">
-                                        <h4 class="doc-name"><a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">مشاور @expert.FullName</a>
+                                        <h4 class="doc-name">
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">مشاور @expert.FullName</a>
                                             @if (expert.HasStar)
                                             {
                                                 <i class="fas fa-check-circle verified"></i>
                                             }
                                         </h4>
                                         <h5 class="doc-department">
-
-                                            <img src="~/@expert.SpecialitySrc"
-                                             class="img-fluid" alt="Speciality">@expert.Speciality
-
+                                            <img src="~/@expert.SpecialitySrc" class="img-fluid" alt="Speciality">@expert.Speciality
                                         </h5>
+                                        <div class="clinic-services">
+                                            @foreach (var tag in expert.Tags)
+                                            {
+                                                <span>@tag</span>
+                                            }
+                                        </div>
                                         @if (expert.AverageRate != 0)
                                         {
                                             <div class="rating">
@@ -131,20 +121,23 @@
                                                 <span class="d-inline-block average-rating">(@expert.RateCount)</span>
                                             </div>
                                         }
-                                        <div class="clinic-services">
-                                            @foreach (var tag in expert.Tags)
+                                        <div class="row doc-info-cont">
+                                            @if (expert.PhoneCall)
                                             {
-                                                <span>@tag</span>
+                                                <div><i style="color:#147ba6" class="fas fa-phone"></i>تلفنی + </div>
+                                            }
+                                            @if (expert.VoiceCall)
+                                            {
+                                                <div><i style="color:#147ba6" class="fas fa-microphone"></i>صوتی + </div>
+                                            }
+                                            @if (expert.TextCall)
+                                            {
+                                                <div><i style="color:#147ba6" class="fas fa-comment"></i>متنی</div>
                                             }
                                         </div>
                                     </div>
                                 </div>
                                 <div class="doc-info-right">
-                                   @* <div class="clini-infos">
-                                        <ul>
-                                            <li><i class="far fa-comment"></i> @expert.RateCount فید بک </li>
-                                        </ul>
-                                    </div>*@
                                     <div class="clinic-booking">
                                         <a class="view-pro-btn" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">مشاهده پروفایل</a>
                                         @if (@expert.HasTimeOfDays)
@@ -184,52 +177,51 @@
 
 </div>
 <!-- /Page Content -->
-
 @section Footer{
-    <partial name="Footer"/>
+<partial name="Footer" />
 }
 
 @*@section Scripts
-{
-<script>
+    {
+    <script>
 
     function Search() {
-        var searchForm = new FormData();
+    var searchForm = new FormData();
 
-        if (document.getElementById("gender_male").checked === true) {
-            searchForm.append("gender",1);
-        }
-        else if(document.getElementById("gender_female").checked === true) {
-            searchForm.append("gender",2);
-        }
+    if (document.getElementById("gender_male").checked === true) {
+    searchForm.append("gender",1);
+    }
+    else if(document.getElementById("gender_female").checked === true) {
+    searchForm.append("gender",2);
+    }
 
-        searchForm.append("searchKey",$("#searchKey").val());
+    searchForm.append("searchKey",$("#searchKey").val());
 
-        $.ajax({
-            type: 'GET',
-            url: '@Url.Action("Index", "Experts")',
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            cache: false,
-            data: searchForm,
-            success: function(data) {
-                if (data.isSuccess == true) {
-                    swal.fire('موفق!',
-                        data.message,
-                        'success');
-                } else {
-                    swal.fire('هشدار!',
-                        data.message,
-                        'warning');
-                }
-            },
-            error: function(request, status, error) {
-                alert(request.responseText);
-            }
-        });
+    $.ajax({
+    type: 'GET',
+    url: '@Url.Action("Index", "Experts")',
+    processData: false,
+    contentType: false,
+    dataType: 'json',
+    cache: false,
+    data: searchForm,
+    success: function(data) {
+    if (data.isSuccess == true) {
+    swal.fire('موفق!',
+    data.message,
+    'success');
+    } else {
+    swal.fire('هشدار!',
+    data.message,
+    'warning');
+    }
+    },
+    error: function(request, status, error) {
+    alert(request.responseText);
+    }
+    });
 
     }
 
-</script>
-}*@
+    </script>
+    }*@
