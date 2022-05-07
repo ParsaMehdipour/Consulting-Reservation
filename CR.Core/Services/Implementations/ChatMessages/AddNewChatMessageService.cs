@@ -62,14 +62,14 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     userId = _context.ChatUsers.Include(_ => _.ExpertInformation)
                         .FirstOrDefault(_ => _.Id == request.chatUserId)?.ExpertInformation.ExpertId.ToString();
 
-                    onlineStatus = _context.Users.Find(userId).OnlineFlag;
+                    onlineStatus = _context.Users.Find(Convert.ToInt64(userId)).OnlineFlag;
                 }
                 else
                 {
                     userId = _context.ChatUsers.Include(_ => _.Consumer)
                         .FirstOrDefault(_ => _.Id == request.chatUserId)?.Consumer.Id.ToString();
 
-                    onlineStatus = _context.Users.Find(userId).OnlineFlag;
+                    onlineStatus = _context.Users.Find(Convert.ToInt64(userId)).OnlineFlag;
 
                 }
 
