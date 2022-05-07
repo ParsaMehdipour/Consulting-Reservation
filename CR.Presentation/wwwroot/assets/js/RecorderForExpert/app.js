@@ -176,8 +176,8 @@ function createDownloadLink(blob) {
                     $('#loading').show();
                 },
 				success: function (data) {
-                    if (data.isSuccess === true) {
-                        location.reload();
+					if (data.isSuccess === true) {
+						GetMessages();
                     }
                     else {
                         swal.fire(
@@ -231,7 +231,40 @@ function Send(blob) {
 		},
 		success: function (data) {
 			if (data.isSuccess === true) {
-				location.reload();
+				var today = new Date();
+
+				var time = today.getHours() + ":" + today.getMinutes();
+				var user = ChatUserId;
+				var messageFlag = 1;
+				connection.invoke("SendVoice", user, messageFlag, data.data).catch(function (err) {
+					return console.error(err.toString());
+				});
+
+				var body = $("#messages-Body-Expert").html();
+
+				body += '<li class="media received">';
+				body += '<div class="media-body">';
+				body += '<div class="msg-box">';
+				body += '<div>';
+				body += '<div class="chat-msg-attachments">';
+				body += '<audio controls>';
+				body += '<source src="/' + data.data + '" type="audio/ogg">';
+				body += '</audio>';
+				body += '</div>';
+				body += '<ul class="chat-msg-info">';
+				body += '<li>';
+				body += '<div class="chat-time">';
+				body += '<span>' + time + '</span>';
+				body += '</div>';
+				body += '</li>';
+				body += '</ul>';
+				body += '</div>';
+				body += '</div>';
+				body += '</div>';
+				body += '</li>';
+
+				$("#messages-Body-Expert").html("");
+				$("#messages-Body-Expert").html(body);
 			}
 			else {
 				swal.fire(

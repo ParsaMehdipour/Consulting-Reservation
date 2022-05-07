@@ -1,4 +1,6 @@
-﻿using CR.Core.DTOs.RequestDTOs.Chat;
+﻿using CR.Common.DTOs;
+using CR.Core.DTOs.Images;
+using CR.Core.DTOs.RequestDTOs.Chat;
 using CR.Core.DTOs.RequestDTOs.ChatUser;
 using CR.Core.Services.Interfaces.ChatMessages;
 using CR.Core.Services.Interfaces.ChatUsers;
@@ -52,9 +54,32 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
 
         [Route("/api/Chat/AddNewConsumerVoiceMessage")]
         [HttpPost]
-        public IActionResult AddNewVoiceMessage([FromForm] RequestAddNewVoiceMessageDto request)
+        public IActionResult AddNewVoiceMessage([FromForm] RequestUploadVoiceDto request)
         {
-            var result = _addNewVoiceMessageService.Execute(request);
+            var result = new ResultDto<string>()
+            {
+                IsSuccess = true,
+            };
+
+            //result = _checkForAppointmentTimeService.Execute(new RequestCheckForAppointmentTimeDto()
+            //{
+            //    chatUserId = request.chatUserId,
+            //    file = null,
+            //    message = "Voice"
+            //});
+
+            if (result.IsSuccess == false)
+            {
+                return new JsonResult(result);
+            }
+
+            var filePath = _imageUploaderService.Execute(new UploadImageDto()
+            {
+                File = request.file,
+                Folder = "ChatVoices"
+            });
+
+            result.Data = filePath;
 
             return new JsonResult(result);
         }

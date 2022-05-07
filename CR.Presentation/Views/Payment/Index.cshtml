@@ -79,7 +79,7 @@
                 <!-- Booking Summary -->
                 <div class="card booking-card">
                     <div class="card-header">
-                        <h4 class="card-title">خلاصه رزرو</h4>
+                        <h4 class="card-title">جزئیات نوبت</h4>
                     </div>
                     <div class="card-body">
 
@@ -122,13 +122,13 @@
                                     <hr />
                                 }
                                 <ul class="booking-fee">
-                                    <li>نوع مشاوره<span>@Model.AppointmentDetailsForSiteDtos.FirstOrDefault()?.TimingType</span></li>
-                                    <li>نوع ارتباط<span>@Model.AppointmentDetailsForSiteDtos.FirstOrDefault()?.CallingType</span></li>
+                                    <li>مدت زمان مشاوره<span>@Model.AppointmentDetailsForSiteDtos.FirstOrDefault()?.TimingType</span></li>
+                                    <li>نوع مشاوره<span>@Model.AppointmentDetailsForSiteDtos.FirstOrDefault()?.CallingType</span></li>
                                 </ul>
                                 <div class="booking-total">
                                     <ul class="booking-total-list">
                                         <li>
-                                            <span>کل</span>
+                                            <span>قیمت نهایی</span>
                                             <span class="total-cost">@Model.price.ToString("n0") تومان</span>
                                         </li>
                                     </ul>
@@ -170,9 +170,8 @@
             else {
 
                 swal.fire('هشدار!',
-                    "لطفا تیک شرایط و مقررات را بزنید",
+                    "لطفا قوانین و مقررات را با دقت مطالعه نموده و سپس تیک آن را بزنید.",
                     'warning');
-
                 return;
             }
 

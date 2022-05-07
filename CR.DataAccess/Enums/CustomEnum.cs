@@ -59,11 +59,11 @@ namespace CR.DataAccess.Enums
 
     public enum CallingType
     {
-        [Display(Name = "مشاوره تلفنی")]
+        [Display(Name = "تلفنی")]
         PhoneCall = 0,
-        [Display(Name = "مشاوره صوتی")]
+        [Display(Name = "صوتی")]
         VoiceCall = 1,
-        [Display(Name = "مشاوره متنی")]
+        [Display(Name = "متنی")]
         TextCall = 2,
     }
 

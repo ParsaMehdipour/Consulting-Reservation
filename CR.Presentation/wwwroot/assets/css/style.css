@@ -5592,7 +5592,7 @@ html.menu-opened body {
 }
 
 .chat-msg-attachments {
-    padding: 4px 0;
+/*    padding: 4px 0;*/
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -8908,7 +8908,7 @@ ul.benifits-col li i {
     }
 
     .navbar-header {
-        width: 70%;
+        width: 60%;
     }
 
     #mobile_btn {

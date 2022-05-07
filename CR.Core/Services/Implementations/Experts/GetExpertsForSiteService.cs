@@ -67,7 +67,10 @@ namespace CR.Core.Services.Implementations.Experts
                 Speciality = e.ExpertInformation.Specialty.Name,
                 HasTimeOfDays = e.ExpertInformation.TimeOfDays.Any(_ => _.StartTime.Date >= DateTime.Now.Date && (e.ExpertInformation.UsePhoneCall || e.ExpertInformation.UseVoiceCall || e.ExpertInformation.UseTextCall)),
                 SpecialitySrc = e.ExpertInformation.Specialty.ImageSrc,
-                Tags = e.ExpertInformation.Tag.Split(",", System.StringSplitOptions.None).ToList()
+                Tags = e.ExpertInformation.Tag.Split(",", System.StringSplitOptions.None).ToList(),
+                PhoneCall = e.ExpertInformation.UsePhoneCall,
+                VoiceCall = e.ExpertInformation.UseVoiceCall,
+                TextCall = e.ExpertInformation.UseTextCall,
             }).AsEnumerable()
                 .Randomize()
                 .ToPaged(Page, PageSize, out var rowCount)

@@ -1,6 +1,6 @@
 ﻿using CR.Common.DTOs;
-using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs.Chat;
+using CR.Core.DTOs.ResultDTOs.ChatMessages;
 using CR.Core.Services.Interfaces.ChatMessages;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Context;
@@ -24,12 +24,15 @@ namespace CR.Core.Services.Implementations.ChatMessages
             _imageUploaderService = imageUploaderService;
         }
 
-        public ResultDto Execute(RequestAddNewVoiceMessageDto request)
+        public ResultDto<ResultAddChatMessageDto> Execute(RequestAddNewVoiceMessageDto request)
         {
             using var transaction = _context.Database.BeginTransaction();
 
             try
             {
+                string userId = "";
+                bool onlineStatus = false;
+
                 var chatUser = _context.ChatUsers
                     .Include(_ => _.Appointment)
                     .ThenInclude(_ => _.TimeOfDay)
@@ -39,19 +42,21 @@ namespace CR.Core.Services.Implementations.ChatMessages
                 {
                     if (DateTime.Now < chatUser?.Appointment.TimeOfDay.StartTime)
                     {
-                        return new ResultDto()
+                        return new ResultDto<ResultAddChatMessageDto>()
                         {
                             IsSuccess = false,
-                            Message = "زمان شروع نوبت شما نرسیده است"
+                            Message = "زمان شروع نوبت شما نرسیده است",
+                            Data = null
                         };
                     }
 
                     if (DateTime.Now > chatUser?.Appointment.TimeOfDay.FinishTime)
                     {
-                        return new ResultDto()
+                        return new ResultDto<ResultAddChatMessageDto>()
                         {
                             IsSuccess = false,
-                            Message = "زمان نوبت شما پایان یافت"
+                            Message = "زمان نوبت شما پایان یافت",
+                            Data = null
                         };
                     }
                 }
@@ -61,16 +66,23 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     ChatUserId = request.chatUserId,
                     ChatUser = chatUser,
                     MessageFlag = request.messageFlag,
+                    Audio = request.filePath
                 };
 
-
-                if (request.file != null)
+                if (request.messageFlag == MessageFlag.ConsumerMessage)
                 {
-                    chatMessage.Audio = _imageUploaderService.Execute(new UploadImageDto()
-                    {
-                        File = request.file,
-                        Folder = "ChatVoices"
-                    });
+                    userId = _context.ChatUsers.Include(_ => _.ExpertInformation)
+                        .FirstOrDefault(_ => _.Id == request.chatUserId)?.ExpertInformation.ExpertId.ToString();
+
+                    onlineStatus = _context.Users.Find(Convert.ToInt64(userId)).OnlineFlag;
+                }
+                else
+                {
+                    userId = _context.ChatUsers.Include(_ => _.Consumer)
+                        .FirstOrDefault(_ => _.Id == request.chatUserId)?.Consumer.Id.ToString();
+
+                    onlineStatus = _context.Users.Find(Convert.ToInt64(userId)).OnlineFlag;
+
                 }
 
                 _context.ChatUserMessages.Add(chatMessage);
@@ -79,23 +91,28 @@ namespace CR.Core.Services.Implementations.ChatMessages
 
                 transaction.Commit();
 
-                return new ResultDto()
+                return new ResultDto<ResultAddChatMessageDto>()
                 {
                     IsSuccess = true,
-                    Message = string.Empty
+                    Message = string.Empty,
+                    Data = new ResultAddChatMessageDto()
+                    {
+                        userId = userId,
+                        messageHour = $"{chatMessage.CreateDate.Minute} : {chatMessage.CreateDate.Hour}",
+                        onlineStatus = onlineStatus
+                    }
                 };
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                var error = e;
-
                 transaction.Rollback();
 
-                return new ResultDto()
+                return new ResultDto<ResultAddChatMessageDto>()
                 {
                     IsSuccess = false,
-                    Message = "خطا از سمت سرور"
+                    Message = "خطا از سمت سرور",
+                    Data = null
                 };
             }
         }

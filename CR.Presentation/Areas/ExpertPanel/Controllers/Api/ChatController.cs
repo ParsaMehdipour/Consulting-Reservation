@@ -1,6 +1,7 @@
 ﻿using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs.Chat;
+using CR.Core.DTOs.RequestDTOs.ChatUser;
 using CR.Core.Services.Interfaces.ChatMessages;
 using CR.Core.Services.Interfaces.ChatUsers;
 using CR.Core.Services.Interfaces.Images;
@@ -20,8 +21,10 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
         public ChatController(IGetChatMessagesService getChatMessagesService
         , IAddNewChatMessageService addNewChatMessageService
         , IAddNewVoiceMessageService addNewVoiceMessageService
-        , IImageUploaderService imageUploaderService)
+        , IImageUploaderService imageUploaderService
+        , ICheckForAppointmentTimeService checkForAppointmentTimeService)
         {
+            _checkForAppointmentTimeService = checkForAppointmentTimeService;
             _getChatMessagesService = getChatMessagesService;
             _addNewChatMessageService = addNewChatMessageService;
             _addNewVoiceMessageService = addNewVoiceMessageService;
@@ -46,6 +49,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
                 IsSuccess = true,
             };
 
+
             if (request.file != null)
             {
                 var filePath = _imageUploaderService.Execute(new UploadImageDto()
@@ -55,16 +59,49 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
                 });
 
                 result.Data = filePath;
+
+                return new JsonResult(result);
             }
 
+            result = _checkForAppointmentTimeService.Execute(new RequestCheckForAppointmentTimeDto()
+            {
+                chatUserId = request.chatUserId,
+                file = null,
+                message = request.message
+            });
+
             return new JsonResult(result);
+
         }
 
         [Route("/api/Chat/AddNewVoiceMessage")]
         [HttpPost]
-        public IActionResult AddNewVoiceMessage([FromForm] RequestAddNewVoiceMessageDto request)
+        public IActionResult AddNewVoiceMessage([FromForm] RequestUploadVoiceDto request)
         {
-            var result = _addNewVoiceMessageService.Execute(request);
+            var result = new ResultDto<string>()
+            {
+                IsSuccess = true,
+            };
+
+            result = _checkForAppointmentTimeService.Execute(new RequestCheckForAppointmentTimeDto()
+            {
+                chatUserId = request.chatUserId,
+                file = null,
+                message = "Voice"
+            });
+
+            if (result.IsSuccess == false)
+            {
+                return new JsonResult(result);
+            }
+
+            var filePath = _imageUploaderService.Execute(new UploadImageDto()
+            {
+                File = request.file,
+                Folder = "ChatVoices"
+            });
+
+            result.Data = filePath;
 
             return new JsonResult(result);
         }

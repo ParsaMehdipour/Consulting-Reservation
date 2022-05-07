@@ -66,7 +66,7 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 };
             }
 
-            if (DateTime.Now > chatUser?.Appointment.TimeOfDay.FinishTime)
+            if (DateTime.Now > chatUser?.Appointment.TimeOfDay.FinishTime.AddMinutes(5))
             {
                 return new ResultDto<string>()
                 {
