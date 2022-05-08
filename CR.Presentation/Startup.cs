@@ -346,7 +346,7 @@ namespace CR.Presentation
             services.AddScoped<ResetAppointmentStatus>();
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(ResetAppointmentStatus),
-                cronExpression: "0 0/30 0 ? * * *"));
+                cronExpression: "0 0/30 * 1/1 * ? *"));
 
             #endregion
 

@@ -35,7 +35,7 @@
                                             <div class="user-last-chat">@chatUser.LastMessage</div>
                                         </div>
                                         <div>
-                                            <div class="last-chat-time block">@chatUser.AppointmentDate</div>
+                                            <div class="last-chat-time block">@chatUser.AppointmentDate - @chatUser.AppointmentTime</div>
                                             <div class="last-chat-time block">@chatUser.MessageType - @chatUser.ChatStatus</div>
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="chat-body">
-                    <div class="chat-scroll">
+                    <div class="chat-scroll" id="chatBody">
                         <ul id="messages-Body-Consumer" class="list-unstyled">
                         </ul>
                     </div>
@@ -307,6 +307,7 @@
                         'warning'
                     );
                 }
+                $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
             },
             complete: function() {
                 $('#loading').hide(0);
@@ -340,7 +341,7 @@
             },
             success: function(data) {
                 if (data.isSuccess === true) {
-
+                    $('#image').val('');
                     var time = "@DateTime.Now.Minute : @DateTime.Now.Hour";
                     var user = ChatUserId;
                     var message = $("#message").val();
@@ -419,6 +420,7 @@
                         'warning'
                     );
                 }
+                $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
             },
             complete: function() {
                 $('#loading').hide();

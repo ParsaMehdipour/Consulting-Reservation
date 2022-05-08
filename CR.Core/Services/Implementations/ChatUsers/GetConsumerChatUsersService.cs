@@ -24,6 +24,8 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 .ThenInclude(_ => _.Expert)
                 .Include(_ => _.Consumer)
                 .Include(_ => _.ChatUserMessages)
+                .Include(_ => _.Appointment)
+                .ThenInclude(_ => _.TimeOfDay)
                 .Where(_ => _.ConsumerId == consumerId);
 
             if (!string.IsNullOrWhiteSpace(searchKey))
@@ -42,7 +44,8 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false),
                 MessageType = _.MessageType.GetDisplayName(),
                 OnlineFlag = _.ExpertInformation.Expert.OnlineFlag,
-                ChatStatus = _.ChatStatus.GetDisplayName()
+                ChatStatus = _.ChatStatus.GetDisplayName(),
+                AppointmentTime = _.Appointment.TimeOfDay.FinishHour + " - " + _.Appointment.TimeOfDay.StartHour
             }).ToList();
 
             return new ResultDto<List<ChatUserForConsumerDto>>()

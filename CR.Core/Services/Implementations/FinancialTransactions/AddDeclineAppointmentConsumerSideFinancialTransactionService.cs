@@ -38,6 +38,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                 }
 
                 var appointment = _context.Appointments
+                    .Include(_ => _.ChatUsers)
                     .Include(_ => _.TimeOfDay)
                     .ThenInclude(_ => _.Day)
                     .Include(_ => _.ExpertInformation)

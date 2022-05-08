@@ -7,7 +7,7 @@
             <!-- Chat Left -->
             <div class="chat-cont-left">
                 <div class="chat-header">
-                    <span>صفجه پیام ها </span>«ِ
+                    <span>صفجه پیام ها </span>
                 </div>
                 <form class="chat-search">
                     <div class="input-group">
@@ -35,7 +35,7 @@
                                             <div class="user-last-chat">@chatUser.LastMessage</div>
                                         </div>
                                         <div>
-                                            <div class="last-chat-time block">@chatUser.AppointmentDate</div>
+                                            <div class="last-chat-time block">@chatUser.AppointmentDate - @chatUser.AppointmentTime</div>
                                             <div class="last-chat-time block">@chatUser.MessageType - @chatUser.ChatStatus</div>
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="chat-body">
-                    <div class="chat-scroll">
+                    <div class="chat-scroll" id="chatBody">
                         <ul id="messages-Body-Expert" class="list-unstyled">
                         </ul>
                     </div>
@@ -147,6 +147,7 @@
                 $('#loading').show(0);
             },
             success: function (response) {
+
                 if (response.isSuccess === true) {
                     var model = response.data;
                     $("#messages-Body-Expert").html("");
@@ -288,14 +289,13 @@
                     }
                 }
                 else {
-
                     swal.fire(
                         'هشدار!',
                         data.message,
                         'warning'
                     );
-
                 }
+                $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
             },
             complete: function() {
                 $('#loading').hide(0);
@@ -328,7 +328,7 @@
             },
             success: function(data) {
                 if (data.isSuccess === true) {
-
+                    $('#image').val(''); 
                     var time = "@DateTime.Now.Minute : @DateTime.Now.Hour";
                     var user = ChatUserId;
                     var message = $("#message").val();
@@ -407,8 +407,8 @@
                         'warning'
                     );
                     $('#loading').hide();
-
                 }
+                $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
             },
             complete: function() {
                 $('#loading').hide();

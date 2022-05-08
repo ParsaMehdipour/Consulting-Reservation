@@ -61,12 +61,12 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
                 IsSuccess = true,
             };
 
-            //result = _checkForAppointmentTimeService.Execute(new RequestCheckForAppointmentTimeDto()
-            //{
-            //    chatUserId = request.chatUserId,
-            //    file = null,
-            //    message = "Voice"
-            //});
+            result = _checkForAppointmentTimeService.Execute(new RequestCheckForAppointmentTimeDto()
+            {
+                chatUserId = request.chatUserId,
+                file = null,
+                message = "Voice"
+            });
 
             if (result.IsSuccess == false)
             {

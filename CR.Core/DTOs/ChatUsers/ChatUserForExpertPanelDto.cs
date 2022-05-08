@@ -11,6 +11,7 @@
         public string MessageType { get; set; }
         public string ChatStatus { get; set; }
         public bool OnlineStatus { get; set; }
+        public string AppointmentTime { get; set; }
 
     }
 }

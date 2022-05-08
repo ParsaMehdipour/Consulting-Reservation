@@ -38,29 +38,6 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     .ThenInclude(_ => _.TimeOfDay)
                     .FirstOrDefault(_ => _.Id == request.chatUserId);
 
-                if (request.messageFlag == MessageFlag.ConsumerMessage)
-                {
-                    if (DateTime.Now < chatUser?.Appointment.TimeOfDay.StartTime)
-                    {
-                        return new ResultDto<ResultAddChatMessageDto>()
-                        {
-                            IsSuccess = false,
-                            Message = "زمان شروع نوبت شما نرسیده است",
-                            Data = null
-                        };
-                    }
-
-                    if (DateTime.Now > chatUser?.Appointment.TimeOfDay.FinishTime)
-                    {
-                        return new ResultDto<ResultAddChatMessageDto>()
-                        {
-                            IsSuccess = false,
-                            Message = "زمان نوبت شما پایان یافت",
-                            Data = null
-                        };
-                    }
-                }
-
                 var chatMessage = new ChatUserMessage()
                 {
                     ChatUserId = request.chatUserId,

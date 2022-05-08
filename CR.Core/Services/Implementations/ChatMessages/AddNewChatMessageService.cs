@@ -43,9 +43,11 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     };
                 }
 
-                var chatUser = _context.ChatUsers.Find(request.chatUserId);
+                var chatUser = _context.ChatUsers
+                    .Include(_ => _.Appointment)
+                    .ThenInclude(_ => _.TimeOfDay).FirstOrDefault(_ => _.Id == request.chatUserId);
 
-                if (request.messageFlag == MessageFlag.ExpertMessage && (chatUser.ChatStatus != ChatStatus.Closed && chatUser.ChatStatus != ChatStatus.Ended))
+                if (request.messageFlag == MessageFlag.ExpertMessage && chatUser!.Appointment.TimeOfDay.StartTime <= DateTime.Now && (chatUser.ChatStatus != ChatStatus.Closed && chatUser.ChatStatus != ChatStatus.Ended))
                 {
                     chatUser.ChatStatus = ChatStatus.Started;
                 }
