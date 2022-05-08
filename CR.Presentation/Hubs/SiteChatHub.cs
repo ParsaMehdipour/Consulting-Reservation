@@ -77,7 +77,6 @@ namespace CR.Presentation.Hubs
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-
             var userId = ClaimUtility.GetUserId(Context.User).Value;
 
             if (userId != 0)
@@ -87,6 +86,8 @@ namespace CR.Presentation.Hubs
                 user.OnlineFlag = false;
 
                 _context.SaveChanges();
+
+                Clients.All.SendAsync("UserLogOut", user.UserFlag.GetDisplayName());
             }
 
             return base.OnDisconnectedAsync(exception);

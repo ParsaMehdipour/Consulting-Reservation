@@ -181,3 +181,54 @@ connection.on("ReceiveVoiceHandler", function (messageFlag, messageHour, filePat
         $("#messages-Body-Consumer").html(body2);
     }
 });
+
+connection.on("UserLogOut", function (userFlag) {
+
+    var body = $("#messages-Body-Expert").html();
+    var body2 = $("#messages-Body-Consumer").html();
+
+    if (userFlag === "کاربر") {
+        body += '<li class="media sent">';
+        body += '<div class="media-body">';
+        body += '<div class="msg-box">';
+        body += '<div>';
+        body += '<p>';
+        body += 'کاربر خارج شد';
+        body += '</p>';
+        body += '<ul class="chat-msg-info">';
+        body += '<li>';
+        body += '<div class="chat-time">';
+        body += '</div>';
+        body += '</li>';
+        body += '</ul>';
+        body += '</div>';
+        body += '</div>';
+        body += '</div>';
+        body += '</li>';
+
+        $("#messages-Body-Expert").html("");
+        $("#messages-Body-Expert").html(body);
+    }
+    else if (userFlag === "مشاور") {
+        body2 += '<li class="media sent">';
+        body2 += '<div class="media-body">';
+        body2 += '<div class="msg-box">';
+        body2 += '<div>';
+        body2 += '<p>';
+        body2 += 'مشاور خارج شد';
+        body2 += '</p>';
+        body2 += '<ul class="chat-msg-info">';
+        body2 += '<li>';
+        body2 += '<div class="chat-time">';
+        body2 += '</div>';
+        body2 += '</li>';
+        body2 += '</ul>';
+        body2 += '</div>';
+        body2 += '</div>';
+        body2 += '</div>';
+        body2 += '</li>';
+
+        $("#messages-Body-Consumer").html("");
+        $("#messages-Body-Consumer").html(body2);
+    }
+});
