@@ -231,6 +231,9 @@ function Send(blob) {
 		},
 		success: function (data) {
 			if (data.isSuccess === true) {
+
+				$('#image').val('');
+
 				var today = new Date();
 
 				var time = today.getHours() + ":" + today.getMinutes();
@@ -274,6 +277,7 @@ function Send(blob) {
 				);
 
 			}
+			$("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
 		},
 		complete: function () {
 			$('#loading').hide();

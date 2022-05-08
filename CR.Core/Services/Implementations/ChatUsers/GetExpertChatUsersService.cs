@@ -42,7 +42,8 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false),
                 MessageType = _.MessageType.GetDisplayName(),
                 OnlineStatus = _.Consumer.OnlineFlag,
-                ChatStatus = _.ChatStatus.GetDisplayName()
+                ChatStatus = _.ChatStatus.GetDisplayName(),
+                AppointmentTime = _.Appointment.TimeOfDay.FinishHour + " - " + _.Appointment.TimeOfDay.StartHour
             }).ToList();
 
             return new ResultDto<List<ChatUserForExpertPanelDto>>()
