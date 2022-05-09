@@ -38,6 +38,13 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     .ThenInclude(_ => _.TimeOfDay)
                     .FirstOrDefault(_ => _.Id == request.chatUserId);
 
+                if (chatUser.ChatStatus == ChatStatus.Waiting && request.messageFlag == MessageFlag.ExpertMessage)
+                {
+                    chatUser.ChatStatus = ChatStatus.Started;
+
+                    _context.SaveChanges();
+                }
+
                 var chatMessage = new ChatUserMessage()
                 {
                     ChatUserId = request.chatUserId,
