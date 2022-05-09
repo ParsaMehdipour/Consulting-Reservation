@@ -34,7 +34,7 @@ namespace CR.Core.Services.Implementations.Appointment
                 .Include(_ => _.TimeOfDay)
                 .Include(_ => _.ChatUsers)
                 .ThenInclude(_ => _.ChatUserMessages)
-                .Where(_ => _.TimeOfDay.StartTime <= DateTime.Now
+                .Where(_ => _.TimeOfDay.StartTime.AddMinutes(5) <= DateTime.Now
                             && _.ChatUsers.Count > 0
                             && _.IsClosed == false
                             && !(_.ChatUsers.FirstOrDefault().ChatUserMessages.Any(cm =>
