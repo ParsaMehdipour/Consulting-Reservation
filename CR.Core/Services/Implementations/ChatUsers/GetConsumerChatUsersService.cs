@@ -26,6 +26,7 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 .Include(_ => _.ChatUserMessages)
                 .Include(_ => _.Appointment)
                 .ThenInclude(_ => _.TimeOfDay)
+                .OrderByDescending(_ => _.Appointment.TimeOfDay.StartTime)
                 .Where(_ => _.ConsumerId == consumerId);
 
             if (!string.IsNullOrWhiteSpace(searchKey))

@@ -25,6 +25,7 @@ namespace CR.Core.Services.Implementations.ChatUsers
             var chatUsers = _context.ChatUsers
                 .Include(_ => _.Consumer)
                 .Include(_ => _.ChatUserMessages)
+                .OrderByDescending(_ => _.Appointment.TimeOfDay.StartTime)
                 .Where(_ => _.ExpertInformationId == expert.ExpertInformationId);
 
             if (!string.IsNullOrWhiteSpace(searchKey))

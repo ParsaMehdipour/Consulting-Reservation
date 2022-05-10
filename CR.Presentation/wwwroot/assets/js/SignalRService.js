@@ -66,6 +66,7 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
 
         $("#messages-Body-Expert").html("");
         $("#messages-Body-Expert").html(body);
+        $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
 
     }
     else {
@@ -121,6 +122,8 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
 
         $("#messages-Body-Consumer").html("");
         $("#messages-Body-Consumer").html(body2);
+
+        $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
     }
 });
 
@@ -153,6 +156,7 @@ connection.on("ReceiveVoiceHandler", function (messageFlag, messageHour, filePat
 
         $("#messages-Body-Expert").html("");
         $("#messages-Body-Expert").html(body);
+        $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
 
     }
     else {
@@ -179,6 +183,7 @@ connection.on("ReceiveVoiceHandler", function (messageFlag, messageHour, filePat
 
         $("#messages-Body-Consumer").html("");
         $("#messages-Body-Consumer").html(body2);
+        $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
     }
 });
 
@@ -208,6 +213,7 @@ connection.on("UserLogOut", function (userFlag) {
 
         $("#messages-Body-Expert").html("");
         $("#messages-Body-Expert").html(body);
+        $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
     }
     else if (userFlag === "مشاور") {
         body2 += '<li class="media sent">';
@@ -230,5 +236,6 @@ connection.on("UserLogOut", function (userFlag) {
 
         $("#messages-Body-Consumer").html("");
         $("#messages-Body-Consumer").html(body2);
+        $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
     }
 });
