@@ -21,7 +21,6 @@ namespace CR.Core.DTOs.Experts
         public bool HasStar { get; set; }
 
         public List<DayForExpertDetailsDto> DayDtos { get; set; }
-        public List<ExpertExperienceDto> experiences { get; set; }
         public List<ExpertMembershipDto> memberships { get; set; }
         public List<ExpertPrizeDto> prizes { get; set; }
         public List<ExpertStudyDto> studies { get; set; }

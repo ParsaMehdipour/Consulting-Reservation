@@ -51,9 +51,11 @@
                                         <div class="patient-details">
                                             <h4><i class="far fa-clock"></i> @appointment.AppointmentDate ، @appointment.AppointmentTime</h4>
                                             <h5><i class="fas fa-calendar"></i>@appointment.Age سال، @appointment.Gender</h5>
-                                            <h5><i class="fas fa-envelope"></i> @appointment.Email</h5>
                                             <h5><i class="fas fa-bars"></i> @appointment.AppointmentType</h5>
+                                            @if(appointment.AppointmentType == "تلفنی")
+                                            {
                                             <h5 class="mb-0"><i class="fas fa-phone"></i> @appointment.PhoneNumber</h5>
+                                            }
                                         </div>
                                     </div>
                                 </div>

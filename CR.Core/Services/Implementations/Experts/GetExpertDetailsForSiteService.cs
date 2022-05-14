@@ -74,13 +74,6 @@ namespace CR.Core.Services.Implementations.Experts
                         StartHour = d.TimeOfDays.FirstOrDefault()?.StartHour,
                         FinishHour = d.TimeOfDays.LastOrDefault()?.FinishHour
                     }).ToList(),
-                experiences = (expertInformation.ExpertExperiences == null) ? new List<ExpertExperienceDto>() : expertInformation.ExpertExperiences.Select(e => new ExpertExperienceDto
-                {
-                    clinicName = e.ClinicName,
-                    startYear = e.StartYear,
-                    finishYear = e.FinishYear,
-                    role = e.Role
-                }).ToList(),
                 memberships = (expertInformation.ExpertMemberships == null) ? new List<ExpertMembershipDto>() : expertInformation.ExpertMemberships.Select(e => new ExpertMembershipDto
                 {
                     membershipName = e.Name

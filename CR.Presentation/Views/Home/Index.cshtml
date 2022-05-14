@@ -31,7 +31,6 @@
 </section>
 <!-- /Home Banner -->
 
-
 <section class="section home-tile-section">
     <div class="container-fluid">
         <div class="row">
@@ -119,18 +118,7 @@
     <section class="section section-doctor">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="section-header ">
-                        <h2> مشاور خود را رزرو کنید </h2>
-                        <p> مشاوران آماده همراهی شما </p>
-                    </div>
-                    <div class="about-content">
-                        <p>  برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و مشاوران را می طلبد</p>
-                        <p>تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد</p>
-                        <a href="javascript:;" class="pakh25">بیشتر بخوانید...</a>
-                    </div>
-                </div>
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="doctor-slider slider" dir="rtl">
                         @foreach (var expert in Model.ExpertForPresentationDtos)
                         {
@@ -289,7 +277,6 @@
             <!-- Section Header -->
             <div class="section-header text-center">
                 <h2>بلاگ و اخبار</h2>
-                <p class="sub-title">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
             </div>
             <!-- /Section Header -->
 
@@ -307,7 +294,7 @@
                                 <ul class="entry-meta meta-item">
                                     <li>
                                         <div class="post-author">
-                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@blog.AuthorInformationId"><img src="~/@blog.AuthorIconSrc" alt="نویسنده"> <span>@blog.AuthorFullName</span></a>
+                                            <p><img src="~/@blog.AuthorIconSrc" alt="نویسنده"> <span>@blog.AuthorFullName</span></p>
                                         </div>
                                     </li>
                                     <li><i class="far fa-clock"></i> @blog.PublishDate</li>

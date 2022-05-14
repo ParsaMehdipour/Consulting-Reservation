@@ -72,7 +72,7 @@ namespace CR.Core.Services.Implementations.Blogs
             var user = _context.Users.Find(id);
 
             if (user != null)
-                return user.IconSrc;
+                return user.IconSrc ?? "assets/img/favicon-32x32.png";
             return "assets/img/favicon-32x32.png";
         }
 
@@ -85,7 +85,7 @@ namespace CR.Core.Services.Implementations.Blogs
         {
             var user = _context.Users.Include(_ => _.ExpertInformation).FirstOrDefault(_ => _.Id == id);
 
-            if (user != null)
+            if (user != null && user.ExpertInformation != null)
                 return user.ExpertInformation.Bio;
             return "سامانه یکپارچه چاله چوله";
         }
@@ -94,7 +94,7 @@ namespace CR.Core.Services.Implementations.Blogs
         {
             var user = context.Users.FirstOrDefault(_ => _.Id == id);
 
-            if (user != null)
+            if (user != null && user.ExpertInformation != null)
                 return user.ExpertInformationId.Value;
             return 0;
         }

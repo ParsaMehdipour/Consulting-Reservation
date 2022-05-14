@@ -47,7 +47,6 @@ namespace CR.Core.Services.Implementations.Appointment
                     ConsumerFullName = a.ConsumerInformation.FirstName + " " + a.ConsumerInformation.LastName,
                     ConsumerIconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ConsumerId = a.ConsumerInformation.ConsumerId,
-                    Email = a.ConsumerInformation.Consumer.Email,
                     PhoneNumber = a.ConsumerInformation.Consumer.PhoneNumber.ToString().GetPersianNumber()
                 }).AsEnumerable()
                 .ToPaged(Page, PageSize, out var rowCount)

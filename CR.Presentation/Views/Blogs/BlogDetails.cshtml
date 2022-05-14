@@ -34,7 +34,7 @@
                                 <ul>
                                     <li>
                                         <div class="post-author">
-                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.BlogDetailsForPresentationDto.authorInformationId"><img src="~/@Model.BlogDetailsForPresentationDto.authorIconSrc" alt="Post Author"> <span>@Model.BlogDetailsForPresentationDto.author</span></a>
+                                            <p><img src="~/@Model.BlogDetailsForPresentationDto.authorIconSrc" alt="Post Author"> <span>@Model.BlogDetailsForPresentationDto.author</span></p>
                                         </div>
                                     </li>
                                     <li><i class="far fa-calendar"></i>4 مهر 1399</li>
@@ -74,11 +74,11 @@
                             <div class="about-author">
                                 <div class="about-author-img">
                                     <div class="author-img-wrap">
-                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.BlogDetailsForPresentationDto.authorInformationId"><img class="img-fluid rounded-circle" alt="" src="~/@Model.BlogDetailsForPresentationDto.authorIconSrc"></a>
+                                        <p><img class="img-fluid rounded-circle" alt="" src="~/@Model.BlogDetailsForPresentationDto.authorIconSrc"></p>
                                     </div>
                                 </div>
                                 <div class="author-details">
-                                    <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@Model.BlogDetailsForPresentationDto.authorInformationId"  class="blog-author-name">@Model.BlogDetailsForPresentationDto.author</a>
+                                    <p class="blog-author-name">@Model.BlogDetailsForPresentationDto.author</p>
                                     <p class="mb-0">@Model.BlogDetailsForPresentationDto.authorDescription</p>
                                 </div>
                             </div>

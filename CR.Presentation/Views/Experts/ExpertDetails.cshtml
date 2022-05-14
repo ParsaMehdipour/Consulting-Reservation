@@ -83,15 +83,6 @@
                             <a onclick="AddToFavorites(@Model.ExpertDetailsForSiteDto.id)" class="btn btn-white fav-btn">
                                 <i class="far fa-bookmark"></i>
                             </a>
-                            @*    <a class="btn btn-white msg-btn">
-                                <i class="far fa-comment-alt"></i>
-                                </a>
-                                <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#voice_call">
-                                <i class="fas fa-phone"></i>
-                                </a>
-                                <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#video_call">
-                                <i class="fas fa-video"></i>
-                                </a>*@
                         </div>
                         @if (Model.ExpertDetailsForSiteDto.DayDtos.Count > 0)
                         {
@@ -169,32 +160,6 @@
                                     </div>
                                 }
                                 <!-- /Education Details -->
-                                <!-- Experience Details -->
-                                @if (Model.ExpertDetailsForSiteDto.experiences.Count > 0)
-                                {
-                                    <div class="widget experience-widget">
-                                        <h4 class="widget-title"> کار و سوابق کاری </h4>
-                                        <div class="experience-box">
-                                            <ul class="experience-list">
-                                                @foreach (var experience in Model.ExpertDetailsForSiteDto.experiences)
-                                                {
-                                                    <li>
-                                                        <div class="experience-user">
-                                                            <div class="before-circle"></div>
-                                                        </div>
-                                                        <div class="experience-content">
-                                                            <div class="timeline-content">
-                                                                <a class="name">@experience.clinicName - @experience.role</a><br />
-                                                                <span>@experience.startYear - @experience.finishYear</span>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    </div>
-                                }
-                                <!-- /Experience Details -->
                                 <!-- Awards Details -->
                                 @if (Model.ExpertDetailsForSiteDto.prizes.Count > 0)
                                 {
@@ -335,7 +300,6 @@
                                 </a>
                                 </div>
                                 <!-- /Show All -->*@
-
                         </div>
                         <!-- /Review Listing -->
                         <!-- Write Review -->
@@ -386,7 +350,6 @@
                                 <button onclick="AddNewComment()" type="submit" class="btn btn-primary submit-btn">افزودن نظر</button>
                             </div>
                             <!-- /Write Review Form -->
-
                         </div>
                         <!-- /Write Review -->
 

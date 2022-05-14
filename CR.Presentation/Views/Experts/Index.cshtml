@@ -23,9 +23,16 @@
 <!-- Page Content -->
 <div class="content">
     <div class="container-fluid">
-
+        <div class="row search-area">
+            <div class="col-md-12 col-lg-4 col-xl-3">
+                <button aria-controls="show-search" style="color: #147ba6" aria-expanded="false" class="btn btn-success btn-block" data-target="#show-search" data-toggle="collapse" type="button">
+                    <i class="fa fa-search"></i>
+                    نمایش فیلتر ها
+                </button>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">
+            <div class="col-md-12 col-lg-4 col-xl-3 collapse theiaStickySidebar" id="show-search">
                 <form>
                     <!-- Search Filter -->
                     <div class="card search-filter">
@@ -73,7 +80,6 @@
                     <!-- /Search Filter -->
                 </form>
             </div>
-
             <div class="col-md-12 col-lg-8 col-xl-9">
 
                 @foreach (var expert in Model.ResultGetExpertsForSiteDto.ExpertForSiteDtos)
@@ -89,17 +95,17 @@
                                         </a>
                                     </div>
                                     <div class="doc-info-cont">
-                                        <h4 class="doc-name">
+                                        <h4 class="doc-name" style="margin-bottom: 10px; margin-top: 10px">
                                             <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">مشاور @expert.FullName</a>
                                             @if (expert.HasStar)
                                             {
                                                 <i class="fas fa-check-circle verified"></i>
                                             }
                                         </h4>
-                                        <h5 class="doc-department">
+                                        <h5 class="doc-department" style="margin-bottom: 10px; margin-top: 10px">
                                             <img src="~/@expert.SpecialitySrc" class="img-fluid" alt="Speciality">@expert.Speciality
                                         </h5>
-                                        <div class="clinic-services">
+                                        <div class="clinic-services" style="margin-bottom: 10px; margin-top: 10px">
                                             @foreach (var tag in expert.Tags)
                                             {
                                                 <span>@tag</span>
@@ -107,7 +113,7 @@
                                         </div>
                                         @if (expert.AverageRate != 0)
                                         {
-                                            <div class="rating">
+                                            <div class="rating" style="margin-bottom: 10px; margin-top: 10px">
 
                                                 @for (int i = 1; i <= expert.AverageRate; i++)
                                                 {
@@ -121,18 +127,18 @@
                                                 <span class="d-inline-block average-rating">(@expert.RateCount)</span>
                                             </div>
                                         }
-                                        <div class="row doc-info-cont">
+                                        <div class="row doc-info-cont text-center" style="align-items: center">
                                             @if (expert.PhoneCall)
                                             {
-                                                <div><i style="color:#147ba6" class="fas fa-phone"></i>تلفنی + </div>
+                                                <div style="margin: 0 5px 0;"><i style="color: #147ba6; margin: 0 4px 0;" class="fas fa-phone"></i>تلفنی</div>
                                             }
                                             @if (expert.VoiceCall)
                                             {
-                                                <div><i style="color:#147ba6" class="fas fa-microphone"></i>صوتی + </div>
+                                                <div style="margin: 0 5px 0;"><i style="color: #147ba6; margin: 0 4px 0;" class="fas fa-microphone"></i>صوتی</div>
                                             }
                                             @if (expert.TextCall)
                                             {
-                                                <div><i style="color:#147ba6" class="fas fa-comment"></i>متنی</div>
+                                                <div style="margin: 0 5px 0;"><i style="color: #147ba6; margin: 0 4px 0;" class="fas fa-comment"></i>متنی</div>
                                             }
                                         </div>
                                     </div>
@@ -172,9 +178,7 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
 <!-- /Page Content -->
 @section Footer{
