@@ -43,6 +43,56 @@
                         <small class="text-secondary">اندازه تصویر پیشنهادی <b>16px x 16px</b> یا <b>32px x 32px</b></small><br>
                         <small class="text-secondary">قالب های پذیرفته شده: فقط png و ico</small>
                     </div>
+
+                    <div class="form-group">
+                        <label>بنر اصلی سایت</label>
+                        <input type="file" class="form-control" asp-for="Banner" id="banner" name="banner">
+                        <small class="text-secondary">اندازه تصویر پیشنهادی <b>1080px x 141px</b></small>
+                    </div>
+                    <div class="form-group">
+                        <label>رنگ بنر اصلی سایت</label>
+                        <input type="text" class="form-control" asp-for="BannerColor" id="bannercolor" name="bannercolor">
+                        <span asp-validation-for="BannerColor" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>فوتر سایت</label>
+                        <input type="file" class="form-control" asp-for="FooterLogo" id="footer" name="footer">
+                        <small class="text-secondary">اندازه تصویر پیشنهادی <b>250px x 60px</b></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>عنوان باکس اول</label>
+                        <input type="text" class="form-control" asp-for="TopBoxText1" id="textbox1" name="textbox1">
+                        <span asp-validation-for="TopBoxText1" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>تصویر باکس اول</label>
+                        <input type="file" class="form-control" asp-for="TopBoxImage1" id="imagebox1" name="imagebox1">
+                        <small class="text-secondary">اندازه تصویر پیشنهادی <b>512px x 512px</b></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>عنوان باکس دوم</label>
+                        <input type="text" class="form-control" asp-for="TopBoxText2" id="textbox2" name="textbox2">
+                        <span asp-validation-for="TopBoxText2" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>تصویر باکس دوم</label>
+                        <input type="file" class="form-control" asp-for="TopBoxImage2" id="imagebox2" name="imagebox2">
+                        <small class="text-secondary">اندازه تصویر پیشنهادی <b>512px x 512px</b></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>عنوان باکس سوم</label>
+                        <input type="text" class="form-control" asp-for="TopBoxText3" id="textbox3" name="textbox3">
+                        <span asp-validation-for="TopBoxText3" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>تصویر باکس سوم</label>
+                        <input type="file" class="form-control" asp-for="TopBoxImage3" id="imagebox3" name="imagebox3">
+                        <small class="text-secondary">اندازه تصویر پیشنهادی <b>512px x 512px</b></small>
+                    </div>
+
                     <div class="submit-section">
                         @if (Model != null)
                         {
@@ -72,7 +122,18 @@
 
             data.append("title",$("#settingForm #title").val());
             data.append("logo",$("#settingForm #logo").get(0).files[0]);
-            data.append("favIcon",$("#settingForm #favicon").get(0).files[0]);
+            data.append("favIcon", $("#settingForm #favicon").get(0).files[0]);
+
+            data.append("footer", $("#settingForm #footer").get(0).files[0]);
+            data.append("banner", $("#settingForm #banner").get(0).files[0]);
+            data.append("imagebox1", $("#settingForm #imagebox1").get(0).files[0]);
+            data.append("imagebox2", $("#settingForm #imagebox2").get(0).files[0]);
+            data.append("imagebox3", $("#settingForm #imagebox3").get(0).files[0]);
+            data.append("textbox1", $("#settingForm #textbox1").val());
+            data.append("textbox2", $("#settingForm #textbox2").val());
+            data.append("textbox3", $("#settingForm #textbox3").val());
+            data.append("bannercolor", $("#settingForm #bannercolor").val());
+
 
             $("#settingForm").submit(function( event ) {
                 $.ajax({
@@ -117,7 +178,19 @@
             data.append("id",id);
             data.append("title",$("#settingForm #title").val());
             data.append("logo",$("#settingForm #logo").get(0).files[0]);
-            data.append("favIcon",$("#settingForm #favicon").get(0).files[0]);
+            data.append("favIcon", $("#settingForm #favicon").get(0).files[0]);
+
+            data.append("footer", $("#settingForm #footer").get(0).files[0]);
+            data.append("banner", $("#settingForm #banner").get(0).files[0]);
+            data.append("imagebox1", $("#settingForm #imagebox1").get(0).files[0]);
+            data.append("imagebox2", $("#settingForm #imagebox2").get(0).files[0]);
+            data.append("imagebox3", $("#settingForm #imagebox3").get(0).files[0]);
+            data.append("textbox1", $("#settingForm #textbox1").val());
+            data.append("textbox2", $("#settingForm #textbox2").val());
+            data.append("textbox3", $("#settingForm #textbox3").val());
+            data.append("bannercolor", $("#settingForm #bannercolor").val());
+
+
 
             $("#settingForm").submit(function( event ) {
                 $.ajax({

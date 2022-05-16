@@ -15,6 +15,16 @@ namespace CR.DataAccess.Configurations
             builder.Property(_ => _.Logo);
 
             builder.Property(_ => _.FavIcon);
+
+            builder.Property(_ => _.SiteBanner);
+            builder.Property(_ => _.SiteBannerColor);
+            builder.Property(_ => _.SiteFooterLogo);
+            builder.Property(_ => _.TopBoxImage1);
+            builder.Property(_ => _.TopBoxImage2);
+            builder.Property(_ => _.TopBoxImage3);
+            builder.Property(_ => _.TopBoxText1);
+            builder.Property(_ => _.TopBoxText2);
+            builder.Property(_ => _.TopBoxText3);
         }
     }
 }

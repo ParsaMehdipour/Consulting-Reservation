@@ -400,6 +400,17 @@ namespace CR.Presentation
             SettingState.SiteFavicon = setting?.FavIcon;
             SettingState.SiteLogo = setting?.Logo;
             SettingState.SiteTitle = setting?.Title;
+
+            SettingState.SiteBanner = setting?.SiteBanner;
+            SettingState.SiteBannerColor = setting?.SiteBannerColor;
+            SettingState.SiteFooterLogo = setting?.SiteFooterLogo;
+            SettingState.TopBoxImage1 = setting?.TopBoxImage1;
+            SettingState.TopBoxImage2 = setting?.TopBoxImage2;
+            SettingState.TopBoxImage3 = setting?.TopBoxImage3;
+            SettingState.TopBoxText1 = setting?.TopBoxText1;
+            SettingState.TopBoxText2 = setting?.TopBoxText2;
+            SettingState.TopBoxText3 = setting?.TopBoxText3;
+
         }
     }
 }
