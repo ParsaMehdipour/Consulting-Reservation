@@ -90,6 +90,15 @@
                         <li>
                             <a asp-area="" asp-controller="Blogs" asp-action="Index" target="_blank">مقالات<i class="fas"></i></a>
                         </li>
+                        <li class="has-submenu">
+                            <a href="#">قوانین و مقررات<i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a asp-area="" asp-controller="Rules" asp-action="Index" target="_blank">قوانین و مقررات کلی<i class="fas"></i></a></li>
+                                <li><a asp-area="" asp-controller="Rules" asp-action="Payment" target="_blank">قوانین و مقررات پرداخت<i class="fas"></i></a></li>
+                                <li><a asp-area="" asp-controller="Rules" asp-action="Comment" target="_blank">قوانین و مقررات نظرات<i class="fas"></i></a></li>
+                                <li><a asp-area="" asp-controller="Rules" asp-action="Other" target="_blank">سایر قوانین و مقررات<i class="fas"></i></a></li>
+                            </ul>
+                        </li>
                         <li>
                             <a asp-area="" asp-controller="AboutUs" asp-action="Index" target="_blank">درباره ما<i class="fas"></i></a>
                         </li>
@@ -113,7 +122,6 @@
                             <a class="nav-link header-login" asp-controller="Account" asp-action="Login">ورود / ثبت‌نام</a>
                         </li>
                     }
-
                 </ul>
             </nav>
         </header>
@@ -418,6 +426,7 @@
             onSelect: function() {},
             onRender: function() {}
         });
+
     </script>
 </body>
 </html>
