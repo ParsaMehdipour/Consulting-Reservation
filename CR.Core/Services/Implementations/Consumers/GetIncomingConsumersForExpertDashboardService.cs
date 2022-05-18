@@ -40,7 +40,7 @@ namespace CR.Core.Services.Implementations.Consumers
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     ConsumerIconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ConsumerId = a.ConsumerInformation.ConsumerId,
-                    ConsumerType = (_context.Appointments.Any(c => c.ConsumerInformationId == a.ConsumerInformationId && a.TimeOfDay.Day.Date.Date < DateTime.Now.Date)) ? "مراجع قدیمی" : "مراجع جدید"
+                    ConsumerType = (_context.Appointments.Any(c => c.ConsumerInformationId == a.ConsumerInformationId && c.TimeOfDay.Day.Date.Date < DateTime.Now.Date)) ? "مراجع قدیمی" : "مراجع جدید"
                 }).OrderByDescending(a => a.AppointmentDate)
                 .AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)
