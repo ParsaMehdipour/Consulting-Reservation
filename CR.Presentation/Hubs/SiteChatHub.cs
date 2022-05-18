@@ -87,7 +87,7 @@ namespace CR.Presentation.Hubs
 
                 _context.SaveChanges();
 
-                Clients.All.SendAsync("UserLogOut", user.UserFlag.GetDisplayName());
+                //Clients.All.SendAsync("UserLogOut", user.UserFlag.GetDisplayName());
             }
 
             return base.OnDisconnectedAsync(exception);

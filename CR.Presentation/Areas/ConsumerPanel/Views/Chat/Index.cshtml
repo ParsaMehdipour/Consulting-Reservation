@@ -161,7 +161,6 @@
                         element.style.visibility = 'hidden';
                     }
 
-
                     $("#messages-Body-Consumer").html("");
                     var body = "";
 
@@ -298,6 +297,17 @@
                         document.getElementById("consumerImage").src = "/" + model.receiverIconSrc;
                         $("#messages-Body-Consumer").html(body);
                     }
+
+                    var time = "@DateTime.Now.Minute : @DateTime.Now.Hour";
+                    var user = ChatUserId;
+                    var message = "کاربر وارد صفحه چت شد";
+                    var messageFlag = 0;
+                    connection.invoke("SendMessage", user, message,messageFlag,null).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+
+
+
                 }
                 else {
 
@@ -461,7 +471,7 @@
                     var time = "@DateTime.Now.Minute : @DateTime.Now.Hour";
                     var user = ChatUserId;
                     var message = $("#message").val();
-                    var messageFlag = 1;
+                    var messageFlag = 0;
                     connection.invoke("SendMessage", user, message,messageFlag,data.data).catch(function (err) {
                         return console.error(err.toString());
                     });
@@ -469,7 +479,7 @@
                     document.getElementById('message').value = '';
 
                     if (data.data == null) {
-                        var body2 = $("#messages-Body-Expert").html();
+                        var body2 = $("#messages-Body-Consumer").html();
                         body2 += '<li class="media received">';
                         body2 += '<div class="media-body">';
                         body2 += '<div class="msg-box">';
@@ -491,8 +501,8 @@
                         body2 += '</div>';
                         body2 += '</li>';
 
-                        $("#messages-Body-Expert").html("");
-                        $("#messages-Body-Expert").html(body2);
+                        $("#messages-Body-Consumer").html("");
+                        $("#messages-Body-Consumer").html(body2);
                     }
                     else {
 
@@ -523,8 +533,8 @@
                         body += '</div>';
                         body += '</li>';
 
-                        $("#messages-Body-Expert").html("");
-                        $("#messages-Body-Expert").html(body);
+                        $("#messages-Body-Consumer").html("");
+                        $("#messages-Body-Consumer").html(body);
                     }
                     $('#loading').hide();
                     event.preventDefault();

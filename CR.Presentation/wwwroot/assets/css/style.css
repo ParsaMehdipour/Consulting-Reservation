@@ -2020,7 +2020,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
         border-radius: 4px;
         padding: 10px 15px !important;
         text-align: center;
-        font-size: 15px;
+        font-size: 10px;
         color: #147ba6;
         text-transform: uppercase;
         font-weight: 500;
@@ -8925,7 +8925,7 @@ ul.benifits-col li i {
     }
 
     .navbar-header {
-        width: 60%;
+        width: 70%;
     }
 
     #mobile_btn {

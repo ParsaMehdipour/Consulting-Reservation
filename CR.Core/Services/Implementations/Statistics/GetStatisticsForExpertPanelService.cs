@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using CR.Core.DTOs.Statistics;
+﻿using CR.Core.DTOs.Statistics;
 using CR.Core.Services.Interfaces.Statistics;
 using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Statistics
 {
@@ -20,15 +20,16 @@ namespace CR.Core.Services.Implementations.Statistics
         {
             var statisticsForExpertPanel = new StatisticsForExpertPanelDto
             {
-                AllAppointmentCount = _context.Appointments.Include(e => e.ExpertInformation)
-                    .Count(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.IsReserved == true),
+                AllAppointmentCount = _context.Appointments
+                    .Include(e => e.ExpertInformation)
+                    .Include(_ => _.TimeOfDay)
+                    .Count(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.IsReserved == true && a.TimeOfDay.StartTime <= DateTime.Now),
 
                 AllConsumersCount = _context.Appointments
-                    .Include(a => a.ConsumerInformation)
-                    .ThenInclude(a => a.Consumer)
                     .Include(a => a.ExpertInformation)
+                    .Include(a => a.TimeOfDay)
                     .Where(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.IsReserved == true)
-                    .OrderByDescending(a => a.ConsumerInformation.ConsumerId).Distinct().Count(),
+                    .OrderByDescending(a => a.ConsumerInformationId).ToList().GroupBy(_ => _.ConsumerInformationId).Distinct().Count(),
 
                 TodayConsumersCount = _context.Appointments
                     .Include(a => a.TimeOfDay)
@@ -40,6 +41,7 @@ namespace CR.Core.Services.Implementations.Statistics
                                 a.TimeOfDay.Day.Date.Date == DateTime.Now.Date
                                 && a.TimeOfDay.IsReserved == true)
                     .OrderByDescending(a => a.ConsumerInformation.ConsumerId).Distinct().Count()
+
             };
 
             return statisticsForExpertPanel;

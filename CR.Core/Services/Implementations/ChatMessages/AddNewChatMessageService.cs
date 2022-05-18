@@ -52,6 +52,16 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     chatUser.ChatStatus = ChatStatus.Started;
                 }
 
+                //if (chatUser.Appointment.TimeOfDay.StartTime < DateTime.Now)
+                //{
+                //    return new ResultDto<ResultAddChatMessageDto>()
+                //    {
+                //        IsSuccess = false,
+                //        Message = string.Empty,
+                //        Data = null
+                //    };
+                //}
+
                 var chatMessage = new ChatUserMessage()
                 {
                     ChatUserId = request.chatUserId,

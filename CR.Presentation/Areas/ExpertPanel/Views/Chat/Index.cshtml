@@ -147,14 +147,10 @@
                 $('#loading').show(0);
             },
             success: function (response) {
-
                 if (response.isSuccess === true) {
                     var model = response.data;
                     $("#messages-Body-Expert").html("");
                     var body = "";
-
-                    console.log(model);
-
                     for (let i = 0; i < model.chatMessageDtos.length; i++) {
                         if (model.chatMessageDtos[i].messageFlag === 0) {
                             body += '<li class="media sent">';
@@ -287,6 +283,14 @@
                         document.getElementById("consumerImage").src = "/" + model.receiverIconSrc;
                         $("#messages-Body-Expert").html(body);
                     }
+
+                    var time = "@DateTime.Now.Minute : @DateTime.Now.Hour";
+                    var user = ChatUserId;
+                    var message = "مشاور وارد صفحه چت شد";
+                    var messageFlag = 1;
+                    connection.invoke("SendMessage", user, message,messageFlag,null).catch(function (err) {
+                        return console.error(err.toString());
+                    });
                 }
                 else {
                     swal.fire(
