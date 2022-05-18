@@ -3950,7 +3950,7 @@ html.menu-opened body {
 
             .service-list ul li::before {
                 color: #ccc;
-                content: '\f30b';
+                /*content: '\f30b';*/
                 font-family: "Font Awesome 5 Free";
                 font-weight: 900;
                 right: 0;
@@ -8253,8 +8253,8 @@ ul.benifits-col li i {
     }
 
         .chat-cont-right .chat-header {
-            justify-content: start;
-            -webkit-justify-content: start;
+            justify-content: space-between;
+            -webkit-justify-content: space-between;
             -ms-flex-pack: start;
         }
 
