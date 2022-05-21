@@ -2,7 +2,6 @@
 using CR.Core.DTOs.Appointments;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.ResultDTOs;
-using CR.Core.DTOs.SMS;
 using CR.Core.Services.Interfaces.Appointment;
 using CR.Core.Services.Interfaces.FinancialTransaction;
 using CR.Core.Services.Interfaces.Users;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -79,26 +77,26 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.View
 
             if (result.IsSuccess == true)
             {
-                if (result.Data.appointmentStatus == AppointmentStatus.NotDone)
-                {
-                    var modelExpert = new SMSModel()
-                    {
-                        toNum = result.Data.phoneNumber,
-                        patternCode = SMSPatterns.ReservationDeclined_ExpertSide,
-                        inputData = new List<Dictionary<string, string>>()
-                        {
-                            new Dictionary<string, string>
-                            {
-                                {SMSInputs.Date, result.Data.date},
-                                {SMSInputs.Time, result.Data.time}
-                            },
-                        },
-                    };
+                //if (result.Data.appointmentStatus == AppointmentStatus.NotDone)
+                //{
+                //    var modelExpert = new SMSModel()
+                //    {
+                //        toNum = result.Data.phoneNumber,
+                //        patternCode = SMSPatterns.ReservationDeclined_ExpertSide,
+                //        inputData = new List<Dictionary<string, string>>()
+                //        {
+                //            new Dictionary<string, string>
+                //            {
+                //                {SMSInputs.Date, result.Data.date},
+                //                {SMSInputs.Time, result.Data.time}
+                //            },
+                //        },
+                //    };
 
-                    var uri = "https://ippanel.com/api/select";
+                //    var uri = "https://ippanel.com/api/select";
 
-                    await CallApiReservation<object>(uri, modelExpert);
-                }
+                //    await CallApiReservation<object>(uri, modelExpert);
+                //}
 
                 return new JsonResult(_addChargeExpertWalletService.Execute(result.Data.receiverId, result.Data.price));
             }

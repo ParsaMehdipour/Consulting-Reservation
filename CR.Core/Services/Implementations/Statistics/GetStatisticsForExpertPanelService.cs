@@ -23,7 +23,7 @@ namespace CR.Core.Services.Implementations.Statistics
                 AllAppointmentCount = _context.Appointments
                     .Include(e => e.ExpertInformation)
                     .Include(_ => _.TimeOfDay)
-                    .Count(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.IsReserved == true && a.TimeOfDay.StartTime <= DateTime.Now),
+                    .Count(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.IsReserved == true && a.TimeOfDay.StartTime.Date <= DateTime.Now.Date),
 
                 AllConsumersCount = _context.Appointments
                     .Include(a => a.ExpertInformation)
@@ -37,10 +37,9 @@ namespace CR.Core.Services.Implementations.Statistics
                     .Include(a => a.ConsumerInformation)
                     .ThenInclude(a => a.Consumer)
                     .Include(a => a.ExpertInformation)
-                    .Where(a => a.ExpertInformation.ExpertId == expertId &&
-                                a.TimeOfDay.Day.Date.Date == DateTime.Now.Date
-                                && a.TimeOfDay.IsReserved == true)
-                    .OrderByDescending(a => a.ConsumerInformation.ConsumerId).Distinct().Count()
+                    .Where(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.Day.Date.Date == DateTime.Now.Date && a.TimeOfDay.IsReserved == true)
+                    .OrderByDescending(a => a.ConsumerInformationId)
+                    .ToList().GroupBy(_ => _.ConsumerInformationId).Distinct().Count()
 
             };
 

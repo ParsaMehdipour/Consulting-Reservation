@@ -79,15 +79,14 @@ namespace CR.Core.Services.Implementations.Experts
                     };
                 }
 
-                //if (expert.ExpertInformation.ExpertAppointments.Any(e =>
-                //        e.TimeOfDay.Day.Date.Date > DateTime.Now && e.TimeOfDay.IsReserved == true))
-                //{
-                //    return new ResultDto()
-                //    {
-                //        IsSuccess = false,
-                //        Message = "به دلیل داشتن نوبت های گرفته شده امکان ویرایش برای شما وجود ندارد"
-                //    };
-                //}
+                if (expertInformation.ExpertAppointments.Any(e => e.AppointmentStatus == AppointmentStatus.Waiting && (e.TimeOfDay.StartTime >= DateTime.Now && e.TimeOfDay.IsReserved == true)))
+                {
+                    return new ResultDto()
+                    {
+                        IsSuccess = false,
+                        Message = "به دلیل داشتن نوبت های گرفته شده امکان ویرایش برای شما وجود ندارد"
+                    };
+                }
 
                 if (request.otherImage != null)
                 {

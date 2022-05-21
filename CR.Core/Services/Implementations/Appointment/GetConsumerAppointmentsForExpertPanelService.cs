@@ -39,7 +39,7 @@ namespace CR.Core.Services.Implementations.Appointment
                     AppointmentReservationDate = a.CreateDate.ToShamsi(),
                     AppointmentStatus = a.AppointmentStatus.GetDisplayName(),
                     ExpertFullName = a.ExpertInformation.FirstName + " " + a.ExpertInformation.LastName,
-                    ExpertIconSrc = a.ExpertInformation.IconSrc,
+                    ExpertIconSrc = a.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ExpertSpeciality = a.ExpertInformation.Specialty.Name,
                 }).AsEnumerable()
                 .ToPaged(Page, PageSize, out var rowCount)
@@ -58,7 +58,7 @@ namespace CR.Core.Services.Implementations.Appointment
                 Data = new ResultGetConsumerAppointmentsForExpertPanel()
                 {
                     ConsumerAppointmentsForExpertPanelDtos = consumerAppointments,
-                    ConsumerIconSrc = consumer.ConsumerInformation.IconSrc,
+                    ConsumerIconSrc = consumer.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     Age = consumer.ConsumerInformation.BirthDate.GetAge().ToString().GetPersianNumber(),
                     Province = consumer.ConsumerInformation.Province,
                     City = consumer.ConsumerInformation.City,

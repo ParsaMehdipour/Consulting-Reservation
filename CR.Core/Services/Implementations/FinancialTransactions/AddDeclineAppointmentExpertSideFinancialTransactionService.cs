@@ -42,6 +42,7 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
                     .ThenInclude(_ => _.Day)
                     .Include(_ => _.ConsumerInformation)
                     .ThenInclude(_ => _.Consumer)
+                    .Include(_ => _.ChatUsers)
                     .FirstOrDefault(_ => _.Id == appointmentId);
 
                 if (appointment == null)
