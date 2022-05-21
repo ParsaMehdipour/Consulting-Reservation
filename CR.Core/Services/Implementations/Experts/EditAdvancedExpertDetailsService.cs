@@ -36,7 +36,6 @@ namespace CR.Core.Services.Implementations.Experts
                     .Include(e => e.ExpertSubscriptions)
                     .Include(e => e.ExpertAppointments)
                     .ThenInclude(a => a.TimeOfDay)
-                    .ThenInclude(t => t.Day)
                     .FirstOrDefault(e => e.Id == request.id);
 
                 var expert = _context.Users.FirstOrDefault(u => u.Id == expertInformation.ExpertId);
@@ -59,7 +58,7 @@ namespace CR.Core.Services.Implementations.Experts
                     };
                 }
 
-                if (expert.ExpertInformation.ExpertAppointments.Any(e => e.AppointmentStatus == AppointmentStatus.Waiting && (e.TimeOfDay.Day.Date.Date > DateTime.Now && e.TimeOfDay.IsReserved == true)))
+                if (expertInformation.ExpertAppointments.Any(e => e.AppointmentStatus == AppointmentStatus.Waiting && (e.TimeOfDay.StartTime >= DateTime.Now && e.TimeOfDay.IsReserved == true)))
                 {
                     return new ResultDto()
                     {

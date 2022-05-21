@@ -90,7 +90,7 @@ function pauseRecording(){
 	}else{
 		//resume
         rec.record();
-		pauseButton.innerHTML="توقف";
+		pauseButton.innerHTML = "توقف";
 
 	}
 }
@@ -104,7 +104,7 @@ function stopRecording() {
 	pauseButton.disabled = true;
 
 	//reset button just in case the recording is stopped while paused
-	pauseButton.innerHTML ="توقف";
+	pauseButton.innerHTML = '<i class="fa fa - pause pause"></i>';
 	
 	//tell the recorder to stop the recording
 	rec.stop();

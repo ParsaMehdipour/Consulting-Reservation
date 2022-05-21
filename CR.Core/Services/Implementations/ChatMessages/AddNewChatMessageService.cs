@@ -45,22 +45,24 @@ namespace CR.Core.Services.Implementations.ChatMessages
 
                 var chatUser = _context.ChatUsers
                     .Include(_ => _.Appointment)
-                    .ThenInclude(_ => _.TimeOfDay).FirstOrDefault(_ => _.Id == request.chatUserId);
+                    .ThenInclude(_ => _.TimeOfDay)
+                    .Include(_ => _.ChatUserMessages)
+                    .FirstOrDefault(_ => _.Id == request.chatUserId);
 
                 if (request.messageFlag == MessageFlag.ExpertMessage && chatUser!.Appointment.TimeOfDay.StartTime <= DateTime.Now && (chatUser.ChatStatus != ChatStatus.Closed && chatUser.ChatStatus != ChatStatus.Ended))
                 {
                     chatUser.ChatStatus = ChatStatus.Started;
                 }
 
-                //if (chatUser.Appointment.TimeOfDay.StartTime < DateTime.Now)
-                //{
-                //    return new ResultDto<ResultAddChatMessageDto>()
-                //    {
-                //        IsSuccess = false,
-                //        Message = string.Empty,
-                //        Data = null
-                //    };
-                //}
+                if (chatUser.Appointment.TimeOfDay.FinishTime < DateTime.Now)
+                {
+                    return new ResultDto<ResultAddChatMessageDto>()
+                    {
+                        IsSuccess = false,
+                        Message = string.Empty,
+                        Data = null
+                    };
+                }
 
                 var chatMessage = new ChatUserMessage()
                 {
@@ -87,6 +89,35 @@ namespace CR.Core.Services.Implementations.ChatMessages
 
                 if (!string.IsNullOrWhiteSpace(request.message))
                 {
+                    if (chatUser.ChatUserMessages != null && chatUser.ChatUserMessages.Count > 0)
+                    {
+                        if (request.message == "مشاور وارد صفحه چت شد")
+                        {
+                            if (chatUser.ChatUserMessages.Last().Message == request.message)
+                            {
+                                return new ResultDto<ResultAddChatMessageDto>()
+                                {
+                                    Data = null,
+                                    IsSuccess = false,
+                                    Message = string.Empty
+                                };
+                            }
+                        }
+
+                        if (request.message == "کاربر وارد صفحه چت شد")
+                        {
+                            if (chatUser.ChatUserMessages.Last().Message == request.message)
+                            {
+                                return new ResultDto<ResultAddChatMessageDto>()
+                                {
+                                    Data = null,
+                                    IsSuccess = false,
+                                    Message = string.Empty
+                                };
+                            }
+                        }
+                    }
+
                     chatMessage.Message = request.message;
                 }
 
