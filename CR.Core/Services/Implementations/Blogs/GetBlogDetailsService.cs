@@ -86,7 +86,7 @@ namespace CR.Core.Services.Implementations.Blogs
         {
             var user = _context.Users.Include(_ => _.ExpertInformation).FirstOrDefault(_ => _.Id == id);
 
-            if (user != null)
+            if (user != null && user.ExpertInformation != null)
                 return user.ExpertInformation.Bio;
             return "سامانه یکپارچه چاله چوله";
         }

@@ -3,6 +3,15 @@
 @{
 }
 
+<style>
+    #tog, #content {
+        display: none
+    }
+    #tog:checked + #content {
+        display: block
+    } 
+</style>
+
 <!-- Breadcrumb -->
 <div class="breadcrumb-bar">
     <div class="container-fluid">
@@ -25,14 +34,62 @@
     <div class="container-fluid">
         <div class="row search-area">
             <div class="col-md-12 col-lg-4 col-xl-3">
-                <button aria-controls="show-search" style="color: #147ba6" aria-expanded="false" class="btn btn-success btn-block" data-target="#show-search" data-toggle="collapse" type="button">
+                <button aria-controls="show-search" style="color: #ffffff" aria-expanded="false" class="btn btn-primary btn-block" data-target="#show-search" data-toggle="collapse" type="button">
                     <i class="fa fa-search"></i>
                     نمایش فیلتر ها
                 </button>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 col-lg-4 col-xl-3 collapse theiaStickySidebar" id="show-search">
+            <div class="col-md-12 col-lg-4 col-xl-3 collapse theiaStickySidebar search-area2" id="show-search">
+                <form>
+                    <!-- Search Filter -->
+                    <div class="card search-filter">
+                        <div class="card-header">
+                            <h4 class="card-title mb-0">فیلتر جستجو</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-widget">
+                                <div>
+                                    <input type="text" class="form-control" placeholder="جستحو" name="searchKey" id="searchKey">
+                                </div>
+                            </div>
+                            <div class="filter-widget">
+                                <h4>جنسیت</h4>
+                                <div>
+                                    <label class="custom_check">
+                                        <input type="checkbox" name="gender" id="gender_male" value="1">
+                                        <span class="checkmark"></span> مشاور مرد
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="custom_check">
+                                        <input type="checkbox" name="gender" id="gender_female" value="2">
+                                        <span class="checkmark"></span> مشاور زن
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-widget">
+                                <h4> مشاور را انتخاب کنید </h4>
+                                @foreach (var speciality in Model.Specialities)
+                                {
+                                    <div>
+                                        <label class="custom_check">
+                                            <input type="checkbox" name="speciality" id="speciality" value="@speciality">
+                                            <span class="checkmark"></span> @speciality
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            <div class="btn-search">
+                                <button type="submit" class="btn btn-block">جستجو</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Search Filter -->
+                </form>
+            </div>
+            <div class="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar search-area3">
                 <form>
                     <!-- Search Filter -->
                     <div class="card search-filter">
@@ -81,7 +138,6 @@
                 </form>
             </div>
             <div class="col-md-12 col-lg-8 col-xl-9">
-
                 @foreach (var expert in Model.ResultGetExpertsForSiteDto.ExpertForSiteDtos)
                 {
                     <!-- Doctor Widget -->
@@ -161,6 +217,7 @@
                     </div>
                     <!-- /Doctor Widget -->
                 }
+
                 <div class="text-center">
                     <paging total-records="Model.ResultGetExpertsForSiteDto.RowCount"
                             page-no="Model.ResultGetExpertsForSiteDto.CurrentPage"
@@ -178,6 +235,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <!-- /Page Content -->
