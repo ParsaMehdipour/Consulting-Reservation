@@ -38,7 +38,7 @@ namespace CR.Core.Services.Implementations.Comments
                     ExpertFullName = expertInformations.FirstOrDefault(e => e.Id == _.OwnerRecordId).FirstName + " " +
                                      expertInformations.FirstOrDefault(e => e.Id == _.OwnerRecordId).LastName,
                     ExpertId = expertInformations.FirstOrDefault(e => e.Id == _.OwnerRecordId).ExpertId,
-                    ExpertIconSrc = expertInformations.FirstOrDefault(e => e.Id == _.OwnerRecordId).IconSrc,
+                    ExpertIconSrc = expertInformations.FirstOrDefault(e => e.Id == _.OwnerRecordId).IconSrc ?? "assets/img/icon-256x256.png",
                     Id = _.Id,
                     Message = (_.Message.Length > 15)
                         ? _.Message.Substring(0, Math.Min(_.Message.Length, 15)) + "..."

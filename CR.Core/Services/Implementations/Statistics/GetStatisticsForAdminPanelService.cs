@@ -24,7 +24,7 @@ namespace CR.Core.Services.Implementations.Statistics
         {
             var consumerCount = _context.Users.Count(u => u.UserFlag == UserFlag.Consumer).ToString().GetPersianNumber();
             var expertCount = _context.Users.Count(e => e.IsActive == true && e.UserFlag == UserFlag.Expert).ToString().GetPersianNumber();
-            var appointmentCount = _context.Appointments.Count().ToString().GetPersianNumber();
+            var appointmentCount = _context.Appointments.Count(_ => _.AppointmentStatus == AppointmentStatus.Completed).ToString().GetPersianNumber();
             var income = _context.Appointments
                 .Where(a => a.AppointmentStatus == AppointmentStatus.Completed || a.AppointmentStatus == AppointmentStatus.NotDone || a.AppointmentStatus == AppointmentStatus.Waiting)
                 .Sum(a => a.Price.Value).ToString("n0");

@@ -1,6 +1,7 @@
 ﻿using CR.Core.DTOs.Statistics;
 using CR.Core.Services.Interfaces.Statistics;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace CR.Core.Services.Implementations.Statistics
                 AllAppointmentCount = _context.Appointments
                     .Include(e => e.ExpertInformation)
                     .Include(_ => _.TimeOfDay)
-                    .Count(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.IsReserved == true && a.TimeOfDay.StartTime.Date <= DateTime.Now.Date),
+                    .Count(a => a.ExpertInformation.ExpertId == expertId && a.TimeOfDay.IsReserved == true && a.AppointmentStatus == AppointmentStatus.Completed && a.TimeOfDay.StartTime.Date <= DateTime.Now.Date),
 
                 AllConsumersCount = _context.Appointments
                     .Include(a => a.ExpertInformation)

@@ -29,7 +29,7 @@
                                 <th>نام مشاور</th>
                                 <th>تخصص</th>
                                 <th>نام کاربر</th>
-                                <th>وقت ویزیت</th>
+                                <th>وقت مشاوره</th>
                                 <th class="text-center">هزینه مشاوره</th>
                                 <th class="text-center">وضعیت نوبت</th>
                                 <th class="text-center">عملیات</th>
@@ -41,15 +41,15 @@
                                 <tr>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@appointment.ExpertId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ConsumerIconSrc" alt="User Image"></a>
-                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@appointment.ExpertId">@appointment.ConsumerFullName </a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@appointment.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ConsumerIconSrc" alt="User Image"></a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@appointment.ConsumerId">@appointment.ConsumerFullName </a>
                                         </h2>
                                     </td>
                                     <td>@appointment.Speciality</td>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@appointment.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image"></a>
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@appointment.ConsumerId">@appointment.ExpertFullName</a>
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@appointment.ExpertId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@appointment.ExpertIconSrc" alt="User Image"></a>
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@appointment.ExpertId">@appointment.ExpertFullName</a>
                                         </h2>
                                     </td>
                                     <td> @appointment.AppointmentDate <span class="text-primary d-block">@appointment.AppointmentTime</span></td>
