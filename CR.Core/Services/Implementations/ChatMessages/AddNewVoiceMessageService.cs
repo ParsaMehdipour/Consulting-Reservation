@@ -32,6 +32,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
             {
                 string userId = "";
                 bool onlineStatus = false;
+                int notReadCount = 0;
 
                 var chatUser = _context.ChatUsers
                     .Include(_ => _.Appointment)
@@ -53,12 +54,18 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     Audio = request.filePath
                 };
 
+                _context.ChatUserMessages.Add(chatMessage);
+
+                _context.SaveChanges();
+
                 if (request.messageFlag == MessageFlag.ConsumerMessage)
                 {
                     userId = _context.ChatUsers.Include(_ => _.ExpertInformation)
                         .FirstOrDefault(_ => _.Id == request.chatUserId)?.ExpertInformation.ExpertId.ToString();
 
                     onlineStatus = _context.Users.Find(Convert.ToInt64(userId)).OnlineFlag;
+
+                    notReadCount = _context.ChatUserMessages.Count(_ => _.IsRead == false && _.MessageFlag == MessageFlag.ConsumerMessage && _.ChatUserId == request.chatUserId);
                 }
                 else
                 {
@@ -67,11 +74,9 @@ namespace CR.Core.Services.Implementations.ChatMessages
 
                     onlineStatus = _context.Users.Find(Convert.ToInt64(userId)).OnlineFlag;
 
+                    notReadCount = _context.ChatUserMessages.Count(_ => _.IsRead == false && _.MessageFlag == MessageFlag.ExpertMessage && _.ChatUserId == request.chatUserId);
+
                 }
-
-                _context.ChatUserMessages.Add(chatMessage);
-
-                _context.SaveChanges();
 
                 transaction.Commit();
 
@@ -83,7 +88,8 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     {
                         userId = userId,
                         messageHour = $"{chatMessage.CreateDate.Minute} : {chatMessage.CreateDate.Hour}",
-                        onlineStatus = onlineStatus
+                        onlineStatus = onlineStatus,
+                        NotReadCount = notReadCount
                     }
                 };
 

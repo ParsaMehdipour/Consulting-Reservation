@@ -57,7 +57,7 @@ namespace CR.Presentation.Hubs
 
             if (result.IsSuccess)
             {
-                await Clients.User(result.Data.userId).SendAsync("ReceiveVoiceHandler", messageFlag, result.Data.messageHour, audioPath);
+                await Clients.User(result.Data.userId).SendAsync("ReceiveVoiceHandler", messageFlag, result.Data.messageHour, audioPath, result.Data.NotReadCount, chatUserId);
             }
         }
 

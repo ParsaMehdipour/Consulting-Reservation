@@ -65,7 +65,6 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
         }
 
         if (notReadCount > 0) {
-            alert(notReadCount);
             $("#NotReadExpert_" + chatUserId).text(notReadCount);
         }
         $("#messages-Body-Expert").html("");
@@ -125,7 +124,6 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
         }
 
         if (notReadCount > 0) {
-            alert(notReadCount);
             $("#NotReadConsumer_" + chatUserId).text(notReadCount);
         }
         $("#messages-Body-Consumer").html("");
@@ -161,6 +159,9 @@ connection.on("ReceiveVoiceHandler", function (messageFlag, messageHour, filePat
         body += '</div>';
         body += '</li>';
 
+        if (notReadCount > 0) {
+            $("#NotReadExpert_" + chatUserId).text(notReadCount);
+        }
         $("#messages-Body-Expert").html("");
         $("#messages-Body-Expert").html(body);
         $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
@@ -188,6 +189,9 @@ connection.on("ReceiveVoiceHandler", function (messageFlag, messageHour, filePat
         body2 += '</div>';
         body2 += '</li>';
 
+        if (notReadCount > 0) {
+            $("#NotReadConsumer_" + chatUserId).text(notReadCount);
+        }
         $("#messages-Body-Consumer").html("");
         $("#messages-Body-Consumer").html(body2);
         $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
