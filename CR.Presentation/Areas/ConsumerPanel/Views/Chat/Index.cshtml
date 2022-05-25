@@ -37,7 +37,10 @@
                                         <div>
                                             <div class="last-chat-time block">@chatUser.AppointmentDate - @chatUser.AppointmentTime</div>
                                             <div class="last-chat-time block">@chatUser.MessageType - @chatUser.ChatStatus</div>
-                                            <div class="badge badge-success badge-pill">3</div>
+                                            @if (chatUser.NotReadMessagesCount != 0)
+                                            {
+                                                <div class="badge badge-success badge-pill">@chatUser.NotReadMessagesCount</div>
+                                            }
                                         </div>
                                     </div>
                                 </a>

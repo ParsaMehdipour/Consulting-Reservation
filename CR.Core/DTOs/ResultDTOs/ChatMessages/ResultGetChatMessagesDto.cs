@@ -9,5 +9,7 @@ namespace CR.Core.DTOs.ResultDTOs.ChatMessages
         public string receiverIconSrc { get; set; }
         public string receiverFullName { get; set; }
         public bool isVoice { get; set; }
+        public int NotReadCountExpertMessage { get; set; }
+        public int NotReadCountConsumerMessage { get; set; }
     }
 }

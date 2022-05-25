@@ -5,6 +5,7 @@ using CR.Core.Services.Interfaces.ChatMessages;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CR.Core.Services.Implementations.ChatMessages
@@ -39,26 +40,51 @@ namespace CR.Core.Services.Implementations.ChatMessages
                 .Include(_ => _.ChatUser)
                 .ThenInclude(_ => _.Consumer)
                 .ThenInclude(_ => _.ExpertInformation)
-                .Where(_ => _.ChatUserId == chatUserId)
-                .Select(_ => new ChatMessageDto()
+                .Where(_ => _.ChatUserId == chatUserId).ToList();
+
+            var result = new List<ChatMessageDto>();
+
+            foreach (var chatUserMessage in chatMessages)
+            {
+                var chatMessageDto = new ChatMessageDto()
                 {
-                    consumerIconSrc = string.IsNullOrWhiteSpace(_.ChatUser.Consumer.IconSrc) ? "assets/img/icon-256x256.png" : _.ChatUser.Consumer.IconSrc,
-                    expertIconSrc = _.ChatUser.ExpertInformation.IconSrc,
-                    message = _.Message,
-                    messageFlag = _.MessageFlag,
-                    messageHour = $"{_.CreateDate.Minute} : {_.CreateDate.Hour}",
-                    hasFile = (!string.IsNullOrWhiteSpace(_.File)),
-                    file = _.File,
-                    hasAudio = (!string.IsNullOrWhiteSpace(_.Audio)),
-                    audio = _.Audio
-                }).ToList();
+                    consumerIconSrc = string.IsNullOrWhiteSpace(chatUserMessage.ChatUser.Consumer.IconSrc) ? "assets/img/icon-256x256.png" : chatUserMessage.ChatUser.Consumer.IconSrc,
+                    expertIconSrc = chatUserMessage.ChatUser.ExpertInformation.IconSrc,
+                    message = chatUserMessage.Message,
+                    messageFlag = chatUserMessage.MessageFlag,
+                    messageHour = $"{chatUserMessage.CreateDate.Minute} : {chatUserMessage.CreateDate.Hour}",
+                    hasFile = (!string.IsNullOrWhiteSpace(chatUserMessage.File)),
+                    file = chatUserMessage.File,
+                    hasAudio = (!string.IsNullOrWhiteSpace(chatUserMessage.Audio)),
+                    audio = chatUserMessage.Audio
+                };
+
+                if (isExpert)
+                {
+                    if (chatUserMessage.MessageFlag == MessageFlag.ConsumerMessage)
+                    {
+                        chatUserMessage.IsRead = true;
+                    }
+                }
+                else
+                {
+                    if (chatUserMessage.MessageFlag == MessageFlag.ExpertMessage)
+                    {
+                        chatUserMessage.IsRead = true;
+                    }
+                }
+
+                result.Add(chatMessageDto);
+            }
+
+            _context.SaveChanges();
 
             return new ResultDto<ResultGetChatMessagesDto>()
             {
                 Data = new ResultGetChatMessagesDto()
                 {
                     isVoice = chatUser.Appointment.CallingType == CallingType.VoiceCall,
-                    chatMessageDtos = chatMessages,
+                    chatMessageDtos = result,
                     receiverFullName = (isExpert) ? chatUser.Consumer.FirstName + " " + chatUser.Consumer.LastName : chatUser.ExpertInformation.FirstName + " " + chatUser.ExpertInformation.LastName,
                     receiverIconSrc = (isExpert) ? (string.IsNullOrWhiteSpace(chatUser.Consumer.IconSrc) ? "assets/img/icon-256x256.png" : chatUser.Consumer.IconSrc) : (string.IsNullOrWhiteSpace(chatUser.ExpertInformation.IconSrc) ? "assets/img/icon-256x256.png" : chatUser.ExpertInformation.IconSrc)
                 },

@@ -3,6 +3,7 @@ using CR.Common.Utilities;
 using CR.Core.DTOs.ChatUsers;
 using CR.Core.Services.Interfaces.ChatUsers;
 using CR.DataAccess.Context;
+using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 ExpertName = _.ExpertInformation.FirstName + " " + _.ExpertInformation.LastName,
                 AppointmentDate = _.AppointmentDate_String,
                 LastMessage = _.ChatUserMessages.OrderBy(_ => _.CreateDate).Last().Message,
-                NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false),
+                NotReadMessagesCount = _.ChatUserMessages.Count(chatUserMessage => chatUserMessage.IsRead == false && chatUserMessage.MessageFlag == MessageFlag.ExpertMessage),
                 MessageType = _.MessageType.GetDisplayName(),
                 OnlineFlag = _.ExpertInformation.Expert.OnlineFlag,
                 ChatStatus = _.ChatStatus.GetDisplayName(),

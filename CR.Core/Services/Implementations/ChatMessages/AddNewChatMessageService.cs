@@ -69,6 +69,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     ChatUserId = request.chatUserId,
                     ChatUser = _context.ChatUsers.Find(request.chatUserId),
                     MessageFlag = request.messageFlag,
+                    IsRead = false
                 };
 
                 if (request.messageFlag == MessageFlag.ConsumerMessage)
