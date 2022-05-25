@@ -32,6 +32,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
             {
                 string userId = "";
                 bool onlineStatus = false;
+                int notReadCount = 0;
 
                 if (string.IsNullOrWhiteSpace(request.message) && string.IsNullOrWhiteSpace(request.filePath))
                 {
@@ -71,22 +72,6 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     MessageFlag = request.messageFlag,
                     IsRead = false
                 };
-
-                if (request.messageFlag == MessageFlag.ConsumerMessage)
-                {
-                    userId = _context.ChatUsers.Include(_ => _.ExpertInformation)
-                        .FirstOrDefault(_ => _.Id == request.chatUserId)?.ExpertInformation.ExpertId.ToString();
-
-                    onlineStatus = _context.Users.Find(Convert.ToInt64(userId)).OnlineFlag;
-                }
-                else
-                {
-                    userId = _context.ChatUsers.Include(_ => _.Consumer)
-                        .FirstOrDefault(_ => _.Id == request.chatUserId)?.Consumer.Id.ToString();
-
-                    onlineStatus = _context.Users.Find(Convert.ToInt64(userId)).OnlineFlag;
-
-                }
 
                 if (!string.IsNullOrWhiteSpace(request.message))
                 {
@@ -131,6 +116,26 @@ namespace CR.Core.Services.Implementations.ChatMessages
 
                 _context.SaveChanges();
 
+                if (request.messageFlag == MessageFlag.ConsumerMessage)
+                {
+                    userId = _context.ChatUsers.Include(_ => _.ExpertInformation)
+                        .FirstOrDefault(_ => _.Id == request.chatUserId)?.ExpertInformation.ExpertId.ToString();
+
+                    onlineStatus = _context.Users.Find(Convert.ToInt64(userId)).OnlineFlag;
+
+                    notReadCount = _context.ChatUserMessages.Count(_ => _.IsRead == false && _.MessageFlag == MessageFlag.ConsumerMessage && _.ChatUserId == request.chatUserId);
+                }
+                else
+                {
+                    userId = _context.ChatUsers.Include(_ => _.Consumer)
+                        .FirstOrDefault(_ => _.Id == request.chatUserId)?.Consumer.Id.ToString();
+
+                    onlineStatus = _context.Users.Find(Convert.ToInt64(userId)).OnlineFlag;
+
+                    notReadCount = _context.ChatUserMessages.Count(_ => _.IsRead == false && _.MessageFlag == MessageFlag.ExpertMessage && _.ChatUserId == request.chatUserId);
+
+                }
+
                 transaction.Commit();
 
                 return new ResultDto<ResultAddChatMessageDto>()
@@ -141,7 +146,8 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     {
                         userId = userId,
                         messageHour = $"{chatMessage.CreateDate.Minute} : {chatMessage.CreateDate.Hour}",
-                        onlineStatus = onlineStatus
+                        onlineStatus = onlineStatus,
+                        NotReadCount = notReadCount
                     }
                 };
             }

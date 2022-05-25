@@ -39,7 +39,7 @@
                                             <div class="last-chat-time block">@chatUser.MessageType - @chatUser.ChatStatus</div>
                                             @if (@chatUser.NotReadMessagesCount != 0)
                                             {
-                                                <div class="badge badge-success badge-pill">@chatUser.NotReadMessagesCount</div>
+                                                <div id="NotReadExpert_@chatUser.Id" class="badge badge-success badge-pill">@chatUser.NotReadMessagesCount</div>
                                             }
                                         </div>
                                     </div>

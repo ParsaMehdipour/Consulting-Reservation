@@ -40,7 +40,7 @@ namespace CR.Presentation.Hubs
 
             if (result.IsSuccess)
             {
-                await Clients.User(result.Data.userId).SendAsync("ReceiveMessageHandler", message, messageFlag, result.Data.messageHour, filePath);
+                await Clients.User(result.Data.userId).SendAsync("ReceiveMessageHandler", message, messageFlag, result.Data.messageHour, filePath, result.Data.NotReadCount, chatUserId);
             }
         }
 

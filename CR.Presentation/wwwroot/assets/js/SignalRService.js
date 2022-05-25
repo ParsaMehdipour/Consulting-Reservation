@@ -6,7 +6,7 @@ var connection = new signalR.HubConnectionBuilder()
 
 connection.start();
 
-connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHour, filePath) {
+connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHour, filePath, notReadCount, chatUserId) {
 
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -64,6 +64,10 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
             body += '</li>';
         }
 
+        if (notReadCount > 0) {
+            alert(notReadCount);
+            $("#NotReadExpert_" + chatUserId).text(notReadCount);
+        }
         $("#messages-Body-Expert").html("");
         $("#messages-Body-Expert").html(body);
         $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
@@ -120,9 +124,12 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
             body2 += '</li>';
         }
 
+        if (notReadCount > 0) {
+            alert(notReadCount);
+            $("#NotReadConsumer_" + chatUserId).text(notReadCount);
+        }
         $("#messages-Body-Consumer").html("");
         $("#messages-Body-Consumer").html(body2);
-
         $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
     }
 });
