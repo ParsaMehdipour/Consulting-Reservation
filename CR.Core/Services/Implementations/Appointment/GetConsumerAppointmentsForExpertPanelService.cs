@@ -59,6 +59,7 @@ namespace CR.Core.Services.Implementations.Appointment
                 {
                     ConsumerAppointmentsForExpertPanelDtos = consumerAppointments,
                     ConsumerIconSrc = consumer.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
+                    ConsumerFullName = consumer.ConsumerInformation.FirstName + " " + consumer.ConsumerInformation.LastName,
                     Age = consumer.ConsumerInformation.BirthDate.GetAge().ToString().GetPersianNumber(),
                     Province = consumer.ConsumerInformation.Province,
                     City = consumer.ConsumerInformation.City,
