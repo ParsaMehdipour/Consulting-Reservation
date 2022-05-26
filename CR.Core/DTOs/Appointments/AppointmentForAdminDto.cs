@@ -14,5 +14,6 @@
         public string AppointmentTime { get; set; }
         public string AppointmentPrice { get; set; }
         public string AppointmentStatus { get; set; }
+        public string CallingType { get; set; }
     }
 }

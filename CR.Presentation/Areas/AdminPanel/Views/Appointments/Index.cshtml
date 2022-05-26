@@ -30,6 +30,7 @@
                                 <th>تخصص</th>
                                 <th>نام کاربر</th>
                                 <th>وقت مشاوره</th>
+                                <th>نوع مشاوره</th>
                                 <th class="text-center">هزینه مشاوره</th>
                                 <th class="text-center">وضعیت نوبت</th>
                                 <th class="text-center">عملیات</th>
@@ -53,6 +54,7 @@
                                         </h2>
                                     </td>
                                     <td> @appointment.AppointmentDate <span class="text-primary d-block">@appointment.AppointmentTime</span></td>
+                                    <td> @appointment.CallingType <span class="text-primary d-block"></span></td>
                                     @if (appointment.AppointmentPrice == "0")
                                     {
                                         <td class="text-center">

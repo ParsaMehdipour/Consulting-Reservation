@@ -48,7 +48,8 @@ namespace CR.Core.Services.Implementations.Appointment
                     ConsumerIconSrc = a.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     ExpertIconSrc = a.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     Id = a.Id,
-                    AppointmentTime = a.TimeOfDay.StartHour + "-" + a.TimeOfDay.FinishHour
+                    AppointmentTime = a.TimeOfDay.StartHour + "-" + a.TimeOfDay.FinishHour,
+                    CallingType = a.CallingType.GetDisplayName(),
                 }).AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount).ToList();
 
