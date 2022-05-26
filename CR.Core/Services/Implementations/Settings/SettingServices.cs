@@ -100,7 +100,22 @@ namespace CR.Core.Services.Implementations.Settings
                         Folder = "Settings"
                     });
                 }
-
+                if (request.UserVector != null)
+                {
+                    setting.UserVector = _imageUploader.Execute(new UploadImageDto()
+                    {
+                        File = request.UserVector,
+                        Folder = "Settings"
+                    });
+                }
+                if (request.ExpertVector != null)
+                {
+                    setting.ExpertVector = _imageUploader.Execute(new UploadImageDto()
+                    {
+                        File = request.ExpertVector,
+                        Folder = "Settings"
+                    });
+                }
 
                 _context.Settings.Add(setting);
 
@@ -111,6 +126,18 @@ namespace CR.Core.Services.Implementations.Settings
                 SettingState.SiteTitle = setting.Title;
                 SettingState.SiteFavicon = setting.FavIcon;
                 SettingState.SiteLogo = setting.Logo;
+
+                SettingState.SiteBanner = setting.SiteBanner;
+                SettingState.SiteBannerColor = setting.SiteBannerColor;
+                SettingState.SiteFooterLogo = setting.SiteFooterLogo;
+                SettingState.TopBoxImage1 = setting.TopBoxImage1;
+                SettingState.TopBoxImage2 = setting.TopBoxImage2;
+                SettingState.TopBoxImage3 = setting.TopBoxImage3;
+                SettingState.TopBoxText1 = setting.TopBoxText1;
+                SettingState.TopBoxText2 = setting.TopBoxText2;
+                SettingState.TopBoxText3 = setting.TopBoxText3;
+                SettingState.UserVector = setting.UserVector;
+                SettingState.ExpertVector = setting.ExpertVector;
 
                 return new ResultDto()
                 {
@@ -209,6 +236,22 @@ namespace CR.Core.Services.Implementations.Settings
                         Folder = "Settings"
                     });
                 }
+                if (request.UserVector != null)
+                {
+                    setting.UserVector = _imageUploader.Execute(new UploadImageDto()
+                    {
+                        File = request.UserVector,
+                        Folder = "Settings"
+                    });
+                }
+                if (request.ExpertVector != null)
+                {
+                    setting.ExpertVector = _imageUploader.Execute(new UploadImageDto()
+                    {
+                        File = request.ExpertVector,
+                        Folder = "Settings"
+                    });
+                }
 
                 _context.SaveChanges();
 
@@ -227,6 +270,8 @@ namespace CR.Core.Services.Implementations.Settings
                 SettingState.TopBoxImage2 = setting.TopBoxImage2;
                 SettingState.TopBoxText3 = setting.TopBoxText3;
                 SettingState.TopBoxImage3 = setting.TopBoxImage3;
+                SettingState.UserVector = setting.UserVector;
+                SettingState.ExpertVector = setting.ExpertVector;
 
                 return new ResultDto()
                 {
@@ -281,7 +326,9 @@ namespace CR.Core.Services.Implementations.Settings
                     TopBoxImage3 = setting.TopBoxImage3,
                     TopBoxText1 = setting.TopBoxText1,
                     TopBoxText2 = setting.TopBoxText2,
-                    TopBoxText3 = setting.TopBoxText3
+                    TopBoxText3 = setting.TopBoxText3,
+                    UserVector = setting.UserVector,
+                    ExpertVector = setting.ExpertVector
                 },
                 IsSuccess = true
             };

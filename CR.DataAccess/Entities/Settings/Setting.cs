@@ -16,5 +16,7 @@ namespace CR.DataAccess.Entities.Settings
         public string TopBoxText2 { get; set; }
         public string TopBoxImage3 { get; set; }
         public string TopBoxText3 { get; set; }
+        public string UserVector { get; set; }
+        public string ExpertVector { get; set; }
     }
 }

@@ -410,6 +410,8 @@ namespace CR.Presentation
             SettingState.TopBoxText1 = setting?.TopBoxText1;
             SettingState.TopBoxText2 = setting?.TopBoxText2;
             SettingState.TopBoxText3 = setting?.TopBoxText3;
+            SettingState.UserVector = setting?.UserVector;
+            SettingState.ExpertVector = setting?.ExpertVector;
 
         }
     }

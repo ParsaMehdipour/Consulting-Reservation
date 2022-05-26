@@ -25,6 +25,8 @@ namespace CR.DataAccess.Configurations
             builder.Property(_ => _.TopBoxText1);
             builder.Property(_ => _.TopBoxText2);
             builder.Property(_ => _.TopBoxText3);
+            builder.Property(_ => _.UserVector);
+            builder.Property(_ => _.ExpertVector);
         }
     }
 }

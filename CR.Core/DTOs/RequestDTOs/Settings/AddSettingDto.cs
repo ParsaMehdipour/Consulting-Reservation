@@ -17,5 +17,7 @@ namespace CR.Core.DTOs.RequestDTOs.Settings
         public string textbox2 { get; set; }
         public IFormFile imagebox3 { get; set; }
         public string textbox3 { get; set; }
+        public IFormFile UserVector { get; set; }
+        public IFormFile ExpertVector { get; set; }
     }
 }

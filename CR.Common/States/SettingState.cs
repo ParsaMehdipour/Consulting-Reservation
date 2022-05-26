@@ -14,5 +14,7 @@
         public static string TopBoxText2 { get; set; }
         public static string TopBoxImage3 { get; set; }
         public static string TopBoxText3 { get; set; }
+        public static string UserVector { get; set; }
+        public static string ExpertVector { get; set; }
     }
 }
