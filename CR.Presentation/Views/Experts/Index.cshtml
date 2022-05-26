@@ -183,7 +183,7 @@
                                                 <span class="d-inline-block average-rating">(@expert.RateCount)</span>
                                             </div>
                                         }
-                                        <div class="row doc-info-cont text-center" style="align-items: center">
+                                        <div class="row doc-info-cont" style="">
                                             @if (expert.PhoneCall)
                                             {
                                                 <div style="margin: 0 5px 0;"><i style="color: #147ba6; margin: 0 4px 0;" class="fas fa-phone"></i>تلفنی</div>
@@ -200,6 +200,14 @@
                                     </div>
                                 </div>
                                 <div class="doc-info-right">
+                                    <div class="clini-infos">
+                                        <ul>
+                                            <li><i class="far fa-arrow-alt-circle-down"></i> @expert.YearsOfExperience سال تجربه </li>
+                                        </ul>
+                                        <ul>
+                                            <li><i style="color: green" class="far fa-check-circle"></i> @expert.NumberOfDoneAppointments نوبت انجام داده شده </li>
+                                        </ul>
+                                    </div>
                                     <div class="clinic-booking">
                                         <a class="view-pro-btn" asp-controller="Experts" asp-action="ExpertDetails" asp-route-expertInformationId="@expert.expertInformationId">مشاهده پروفایل</a>
                                         @if (@expert.HasTimeOfDays)
@@ -214,6 +222,7 @@
                                 </div>
                             </div>
                         </div>
+                   
                     </div>
                     <!-- /Doctor Widget -->
                 }

@@ -8778,7 +8778,11 @@ ul.benifits-col li i {
     }
 
     .clinic-services {
-        display: none;
+        display: block;
+    }
+
+    .doc-info-cont {
+        justify-content: center;
     }
 
     .doctor-img {
