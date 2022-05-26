@@ -21,5 +21,7 @@ namespace CR.Core.DTOs.Experts
         public bool VoiceCall { get; set; }
         public bool TextCall { get; set; }
         public List<string> Tags { get; set; }
+        public int YearsOfExperience { get; set; }
+        public int NumberOfDoneAppointments { get; set; }
     }
 }

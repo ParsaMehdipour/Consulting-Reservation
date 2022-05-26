@@ -71,6 +71,8 @@ namespace CR.Core.Services.Implementations.Experts
                 PhoneCall = e.ExpertInformation.UsePhoneCall,
                 VoiceCall = e.ExpertInformation.UseVoiceCall,
                 TextCall = e.ExpertInformation.UseTextCall,
+                YearsOfExperience = e.ExpertInformation.ExpertExperiences.Count > 0 ? e.ExpertInformation.ExpertExperiences.Max(a => Convert.ToInt32(a.FinishYear)) - e.ExpertInformation.ExpertExperiences.Min(a => Convert.ToInt32(a.StartYear)) : 0,
+                NumberOfDoneAppointments = e.ExpertInformation.ExpertAppointments.Count(_ => _.AppointmentStatus == AppointmentStatus.Completed),
             }).AsEnumerable()
                 .Randomize()
                 .ToPaged(Page, PageSize, out var rowCount)
