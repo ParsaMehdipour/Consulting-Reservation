@@ -30,7 +30,7 @@ namespace CR.Core.Services.Implementations.Experts
                 .ThenInclude(u => u.ExpertAppointments)
                 .Where(u => u.UserFlag == UserFlag.Expert)
                 //.OrderByDescending(e => e.Id)
-                .OrderByDescending(u => u.RowVersion)
+                .OrderByDescending(u => u.ExpertInformation.RowVersion)
                 .AsNoTracking()
                 .AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)

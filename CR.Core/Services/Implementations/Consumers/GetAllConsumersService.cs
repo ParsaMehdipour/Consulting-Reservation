@@ -28,7 +28,7 @@ namespace CR.Core.Services.Implementations.Consumers
                 .ThenInclude(u => u.ConsumerAppointments)
                 .Where(u => u.UserFlag == UserFlag.Consumer)
                 //.OrderByDescending(c => c.Id)
-                .OrderByDescending(c => c.RowVersion)
+                .OrderByDescending(c => c.ConsumerInfromation.RowVersion)
                 .AsNoTracking()
                 .AsEnumerable()
                 .ToPaged(Page, PageSize, out rowCount)
