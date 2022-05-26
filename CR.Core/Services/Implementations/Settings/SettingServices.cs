@@ -100,19 +100,19 @@ namespace CR.Core.Services.Implementations.Settings
                         Folder = "Settings"
                     });
                 }
-                if (request.UserVector != null)
+                if (request.uservector != null)
                 {
                     setting.UserVector = _imageUploader.Execute(new UploadImageDto()
                     {
-                        File = request.UserVector,
+                        File = request.uservector,
                         Folder = "Settings"
                     });
                 }
-                if (request.ExpertVector != null)
+                if (request.expertvector != null)
                 {
                     setting.ExpertVector = _imageUploader.Execute(new UploadImageDto()
                     {
-                        File = request.ExpertVector,
+                        File = request.expertvector,
                         Folder = "Settings"
                     });
                 }
@@ -236,19 +236,19 @@ namespace CR.Core.Services.Implementations.Settings
                         Folder = "Settings"
                     });
                 }
-                if (request.UserVector != null)
+                if (request.uservector != null)
                 {
                     setting.UserVector = _imageUploader.Execute(new UploadImageDto()
                     {
-                        File = request.UserVector,
+                        File = request.uservector,
                         Folder = "Settings"
                     });
                 }
-                if (request.ExpertVector != null)
+                if (request.expertvector != null)
                 {
                     setting.ExpertVector = _imageUploader.Execute(new UploadImageDto()
                     {
-                        File = request.ExpertVector,
+                        File = request.expertvector,
                         Folder = "Settings"
                     });
                 }

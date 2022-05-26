@@ -92,6 +92,16 @@
                         <input type="file" class="form-control" asp-for="TopBoxImage3" id="imagebox3" name="imagebox3">
                         <small class="text-secondary">اندازه تصویر پیشنهادی <b>512px x 512px</b></small>
                     </div>
+                    <div class="form-group">
+                        <label>وکتور کاربر</label>
+                        <input type="file" class="form-control" asp-for="UserVector" id="uservector" name="uservector">
+                        <small class="text-secondary">اندازه تصویر پیشنهادی <b>650px x 950px</b></small>
+                    </div>
+                    <div class="form-group">
+                        <label>وکتور مشاور</label>
+                        <input type="file" class="form-control" asp-for="ExpertVector" id="expertvector" name="expertvector">
+                        <small class="text-secondary">اندازه تصویر پیشنهادی <b>650px x 950px</b></small>
+                    </div>
 
                     <div class="submit-section">
                         @if (Model != null)
@@ -133,6 +143,8 @@
             data.append("textbox2", $("#settingForm #textbox2").val());
             data.append("textbox3", $("#settingForm #textbox3").val());
             data.append("bannercolor", $("#settingForm #bannercolor").val());
+            data.append("uservector", $("#settingForm #uservector").val());
+            data.append("expertvector", $("#settingForm #expertvector").val());
 
 
             $("#settingForm").submit(function( event ) {
@@ -189,7 +201,8 @@
             data.append("textbox2", $("#settingForm #textbox2").val());
             data.append("textbox3", $("#settingForm #textbox3").val());
             data.append("bannercolor", $("#settingForm #bannercolor").val());
-
+            data.append("uservector", $("#settingForm #uservector").val());
+            data.append("expertvector", $("#settingForm #expertvector").val());
 
 
             $("#settingForm").submit(function( event ) {
