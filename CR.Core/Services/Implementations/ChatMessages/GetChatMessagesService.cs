@@ -52,7 +52,8 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     expertIconSrc = chatUserMessage.ChatUser.ExpertInformation.IconSrc,
                     message = chatUserMessage.Message,
                     messageFlag = chatUserMessage.MessageFlag,
-                    messageHour = $"{chatUserMessage.CreateDate.Minute} : {chatUserMessage.CreateDate.Hour}",
+                    messageHour = $"{FixMessageTime(chatUserMessage.CreateDate.Minute)} : {chatUserMessage.CreateDate.Hour}",
+                    //messageHour = FixMessageTime(string.Format("{0}:{1}", chatUserMessage.CreateDate.Hour, chatUserMessage.CreateDate.Minute)),
                     hasFile = (!string.IsNullOrWhiteSpace(chatUserMessage.File)),
                     file = chatUserMessage.File,
                     hasAudio = (!string.IsNullOrWhiteSpace(chatUserMessage.Audio)),
@@ -91,6 +92,14 @@ namespace CR.Core.Services.Implementations.ChatMessages
                 IsSuccess = true
             };
 
+        }
+        private string FixMessageTime(int time)
+        {
+            string output = time.ToString();
+            if (time < 10)
+                output = "0" + time;
+
+            return output;
         }
     }
 }
