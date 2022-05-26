@@ -18,6 +18,7 @@ namespace CR.DataAccess.Entities.Users
         public UserFlag UserFlag { get; set; } = 0;
         public bool IsActive { get; set; } = true;
         public bool OnlineFlag { get; set; } = false;
+        public byte[] RowVersion { get; set; }
 
         #region Foreign Keys 
 

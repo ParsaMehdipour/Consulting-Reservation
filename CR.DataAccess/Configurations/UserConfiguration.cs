@@ -29,6 +29,9 @@ namespace CR.DataAccess.Configurations
 
             builder.Property(_ => _.LastName)
                 .HasMaxLength(50);
+
+            builder.Property(_ => _.RowVersion)
+                .IsRowVersion();
         }
     }
 }

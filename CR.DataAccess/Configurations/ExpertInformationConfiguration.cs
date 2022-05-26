@@ -121,7 +121,8 @@ namespace CR.DataAccess.Configurations
             builder.Property(_ => _.AverageRate)
                 .HasPrecision(6, 2);
 
-
+            builder.Property(_ => _.RowVersion)
+                .IsRowVersion();
         }
     }
 }

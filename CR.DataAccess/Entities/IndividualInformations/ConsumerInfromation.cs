@@ -20,7 +20,7 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public string City { get; set; }
         public string Degree { get; set; }
         public string IconSrc { get; set; }
-
+        public byte[] RowVersion { get; set; }
 
         #region Foreign Keys
 

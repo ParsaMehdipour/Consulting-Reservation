@@ -42,6 +42,9 @@ namespace CR.DataAccess.Configurations
 
             builder.Property(_ => _.SpecificAddress)
                 .HasMaxLength(150);
+
+            builder.Property(_ => _.RowVersion)
+                .IsRowVersion();
         }
     }
 }

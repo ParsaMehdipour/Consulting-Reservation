@@ -40,6 +40,8 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public string ShabaNumber { get; set; }
         public decimal AverageRate { get; set; }
 
+        public byte[] RowVersion { get; set; }
+
 
         #region Foreign Keys
 
