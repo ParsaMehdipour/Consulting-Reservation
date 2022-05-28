@@ -1,5 +1,10 @@
 ﻿@using CR.DataAccess.Enums
 @model List<CR.Core.DTOs.ChatUsers.ChatUserForConsumerDto>
+<style>
+    .hidden {
+        display: none
+    }
+</style>
 <!-- Page Content -->
 <div class="row">
     <div class="col-xl-12">
@@ -32,15 +37,12 @@
                                     <div class="media-body">
                                         <div>
                                             <div class="user-name">@chatUser.ExpertName</div>
-                                            <div class="user-last-chat">@chatUser.LastMessage</div>
+                                            <div id="LastConsumerMessage_@chatUser.Id" class="user-last-chat">@chatUser.LastMessage</div>
                                         </div>
                                         <div>
                                             <div class="last-chat-time block">@chatUser.AppointmentDate - @chatUser.AppointmentTime</div>
                                             <div class="last-chat-time block">@chatUser.MessageType - @chatUser.ChatStatus</div>
-                                            @if (chatUser.NotReadMessagesCount != 0)
-                                            {
-                                                <div id="NotReadConsumer_@chatUser.Id" class="badge badge-success badge-pill">@chatUser.NotReadMessagesCount</div>
-                                            }
+                                            <div id="NotReadConsumer_@chatUser.Id" class="@(chatUser.NotReadMessagesCount != 0 ? "badge badge-success badge-pill" : "hidden")">@chatUser.NotReadMessagesCount</div>
                                         </div>
                                     </div>
                                 </a>
@@ -561,7 +563,7 @@
         }
     });
 
-     const selectElement = document.getElementById("image");
+    const selectElement = document.getElementById("image");
 
     selectElement.addEventListener('change', (event) => {
         var addNewMessageForm = new FormData();
@@ -585,7 +587,7 @@
                     var time = FixMessageTime("@DateTime.Now.Minute : @DateTime.Now.Hour");
                     var user = ChatUserId;
                     var message = $("#message").val();
-                    var messageFlag = 1;
+                    var messageFlag = 0;
                     connection.invoke("SendMessage", user, message,messageFlag,data.data).catch(function (err) {
                         return console.error(err.toString());
                     });
@@ -593,7 +595,7 @@
                     document.getElementById('message').value = '';
 
                     if (data.data == null) {
-                        var body2 = $("#messages-Body-Expert").html();
+                        var body2 = $("#messages-Body-Consumer").html();
                         body2 += '<li class="media received">';
                         body2 += '<div class="media-body">';
                         body2 += '<div class="msg-box">';
@@ -615,12 +617,12 @@
                         body2 += '</div>';
                         body2 += '</li>';
 
-                        $("#messages-Body-Expert").html("");
-                        $("#messages-Body-Expert").html(body2);
+                        $("#messages-Body-Consumer").html("");
+                        $("#messages-Body-Consumer").html(body2);
                     }
                     else {
 
-                        var body = $("#messages-Body-Expert").html();
+                        var body = $("#messages-Body-Consumer").html();
 
                         body += '<li class="media received">';
                         body += '<div class="media-body">';
@@ -647,8 +649,8 @@
                         body += '</div>';
                         body += '</li>';
 
-                        $("#messages-Body-Expert").html("");
-                        $("#messages-Body-Expert").html(body);
+                        $("#messages-Body-Consumer").html("");
+                        $("#messages-Body-Consumer").html(body);
                     }
                     $('#loading').hide();
                     event.preventDefault();

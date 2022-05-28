@@ -50,7 +50,7 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     .Include(_ => _.ChatUserMessages)
                     .FirstOrDefault(_ => _.Id == request.chatUserId);
 
-                if (request.messageFlag == MessageFlag.ExpertMessage && chatUser!.Appointment.TimeOfDay.StartTime <= DateTime.Now && (chatUser.ChatStatus != ChatStatus.Closed && chatUser.ChatStatus != ChatStatus.Ended))
+                if (request.messageFlag == MessageFlag.ExpertMessage && chatUser!.Appointment.TimeOfDay.StartTime <= DateTime.Now && chatUser!.Appointment.TimeOfDay.FinishTime >= DateTime.Now && (chatUser.ChatStatus != ChatStatus.Closed && chatUser.ChatStatus != ChatStatus.Ended))
                 {
                     chatUser.ChatStatus = ChatStatus.Started;
                 }
@@ -72,6 +72,32 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     MessageFlag = request.messageFlag,
                     IsRead = false
                 };
+
+                if (request.message == "کاربر خارج شد")
+                {
+                    if (chatUser.ChatUserMessages.Any(_ => _.Message == request.message && (chatMessage.CreateDate - _.CreateDate).TotalMinutes < 1))
+                    {
+                        return new ResultDto<ResultAddChatMessageDto>()
+                        {
+                            IsSuccess = false,
+                            Data = null,
+                            Message = string.Empty
+                        };
+                    }
+                }
+
+                if (request.message == "مشاور خارج شد")
+                {
+                    if (chatUser.ChatUserMessages.Any(_ => _.Message == request.message && (chatMessage.CreateDate - _.CreateDate).TotalMinutes < 1))
+                    {
+                        return new ResultDto<ResultAddChatMessageDto>()
+                        {
+                            IsSuccess = false,
+                            Data = null,
+                            Message = string.Empty
+                        };
+                    }
+                }
 
                 if (!string.IsNullOrWhiteSpace(request.message))
                 {

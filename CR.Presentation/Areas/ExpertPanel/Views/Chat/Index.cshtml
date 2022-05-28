@@ -1,4 +1,9 @@
 ﻿@model List<CR.Core.DTOs.ChatUsers.ChatUserForExpertPanelDto>
+<style>
+    .hidden {
+        display: none
+    }
+</style>
 <!-- Page Content -->
 <div class="row">
     <div class="col-xl-12">
@@ -32,15 +37,12 @@
                                     <div class="media-body">
                                         <div>
                                             <div class="user-name">@chatUser.ConsumerName</div>
-                                            <div class="user-last-chat">@chatUser.LastMessage</div>
+                                            <div id="LastExpertMessage_@chatUser.Id" class="user-last-chat">@chatUser.LastMessage</div>
                                         </div>
                                         <div>
                                             <div class="last-chat-time block">@chatUser.AppointmentDate - @chatUser.AppointmentTime</div>
                                             <div class="last-chat-time block">@chatUser.MessageType - @chatUser.ChatStatus</div>
-                                            @if (@chatUser.NotReadMessagesCount != 0)
-                                            {
-                                                <div id="NotReadExpert_@chatUser.Id" class="badge badge-success badge-pill">@chatUser.NotReadMessagesCount</div>
-                                            }
+                                            <div id="NotReadExpert_@chatUser.Id" class="@(chatUser.NotReadMessagesCount != 0 ? "badge badge-success badge-pill" : "hidden")">@chatUser.NotReadMessagesCount</div>
                                         </div>
                                     </div>
                                 </a>
@@ -331,7 +333,7 @@
             },
             success: function(data) {
                 if (data.isSuccess === true) {
-                    $('#image').val(''); 
+                    $('#image').val('');
                     var time = FixMessageTime("@DateTime.Now.Minute : @DateTime.Now.Hour");
                     var user = ChatUserId;
                     var message = $("#message").val();
@@ -430,7 +432,7 @@
     elem.addEventListener("keypress", (event)=> {
         if (event.keyCode === 13) { // key code of the keybord key
             event.preventDefault();
-            
+
         var addNewMessageForm = new FormData();
 
         addNewMessageForm.append("chatUserId",ChatUserId);
@@ -448,7 +450,7 @@
             },
             success: function(data) {
                 if (data.isSuccess === true) {
-                    $('#image').val(''); 
+                    $('#image').val('');
                     var time = FixMessageTime("@DateTime.Now.Minute : @DateTime.Now.Hour");
                     var user = ChatUserId;
                     var message = $("#message").val();
@@ -563,7 +565,7 @@
             },
             success: function(data) {
                 if (data.isSuccess === true) {
-                    $('#image').val(''); 
+                    $('#image').val('');
                     var time = FixMessageTime("@DateTime.Now.Minute : @DateTime.Now.Hour");
                     var user = ChatUserId;
                     var message = $("#message").val();

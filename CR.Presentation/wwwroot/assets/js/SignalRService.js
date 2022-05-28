@@ -66,7 +66,13 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
 
         if (notReadCount > 0) {
             $("#NotReadExpert_" + chatUserId).text(notReadCount);
+
+            if ($("#NotReadExpert_" + chatUserId).hasClass("hidden") === true) {
+                $("#NotReadExpert_" + chatUserId).removeClass("hidden");
+                $("#NotReadExpert_" + chatUserId).addClass("badge badge-success badge-pill");
+            }
         }
+        $("#LastExpertMessage_" + chatUserId).text(message);
         $("#messages-Body-Expert").html("");
         $("#messages-Body-Expert").html(body);
         $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
@@ -125,14 +131,20 @@ connection.on("ReceiveMessageHandler", function (message, messageFlag, messageHo
 
         if (notReadCount > 0) {
             $("#NotReadConsumer_" + chatUserId).text(notReadCount);
+
+            if ($("#NotReadConsumer_" + chatUserId).hasClass("hidden") === true) {
+                $("#NotReadConsumer_" + chatUserId).removeClass("hidden");
+                $("#NotReadConsumer_" + chatUserId).addClass("badge badge-success badge-pill");
+            }
         }
+        $("#LastConsumerMessage_" + chatUserId).text(message);
         $("#messages-Body-Consumer").html("");
         $("#messages-Body-Consumer").html(body2);
         $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
     }
 });
 
-connection.on("ReceiveVoiceHandler", function (messageFlag, messageHour, filePath) {
+connection.on("ReceiveVoiceHandler", function (messageFlag, messageHour, filePath, notReadCount, chatUserId) {
 
     var body = $("#messages-Body-Expert").html();
     var body2 = $("#messages-Body-Consumer").html();
@@ -161,7 +173,13 @@ connection.on("ReceiveVoiceHandler", function (messageFlag, messageHour, filePat
 
         if (notReadCount > 0) {
             $("#NotReadExpert_" + chatUserId).text(notReadCount);
+
+            if ($("#NotReadExpert_" + chatUserId).hasClass("hidden") === true) {
+                $("#NotReadExpert_" + chatUserId).removeClass("hidden");
+                $("#NotReadExpert_" + chatUserId).addClass("badge badge-success badge-pill");
+            }
         }
+        $("#LastExpertMessage_" + chatUserId).text("");
         $("#messages-Body-Expert").html("");
         $("#messages-Body-Expert").html(body);
         $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
@@ -191,7 +209,13 @@ connection.on("ReceiveVoiceHandler", function (messageFlag, messageHour, filePat
 
         if (notReadCount > 0) {
             $("#NotReadConsumer_" + chatUserId).text(notReadCount);
+
+            if ($("#NotReadConsumer_" + chatUserId).hasClass("hidden") === true) {
+                $("#NotReadConsumer_" + chatUserId).removeClass("hidden");
+                $("#NotReadConsumer_" + chatUserId).addClass("badge badge-success badge-pill");
+            }
         }
+        $("#LastConsumerMessage_" + chatUserId).text("");
         $("#messages-Body-Consumer").html("");
         $("#messages-Body-Consumer").html(body2);
         $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
