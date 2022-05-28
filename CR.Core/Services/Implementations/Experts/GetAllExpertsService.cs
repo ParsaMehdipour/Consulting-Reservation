@@ -28,6 +28,7 @@ namespace CR.Core.Services.Implementations.Experts
                 .ThenInclude(u => u.Specialty)
                 .Include(u => u.ExpertInformation)
                 .ThenInclude(u => u.ExpertAppointments)
+                .ThenInclude(_ => _.TimeOfDay)
                 .Where(u => u.UserFlag == UserFlag.Expert)
                 //.OrderByDescending(e => e.Id)
                 .OrderByDescending(u => u.ExpertInformation.RowVersion)
@@ -39,7 +40,8 @@ namespace CR.Core.Services.Implementations.Experts
                     Id = u.Id,
                     FullName = u.ExpertInformation.FirstName + " " + u.ExpertInformation.LastName,
                     IconSrc = u.ExpertInformation.IconSrc ?? "assets/img/icon-256x256.png",
-                    Income = _context.FinancialTransactions.Where(_ => _.TransactionType == TransactionType.ChargeExpertWallet).Sum(_ => _.Price_Digit).ToString("n0"),
+                    //Income = _context.FinancialTransactions.Where(_ => _.TransactionType == TransactionType.ChargeExpertWallet).Sum(_ => _.Price_Digit).ToString("n0"),
+                    Income = u.ExpertInformation.ExpertAppointments.Where(_ => _.TimeOfDay.IsReserved == true && (_.AppointmentStatus == AppointmentStatus.Completed || _.AppointmentStatus == AppointmentStatus.NotDone)).Sum(_ => _.RawPrice).ToString("n0"),
                     IsActive = u.IsActive,
                     RegisterDate = u.CreationDate.ToShamsi(),
                     Speciality = (u.ExpertInformation.Specialty != null) ? u.ExpertInformation.Specialty.Name : "تخصص نامعلوم",
