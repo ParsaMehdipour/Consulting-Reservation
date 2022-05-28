@@ -297,7 +297,7 @@
                         $("#messages-Body-Consumer").html(body);
                     }
 
-                    var time = FixMessageTime("@DateTime.Now.Minute : @DateTime.Now.Hour");
+                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
                     var user = ChatUserId;
                     var message = "کاربر وارد صفحه چت شد";
                     var messageFlag = 0;
@@ -351,7 +351,7 @@
             success: function(data) {
                 if (data.isSuccess === true) {
                     $('#image').val('');
-                    var time = FixMessageTime("@DateTime.Now.Minute : @DateTime.Now.Hour");
+                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
                     var user = ChatUserId;
                     var message = $("#message").val();
                     var messageFlag = 0;
@@ -467,7 +467,7 @@
             success: function(data) {
                 if (data.isSuccess === true) {
                     $('#image').val('');
-                    var time = FixMessageTime("@DateTime.Now.Minute : @DateTime.Now.Hour");
+                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
                     var user = ChatUserId;
                     var message = $("#message").val();
                     var messageFlag = 0;
@@ -582,7 +582,7 @@
             success: function(data) {
                 if (data.isSuccess === true) {
                     $('#image').val('');
-                    var time = FixMessageTime("@DateTime.Now.Minute : @DateTime.Now.Hour");
+                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
                     var user = ChatUserId;
                     var message = $("#message").val();
                     var messageFlag = 1;
@@ -675,17 +675,32 @@
         });
     });
 
+    //function FixMessageTime(time) {
+    //    var output = time;
+    //    var x = time.split(":");
+    //    if (x[1].length < 2)
+    //        x[1] += "0" + x[1];
+    //    output = x[0] + ":" + x[1];
+    //    return output;
+    //}
     function FixMessageTime(time) {
-
-        var output = time;
-        var x = time.split(":");
-
-        if (x[1].length < 2)
-            x[1] += "0" + x[1];
-
-        output = x[0] + ":" + x[1];
-
+        var output = time.ToString();
+        if (time < 10)
+            output = "0" + time;
         return output;
     }
+
+    var lastScrollTop = 0;
+    $("#chatBody").scroll(function (event) {
+        var st = $(this).scrollTop();
+        if (st > lastScrollTop) {
+            if (($("#chatBody").innerHeight + $("#chatBody").scrollY) >= $("#chatBody").offsetHeight) {
+                alert("bottom of the page");
+            }
+        } else {
+
+        }
+        lastScrollTop = st;
+    });
 </script>
 }
