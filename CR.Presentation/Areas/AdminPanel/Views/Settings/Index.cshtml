@@ -143,8 +143,8 @@
             data.append("textbox2", $("#settingForm #textbox2").val());
             data.append("textbox3", $("#settingForm #textbox3").val());
             data.append("bannercolor", $("#settingForm #bannercolor").val());
-            data.append("uservector", $("#settingForm #uservector").val());
-            data.append("expertvector", $("#settingForm #expertvector").val());
+            data.append("uservector", $("#settingForm #uservector").get(0).files[0]);
+            data.append("expertvector", $("#settingForm #expertvector").get(0).files[0]);
 
 
             $("#settingForm").submit(function( event ) {
@@ -201,8 +201,8 @@
             data.append("textbox2", $("#settingForm #textbox2").val());
             data.append("textbox3", $("#settingForm #textbox3").val());
             data.append("bannercolor", $("#settingForm #bannercolor").val());
-            data.append("uservector", $("#settingForm #uservector").val());
-            data.append("expertvector", $("#settingForm #expertvector").val());
+            data.append("uservector", $("#settingForm #uservector").get(0).files[0]);
+            data.append("expertvector", $("#settingForm #expertvector").get(0).files[0]);
 
 
             $("#settingForm").submit(function( event ) {
