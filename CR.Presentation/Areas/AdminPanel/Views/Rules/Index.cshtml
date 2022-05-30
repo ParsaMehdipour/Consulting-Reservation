@@ -89,7 +89,10 @@
 
             var data = new FormData();
 
-            data.append("fullContent",CKEDITOR.instances.description.getData());
+            data.append("fullContent", CKEDITOR.instances.description.getData());
+            data.append("paymentContent", CKEDITOR.instances.paymentDescription.getData());
+            data.append("commentContent", CKEDITOR.instances.commentDescription.getData());
+            data.append("otherContent", CKEDITOR.instances.otherDescription.getData());
 
             $("#ruleForm").submit(function( event ) {
                 $.ajax({
@@ -133,9 +136,9 @@
 
             data.append("id",id);
             data.append("fullContent",CKEDITOR.instances.description.getData());
-            data.append("paymentContent",CKEDITOR.instances.description.getData());
-            data.append("commentContent",CKEDITOR.instances.description.getData());
-            data.append("otherContent",CKEDITOR.instances.description.getData());
+            data.append("paymentContent", CKEDITOR.instances.paymentDescription.getData());
+            data.append("commentContent", CKEDITOR.instances.commentDescription.getData());
+            data.append("otherContent", CKEDITOR.instances.otherDescription.getData());
 
             $("#ruleForm").submit(function( event ) {
                 $.ajax({
