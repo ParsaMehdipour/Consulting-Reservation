@@ -28,32 +28,46 @@
                     <div class="table-responsive">
                         <table class="datatable table table-hover table-center mb-0">
                             <thead>
-                            <tr>
-                                <th>نام کاربر</th>
-                                <th>سن</th>
-                                <th>آدرس</th>
-                                <th>شماره</th>
-                                <th>آخرین نوبت</th>
-                                <th>پرداخت شده</th>
-                            </tr>
+                                <tr>
+                                    <th>نام کاربر</th>
+                                    <th>سن</th>
+                                    <th>آدرس</th>
+                                    <th>شماره</th>
+                                    <th>آخرین نوبت</th>
+                                    <th>پرداخت شده</th>
+                                    <th>وضعیت اکانت</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach (var consumer in Model.Consumers)
-                            {
-                                <tr>
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@consumer.Id" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.IconSrc" alt="User Image"></a>
-                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@consumer.Id">@consumer.FullName </a>
-                                        </h2>
-                                    </td>
-                                    <td>@consumer.Age</td>
-                                    <td>@consumer.Address</td>
-                                    <td>@consumer.PhoneNumber</td>
-                                    <td>@consumer.LastAppointment</td>
-                                    <td>@consumer.PaidAmount تومان</td>
-                                </tr>
-                            }
+                                @foreach (var consumer in Model.Consumers)
+                                {
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@consumer.Id" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@consumer.IconSrc" alt="User Image"></a>
+                                                <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@consumer.Id">@consumer.FullName </a>
+                                            </h2>
+                                        </td>
+                                        <td>@consumer.Age</td>
+                                        <td>@consumer.Address</td>
+                                        <td>@consumer.PhoneNumber</td>
+                                        <td>@consumer.LastAppointment</td>
+                                        <td>@consumer.PaidAmount تومان</td>
+                                        <td>
+                                            <div class="status-toggle">
+                                                @if (consumer.IsActive == true)
+                                                {
+                                                    <input onchange="ChangeStatus(@consumer.Id)" type="checkbox" id="status_@consumer.Id" name="status" class="check" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input onchange="ChangeStatus(@consumer.Id)" type="checkbox" id="status_@consumer.Id" name="status" class="check">
+                                                }
+                                                <label for="status_@consumer.Id" class="checktoggle">checkbox</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -77,3 +91,56 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+
+    <script>
+        function ChangeStatus(id) {
+            var activateStatus = false;
+            var consumerId = id;
+
+            if (document.getElementById("status_" + consumerId).checked) {
+                activateStatus = true;
+            } else {
+                activateStatus = false;
+            }
+
+            var postData = {
+                'consumerId': consumerId,
+                'activeStatus': activateStatus
+            };
+            $.ajax({
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "POST",
+                url: '@Url.Action("ChangeConsumerStatus", "Consumers")',
+                data: postData,
+                success: function (data) {
+                    if (data.isSuccess == true) {
+                        swal.fire(
+                            'موفق!',
+                            data.message,
+                            'success'
+                        ).then(function (isConfirm) {
+                            location.reload();
+                        });
+                    }
+                    else {
+                        swal.fire(
+                            'هشدار!',
+                            data.message,
+                            'warning'
+                        );
+
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        }
+    </script>
+
+}

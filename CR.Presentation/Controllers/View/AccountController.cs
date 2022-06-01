@@ -331,6 +331,12 @@ namespace CR.Presentation.Controllers.View
                     return View(model);
                 }
 
+                if (user.IsActive == false && user.UserFlag == DataAccess.Enums.UserFlag.Consumer)
+                {
+                    ModelState.AddModelError("", "حساب کاربری شما غیرفعال شده است ");
+                    return View(model);
+                }
+
                 var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, true);
                 if (result.Succeeded)
                 {

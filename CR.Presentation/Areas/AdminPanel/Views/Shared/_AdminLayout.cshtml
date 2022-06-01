@@ -153,13 +153,25 @@
                             </ul>
                         </li>
                         <li class="submenu">
-                            <a @(TempData["activemenu"].ToString() == ActiveMenu.Experts || TempData["activemenu"].ToString() == ActiveMenu.Consumers ? @"class=active subdrop" : "") href="#"><i class="fe fe-users"></i> <span>کاربران و مشاوران</span> <span class="menu-arrow"></span></a>
+                            <a @(TempData["activemenu"].ToString() == ActiveMenu.Experts || TempData["activemenu"].ToString() == ActiveMenu.Consumers ? @"class=active subdrop" : "") href="#">
+                                <i class="fe fe-users"></i>
+                                <span>کاربران و مشاوران</span> <span class="menu-arrow"></span>
+                                <div id="NotCheckedAllUsers" class="badge badge-success badge-pill hidden">0</div>
+                            </a>
                             <ul>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Consumers ? @"class=active" : "")>
-                                    <a asp-controller="Consumers" asp-action="Index"><i class="fe fe-user"></i> <span>کاربران</span></a>
+                                    <a asp-controller="Consumers" asp-action="Index">
+                                        <i class="fe fe-user"> </i> 
+                                        <span>کاربران</span>
+                                        <div id="NotCheckedConsumers" class="badge badge-success badge-pill hidden">0</div>
+                                    </a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Experts ? @"class=active" : "")>
-                                    <a asp-controller="Experts" asp-action="Index"><i class="fe fe-user-plus"></i> <span>مشاورین</span></a>
+                                    <a asp-controller="Experts" asp-action="Index">
+                                        <i class="fe fe-user-plus"></i>
+                                        <span>مشاورین</span>
+                                        <div id="NotCheckedExperts" class="badge badge-success badge-pill hidden">0</div>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -351,6 +363,28 @@
                             if ($("#NotReadComments").hasClass("hidden") === true) {
                                 $("#NotReadComments").removeClass("hidden");
                                 $("#NotReadComments").addClass("badge badge-success badge-pill");
+                            }
+                        }
+
+                        if (model.notcheckedallusers > 0) {
+                            $("#NotCheckedAllUsers").text(model.notcheckedallusers);
+                            if ($("#NotCheckedAllUsers").hasClass("hidden") === true) {
+                                $("#NotCheckedAllUsers").removeClass("hidden");
+                                $("#NotCheckedAllUsers").addClass("badge badge-success badge-pill");
+                            }
+                        }
+                        if (model.notcheckedconsumers > 0) {
+                            $("#NotCheckedConsumers").text(model.notcheckedconsumers);
+                            if ($("#NotCheckedConsumers").hasClass("hidden") === true) {
+                                $("#NotCheckedConsumers").removeClass("hidden");
+                                $("#NotCheckedConsumers").addClass("badge badge-success badge-pill");
+                            }
+                        }
+                        if (model.notcheckedexperts > 0) {
+                            $("#NotCheckedExperts").text(model.notcheckedexperts);
+                            if ($("#NotCheckedExperts").hasClass("hidden") === true) {
+                                $("#NotCheckedExperts").removeClass("hidden");
+                                $("#NotCheckedExperts").addClass("badge badge-success badge-pill");
                             }
                         }
                     }

@@ -4,6 +4,6 @@ namespace CR.Core.Services.Interfaces.Experts
 {
     public interface IChangeExpertStatusService
     {
-        ResultDto Execute(long expertId,bool activeStatus);
+        ResultDto Execute(long expertId, bool activeStatus);
     }
 }

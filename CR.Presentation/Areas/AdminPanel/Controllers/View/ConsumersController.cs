@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using CR.Common.ActiveMenus;
+﻿using CR.Common.ActiveMenus;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.DTOs.Users;
 using CR.Core.Services.Interfaces.Consumers;
 using CR.Core.Services.Interfaces.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CR.Presentation.Areas.AdminPanel.Controllers.View
 {
@@ -18,18 +18,21 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
         private readonly IGetConsumerDetailsForProfileService _getConsumerDetailsForProfileService;
         private readonly IEditConsumerDetailsService _editConsumerDetailsService;
         private readonly IAddConsumerDetailsService _addConsumerDetailsService;
+        private readonly IChangeConsumerStatusService _changeConsumerStatusService;
 
         public ConsumersController(IGetAllConsumersService getAllConsumersService
         , IRegisterConsumerFromAdminService registerConsumerFromAdminService
         , IGetConsumerDetailsForProfileService getConsumerDetailsForProfileService
         , IEditConsumerDetailsService editConsumerDetailsService
-        , IAddConsumerDetailsService addConsumerDetailsService)
+        , IAddConsumerDetailsService addConsumerDetailsService
+        , IChangeConsumerStatusService changeConsumerStatusService)
         {
             _getAllConsumersService = getAllConsumersService;
             _registerConsumerFromAdminService = registerConsumerFromAdminService;
             _getConsumerDetailsForProfileService = getConsumerDetailsForProfileService;
             _editConsumerDetailsService = editConsumerDetailsService;
             _addConsumerDetailsService = addConsumerDetailsService;
+            _changeConsumerStatusService = changeConsumerStatusService;
         }
 
         public IActionResult Index(int page = 1, int pageSize = 20)
@@ -81,6 +84,14 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
         public IActionResult AddProfileDetails(RequestAddConsumerDetailsDto request)
         {
             var result = _addConsumerDetailsService.Execute(request);
+
+            return new JsonResult(result);
+        }
+
+        [HttpPost]
+        public IActionResult ChangeConsumerStatus(long consumerId, bool activeStatus)
+        {
+            var result = _changeConsumerStatusService.Execute(consumerId, activeStatus);
 
             return new JsonResult(result);
         }

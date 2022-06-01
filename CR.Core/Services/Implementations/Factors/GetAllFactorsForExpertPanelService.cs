@@ -31,7 +31,7 @@ namespace CR.Core.Services.Implementations.Factors
                 {
                     ConsumerId = f.ConsumerInformation.ConsumerId,
                     ConsumerFullName = f.ConsumerInformation.FirstName + " " + f.ConsumerInformation.LastName,
-                    ConsumerIconSrc = f.ConsumerInformation.IconSrc,
+                    ConsumerIconSrc = f.ConsumerInformation.IconSrc ?? "assets/img/icon-256x256.png",
                     CreateDate = f.CreateDate.ToShamsi(),
                     FactorNumber = f.FactorNumber,
                     Status = f.FactorStatus.GetDisplayName(),

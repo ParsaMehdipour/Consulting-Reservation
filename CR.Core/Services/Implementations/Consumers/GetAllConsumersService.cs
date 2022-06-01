@@ -40,6 +40,7 @@ namespace CR.Core.Services.Implementations.Consumers
                     Age = u.ConsumerInfromation?.BirthDate.GetAge().ToString().GetPersianNumber(),
                     Address = u.ConsumerInfromation?.SpecificAddress,
                     PhoneNumber = u.PhoneNumber.GetPersianNumber(),
+                    IsActive = u.IsActive,
                     LastAppointment = (u.ConsumerInfromation != null) ? _context.Appointments
                         .Include(a => a.ConsumerInformation)
                         .Include(a => a.TimeOfDay)

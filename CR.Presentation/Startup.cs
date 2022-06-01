@@ -338,6 +338,8 @@ namespace CR.Presentation
             services.AddScoped<ILinkServices, LinkServices>();
             //Notification
             services.AddScoped<INotificationServices, NotificationServices>();
+            //Change Consumer Status
+            services.AddScoped<IChangeConsumerStatusService, ChangeConsumerStatusService>();
 
             #endregion
 

@@ -10,5 +10,6 @@
         public string Address { get; set; }
         public string LastAppointment { get; set; }
         public string PaidAmount { get; set; }
+        public bool IsActive { get; set; }
     }
 }
