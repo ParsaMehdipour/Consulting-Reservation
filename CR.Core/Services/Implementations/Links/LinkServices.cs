@@ -25,7 +25,7 @@ namespace CR.Core.Services.Implementations.Links
 
         public ResultDto<ResultGetLinksForAdminPanelDto> GetAllLinksForAdminPanel(string searchKey, int Page = 1, int PageSize = 20)
         {
-            var linksQueryable = _context.Links.Include(_ => _.Parent).AsQueryable();
+            var linksQueryable = _context.Links.Include(_ => _.Parent).Include(_ => _.Children).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchKey))
                 linksQueryable = linksQueryable.Where(_ => _.PersianTitle.Contains(searchKey) || _.Parent.PersianTitle.Contains(searchKey));
@@ -39,6 +39,7 @@ namespace CR.Core.Services.Implementations.Links
                 {
                     PersianTitle = _.Parent.PersianTitle,
                 },
+                HasChildren = _.Children.Any(),
                 OrderNumber = _.OrderNumber
             }).AsEnumerable().ToPaged(Page, PageSize, out var rowsCount).ToList();
 
