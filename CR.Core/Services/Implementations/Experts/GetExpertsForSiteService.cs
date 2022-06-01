@@ -27,9 +27,10 @@ namespace CR.Core.Services.Implementations.Experts
                 .Include(u => u.ExpertInformation)
                 .ThenInclude(e => e.Specialty)
                 .Include(e => e.ExpertInformation.Favorites)
-                .Where(u => u.UserFlag == UserFlag.Expert
-                 && u.IsActive == true
-                 && u.ExpertInformation != null)
+                .Include(e => e.ExpertInformation.TimeOfDays)
+                .Include(e => e.ExpertInformation.ExpertExperiences)
+                .Include(e => e.ExpertInformation.ExpertAppointments)
+                .Where(u => u.UserFlag == UserFlag.Expert && u.IsActive == true && u.ExpertInformation != null)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchKey))
@@ -67,7 +68,7 @@ namespace CR.Core.Services.Implementations.Experts
                 Speciality = e.ExpertInformation.Specialty.Name,
                 HasTimeOfDays = e.ExpertInformation.TimeOfDays.Any(_ => _.StartTime.Date >= DateTime.Now.Date && (e.ExpertInformation.UsePhoneCall || e.ExpertInformation.UseVoiceCall || e.ExpertInformation.UseTextCall)),
                 SpecialitySrc = e.ExpertInformation.Specialty.ImageSrc,
-                Tags = e.ExpertInformation.Tag.Split(",", System.StringSplitOptions.None).ToList(),
+                Tags = !string.IsNullOrEmpty(e.ExpertInformation.Tag) ? e.ExpertInformation.Tag.Split(",", System.StringSplitOptions.None).ToList() : new List<string>(),
                 PhoneCall = e.ExpertInformation.UsePhoneCall,
                 VoiceCall = e.ExpertInformation.UseVoiceCall,
                 TextCall = e.ExpertInformation.UseTextCall,

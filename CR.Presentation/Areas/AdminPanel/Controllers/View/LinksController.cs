@@ -14,7 +14,7 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
             _linkServices = linkServices;
         }
 
-        public IActionResult Index(string searchKey, int Page = 1, int PageSize = 20)
+        public IActionResult Index(string searchKey, int Page = 1, int PageSize = 200)
         {
             TempData["activemenu"] = ActiveMenu.Links;
 
