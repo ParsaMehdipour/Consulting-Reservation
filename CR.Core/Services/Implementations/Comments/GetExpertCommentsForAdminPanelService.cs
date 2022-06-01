@@ -45,7 +45,8 @@ namespace CR.Core.Services.Implementations.Comments
                         : _.Message,
                     Status = _.CommentStatus.GetDisplayName(),
                     ShowStatus = _.ShowInMainPage,
-                    Rate = _.Rate.FirstOrDefault().Rate
+                    Rate = _.Rate.FirstOrDefault().Rate,
+                    IsRead = _.IsRead
                 }).AsEnumerable()
                 .ToPaged(Page, PageSize, out var rowsCount)
                 .ToList();

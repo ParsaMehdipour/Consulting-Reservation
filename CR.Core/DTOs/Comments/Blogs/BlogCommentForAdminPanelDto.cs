@@ -12,5 +12,6 @@
         public string Message { get; set; }
         public string CreateDate { get; set; }
         public string Status { get; set; }
+        public bool IsRead { get; set; }
     }
 }

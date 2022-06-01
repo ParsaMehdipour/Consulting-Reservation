@@ -14,6 +14,7 @@
         public string Status { get; set; }
         public bool ShowStatus { get; set; }
         public int? Rate { get; set; }
+        public bool IsRead { get; set; }
 
     }
 }

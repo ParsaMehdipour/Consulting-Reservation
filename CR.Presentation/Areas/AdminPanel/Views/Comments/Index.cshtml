@@ -28,6 +28,7 @@
                                 <th class="text-center">نظر</th>
                                 <th class="text-center"> متن </th>
                                 <th class="text-center">تاریخ</th>
+                                <th class="text-center">مشاهده شده</th>
                                 <th class="text-center">وضعیت</th>
                                 <th class="text-center"> اقدامات </th>
                                 <th class="text-center">نمایش در صفحه اصلی</th>
@@ -73,6 +74,15 @@
 
                                         <td class="text-center">
                                             @comment.CreateDate
+                                        </td>
+                                        <td class="text-center">
+                                            @if(comment.IsRead)
+                                            {
+                                                <p style="color:green;">بله</p>
+                                            }else
+                                            { 
+                                                <p style="color:red;">خیر</p>
+                                            }
                                         </td>
                                         <td class="text-center">
                                             @if (comment.Status == CommentStatus.Waiting.GetDisplayName())

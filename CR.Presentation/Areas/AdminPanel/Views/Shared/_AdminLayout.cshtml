@@ -60,7 +60,11 @@
     <![endif]-->
 </head>
 <body>
-
+    <style>
+        .hidden {
+            display: none
+        }
+    </style>
     <!-- Main Wrapper -->
     <div class="main-wrapper">
 
@@ -177,13 +181,25 @@
                             </ul>
                         </li>
                         <li class="submenu">
-                            <a @(TempData["activemenu"].ToString() == ActiveMenu.ExpertComments || TempData["activemenu"].ToString() == ActiveMenu.BlogComments ? @"class=active subdrop" : "") href="#"><i class="fe fe-comments"></i> <span>نظرات</span> <span class="menu-arrow"></span></a>
+                            <a @(TempData["activemenu"].ToString() == ActiveMenu.ExpertComments || TempData["activemenu"].ToString() == ActiveMenu.BlogComments ? @"class=active subdrop" : "") href="#">
+                                <i class="fe fe-comments"></i>
+                                <span>نظرات</span> <span class="menu-arrow"></span>
+                                <div id="NotReadAllComments" class="badge badge-success badge-pill hidden">0</div>
+                            </a>
                             <ul>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.ExpertComments ? @"class=active" : "")>
-                                    <a asp-controller="Comments" asp-action="Index"><i class="fe fe-user"></i> <span>نظرات متخصصین</span></a>
+                                    <a asp-controller="Comments" asp-action="Index">
+                                        <i class="fe fe-user"></i>
+                                        <span>نظرات متخصصین</span>
+                                        <div id="NotReadComments" class="badge badge-success badge-pill hidden">0</div>
+                                    </a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.BlogComments ? @"class=active" : "")>
-                                    <a asp-controller="BlogComments" asp-action="Index"><i class="fe fe-user"></i> <span>نظرات مقالات</span></a>
+                                    <a asp-controller="BlogComments" asp-action="Index">
+                                        <i class="fe fe-user"></i>
+                                        <span>نظرات مقالات</span>
+                                        <div id="NotReadBlogComments" class="badge badge-success badge-pill hidden">0</div>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -300,7 +316,56 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function(){
+        $(document).ready(function () {
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/Notification/GetNotification',
+                cache: false,
+                beforeSend: function (x) {
+                    $('#loading').show(0);
+                    //alert('!!!!!');
+                    //$("#NotReadAllComments").html("100");
+                    //$("#NotReadComments").html("200");
+                    //$("#NotReadBlogComments").html("300");
+                },
+                success: function (response) {
+                    if (response.isSuccess === true) {
+                        var model = response.data;
+                        if (model.notreadallcomments > 0) {
+                            $("#NotReadAllComments").text(model.notreadallcomments);
+                            if ($("#NotReadAllComments").hasClass("hidden") === true) {
+                                $("#NotReadAllComments").removeClass("hidden");
+                                $("#NotReadAllComments").addClass("badge badge-success badge-pill");
+                            }
+                        }
+                        if (model.notreadblogcomments > 0) {
+                            $("#NotReadBlogComments").text(model.notreadblogcomments);
+                            if ($("#NotReadBlogComments").hasClass("hidden") === true) {
+                                $("#NotReadBlogComments").removeClass("hidden");
+                                $("#NotReadBlogComments").addClass("badge badge-success badge-pill");
+                            }
+                        }
+                        if (model.notreadcomments > 0) {
+                            $("#NotReadComments").text(model.notreadcomments);
+                            if ($("#NotReadComments").hasClass("hidden") === true) {
+                                $("#NotReadComments").removeClass("hidden");
+                                $("#NotReadComments").addClass("badge badge-success badge-pill");
+                            }
+                        }
+                    }
+                },
+                complete: function () {
+                    $('#loading').hide(0);
+                },
+                fail: function () {
+                    $('#loading').hide(0);
+                },
+                error: function (request, status, error) {
+                    //alert(request.responseText);
+                }
+            });
+
             $('.date').mask('00/00/0000');
             $('.time').mask('00:00:00');
             $('.number').mask('0000');
@@ -310,10 +375,10 @@
             $('.phone_with_ddd').mask('(00) 0000-0000');
             $('.phone_us').mask('(000) 000-0000');
             $('.mixed').mask('AAA 000-S0S');
-            $('.cpf').mask('000.000.000-00', {reverse: true});
-            $('.cnpj').mask('00.000.000/0000-00', {reverse: true});
-            $('.money').mask('000.000.000.000.000,00', {reverse: true});
-            $('.money2').mask("#.##0,000", {reverse: true});
+            $('.cpf').mask('000.000.000-00', { reverse: true });
+            $('.cnpj').mask('00.000.000/0000-00', { reverse: true });
+            $('.money').mask('000.000.000.000.000,00', { reverse: true });
+            $('.money2').mask("#.##0,000", { reverse: true });
             $('.ip_address').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
                 translation: {
                     'Z': {
@@ -322,9 +387,9 @@
                 }
             });
             $('.ip_address').mask('099.099.099.099');
-            $('.percent').mask('##0,00%', {reverse: true});
-            $('.clear-if-not-match').mask("00/00/0000", {clearIfNotMatch: true});
-            $('.placeholder').mask("00/00/0000", {placeholder: "__/__/____"});
+            $('.percent').mask('##0,00%', { reverse: true });
+            $('.clear-if-not-match').mask("00/00/0000", { clearIfNotMatch: true });
+            $('.placeholder').mask("00/00/0000", { placeholder: "__/__/____" });
             $('.fallback').mask("00r00r0000", {
                 translation: {
                     'r': {
@@ -334,7 +399,7 @@
                     placeholder: "__/__/____"
                 }
             });
-            $('.selectonfocus').mask("00/00/0000", {selectOnFocus: true});
+            $('.selectonfocus').mask("00/00/0000", { selectOnFocus: true });
         });
 
         $(".datetimepicker").persianDatepicker({
