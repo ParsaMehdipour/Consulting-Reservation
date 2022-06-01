@@ -1,11 +1,11 @@
-﻿using System;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
 using CR.Core.DTOs.RequestDTOs;
 using CR.Core.Services.Interfaces.Images;
 using CR.Core.Services.Interfaces.Specialites;
 using CR.DataAccess.Context;
 using CR.DataAccess.Entities.Specialties;
+using System;
 
 namespace CR.Core.Services.Implementations.Specialites
 {
@@ -16,7 +16,7 @@ namespace CR.Core.Services.Implementations.Specialites
 
         public AddNewSpecialityService(
              ApplicationContext context
-            ,IImageUploaderService imageUploaderService)
+            , IImageUploaderService imageUploaderService)
         {
             _context = context;
             _imageUploaderService = imageUploaderService;
@@ -36,11 +36,10 @@ namespace CR.Core.Services.Implementations.Specialites
 
                 var imageSrc = _imageUploaderService.Execute(uploadImageDto);
 
-                var speciality = new Specialty
-                {
-                    Name = request.Name,
-                    ImageSrc = imageSrc,
-                };
+                var speciality = new Specialty(request.Name, imageSrc);
+
+                if (request.ParentId != null)
+                    speciality.SetParent(request.ParentId.Value);
 
                 _context.Specialties.Add(speciality);
 

@@ -6,5 +6,7 @@ namespace CR.Core.DTOs.RequestDTOs
     {
         public string Name { get; set; }
         public IFormFile File { get; set; }
+        public long? ParentId { get; set; }
+
     }
 }

@@ -14,6 +14,10 @@ namespace CR.DataAccess.Configurations
                 .WithOne(p => p.Specialty)
                 .HasForeignKey(p => p.SpecialtyId);
 
+            builder.HasOne(_ => _.Parent)
+                .WithMany()
+                .HasForeignKey(_ => _.ParentSpecialtyId);
+
             builder.Property(_ => _.Name)
                 .HasMaxLength(100)
                 .IsRequired();
