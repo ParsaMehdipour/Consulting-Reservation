@@ -8,5 +8,7 @@
         public string notcheckedallusers { get; set; }
         public string notcheckedconsumers { get; set; }
         public string notcheckedexperts { get; set; }
+        public string notreadcontactus { get; set; }
+        public string notreadallcontactus { get; set; }
     }
 }

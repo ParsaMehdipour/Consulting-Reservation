@@ -22,6 +22,8 @@ namespace CR.Core.Services.Implementations.Notification
             var expertComments = _context.Comments.Where(_ => _.IsRead == false && _.TypeId == CommentType.Expert).Count();
             var experts = _context.Users.Where(_ => _.IsActive == false && _.UserFlag == UserFlag.Expert).Count();
             var consumers = _context.Users.Where(_ => _.IsActive == false && _.UserFlag == UserFlag.Consumer).Count();
+            var contactusComments = _context.ContactUs.Where(_ => _.IsRead == false).Count();
+
 
             return new ResultDto<NotificationDTO>()
             {
@@ -33,6 +35,8 @@ namespace CR.Core.Services.Implementations.Notification
                     notcheckedallusers = (consumers + experts).ToString(),
                     notcheckedconsumers = consumers.ToString(),
                     notcheckedexperts = experts.ToString(),
+                    notreadcontactus = contactusComments.ToString(),
+                    notreadallcontactus = contactusComments.ToString()
                 },
                 IsSuccess = true
             };

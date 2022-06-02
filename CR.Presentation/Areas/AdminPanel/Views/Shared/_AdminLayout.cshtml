@@ -227,7 +227,11 @@
                             </ul>
                         </li>
                         <li class="submenu">
-                            <a @(TempData["activemenu"].ToString() == ActiveMenu.AboutUs || TempData["activemenu"].ToString() == ActiveMenu.Rules || TempData["activemenu"].ToString() == ActiveMenu.ContactUsContent || TempData["activemenu"].ToString() == ActiveMenu.Links ? @"class=active subdrop" : "") href="#"><i class="fe fe-document"></i> <span>صفحه اصلی</span> <span class="menu-arrow"></span></a>
+                            <a @(TempData["activemenu"].ToString() == ActiveMenu.AboutUs || TempData["activemenu"].ToString() == ActiveMenu.Rules || TempData["activemenu"].ToString() == ActiveMenu.ContactUsContent || TempData["activemenu"].ToString() == ActiveMenu.Links ? @"class=active subdrop" : "") href="#">
+                                <i class="fe fe-document"></i> <span>صفحه اصلی</span>
+                                <span class="menu-arrow"></span>
+                                <div id="NotReadAllContactUs" class="badge badge-success badge-pill hidden">0</div>
+                            </a>
                             <ul style="display: none;">
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Links ? @"class=active" : "")>
                                     <a asp-controller="Links" asp-action="Index"><i class="fe fe-user"></i> <span>لینک ها</span></a>
@@ -242,7 +246,11 @@
                                     <a asp-controller="ContactUsContent" asp-action="Index"><i class="fe fe-user"></i> <span>متن تماس با ما</span></a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.ContactUs ? @"class=active" : "")>
-                                    <a asp-controller="ContactUs" asp-action="Index"><i class="fe fe-user"></i> <span>پیام های تماس با ما</span></a>
+                                    <a asp-controller="ContactUs" asp-action="Index">
+                                        <i class="fe fe-user"></i>
+                                        <span>پیام های تماس با ما</span>
+                                        <div id="NotReadContactUs" class="badge badge-success badge-pill hidden">0</div>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -385,6 +393,21 @@
                             if ($("#NotCheckedExperts").hasClass("hidden") === true) {
                                 $("#NotCheckedExperts").removeClass("hidden");
                                 $("#NotCheckedExperts").addClass("badge badge-success badge-pill");
+                            }
+                        }
+
+                        if (model.notreadallcontactus > 0) {
+                            $("#NotReadAllContactUs").text(model.notreadallcontactus);
+                            if ($("#NotReadAllContactUs").hasClass("hidden") === true) {
+                                $("#NotReadAllContactUs").removeClass("hidden");
+                                $("#NotReadAllContactUs").addClass("badge badge-success badge-pill");
+                            }
+                        }
+                        if (model.notreadcontactus > 0) {
+                            $("#NotReadContactUs").text(model.notreadcontactus);
+                            if ($("#NotReadContactUs").hasClass("hidden") === true) {
+                                $("#NotReadContactUs").removeClass("hidden");
+                                $("#NotReadContactUs").addClass("badge badge-success badge-pill");
                             }
                         }
                     }
