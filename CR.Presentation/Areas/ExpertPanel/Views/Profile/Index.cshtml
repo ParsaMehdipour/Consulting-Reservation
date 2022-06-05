@@ -59,6 +59,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <input type="hidden" asp-for="id" id="expertid" name="expertid" value="@Model.id" />
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>نام کاربری <span class="text-danger">*</span></label>
@@ -448,10 +449,15 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label>تخصص ها</label>
+                                <select class="form-control" name="attributeTypeList" id="attributeTypeList" multiple="multiple">
+                                </select>
+                            </div>
+                            @*<div class="form-group">
                                 <label>خدمات (جزئیات بیشتری از تخصص خود ذکر کنید)</label>
                                 <input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="وارد کردن خدمت" name="services" asp-for="tag" id="services">
                                 <small class="form-text text-muted">توجه: برای افزودن سرویس های جدید ، اینتر را فشار داده و وارد کنید</small>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                     <div class="submit-section submit-btn-bottom">
@@ -769,6 +775,80 @@
 <script src="~/assets/js/ExpertPanel/Profile/profile-settings.js"></script>
 
 <script>
+
+    $(document).ready(function () {
+
+        initialSelect2AttributeType();
+
+        getattribute();
+    });
+
+    function getattribute() {
+        var expertid = $("#expertBasicProfileForm #expertid").val();
+        $.ajax({
+            type: 'GET',
+            url: '/api/ExpertDetails/getselect2items?expertid=' + expertid,
+            processData: false,
+            contentType: false,
+            cache: false,
+            beforeSend: function (x) {
+                //$('#loading').show();
+            },
+            success: function (data) {
+                var attributeTypes = data.items;
+                var $newOption = "";
+                for (var i = 0; i < attributeTypes.length; i++) {
+                    var attributeType = attributeTypes[i];
+                    $newOption += "<option value='" + attributeType.id + "' selected='selected'>" + attributeType.text + "</option>";
+                }
+                $("#attributeTypeList").html($newOption).trigger('change');
+            },
+            complete: function () {
+                //$('#loading').hide();
+            },
+            fail: function () {
+                //$('#loading').hide();
+            },
+            error: function (request, status, error) {
+                //alert(request.responseText);
+            }
+        });
+        event.preventDefault();
+
+    }
+
+    function initialSelect2AttributeType() {
+
+        $('#attributeTypeList').html('').select2({
+            closeOnSelect: false,
+            dir: "rtl",
+            ajax: {
+                delay: 500,
+                url: '/api/ExpertDetails/select2',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                        page: params.page || 1,
+                        specialtyId: BigInt($("#expertBasicProfileForm #specialtyId").val())
+                    }
+                    // Query parameters will be ?search=[term]&page=[page]
+                    return query;
+                },
+                processResults: function (response, params) {
+                    var model = response;
+                    params.page = params.page || 1;
+
+                    return {
+                        results: model.items,
+                        pagination: {
+                            more: (params.page * 10) < model.countFiltered
+                        }
+                    };
+                }
+            }
+        });
+    }
+
     function EditBasicInformation(id) {
 
         if ($("#expertBasicProfileForm").valid()) {
@@ -792,7 +872,7 @@
             expertProfileData.append("instagram", $('input[name=instagram]').val());
             expertProfileData.append("iconImage", $("#expertBasicProfileForm #iconImage").get(0).files[0]);
             expertProfileData.append("specialtyId", BigInt($("#expertBasicProfileForm #specialtyId").val()));
-            expertProfileData.append("tag", $("#expertBasicProfileForm #services").val());
+            //expertProfileData.append("tag", $("#expertBasicProfileForm #services").val());
             expertProfileData.append("shabaNumber", $("#expertBasicProfileForm #shabaNumber").val());
             expertProfileData.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
             expertProfileData.append("id", id);
@@ -838,6 +918,17 @@
             else {
                 expertProfileData.append("useTextCall", false);
             }
+
+            var $_attr = $('#expertBasicProfileForm  #attributeTypeList').val();
+            var intAttributeTypeList = "";
+            for (var i = 0; i < $_attr.length; i++) {
+                if (i == $_attr.length - 1) {
+                    intAttributeTypeList += $_attr[i];
+                } else {
+                    intAttributeTypeList += $_attr[i] + ",";
+                }
+            }
+            expertProfileData.append("tag", intAttributeTypeList);
 
             $( "#expertBasicProfileForm" ).submit(function( event ) {
                 $.ajax({

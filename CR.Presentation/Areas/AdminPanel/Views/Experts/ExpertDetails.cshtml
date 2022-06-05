@@ -46,6 +46,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" asp-for="id" id="expertid" name="expertid" value="@Model.id"/>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>نام کاربری <span class="text-danger">*</span></label>
@@ -94,7 +95,7 @@
                             <div class="form-group">
                                 <label>تاریخ تولد</label>
                                 <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate_String">
+                                    <input type="text" class="form-control datetimepicker" asp-for="birthDate" id="birthDate_String" dir="ltr">
                                 </div>
                             </div>
                         </div>
@@ -140,125 +141,129 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                                    @if (Model.degreeImages.Count > 0)
+                            @if (Model.degreeImages.Count > 0)
+                            {
+                                <label>تصاویر مدارک هویتی</label>
+                                <div class="upload-wrap">
+                                    @foreach (var image in Model.identityImages)
                                     {
-                                        <label>تصاویر مدارک هویتی</label>
-                                        <div class="upload-wrap">
-                                            @foreach (var image in Model.identityImages)
-                                            {
-                                                <div class="upload-images">
-                                                    <a href="~/@image.Src" data-fancybox="gallery">
-                                                        <img src="~/@image.Src" alt="Upload Image">
-                                                    </a>
-                                                    <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-                                                </div>
-                                            }
+                                        <div class="upload-images">
+                                            <a href="~/@image.Src" data-fancybox="gallery">
+                                                <img src="~/@image.Src" alt="Upload Image">
+                                            </a>
+                                            <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                                         </div>
-                                        <br />
                                     }
-                                    <div class="form-group">
-                                        <label>بارگذاری تصاویر مدارک هویتی</label>
-                                        <span id="identityImageUploadContainer" style="width: 100%">
-                                            <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box_identity l-center-box">
-                                                    <div class="uploader__contents">
-                                                        <label class="button button--secondary" for="fileinputIdentity">انتخاب تصویر</label>
-                                                        <input id="fileinputIdentity" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
-                                                    </div>
-                                                </div>
+                                </div>
+                                <br />
+                            }
+                            <div class="form-group">
+                                <label>بارگذاری تصاویر مدارک هویتی</label>
+                                <span id="identityImageUploadContainer" style="width: 100%">
+                                    <div class="col-lg-12 ">
+                                        <div class="uploader__box js-uploader__box_identity l-center-box">
+                                            <div class="uploader__contents">
+                                                <label class="button button--secondary" for="fileinputIdentity">انتخاب تصویر</label>
+                                                <input id="fileinputIdentity" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
                                             </div>
-                                        </span>
-                                    </div></div><br />
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div><br />
                         <div class="col-md-12">
-                                    @if (Model.degreeImages.Count > 0)
+                            @if (Model.degreeImages.Count > 0)
+                            {
+                                <label>تصاویر مدرک</label>
+                                <div class="upload-wrap">
+                                    @foreach (var image in Model.degreeImages)
                                     {
-                                        <label>تصاویر مدرک</label>
-                                        <div class="upload-wrap">
-                                            @foreach (var image in Model.degreeImages)
-                                            {
-                                                <div class="upload-images">
-                                                    <a href="~/@image.Src" data-fancybox="gallery">
-                                                        <img src="~/@image.Src" alt="Upload Image">
-                                                    </a>
-                                                    <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-                                                </div>
-                                            }
+                                        <div class="upload-images">
+                                            <a href="~/@image.Src" data-fancybox="gallery">
+                                                <img src="~/@image.Src" alt="Upload Image">
+                                            </a>
+                                            <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                                         </div>
-                                        <br />
                                     }
-                                    <div class="form-group">
-                                        <label>بارگذاری تصاویر مدرک</label>
-                                        <span id="degreeImageUploadContainer" style="width: 100%">
-                                            <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box_degree l-center-box">
-                                                    <div class="uploader__contents">
-                                                        <label class="button button--secondary" for="fileinputDegree">انتخاب تصویر</label>
-                                                        <input id="fileinputDegree" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
-                                                    </div>
-                                                </div>
+                                </div>
+                                <br />
+                            }
+                            <div class="form-group">
+                                <label>بارگذاری تصاویر مدرک</label>
+                                <span id="degreeImageUploadContainer" style="width: 100%">
+                                    <div class="col-lg-12 ">
+                                        <div class="uploader__box js-uploader__box_degree l-center-box">
+                                            <div class="uploader__contents">
+                                                <label class="button button--secondary" for="fileinputDegree">انتخاب تصویر</label>
+                                                <input id="fileinputDegree" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
                                             </div>
-                                        </span>
-                                    </div></div><br />
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div><br />
                         <div class="col-md-12">
-                                    @if (Model.resumeImages.Count > 0)
+                            @if (Model.resumeImages.Count > 0)
+                            {
+                                <label>تصاویر رزومه</label>
+                                <div class="upload-wrap">
+                                    @foreach (var image in Model.resumeImages)
                                     {
-                                        <label>تصاویر رزومه</label>
-                                        <div class="upload-wrap">
-                                            @foreach (var image in Model.resumeImages)
-                                            {
-                                                <div class="upload-images">
-                                                    <a href="~/@image.Src" data-fancybox="gallery">
-                                                        <img src="~/@image.Src" alt="Upload Image">
-                                                    </a>
-                                                    <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-                                                </div>
-                                            }
+                                        <div class="upload-images">
+                                            <a href="~/@image.Src" data-fancybox="gallery">
+                                                <img src="~/@image.Src" alt="Upload Image">
+                                            </a>
+                                            <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                                         </div>
-                                        <br />
                                     }
-                                    <div class="form-group">
-                                        <label>بارگذاری تصاویر رزومه</label>
-                                        <span id="rseumeImageUploadContainer" style="width: 100%">
-                                            <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box_resume l-center-box">
-                                                    <div class="uploader__contents">
-                                                        <label class="button button--secondary" for="fileinputResume">انتخاب تصویر</label>
-                                                        <input id="fileinputResume" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
-                                                    </div>
-                                                </div>
+                                </div>
+                                <br />
+                            }
+                            <div class="form-group">
+                                <label>بارگذاری تصاویر رزومه</label>
+                                <span id="rseumeImageUploadContainer" style="width: 100%">
+                                    <div class="col-lg-12 ">
+                                        <div class="uploader__box js-uploader__box_resume l-center-box">
+                                            <div class="uploader__contents">
+                                                <label class="button button--secondary" for="fileinputResume">انتخاب تصویر</label>
+                                                <input id="fileinputResume" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
                                             </div>
-                                        </span>
-                                    </div></div><br />
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div><br />
                         <div class="col-md-12">
-                                    @if (Model.otherImages.Count > 0)
+                            @if (Model.otherImages.Count > 0)
+                            {
+                                <label>سایر تصاویر</label>
+                                <div class="upload-wrap">
+                                    @foreach (var image in Model.otherImages)
                                     {
-                                        <label>سایر تصاویر</label>
-                                        <div class="upload-wrap">
-                                            @foreach (var image in Model.otherImages)
-                                            {
-                                                <div class="upload-images">
-                                                    <a href="~/@image.Src" data-fancybox="gallery">
-                                                        <img src="~/@image.Src" alt="Upload Image">
-                                                    </a>
-                                                    <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-                                                </div>
-                                            }
+                                        <div class="upload-images">
+                                            <a href="~/@image.Src" data-fancybox="gallery">
+                                                <img src="~/@image.Src" alt="Upload Image">
+                                            </a>
+                                            <a onclick="DeleteExpertImage(@image.Id)" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                                         </div>
-                                        <br />
                                     }
-                                    <div class="form-group">
-                                        <label>بارگذاری سایر تصاویر</label>
-                                        <span id="otherImageUploadContainer" style="width: 100%">
-                                            <div class="col-lg-12 ">
-                                                <div class="uploader__box js-uploader__box_other l-center-box">
-                                                    <div class="uploader__contents">
-                                                        <label class="button button--secondary" for="fileinputOther">انتخاب تصویر</label>
-                                                        <input id="fileinputOther" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
-                                                    </div>
-                                                </div>
+                                </div>
+                                <br />
+                            }
+                            <div class="form-group">
+                                <label>بارگذاری سایر تصاویر</label>
+                                <span id="otherImageUploadContainer" style="width: 100%">
+                                    <div class="col-lg-12 ">
+                                        <div class="uploader__box js-uploader__box_other l-center-box">
+                                            <div class="uploader__contents">
+                                                <label class="button button--secondary" for="fileinputOther">انتخاب تصویر</label>
+                                                <input id="fileinputOther" class="uploader__file-input" type="file" multiple value="انتخاب تصویر">
                                             </div>
-                                        </span>
-                                    </div></div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <hr />
                     <h4 class="card-title">جزئیات تماس</h4>
@@ -304,7 +309,7 @@
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="price_custom_phoneCallPrice" name="rating_option_phoneCallPrice" value="custom_price_phoneCallPrice" class="custom-control-input">
-                                    <label class="custom-control-label" for="price_custom_phoneCallPrice">مشاوره تلفنی غیر فعال باشد</label>
+                                    <label class="custom-control-label" for="price_custom_phoneCallPrice">مشاوره تلفنی غیرفعال باشد</label>
                                 </div>
                             }
                             else
@@ -325,7 +330,7 @@
                         <div class="row custom_price_cont" id="custom_price_cont_phoneCallPrice">
                             <div class="col-md-4">
                                 <input type="text" class="form-control money2" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
-                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای به تومان)</small>
                             </div>
                         </div>
                     }
@@ -334,7 +339,7 @@
                         <div class="row custom_price_cont" id="custom_price_cont_phoneCallPrice" style="display: none;">
                             <div class="col-md-4">
                                 <input type="text" class="form-control money2" id="custom_rating_input_phoneCallPrice" name="custom_rating_count_phoneCallPrice" value="@Model.phoneCallPrice">
-                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای به تومان)</small>
                             </div>
                         </div>
                     }
@@ -350,7 +355,7 @@
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="price_custom_voiceCallPrice" name="rating_option_voiceCallPrice" value="custom_price_voiceCallPrice" class="custom-control-input">
-                                    <label class="custom-control-label" for="price_custom_voiceCallPrice">مشاوره صوتی غیر فعال باشد</label>
+                                    <label class="custom-control-label" for="price_custom_voiceCallPrice">مشاوره صوتی غیرفعال باشد</label>
                                 </div>
                             }
                             else
@@ -371,7 +376,7 @@
                         <div class="row custom_price_cont" id="voiceCallPrice_Custom">
                             <div class="col-md-4">
                                 <input type="text" class="form-control money2" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
-                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای به تومان)</small>
                             </div>
                         </div>
                     }
@@ -380,7 +385,7 @@
                         <div class="row custom_price_cont" id="voiceCallPrice_Custom" style="display: none;">
                             <div class="col-md-4">
                                 <input type="text" class="form-control money2" id="custom_rating_input_voiceCallPrice" name="custom_rating_count_voiceCallPrice" value="@Model.voiceCallPrice">
-                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای  به تومان)</small>
+                                <small class="form-text text-muted">مبلغ مورد نظر شما(دقیقه ای به تومان)</small>
                             </div>
                         </div>
                     }
@@ -439,10 +444,15 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>خدمات</label>
-                        <input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="وارد کردن خدمت" name="services" asp-for="tag" id="services">
-                        <small class="form-text text-muted">توجه: برای افزودن سرویس های جدید ، اینتر را فشار داده و وارد کنید</small>
+                        <label>تخصص ها</label>
+                        <select class="form-control" name="attributeTypeList" id="attributeTypeList" multiple="multiple">
+                        </select>
                     </div>
+                    @*<div class="form-group">
+                        <label>خدمات</label>
+                        <input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="وارد کردن خدمت" name="services" asp-for="tag" id="services" readonly="readonly">
+                        <small class="form-text text-muted">توجه: برای افزودن سرویس های جدید ، اینتر را فشار داده و وارد کنید</small>
+                    </div>*@
                 </div>
             </div>
             <div class="submit-section submit-btn-bottom">
@@ -751,6 +761,82 @@
 <script src="~/assets/js/ExpertPanel/layout.js"></script>
 
 <script>
+
+    $(document).ready(function () {
+
+        initialSelect2AttributeType();
+
+        getattribute();
+    });
+
+    function getattribute() {
+        var expertid = $("#expertBasicProfileForm #expertid").val();
+            $.ajax({
+                type: 'GET',
+                url: '/api/Experts/getselect2items?expertid=' + expertid,
+                processData: false,
+                contentType: false,
+                cache: false,
+                beforeSend: function(x) {
+                    //$('#loading').show();
+                },
+                success: function(data) {
+                    var attributeTypes = data.items;
+                    var $newOption = "";
+                    for (var i = 0; i < attributeTypes.length; i++) {
+                        var attributeType = attributeTypes[i];
+                        $newOption += "<option value='" + attributeType.id + "' selected='selected'>" + attributeType.text + "</option>";
+                    }
+                    $("#attributeTypeList").html($newOption).trigger('change');
+                },
+                complete: function() {
+                    //$('#loading').hide();
+                },
+                fail: function() {
+                    //$('#loading').hide();
+                },
+                error: function(request, status, error) {
+                    //alert(request.responseText);
+                }
+            });
+            event.preventDefault();
+
+    }
+
+    function initialSelect2AttributeType() {
+
+        $('#attributeTypeList').html('').select2({
+            closeOnSelect: false,
+            dir: "rtl",
+
+            ajax: {
+                delay: 500,
+                url: '/api/Experts/select2',
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                        page: params.page || 1,
+                        specialtyId: BigInt($("#expertBasicProfileForm #specialtyId").val())
+                    }
+                    // Query parameters will be ?search=[term]&page=[page]
+                    return query;
+                },
+                processResults: function (response, params) {
+                    var model = response;
+                    params.page = params.page || 1;
+
+                    return {
+                        results: model.items,
+                        pagination: {
+                            more: (params.page * 10) < model.countFiltered
+                        }
+                    };
+                }
+            }
+        });
+    }
+
+
     function EditBasicInformation(id) {
 
         if ($("#expertBasicProfileForm").valid()) {
@@ -775,7 +861,7 @@
             expertProfileData.append("shabaNumber", $("#expertBasicProfileForm #shabaNumber").val());
             expertProfileData.append("iconImage", $("#expertBasicProfileForm #iconImage").get(0).files[0]);
             expertProfileData.append("specialtyId", BigInt($("#expertBasicProfileForm #specialtyId").val()));
-            expertProfileData.append("tag", $("#expertBasicProfileForm #services").val());
+            //expertProfileData.append("tag", $("#expertBasicProfileForm #services").val());
             expertProfileData.append("gender",genderSelect.options[genderSelect.selectedIndex].value);
             expertProfileData.append("id", id);
 
@@ -795,11 +881,9 @@
                 expertProfileData.append("identityImage",identityImageFileList[l]);
             }
 
-
             if (document.getElementById('price_free_phoneCallPrice').checked) {
                 expertProfileData.append("usePhoneCall", true);
                 expertProfileData.append("phoneCallPrice", $('input[name=custom_rating_count_phoneCallPrice]').cleanVal());
-
             }
             else {
                 expertProfileData.append("usePhoneCall", false);
@@ -808,7 +892,6 @@
             if (document.getElementById('price_free_voiceCallPrice').checked) {
                 expertProfileData.append("useVoiceCall", true);
                 expertProfileData.append("voiceCallPrice", $('input[name=custom_rating_count_voiceCallPrice]').cleanVal());
-
             }
             else {
                 expertProfileData.append("useVoiceCall", false);
@@ -821,6 +904,17 @@
             else {
                 expertProfileData.append("useTextCall", false);
             }
+
+            var $_attr = $('#expertBasicProfileForm  #attributeTypeList').val();
+            var intAttributeTypeList = "";
+            for (var i = 0; i < $_attr.length; i++) {
+                if (i == $_attr.length - 1) {
+                    intAttributeTypeList += $_attr[i];
+                } else {
+                    intAttributeTypeList += $_attr[i] + ",";
+                }
+            }
+            expertProfileData.append("tag", intAttributeTypeList);
 
             $( "#expertBasicProfileForm" ).submit(function( event ) {
                 $.ajax({

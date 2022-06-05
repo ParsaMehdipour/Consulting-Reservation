@@ -1,5 +1,6 @@
 ﻿using CR.Common.ActiveMenus;
 using CR.Core.DTOs.RequestDTOs;
+using CR.Core.DTOs.RequestDTOs.Specialty;
 using CR.Core.Services.Interfaces.Specialites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,17 +28,17 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
             _removeSpecialityService = removeSpecialityService;
         }
 
-        public IActionResult Index(int page = 1, int pageSize = 20)
+        public IActionResult Index(int page = 1, int pageSize = 20, int parentId = 0)
         {
             TempData["activemenu"] = ActiveMenu.Speciality;
 
-            var model = _getAllSpecialitiesService.Execute(page, pageSize).Data;
+            var model = _getAllSpecialitiesService.Execute(page, pageSize, parentId).Data;
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult AddSpeciality(RequestAddNewSpecialityDto request)
+        public IActionResult AddSpeciality(RequestAddNewSpecialtyDto request)
         {
 
             if (Request.Form.Files.Count > 0)
@@ -78,6 +79,26 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
             var result = _removeSpecialityService.Execute(id);
 
             return new JsonResult(result);
+        }
+
+        [HttpGet]
+        public IActionResult Create(long? parentId)
+        {
+            TempData["activemenu"] = ActiveMenu.Speciality;
+
+            ViewBag.parentId = parentId;
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Edit(long SpecialityId)
+        {
+            TempData["activemenu"] = ActiveMenu.Speciality;
+
+            var model = _getAllSpecialitiesService.GetSpecialty(SpecialityId).Data;
+
+            return View(model);
         }
     }
 }

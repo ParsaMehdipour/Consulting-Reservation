@@ -1,5 +1,5 @@
 ﻿using CR.Common.DTOs;
-using CR.Core.DTOs.RequestDTOs;
+using CR.Core.DTOs.RequestDTOs.Specialty;
 
 namespace CR.Core.Services.Interfaces.Specialites
 {

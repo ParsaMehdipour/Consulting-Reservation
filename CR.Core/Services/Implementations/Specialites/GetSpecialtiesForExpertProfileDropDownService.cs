@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.Specialities;
 using CR.Core.Services.Interfaces.Specialites;
 using CR.DataAccess.Context;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Specialites
 {
@@ -18,7 +18,7 @@ namespace CR.Core.Services.Implementations.Specialites
 
         public ResultDto<List<SpecialityDto>> Execute()
         {
-            var Specialties = _context.Specialties
+            var Specialties = _context.Specialties.Where(a => a.Parent == null)
                 .Select(s => new SpecialityDto
                 {
                     Id = s.Id,

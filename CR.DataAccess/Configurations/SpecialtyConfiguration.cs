@@ -15,7 +15,7 @@ namespace CR.DataAccess.Configurations
                 .HasForeignKey(p => p.SpecialtyId);
 
             builder.HasOne(_ => _.Parent)
-                .WithMany()
+                .WithMany(_ => _.Children)
                 .HasForeignKey(_ => _.ParentSpecialtyId);
 
             builder.Property(_ => _.Name)

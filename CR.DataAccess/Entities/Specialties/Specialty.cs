@@ -8,20 +8,25 @@ namespace CR.DataAccess.Entities.Specialties
     {
         public string Name { get; set; }
         public string ImageSrc { get; set; }
+        public int OrderNumber { get; set; }
 
 
         #region Navigation Properties\
 
         public long? ParentSpecialtyId { get; set; }
         public Specialty Parent { get; set; }
+        public ICollection<Specialty> Children { get; set; }
         public List<ExpertInformation> ExpertInformations { get; set; }
-
         #endregion
 
         public Specialty(string name, string imageSrc)
         {
             SetName(name);
             SetImageSrc(imageSrc);
+        }
+        public Specialty()
+        {
+
         }
 
         public void SetName(string name)
@@ -46,6 +51,14 @@ namespace CR.DataAccess.Entities.Specialties
                 return;
             else
                 ParentSpecialtyId = parentId;
+        }
+
+        public void SetOrderNumber(int orderNumber)
+        {
+            if (OrderNumber == orderNumber)
+                return;
+
+            OrderNumber = orderNumber;
         }
     }
 }

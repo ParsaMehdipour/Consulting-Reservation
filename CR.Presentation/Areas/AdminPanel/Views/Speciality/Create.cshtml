@@ -1,0 +1,119 @@
+﻿@model CR.Core.DTOs.RequestDTOs.RequestAddNewSpecialtyDto
+
+<link rel="stylesheet" href="~/assets/css/style.css">
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">افزودن تخصص</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item"><a href="javascript:(0);">صفحات</a></li>
+                <li class="breadcrumb-item active">افزودن تخصص</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <input type="hidden" id="parentId" value="@ViewBag.parentId" />
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body custom-edit-service">
+                <!-- Add Blog -->
+                <form id="addNewSpecialtyForm">
+                    <div class="service-fields mb-3">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>تصویر</label>
+                                    <input type="file" class="form-control" id="fileEdit">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>عنوان <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" asp-for="Name" id="name" name="name">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>ترتیب نمایش <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="number" asp-for="OrderNumber" id="orderNumber" name="orderNumber">
+                                    <span asp-validation-for="OrderNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-section">
+                        <button onclick="AddNewSpecialty()" type="submit" class="btn btn-primary submit-btn"> ایجاد</button>
+                    </div>
+                </form>
+                <!-- /Add Blog -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+
+    function AddNewSpecialty() {
+
+        if ($("#addNewSpecialtyForm").valid()) {
+
+            var addNewSpecialtyForm = new FormData();
+            addNewSpecialtyForm.append("name", $("#addNewSpecialtyForm #name").val());
+            addNewSpecialtyForm.append("parentId",$("#parentId").val());
+            addNewSpecialtyForm.append("orderNumber", $("#addNewSpecialtyForm #orderNumber").val());
+
+            var Image = document.getElementById("fileEdit");
+            if (Image.files.length > 0) {
+                addNewSpecialtyForm.append("File", Image.files[0]);
+            }
+
+            $("#addNewSpecialtyForm").submit(function(event) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/SpecialtiesController/AddNewSpecialty',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    cache: false,
+                    data: addNewSpecialtyForm,
+                    beforeSend: function(x) {
+                        $('#loading').show(0);
+                    },
+                    success: function(data) {
+                        if (data.isSuccess === true) {
+                            swal.fire('موفق!',
+                                data.message,
+                                'success').then(function(isConfirm) {
+                                window.location.replace('/AdminPanel/Speciality');
+                            });
+                        }
+                    },
+                    complete: function() {
+                        $('#loading').hide(0);
+                    },
+                    fail: function() {
+                        $('#loading').hide(0);
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+
+                event.preventDefault();
+            });
+       }
+    }
+
+    </script>
+}

@@ -30,6 +30,7 @@ namespace CR.DataAccess.Entities.IndividualInformations
         public string ClinicName { get; set; }
         public string ClinicAddress { get; set; }
         public string Tag { get; set; }
+        public string TagID { get; set; }
         public bool UsePhoneCall { get; set; }
         public long PhoneCallPrice { get; set; } = 0;
         public bool UseVoiceCall { get; set; }

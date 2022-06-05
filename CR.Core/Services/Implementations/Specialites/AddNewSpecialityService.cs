@@ -22,7 +22,7 @@ namespace CR.Core.Services.Implementations.Specialites
             _imageUploaderService = imageUploaderService;
         }
 
-        public ResultDto Execute(RequestAddNewSpecialityDto request)
+        public ResultDto Execute(RequestAddNewSpecialtyDto request)
         {
             using var transaction = _context.Database.BeginTransaction();
 

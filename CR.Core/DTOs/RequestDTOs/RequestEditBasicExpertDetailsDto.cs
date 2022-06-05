@@ -64,6 +64,7 @@ namespace CR.Core.DTOs.RequestDTOs
         public string textCallPrice { get; set; }
 
         public string tag { get; set; }
+        public string tagid { get; set; }
 
         public string instagram { get; set; }
 

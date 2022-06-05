@@ -5,6 +5,6 @@ namespace CR.Core.Services.Interfaces.Specialites
 {
     public interface IAddNewSpecialityService
     {
-        ResultDto Execute(RequestAddNewSpecialityDto request);
+        ResultDto Execute(RequestAddNewSpecialtyDto request);
     }
 }

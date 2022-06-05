@@ -171,10 +171,35 @@ namespace CR.Core.Services.Implementations.Experts
                     }
                 }
 
+
+                if (request.tag != null)
+                {
+                    var list = request.tag.Split(",").ToList();
+                    string str = "";
+                    string str2 = "";
+                    foreach (var item in list)
+                    {
+                        var x = _context.Specialties.Where(a => a.Id == Int32.Parse(item)).FirstOrDefault().Name;
+                        if (string.IsNullOrEmpty(str) && string.IsNullOrEmpty(str2))
+                        {
+                            str = x;
+                            str2 = item;
+                        }
+                        else
+                        {
+                            str = str + "," + x;
+                            str2 = str2 + "," + item;
+                        }
+                    }
+                    request.tag = str;
+                    request.tagid = str2;
+                }
+
                 var speciality = _context.Specialties.FirstOrDefault(s => s.Id == request.specialtyId);
 
                 expertInformation.FirstName = request.firstName;
                 expertInformation.Tag = request.tag;
+                expertInformation.TagID = request.tagid;
                 expertInformation.LastName = request.lastName;
                 expertInformation.ShabaNumber = request.shabaNumber;
                 expertInformation.Bio = request.bio;

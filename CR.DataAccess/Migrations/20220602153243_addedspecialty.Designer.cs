@@ -4,14 +4,16 @@ using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220602153243_addedspecialty")]
+    partial class addedspecialty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -978,9 +980,6 @@ namespace CR.DataAccess.Migrations
                     b.Property<string>("Tag")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TagID")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("TextCallPrice")
                         .HasColumnType("bigint");
 
@@ -1175,9 +1174,14 @@ namespace CR.DataAccess.Migrations
                     b.Property<long?>("ParentSpecialtyId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("SpecialtyId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ParentSpecialtyId");
+
+                    b.HasIndex("SpecialtyId");
 
                     b.ToTable("TBL_Specialties");
                 });
@@ -1717,8 +1721,12 @@ namespace CR.DataAccess.Migrations
             modelBuilder.Entity("CR.DataAccess.Entities.Specialties.Specialty", b =>
                 {
                     b.HasOne("CR.DataAccess.Entities.Specialties.Specialty", "Parent")
-                        .WithMany("Children")
+                        .WithMany()
                         .HasForeignKey("ParentSpecialtyId");
+
+                    b.HasOne("CR.DataAccess.Entities.Specialties.Specialty", null)
+                        .WithMany("Children")
+                        .HasForeignKey("SpecialtyId");
 
                     b.Navigation("Parent");
                 });

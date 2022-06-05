@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using CR.Common.DTOs;
+﻿using CR.Common.DTOs;
 using CR.Core.DTOs.Images;
-using CR.Core.DTOs.RequestDTOs;
+using CR.Core.DTOs.RequestDTOs.Specialty;
 using CR.Core.Services.Interfaces.Images;
 using CR.Core.Services.Interfaces.Specialites;
 using CR.DataAccess.Context;
+using System;
+using System.Linq;
 
 namespace CR.Core.Services.Implementations.Specialites
 {
@@ -14,8 +14,7 @@ namespace CR.Core.Services.Implementations.Specialites
         private readonly ApplicationContext _context;
         private readonly IImageUploaderService _imageUploaderService;
 
-        public EditSpecialityService(ApplicationContext context
-            ,IImageUploaderService imageUploaderService)
+        public EditSpecialityService(ApplicationContext context, IImageUploaderService imageUploaderService)
         {
             _context = context;
             _imageUploaderService = imageUploaderService;

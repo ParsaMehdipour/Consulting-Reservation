@@ -15,7 +15,8 @@
             </ul>
         </div>
         <div class="col-sm-5 col">
-            <a href="#Add_Specialities_details" data-toggle="modal" class="btn btn-primary float-right mt-2">افزودن</a>
+            @*<a href="#Add_Specialities_details" data-toggle="modal" class="btn btn-primary float-right mt-2">افزودن</a>*@
+            <a asp-area="AdminPanel" asp-controller="Speciality" asp-action="Create" asp-route-parentId="@ViewData["parentId"]" class="btn btn-primary float-right mt-2">افزودن</a>
         </div>
     </div>
 </div>
@@ -30,8 +31,11 @@
                         <table class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>تخصص ها</th>
+                                    @*<th>#</th>*@
+                                    <th>نام تخصص</th>
+                                    <th>پدر</th>
+                                    <th>تاریخ ایجاد</th>
+                                    <th>ترتیب نمایش</th>
                                     <th class="text-right"> اقدامات </th>
                                 </tr>
                             </thead>
@@ -39,20 +43,39 @@
                                 @foreach (var speciality in Model.Specialities)
                                 {
                                     <tr>
-                                        <td>@speciality.Id</td>
-
+                                        @*<td>@speciality.Id</td>*@
                                         <td>
                                             <h2 class="table-avatar">
-                                                <a href="profile.html" class="avatar avatar-sm mr-2">
+                                                <a href="#" class="avatar avatar-sm mr-2">
                                                     <img class="avatar-img" src="~/@speciality.ImageSrc" alt="Speciality">
                                                 </a>
                                                 <a id="speciality_@speciality.Id">@speciality.Name</a>
                                             </h2>
                                         </td>
+                                        <td>
+                                            @{
+                                                string parent = speciality.Parent != null ? speciality.Parent.Name : "-";
+                                            }
+                                            <text> @parent </text>
+                                        </td>
+
+                                        <td>@speciality.CreatedDate</td>
+
+                                        <td>@speciality.OrderNumber</td>
 
                                         <td class="text-right">
                                             <div class="actions">
-                                                <a onclick="GetId(@speciality.Id)" class="btn btn-sm bg-success-light" data-toggle="modal" href="#edit_specialities_details">
+
+                                                <a asp-controller="Speciality" asp-action="Create" asp-route-parentId="@speciality.Id" class="btn btn-success">افزودن فرزند</a>
+
+                                                @if (speciality.HasChildren)
+                                                {
+                                                    <a asp-controller="Speciality" asp-action="Index" asp-route-parentId="@speciality.Id" class="btn btn-info">مشاهده لیست فرزند ها </a>
+                                                }
+                                                @*<a onclick="GetId(@speciality.Id)" class="btn btn-sm bg-success-light" data-toggle="modal" href="#edit_specialities_details">
+                                                    <i class="fe fe-pencil"></i> ویرایش
+                                                </a>*@
+                                                <a class="btn btn-sm bg-success-light" asp-controller="Speciality" asp-action="Edit" asp-route-SpecialityId="@speciality.Id">
                                                     <i class="fe fe-pencil"></i> ویرایش
                                                 </a>
                                                 <a data-toggle="modal" onclick="Remove(@speciality.Id)" class="btn btn-sm bg-danger-light">

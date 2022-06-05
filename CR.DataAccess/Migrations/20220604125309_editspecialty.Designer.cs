@@ -4,14 +4,16 @@ using CR.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CR.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220604125309_editspecialty")]
+    partial class editspecialty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -976,9 +978,6 @@ namespace CR.DataAccess.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Tag")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TagID")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("TextCallPrice")
