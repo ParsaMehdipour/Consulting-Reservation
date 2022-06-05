@@ -1,4 +1,5 @@
-﻿@model CR.Core.DTOs.ResultDTOs.Links.ResultGetLinksForAdminPanelDto
+﻿@addTagHelper *, LazZiya.TagHelpers
+@model CR.Core.DTOs.ResultDTOs.Links.ResultGetLinksForAdminPanelDto
 <!-- Page Header -->
 <div class="page-header">
     <div class="row">
@@ -17,67 +18,88 @@
 <!-- /Page Header -->
 <div class="row">
     <div class="col-sm-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="datatable table table-hover table-center mb-0">
-                        <thead>
-                        <tr>
-                            <th>نام دسته بندی</th>
-                            <th>پدر</th>
-                            <th>تاریخ ایجاد</th>
-                            <th>ترتیب نمایش</th>
-                            <th class="text-right"> اقدامات </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if (Model.LinkForAdminPanelDtos.Count > 0)
-                        {
-                            @foreach (var link in Model.LinkForAdminPanelDtos)
-                            {
+        @if (Model.LinkForAdminPanelDtos.Count > 0)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="datatable table table-hover table-center mb-0">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            <p>@link.PersianTitle</p>
-                                        </h2>
-                                    </td>
-
-                                    <td>
-                                        @{
-                                            string parent = link.Parent != null ? link.Parent.PersianTitle : "-";
-                                        }
-
-                                        <text> @parent </text>
-                                    </td>
-
-                                    <td>@link.CreatedDate</td>
-
-                                    <td>@link.OrderNumber</td>
-
-                                    <td class="text-right">
-                                        <div class="actions">
-
-                                            <a asp-controller="Links" asp-action="Create" asp-route-parentId="@link.Id" class="btn btn-success">افزودن فرزند</a>
-
-                                            @if (link.HasChildren)
-                                            {
-                                                <a asp-controller="Links" asp-action="Index" asp-route-parentId="@link.Id" class="btn btn-info">مشاهده لیست فرزند ها </a>
-                                            }
-                                            <a class="btn btn-sm bg-success-light" asp-controller="Links" asp-action="Edit" asp-route-linkId="@link.Id">
-                                                <i class="fe fe-pencil"></i> ویرایش
-                                            </a>
-                                            <a onclick="Delete(@link.Id)" class="btn btn-sm bg-danger-light">
-                                                <i class="fe fe-trash"></i> حذف
-                                            </a>
-                                        </div>
-                                    </td>
+                                    <th>نام دسته بندی</th>
+                                    <th>پدر</th>
+                                    <th>تاریخ ایجاد</th>
+                                    <th>ترتیب نمایش</th>
+                                    <th class="text-right"> اقدامات </th>
                                 </tr>
-                            }
-                        }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @if (Model.LinkForAdminPanelDtos.Count > 0)
+                                {
+                                    @foreach (var link in Model.LinkForAdminPanelDtos)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <p>@link.PersianTitle</p>
+                                                </h2>
+                                            </td>
+
+                                            <td>
+                                                @{
+                                                    string parent = link.Parent != null ? link.Parent.PersianTitle : "-";
+                                                }
+                                                <text> @parent </text>
+                                            </td>
+
+                                            <td>@link.CreatedDate</td>
+
+                                            <td>@link.OrderNumber</td>
+
+                                            <td class="text-right">
+                                                <div class="actions">
+
+                                                    <a asp-controller="Links" asp-action="Create" asp-route-parentId="@link.Id" class="btn btn-success">افزودن فرزند</a>
+
+                                                    @if (link.HasChildren)
+                                                    {
+                                                        <a asp-controller="Links" asp-action="Index" asp-route-parentId="@link.Id" class="btn btn-info">مشاهده لیست فرزند ها </a>
+                                                    }
+                                                    <a class="btn btn-sm bg-success-light" asp-controller="Links" asp-action="Edit" asp-route-linkId="@link.Id">
+                                                        <i class="fe fe-pencil"></i> ویرایش
+                                                    </a>
+                                                    <a onclick="Delete(@link.Id)" class="btn btn-sm bg-danger-light">
+                                                        <i class="fe fe-trash"></i> حذف
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+        }
+        else
+        {
+            <h1>اطلاعاتی جهت نمایش وجود ندارد</h1>
+        }
+        <div class="text-center">
+            <paging total-records="Model.RowCount"
+                    page-no="Model.CurrentPage"
+                    page-size="Model.PageSize"
+                    show-prev-next="true"
+                    show-total-pages="false"
+                    show-total-records="false"
+                    show-page-size-nav="true"
+                    show-first-numbered-page="true"
+                    show-last-numbered-page="true"
+                    query-string-key-page-no="Page"
+                    query-string-key-page-size="PageSize"
+                    gap-size="2">
+            </paging>
         </div>
     </div>
 </div>
@@ -86,7 +108,7 @@
 {
     <script>
 
-        function Delete(Id){
+        function Delete(Id) {
             swal.fire({
                 title: 'حذف گروه',
                 text: "مدیریت گرامی از حذف لینک مطمئن هستید؟",
@@ -107,13 +129,13 @@
                         enctype: 'application/json',
                         url: '/api/LinksController/DeleteLink',
                         data: JSON.stringify(data),
-                        success: function(data) {
+                        success: function (data) {
                             if (data.isSuccess === true) {
                                 swal.fire(
                                     'موفق!',
                                     data.message,
                                     'success'
-                                ).then(function(isConfirm) {
+                                ).then(function (isConfirm) {
                                     location.reload();
                                 });
                             } else {
@@ -125,7 +147,7 @@
 
                             }
                         },
-                        error: function(request, status, error) {
+                        error: function (request, status, error) {
                             alert(request.responseText);
                         }
 

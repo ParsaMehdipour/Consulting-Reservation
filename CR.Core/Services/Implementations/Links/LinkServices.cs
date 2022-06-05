@@ -23,33 +23,40 @@ namespace CR.Core.Services.Implementations.Links
             _context = context;
         }
 
-        public ResultDto<ResultGetLinksForAdminPanelDto> GetAllLinksForAdminPanel(string searchKey, int Page = 1, int PageSize = 20)
+        public ResultDto<ResultGetLinksForAdminPanelDto> GetAllLinksForAdminPanel(string searchKey, int Page = 1, int PageSize = 20, int ParentId = 0)
         {
+            int rowCount = 0;
             var linksQueryable = _context.Links.Include(_ => _.Parent).Include(_ => _.Children).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchKey))
-                linksQueryable = linksQueryable.Where(_ => _.PersianTitle.Contains(searchKey) || _.Parent.PersianTitle.Contains(searchKey));
+                linksQueryable = linksQueryable.Where(_ => _.PersianTitle.Contains(searchKey) || _.Parent.PersianTitle.Contains(searchKey)).AsQueryable();
+
+            if (ParentId > 0)
+                linksQueryable = linksQueryable.Where(_ => _.ParentLinkId == ParentId).AsQueryable();
 
             var links = linksQueryable.Select(_ => new LinkForAdminPanelDto()
             {
-                CreatedDate = _.CreateDate.ToShamsi(),
-                PersianTitle = _.PersianTitle,
                 Id = _.Id,
+                PersianTitle = _.PersianTitle,
+                CreatedDate = _.CreateDate.ToShamsi(),
                 Parent = new LinkForAdminPanelDto()
                 {
                     PersianTitle = _.Parent.PersianTitle,
                 },
                 HasChildren = _.Children.Any(),
                 OrderNumber = _.OrderNumber
-            }).AsEnumerable().ToPaged(Page, PageSize, out var rowsCount).ToList();
+            }).AsEnumerable()
+                .ToPaged(Page, PageSize, out rowCount)
+                .ToList();
 
             return new ResultDto<ResultGetLinksForAdminPanelDto>()
             {
                 Data = new ResultGetLinksForAdminPanelDto()
                 {
                     LinkForAdminPanelDtos = links,
+                    CurrentPage = Page,
                     PageSize = PageSize,
-                    CurrentPage = Page
+                    RowCount = rowCount,
                 },
                 IsSuccess = true
             };

@@ -14,11 +14,11 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
             _linkServices = linkServices;
         }
 
-        public IActionResult Index(string searchKey, int Page = 1, int PageSize = 200)
+        public IActionResult Index(string searchKey, int Page = 1, int PageSize = 20, int ParentId = 0)
         {
             TempData["activemenu"] = ActiveMenu.Links;
 
-            var model = _linkServices.GetAllLinksForAdminPanel(searchKey, Page, PageSize).Data;
+            var model = _linkServices.GetAllLinksForAdminPanel(searchKey, Page, PageSize, ParentId).Data;
 
             return View(model);
         }
@@ -42,6 +42,5 @@ namespace CR.Presentation.Areas.AdminPanel.Controllers.View
 
             return View(model);
         }
-
     }
 }

@@ -8,7 +8,7 @@ namespace CR.Core.Services.Interfaces.Links
 {
     public interface ILinkServices
     {
-        ResultDto<ResultGetLinksForAdminPanelDto> GetAllLinksForAdminPanel(string searchKey, int Page = 1, int PageSize = 20);
+        ResultDto<ResultGetLinksForAdminPanelDto> GetAllLinksForAdminPanel(string searchKey, int Page = 1, int PageSize = 20, int ParentId = 0);
         ResultDto<List<Link>> GetAllLinksForSite();
         ResultDto AddNewLink(RequestAddNewLinkDto request);
         ResultDto DeleteLink(long linkId);
