@@ -403,6 +403,8 @@
     <None Include="wwwroot\assets\js\ckeditor\skins\moono-lisa\readme.md" />
     <None Include="wwwroot\assets\js\ckeditor\styles.js" />
     <None Include="wwwroot\assets\js\ckeditor\vendor\promise.js" />
+    <None Include="wwwroot\lib\select2\select2.full.min.js" />
+    <None Include="wwwroot\lib\select2\select2Option.js" />
   </ItemGroup>
 
   <ItemGroup>
