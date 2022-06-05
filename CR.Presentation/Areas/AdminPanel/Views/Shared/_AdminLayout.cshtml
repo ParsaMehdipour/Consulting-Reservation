@@ -176,19 +176,35 @@
                             </ul>
                         </li>
                         <li class="submenu">
-                            <a @(TempData["activemenu"].ToString() == ActiveMenu.Appointments || TempData["activemenu"].ToString() == ActiveMenu.Factors || TempData["activemenu"].ToString() == ActiveMenu.FinancialTransactions || TempData["activemenu"].ToString() == ActiveMenu.CheckoutFinancialTransactions ? @"class=active subdrop" : "") href="#"><i class="fe fe-document"></i> <span>گزارشات</span> <span class="menu-arrow"></span></a>
+                            <a @(TempData["activemenu"].ToString() == ActiveMenu.Appointments || TempData["activemenu"].ToString() == ActiveMenu.Factors || TempData["activemenu"].ToString() == ActiveMenu.FinancialTransactions || TempData["activemenu"].ToString() == ActiveMenu.CheckoutFinancialTransactions ? @"class=active subdrop" : "") href="#">
+                                <i class="fe fe-document"></i> 
+                                <span>گزارشات</span> 
+                                <span class="menu-arrow"></span>
+                            </a>
                             <ul style="display: none;">
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Appointments ? @"class=active" : "")>
-                                    <a asp-controller="Appointments" asp-action="Index"><i class="fe fe-layout"></i> <span>نوبت‌دهی</span></a>
+                                    <a asp-controller="Appointments" asp-action="Index">
+                                        <i class="fe fe-document"></i> 
+                                        <span>نوبت‌دهی</span>
+                                    </a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Factors ? @"class=active" : "")>
-                                    <a asp-controller="Factors" asp-action="Index"><span>گزارش فاکتور ها</span></a>
+                                    <a asp-controller="Factors" asp-action="Index">
+                                        <i class="fe fe-document"></i>
+                                        <span>گزارش فاکتور ها</span>
+                                    </a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.FinancialTransactions ? @"class=active" : "")>
-                                    <a asp-controller="FinancialTransactions" asp-action="Index"><span>گزارش تراکنش ها</span></a>
+                                    <a asp-controller="FinancialTransactions" asp-action="Index">
+                                        <i class="fe fe-document"></i>
+                                        <span>گزارش تراکنش ها</span>
+                                    </a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.CheckoutFinancialTransactions ? @"class=active" : "")>
-                                    <a asp-controller="CheckoutFinancialTransactions" asp-action="Index"><span>گزارش تسویه حساب ها</span></a>
+                                    <a asp-controller="CheckoutFinancialTransactions" asp-action="Index">
+                                        <i class="fe fe-document"></i>
+                                        <span>گزارش تسویه حساب ها</span>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -201,14 +217,14 @@
                             <ul>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.ExpertComments ? @"class=active" : "")>
                                     <a asp-controller="Comments" asp-action="Index">
-                                        <i class="fe fe-user"></i>
+                                        <i class="fe fe-comments"></i>
                                         <span>نظرات متخصصین</span>
                                         <div id="NotReadComments" class="badge badge-success badge-pill hidden">0</div>
                                     </a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.BlogComments ? @"class=active" : "")>
                                     <a asp-controller="BlogComments" asp-action="Index">
-                                        <i class="fe fe-user"></i>
+                                        <i class="fe fe-comments"></i>
                                         <span>نظرات مقالات</span>
                                         <div id="NotReadBlogComments" class="badge badge-success badge-pill hidden">0</div>
                                     </a>
@@ -216,38 +232,49 @@
                             </ul>
                         </li>
                         <li class="submenu">
-                            <a @(TempData["activemenu"].ToString() == ActiveMenu.BlogCategories || TempData["activemenu"].ToString() == ActiveMenu.Blogs ? @"class=active subdrop" : "") href="#"><i class="fe fe-document"></i> <span>مقالات</span> <span class="menu-arrow"></span></a>
+                            <a @(TempData["activemenu"].ToString() == ActiveMenu.BlogCategories || TempData["activemenu"].ToString() == ActiveMenu.Blogs ? @"class=active subdrop" : "") href="#">
+                                <i class="fe fe-document"></i> 
+                                <span>مقالات</span>
+                                <span class="menu-arrow"></span>
+                            </a>
                             <ul>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.BlogCategories ? @"class=active" : "")>
-                                    <a asp-controller="BlogCategories" asp-action="Index"><i class="fe fe-user"></i> <span>گروه مقالات</span></a>
+                                    <a asp-controller="BlogCategories" asp-action="Index">
+                                        <i class="fe fe-document"></i>
+                                        <span>گروه مقالات</span>
+                                    </a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Blogs ? @"class=active" : "")>
-                                    <a asp-controller="Blogs" asp-action="Index"><i class="fe fe-user"></i> <span>مقالات</span></a>
+                                    <a asp-controller="Blogs" asp-action="Index">
+                                        <i class="fe fe-document"></i>
+                                        <span>مقالات</span>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
                         <li class="submenu">
                             <a @(TempData["activemenu"].ToString() == ActiveMenu.AboutUs || TempData["activemenu"].ToString() == ActiveMenu.Rules || TempData["activemenu"].ToString() == ActiveMenu.ContactUsContent || TempData["activemenu"].ToString() == ActiveMenu.Links ? @"class=active subdrop" : "") href="#">
-                                <i class="fe fe-document"></i> <span>صفحه اصلی</span>
+                                <i class="fe fe-document"></i> 
+                                <span>صفحه اصلی</span>
                                 <span class="menu-arrow"></span>
                                 <div id="NotReadAllContactUs" class="badge badge-success badge-pill hidden">0</div>
                             </a>
                             <ul style="display: none;">
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Links ? @"class=active" : "")>
-                                    <a asp-controller="Links" asp-action="Index"><i class="fe fe-user"></i> <span>لینک ها</span></a>
+                                    <a asp-controller="Links" asp-action="Index"><i class="fe fe-document"></i> <span>لینک ها</span></a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.AboutUs ? @"class=active" : "")>
-                                    <a asp-controller="AboutUs" asp-action="Index"><i class="fe fe-user"></i> <span>درباره ما</span></a>
+                                    <a asp-controller="AboutUs" asp-action="Index"><i class="fe fe-document"></i> <span>درباره ما</span></a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Rules ? @"class=active" : "")>
-                                    <a asp-controller="Rules" asp-action="Index"><i class="fe fe-user"></i> <span>قوانین و مقررات</span></a>
+                                    <a asp-controller="Rules" asp-action="Index"><i class="fe fe-document"></i> <span>قوانین و مقررات</span></a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.ContactUsContent ? @"class=active" : "")>
-                                    <a asp-controller="ContactUsContent" asp-action="Index"><i class="fe fe-user"></i> <span>متن تماس با ما</span></a>
+                                    <a asp-controller="ContactUsContent" asp-action="Index"><i class="fe fe-document"></i> <span>متن تماس با ما</span></a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.ContactUs ? @"class=active" : "")>
                                     <a asp-controller="ContactUs" asp-action="Index">
-                                        <i class="fe fe-user"></i>
+                                        <i class="fe fe-document"></i>
                                         <span>پیام های تماس با ما</span>
                                         <div id="NotReadContactUs" class="badge badge-success badge-pill hidden">0</div>
                                     </a>
