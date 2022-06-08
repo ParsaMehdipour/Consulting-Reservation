@@ -157,7 +157,7 @@ $(document).ready(function () {
         var regcontent = '<div class="row form-row awards-cont">' +
 			'<div class="col-12 col-md-5">' +
 				'<div class="form-group">' +
-					'<label>جایزه ها</label>' +
+					'<label>جایزه</label>' +
 					'<input type="text" class="form-control" id="prizeName" name="prizeName">' +
 				'</div>' +
 			'</div>' +
@@ -189,7 +189,7 @@ $(document).ready(function () {
         var membershipcontent = '<div class="row form-row membership-cont">' +
 			'<div class="col-12 col-md-10 col-lg-5">' +
 				'<div class="form-group">' +
-					'<label>عضویت ها</label>' +
+					'<label>عضویت</label>' +
 					'<input type="text" class="form-control" id="name" name="membershipName">' +
 				'</div>' +
 			'</div>' +
@@ -215,7 +215,7 @@ $(document).ready(function () {
         var regcontent = '<div class="row form-row reg-cont">' +
 			'<div class="col-12 col-md-5">' +
 				'<div class="form-group">' +
-					'<label> گواهی ها </label>' +
+					'<label> گواهی </label>' +
 					'<input type="text" class="form-control" id="subscriptionName" name="subscriptionName">' +
 				'</div>' +
 			'</div>' +
