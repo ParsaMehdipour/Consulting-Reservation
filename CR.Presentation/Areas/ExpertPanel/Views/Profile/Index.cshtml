@@ -6,7 +6,7 @@
 
 @section Style
 {
-    <link rel="stylesheet" href="~/lib/imageUploader/styles.imageuploader.css" />
+<link rel="stylesheet" href="~/lib/imageUploader/styles.imageuploader.css" />
 }
 
 <!-- Breadcrumb -->
@@ -43,7 +43,7 @@
                         <div class="card-body">
                             <h2 class="card-title">اطلاعات پایه</h2>
                             <div class="row form-row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="change-avatar">
                                             <div class="profile-img">
@@ -56,6 +56,13 @@
                                                 </div>
                                                 <small class="form-text text-muted">JPG ، GIF یا PNG مجاز است. حداکثر اندازه 2 مگابایت</small>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div>
+                                            <small class="form-text text-muted">برای مشاور شدن، فیلدهای زیر را پر کنید و مدارک خواسته شده را بارگذاری نمایید تا اطلاعات شما توسط همکاران ما بررسی شود. پس از بررسی و تأیید اطلاعات، اکانت شما فعال می گردد و می توانید نوبت های مشاوره خود را در هر روز تنظیم و کار خود را شروع نمایید. لازم به ذکر است در پر کردن فیلدها، دقت لازم را داشته باشید، زیرا پس از تأیید و فعال شدن اکانت شما، هر نوع تغییری منجر به غیرفعال شدن اکانت می گردد و بررسی مجدد آن ممکن است 24-48 ساعت کاری به طول بیانجامد.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +129,14 @@
                                 </div>
                             </div>
                             <hr />
-                            <h4 class="card-title"> درباره من </h4>
+                            <div class="row form-row">
+                                <div class="col-md-3">
+                                    <h4 class="card-title"> درباره من </h4>
+                                </div>
+                                <div class="col-md-9">
+                                    <small class="form-text text-muted">در چند سطر در مورد خودتان توضیح دهید. پر کردن این بخش، در جلب توجه کاربر نسبت به پروفایل شما تأثیر ویژه ای خواهد داشت.</small>
+                                </div>
+                            </div>
                             <div class="form-group mb-0">
                                 <label>بیوگرافی</label>
                                 <textarea class="form-control" rows="5" asp-for="bio" id="bio" name="bio"></textarea>
@@ -163,7 +177,14 @@
                                         <br />
                                     }
                                     <div class="form-group">
-                                        <label>بارگذاری تصاویر مدارک هویتی</label>
+                                        <div class="row form-row">
+                                            <div class="col-md-3">
+                                                <label>بارگذاری تصاویر مدارک هویتی</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <small class="form-text text-muted">در این قسمت، مدارک خودتان رو بارگذاری نمایید. مدارک هویتی شامل تصاویر کارت ملی و صفحات شناسنامه می باشد. مدارک تحصیلی و رزومه خود را نیز می توانید در فیلدهای بعدی بارگذاری کنید. </small>
+                                            </div>
+                                        </div>
                                         <span id="identityImageUploadContainer" style="width: 100%">
                                             <div class="col-lg-12 ">
                                                 <div class="uploader__box js-uploader__box_identity l-center-box">
@@ -179,7 +200,7 @@
                                 <div class="col-md-12">
                                     @if (Model.degreeImages.Count > 0)
                                     {
-                                        <label>تصاویر مدرک</label>
+                                        <label>تصاویر مدارک تحصیلی </label>
                                         <div class="upload-wrap">
                                             @foreach (var image in Model.degreeImages)
                                             {
@@ -194,7 +215,7 @@
                                         <br />
                                     }
                                     <div class="form-group">
-                                        <label>بارگذاری تصاویر مدرک</label>
+                                        <label>بارگذاری تصاویر مدارک تحصیلی </label>
                                         <span id="degreeImageUploadContainer" style="width: 100%">
                                             <div class="col-lg-12 ">
                                                 <div class="uploader__box js-uploader__box_degree l-center-box">
@@ -457,7 +478,7 @@
                                 <label>خدمات (جزئیات بیشتری از تخصص خود ذکر کنید)</label>
                                 <input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="وارد کردن خدمت" name="services" asp-for="tag" id="services">
                                 <small class="form-text text-muted">توجه: برای افزودن سرویس های جدید ، اینتر را فشار داده و وارد کنید</small>
-                            </div>*@
+                                </div>*@
                         </div>
                     </div>
                     <div class="submit-section submit-btn-bottom">

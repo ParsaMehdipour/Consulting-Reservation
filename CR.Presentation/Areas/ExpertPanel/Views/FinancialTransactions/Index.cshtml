@@ -35,8 +35,15 @@
                         <div class="card-header">
                             <h4 class="card-title">موجودی کیف پول : @Model.WalletBalance.ToString("n0") تومان</h4>
                         </div>
-                        <div class="card-body btn-showcase">
-                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Checkout" data-original-title="" title="">درخواست تسویه حساب</button>
+                        <div class="row form-row">
+                            <div class="col-md-3">
+                                <div class="card-body">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Checkout" data-original-title="" title="">درخواست تسویه حساب</button>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <small class="form-text text-muted">مشاوران در هر 24 ساعت تنها یک مرتبه می توانند درخواست تسویه حساب داشته باشند. پس از تأیید درخواست شما توسط همکاران ما در اسرع وقت، واریز مبلغ به شماره شبا ثبت شده و مرتبط با حساب خود مشاور انجام می گردد. این روند ممکن است 24-48 ساعت کاری به طول بیانجامد.</small>
+                            </div>
                         </div>
                     </div>
                 </div>
