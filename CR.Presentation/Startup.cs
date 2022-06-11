@@ -243,6 +243,7 @@ namespace CR.Presentation
             services.AddScoped<IUpdateFactorSaleReferenceIdService, UpdateFactorSaleReferenceIdService>();
             services.AddScoped<IUpdateFactorCartHolderPanService, UpdateFactorCartHolderPanService>();
             services.AddScoped<IUpdateFactorStatusService, UpdateFactorStatusService>();
+            services.AddScoped<IGetFactorDetailsForAdminPanelService, GetFactorDetailsForAdminPanelService>();
             //BlogCategories
             services.AddScoped<IGetBlogCategoriesForAdminPanelService, GetBlogCategoriesForAdminPanelService>();
             services.AddScoped<IAddNewBlogCategoryService, AddNewBlogCategoryService>();

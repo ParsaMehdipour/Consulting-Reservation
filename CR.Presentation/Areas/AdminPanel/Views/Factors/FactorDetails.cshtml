@@ -1,0 +1,166 @@
+﻿@using CR.Common.States
+@using CR.Common.Utilities
+@using CR.DataAccess.Enums
+@model CR.Core.DTOs.Factors.FactorDetailsForAdminPanelDto
+
+@section Styles
+{
+<link rel="stylesheet" href="~/assets/css/style.css">
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col">
+            <h3 class="page-title">فاکتور</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item active">جزییات فاکتور </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+    <div class="col-lg-8 offset-lg-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="invoice-content">
+                    <div class="invoice-item">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="invoice-logo">
+                                    <img src="~/@SettingState.SiteLogo" alt="logo">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="invoice-details">
+                                    <strong>سفارش:</strong> #@Model.FactorNumber <br>
+                                    <strong> صادر شده: </strong> @Model.CreateDate
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invoice Item -->
+                    <div class="invoice-item">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="invoice-info">
+                                    <strong class="customer-text"> مشاور </strong>
+                                    <p class="invoice-details invoice-details-two">
+                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@Model.expertId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@Model.expertIconSrc" alt="User Image"></a>
+                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@Model.expertId">@Model.expertFullName </a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="invoice-info invoice-info2">
+                                    <strong class="customer-text"> کاربر </strong>
+                                    <p class="invoice-details">
+                                        <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@Model.consumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@Model.consumerIconSrc" alt="User Image"></a>
+                                        <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@Model.consumerId">@Model.consumerFullName </a>
+                                    </p><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Invoice Item -->
+                    <!-- Invoice Item -->
+                    <div class="invoice-item">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="invoice-info">
+                                    <strong class="customer-text">وضعیت فاکتور</strong>
+                                    <p class="invoice-details invoice-details-two">
+                                        @if (Model.FactorStatus == FactorStatus.Waiting.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-warning inv-badge">@Model.FactorStatus</span>
+                                        }
+                                        else if (Model.FactorStatus == FactorStatus.SuccessfulPayment.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-success inv-badge">@Model.FactorStatus</span>
+                                        }
+                                        else if (Model.FactorStatus == FactorStatus.Declined.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-primary inv-badge">@Model.FactorStatus</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-pill bg-danger inv-badge">@Model.FactorStatus</span>
+                                        }
+                                    </p><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Invoice Item -->
+                    <!-- Invoice Item -->
+                    <div class="invoice-item invoice-table-wrap">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="invoice-table table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center"> نوه زمانبندی </th>
+                                                <th class="text-center">نوع تماس</th>
+                                                <th class="text-center"> تاریخ </th>
+                                                <th class="text-center">زمان</th>
+                                                <th class="text-center">مبلغ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var appointment in Model.AppointmentDetailsForSiteDtos)
+                                            {
+                                                <tr>
+                                                    <td class="text-center"> @appointment.TimingType </td>
+                                                    <td class="text-center">@appointment.CallingType</td>
+                                                    <td class="text-center">@appointment.Date</td>
+                                                    <td class="text-center">@appointment.Time</td>
+                                                    <td class="text-center">@appointment.Price.ToString("n0")</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4 ml-auto">
+                                <div class="table-responsive">
+                                    <table class="invoice-table-two table">
+                                        <tbody>
+                                            <tr>
+                                                <th>جمع:</th>
+                                                <td><span>@Model.RawPrice.ToString("n0") تومان</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>تخفیف:</th>
+                                                <td><span>@Model.DiscountPrice.ToString("n0") تومان</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>کارمزد:</th>
+                                                <td><span>@Model.CommissionPrice.ToString("n0") تومان</span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>مبلغ کل:</th>
+                                                <td><span>@Model.price.ToString("n0") تومان</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Invoice Item -->
+                    <!-- Invoice Information -->
+                    <div class="other-info">
+                        <h4> سایر اطلاعات </h4>
+                        <p class="text-muted mb-0"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است برای شرایط فعلی تکنولوژی مورد نیاز و کاربردها </p>
+                    </div>
+                    <!-- /Invoice Information -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
