@@ -212,7 +212,7 @@ namespace CR.Presentation
             services.AddScoped<IGetSpecialtiesForExpertProfileDropDownService, GetSpecialtiesForExpertProfileDropDownService>();
             services.AddScoped<IGetSpecialitiesForPresentationService, GetSpecialitiesForPresentationService>();
             services.AddScoped<IGetSpecialitiesForSearchService, GetSpecialitiesForSearchService>();
-            //Appointments\
+            //Appointments
             services.AddScoped<IResetAppointmentStatusService, ResetAppointmentStatusService>();
             services.AddScoped<IAddAppointmentService, AddAppointmentService>();
             services.AddScoped<IGetAllAppointmentsForAdminPanelService, GetAllAppointmentsForAdminPanelService>();
@@ -221,6 +221,7 @@ namespace CR.Presentation
             services.AddScoped<IGetAllAppointmentsForExpertPanelService, GetAllAppointmentsForExpertPanelService>();
             services.AddScoped<IGetConsumerAppointmentsForExpertPanelService, GetConsumerAppointmentsForExpertPanelService>();
             services.AddScoped<IGetAppointmentDetailsForExpertPanelService, GetAppointmentDetailsForExpertPanelService>();
+            services.AddScoped<IGetAppointmentDetailsForConsumerPanelService, GetAppointmentDetailsForConsumerPanelService>();
             services.AddScoped<IGetAppointmentsForAdminDashboardService, GetAppointmentsForAdminDashboardService>();
             services.AddScoped<IChangeAppointmentStatusService, ChangeAppointmentStatusService>();
             //Images
