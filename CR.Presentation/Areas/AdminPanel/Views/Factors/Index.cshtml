@@ -23,56 +23,59 @@
                 <div class="table-responsive">
                     <table class="datatable table table-hover table-center mb-0">
                         <thead>
-                        <tr>
-                            <th>شماره فاکتور </th>
-                            <th>نام کاربر</th>
-                            <th> مبلغ کل </th>
-                            <th> تاریخ فاکتور </th>
-                            <th class="text-center">وضعیت فاکتور</th>
-                            <th class="text-center">عملیات</th>
-                        </tr>
+                            <tr>
+                                <th>شماره فاکتور </th>
+                                <th>نام کاربر</th>
+                                <th> مبلغ کل </th>
+                                <th> تاریخ فاکتور </th>
+                                <th class="text-center">وضعیت فاکتور</th>
+                                <th class="text-center">عملیات</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach (var factor in Model.FactorForAdminDtos)
-                        {
-                            <tr>
-                                <td><a href="invoice.html">@factor.FactorNumber</a></td>
-                                <td>
-                                    <h2 class="table-avatar">
-                                        <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@factor.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@factor.ConsumerIconSrc" alt="User Image"></a>
-                                        <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@factor.ConsumerId">@factor.ConsumerFullName </a>
-                                    </h2>
-                                </td>
-                                <td>@factor.TotalPrice تومان</td>
-                                <td>@factor.CreateDate</td>
-                                <td class="text-center">
-                                    @if (factor.Status == FactorStatus.Waiting.GetDisplayName())
-                                    {
-                                        <span class="badge badge-pill bg-warning inv-badge">@factor.Status</span>
-                                    }
-                                    else if (factor.Status == FactorStatus.SuccessfulPayment.GetDisplayName())
-                                    {
-                                        <span class="badge badge-pill bg-success inv-badge">@factor.Status</span>
-                                    }
-                                    else if (factor.Status == FactorStatus.Declined.GetDisplayName())
-                                    {
-                                        <span class="badge badge-pill bg-primary inv-badge">@factor.Status</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge badge-pill bg-danger inv-badge">@factor.Status</span>
-                                    }
-                                </td>
-                                @if (factor.Status == FactorStatus.SuccessfulPayment.GetDisplayName())
-                                {
-                                    <td class="text-center">
-                                        <a onclick="Decline(@factor.Id,@factor.ConsumerId)" class="btn btn-sm bg-danger-light">
-                                            <i class="fe fe-trash"></i> لغو تراکنش
-                                        </a>
+                            @foreach (var factor in Model.FactorForAdminDtos)
+                            {
+                                <tr>
+                                    <td><a href="invoice.html">@factor.FactorNumber</a></td>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@factor.ConsumerId" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@factor.ConsumerIconSrc" alt="User Image"></a>
+                                            <a asp-controller="Consumers" asp-action="ConsumerDetails" asp-route-id="@factor.ConsumerId">@factor.ConsumerFullName </a>
+                                        </h2>
                                     </td>
-                                }
-                            </tr>
-                        }
+                                    <td>@factor.TotalPrice تومان</td>
+                                    <td>@factor.CreateDate</td>
+                                    <td class="text-center">
+                                        @if (factor.Status == FactorStatus.Waiting.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-warning inv-badge">@factor.Status</span>
+                                        }
+                                        else if (factor.Status == FactorStatus.SuccessfulPayment.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-success inv-badge">@factor.Status</span>
+                                        }
+                                        else if (factor.Status == FactorStatus.Declined.GetDisplayName())
+                                        {
+                                            <span class="badge badge-pill bg-primary inv-badge">@factor.Status</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-pill bg-danger inv-badge">@factor.Status</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <a asp-controller="Factors" asp-action="FactorDetails" asp-route-factorId="@factor.Id" class="btn btn-sm bg-primary-light">
+                                            <i class="fe fe-trash"></i> نمایش جزییات
+                                        </a>
+                                        @if (factor.Status == FactorStatus.SuccessfulPayment.GetDisplayName())
+                                        {
+                                            <a onclick="Decline(@factor.Id, @factor.ConsumerId)" class="btn btn-sm bg-danger-light">
+                                                <i class="fe fe-trash"></i> لغو تراکنش
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

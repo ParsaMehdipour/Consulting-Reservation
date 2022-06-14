@@ -9,17 +9,17 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.View
     [Area("ConsumerPanel")]
     public class AppointmentsController : Controller
     {
-        private readonly IGetAppointmentDetailsForExpertPanelService _getAppointmentDetailsForExpertPanelService;
+        private readonly IGetAppointmentDetailsForConsumerPanelService _getAppointmentDetailsForConsumerPanelService;
 
-        public AppointmentsController(IGetAppointmentDetailsForExpertPanelService getAppointmentDetailsForExpertPanelService)
+        public AppointmentsController(IGetAppointmentDetailsForConsumerPanelService getAppointmentDetailsForConsumerPanelService)
         {
-            _getAppointmentDetailsForExpertPanelService = getAppointmentDetailsForExpertPanelService;
+            _getAppointmentDetailsForConsumerPanelService = getAppointmentDetailsForConsumerPanelService;
         }
 
         [HttpPost]
         public AppointmentDetailsForExpertPanel GetDetails(long id)
         {
-            return _getAppointmentDetailsForExpertPanelService.Execute(id).Data;
+            return _getAppointmentDetailsForConsumerPanelService.Execute(id).Data;
         }
     }
 }
