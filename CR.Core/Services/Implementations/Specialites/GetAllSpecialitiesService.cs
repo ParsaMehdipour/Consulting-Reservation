@@ -37,6 +37,8 @@ namespace CR.Core.Services.Implementations.Specialites
 
             if (parentId > 0)
                 items = items.Where(_ => _.ParentSpecialtyId == parentId).AsQueryable();
+            else
+                items = items.Where(_ => _.ParentSpecialtyId == null).AsQueryable();
 
             var specialities = items.Select(s => new SpecialityDto
             {
