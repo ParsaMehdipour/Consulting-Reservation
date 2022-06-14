@@ -19,6 +19,8 @@ namespace CR.Core.DTOs.Account
         [Required(ErrorMessage = "شماره تماس را وارد کنید")]
         [Display(Name = "شماره تماس")]
         [Phone]
+        [RegularExpression(@"(\+98|0)?9\d{9}",
+         ErrorMessage = "شماره موبایل را به درستی وارد کنید")]
         public string phoneNumber { get; set; }
 
         [Required(ErrorMessage = "رمزعبور را وارد کنید")]
