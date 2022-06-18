@@ -157,7 +157,7 @@ namespace CR.Presentation.Controllers.View
                                 {
                                     new Dictionary<string, string>
                                     {
-                                        {SMSInputs.UserName, appointment.UserName },
+                                        //{SMSInputs.UserName, appointment.UserName },
                                         {SMSInputs.Date, appointment.Date},
                                         {SMSInputs.Time, appointment.Time}
                                     },
