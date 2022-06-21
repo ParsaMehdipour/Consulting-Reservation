@@ -37,8 +37,8 @@
                                             <p><img src="~/@Model.BlogDetailsForPresentationDto.authorIconSrc" alt="Post Author"> <span>@Model.BlogDetailsForPresentationDto.author</span></p>
                                         </div>
                                     </li>
-                                    <li><i class="far fa-calendar"></i>4 مهر 1399</li>
-                                    <li><i class="far fa-comments"></i>12 نظر</li>
+                                    <li><i class="far fa-calendar"></i>@Model.BlogDetailsForPresentationDto.publishDate</li>
+                                    <li><i class="far fa-comments"></i>@Model.BlogCommentsDto.Count نظر</li>
                                     <li><i class="fa fa-tags"></i>@Model.BlogDetailsForPresentationDto.blogCategoryName</li>
                                 </ul>
                             </div>
