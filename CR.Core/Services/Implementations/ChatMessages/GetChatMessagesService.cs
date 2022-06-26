@@ -5,6 +5,7 @@ using CR.Core.Services.Interfaces.ChatMessages;
 using CR.DataAccess.Context;
 using CR.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -86,7 +87,8 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     isVoice = chatUser.Appointment.CallingType == CallingType.VoiceCall,
                     chatMessageDtos = result,
                     receiverFullName = (isExpert) ? chatUser.Consumer.FirstName + " " + chatUser.Consumer.LastName : chatUser.ExpertInformation.FirstName + " " + chatUser.ExpertInformation.LastName,
-                    receiverIconSrc = (isExpert) ? (string.IsNullOrWhiteSpace(chatUser.Consumer.IconSrc) ? "assets/img/icon-256x256.png" : chatUser.Consumer.IconSrc) : (string.IsNullOrWhiteSpace(chatUser.ExpertInformation.IconSrc) ? "assets/img/icon-256x256.png" : chatUser.ExpertInformation.IconSrc)
+                    receiverIconSrc = (isExpert) ? (string.IsNullOrWhiteSpace(chatUser.Consumer.IconSrc) ? "assets/img/icon-256x256.png" : chatUser.Consumer.IconSrc) : (string.IsNullOrWhiteSpace(chatUser.ExpertInformation.IconSrc) ? "assets/img/icon-256x256.png" : chatUser.ExpertInformation.IconSrc),
+                    dateTime = $"{FixMessageTime(DateTime.Now.Minute)} : {FixMessageTime(DateTime.Now.Hour)}"
                 },
                 IsSuccess = true
             };

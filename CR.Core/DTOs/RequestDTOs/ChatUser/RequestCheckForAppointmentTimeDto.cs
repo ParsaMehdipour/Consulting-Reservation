@@ -7,5 +7,6 @@ namespace CR.Core.DTOs.RequestDTOs.ChatUser
         public long chatUserId { get; set; }
         public string message { get; set; }
         public IFormFile file { get; set; }
+        public string DateTime { get; set; }
     }
 }

@@ -87,15 +87,26 @@ namespace CR.Core.Services.Implementations.ChatUsers
                 {
                     Data = fileName,
                     IsSuccess = true,
-                    Message = string.Empty
+                    Message = string.Empty,
+                    dateTime = $"{FixMessageTime(DateTime.Now.Minute)} : {FixMessageTime(DateTime.Now.Hour)}"
                 };
             }
 
             return new ResultDto<string>()
             {
                 IsSuccess = true,
-                Message = string.Empty
+                Message = string.Empty,
+                dateTime = $"{FixMessageTime(DateTime.Now.Minute)} : {FixMessageTime(DateTime.Now.Hour)}"
             };
+        }
+
+        private string FixMessageTime(int time)
+        {
+            string output = time.ToString();
+            if (time < 10)
+                output = "0" + time;
+
+            return output;
         }
     }
 }

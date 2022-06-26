@@ -234,9 +234,9 @@ function Send(blob) {
 
 				$('#image').val('');
 
-				var today = new Date();
+				//var today = new Date();
 
-				var time = today.getHours() + ":" + today.getMinutes();
+				var time = data.dateTime; //today.getHours() + ":" + today.getMinutes();
 				var user = ChatUserId;
 				var messageFlag = 1;
 				connection.invoke("SendVoice", user, messageFlag, data.data).catch(function (err) {

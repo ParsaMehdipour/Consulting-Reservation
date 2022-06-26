@@ -299,15 +299,15 @@
                         $("#messages-Body-Consumer").html(body);
                     }
 
-                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    //var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    var time = model.dateTime; //FixMessageTime(@DateTime.Now.Hour) + ":" + FixMessageTime(@DateTime.Now.Minute);
+
                     var user = ChatUserId;
                     var message = "کاربر وارد صفحه چت شد";
                     var messageFlag = 0;
                     connection.invoke("SendMessage", user, message,messageFlag,null).catch(function (err) {
                         return console.error(err.toString());
                     });
-
-
 
                 }
                 else {
@@ -353,7 +353,9 @@
             success: function(data) {
                 if (data.isSuccess === true) {
                     $('#image').val('');
-                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    //var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    var time = data.dateTime; //FixMessageTime(@DateTime.Now.Hour) + ":" + FixMessageTime(@DateTime.Now.Minute);
+
                     var user = ChatUserId;
                     var message = $("#message").val();
                     var messageFlag = 0;
@@ -469,7 +471,9 @@
             success: function(data) {
                 if (data.isSuccess === true) {
                     $('#image').val('');
-                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    //var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    var time = data.dateTime;//FixMessageTime(@DateTime.Now.Hour) + ":" + FixMessageTime(@DateTime.Now.Minute);
+
                     var user = ChatUserId;
                     var message = $("#message").val();
                     var messageFlag = 0;
@@ -584,7 +588,9 @@
             success: function(data) {
                 if (data.isSuccess === true) {
                     $('#image').val('');
-                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    //var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    var time = data.dateTime;//FixMessageTime(@DateTime.Now.Hour) + ":" + FixMessageTime(@DateTime.Now.Minute);
+
                     var user = ChatUserId;
                     var message = $("#message").val();
                     var messageFlag = 0;

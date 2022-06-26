@@ -285,7 +285,9 @@
                         $("#messages-Body-Expert").html(body);
                     }
 
-                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    //var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    var time = model.dateTime; //FixMessageTime(@DateTime.Now.Hour) + ":" + FixMessageTime(@DateTime.Now.Minute);
+
                     var user = ChatUserId;
                     var message = "مشاور وارد صفحه چت شد";
                     var messageFlag = 1;
@@ -334,7 +336,8 @@
             success: function(data) {
                 if (data.isSuccess === true) {
                     $('#image').val('');
-                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    //var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    var time = data.datetime; //FixMessageTime(@DateTime.Now.Hour) + ":" + FixMessageTime(@DateTime.Now.Minute);
                     var user = ChatUserId;
                     var message = $("#message").val();
                     var messageFlag = 1;
@@ -451,7 +454,9 @@
             success: function(data) {
                 if (data.isSuccess === true) {
                     $('#image').val('');
-                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    //var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                    var time = data.dateTime;//FixMessageTime(@DateTime.Now.Hour) + ":" + FixMessageTime(@DateTime.Now.Minute);
+
                     var user = ChatUserId;
                     var message = $("#message").val();
                     var messageFlag = 1;
@@ -554,109 +559,116 @@
         addNewMessageForm.append("message",$("#message").val());
         addNewMessageForm.append("file",$("#image").get(0).files[0]);
 
-        $.ajax({
-            type: "POST",
-            url: '/api/Chat/UploadImage',
-            data: addNewMessageForm,
-            processData: false,
-            contentType: false,
-            beforeSend: function(x) {
-                $('#loading').show();
-            },
-            success: function(data) {
-                if (data.isSuccess === true) {
-                    $('#image').val('');
-                    var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
-                    var user = ChatUserId;
-                    var message = $("#message").val();
-                    var messageFlag = 1;
-                    connection.invoke("SendMessage", user, message,messageFlag,data.data).catch(function (err) {
-                        return console.error(err.toString());
-                    });
+        if (ChatUserId == null || ChatUserId == 0) {
 
-                    document.getElementById('message').value = '';
+        }
+        else {
+             $.ajax({
+                type: "POST",
+                url: '/api/Chat/UploadImage',
+                data: addNewMessageForm,
+                processData: false,
+                contentType: false,
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
+                success: function(data) {
+                    if (data.isSuccess === true) {
+                        $('#image').val('');
+                        //var time = FixMessageTime(@DateTime.Now.Minute) + ":" + FixMessageTime(@DateTime.Now.Hour);
+                        var time = data.dateTime; //FixMessageTime(@DateTime.Now.Hour) + ":" + FixMessageTime(@DateTime.Now.Minute);
+                        var user = ChatUserId;
+                        var message = $("#message").val();
+                        var messageFlag = 1;
+                        connection.invoke("SendMessage", user, message,messageFlag,data.data).catch(function (err) {
+                            return console.error(err.toString());
+                        });
 
-                    if (data.data == null) {
-                        var body2 = $("#messages-Body-Expert").html();
-                        body2 += '<li class="media received">';
-                        body2 += '<div class="media-body">';
-                        body2 += '<div class="msg-box">';
-                        body2 += '<div>';
-                        body2 += '<p>';
-                        body2 += message;
-                        body2 += '</p>';
-                        body2 += '<ul class="chat-msg-info">';
-                        body2 += '<li>';
-                        body2 += '<div class="chat-time">';
-                        body2 += '<span>';
-                        body2 += time;
-                        body2 += '</span>';
-                        body2 += '</div>';
-                        body2 += '</li>';
-                        body2 += '</ul>';
-                        body2 += '</div>';
-                        body2 += '</div>';
-                        body2 += '</div>';
-                        body2 += '</li>';
+                        document.getElementById('message').value = '';
 
-                        $("#messages-Body-Expert").html("");
-                        $("#messages-Body-Expert").html(body2);
+                        if (data.data == null) {
+                            var body2 = $("#messages-Body-Expert").html();
+                            body2 += '<li class="media received">';
+                            body2 += '<div class="media-body">';
+                            body2 += '<div class="msg-box">';
+                            body2 += '<div>';
+                            body2 += '<p>';
+                            body2 += message;
+                            body2 += '</p>';
+                            body2 += '<ul class="chat-msg-info">';
+                            body2 += '<li>';
+                            body2 += '<div class="chat-time">';
+                            body2 += '<span>';
+                            body2 += time;
+                            body2 += '</span>';
+                            body2 += '</div>';
+                            body2 += '</li>';
+                            body2 += '</ul>';
+                            body2 += '</div>';
+                            body2 += '</div>';
+                            body2 += '</div>';
+                            body2 += '</li>';
+
+                            $("#messages-Body-Expert").html("");
+                            $("#messages-Body-Expert").html(body2);
+                        }
+                        else {
+
+                            var body = $("#messages-Body-Expert").html();
+
+                            body += '<li class="media received">';
+                            body += '<div class="media-body">';
+                            body += '<div class="msg-box">';
+                            body += '<div>';
+                            body += '<div class="chat-msg-attachments">';
+                            body += '<div class="chat-attachment">';
+                            body += '<img src="/' + data.data + '" alt="Attachment">';
+                            body += '<div class="chat-attach-caption"></div>';
+                            body += '<a href="/' + data.data + '" class="chat-attach-download" download>';
+                            body += '<i class="fas fa-download"></i>';
+                            body += '</a>';
+                            body += '</div>';
+                            body += '</div>';
+                            body += '<ul class="chat-msg-info">';
+                            body += '<li>';
+                            body += '<div class="chat-time">';
+                            body += '<span>' + time + '</span>';
+                            body += '</div>';
+                            body += '</li>';
+                            body += '</ul>';
+                            body += '</div>';
+                            body += '</div>';
+                            body += '</div>';
+                            body += '</li>';
+
+                            $("#messages-Body-Expert").html("");
+                            $("#messages-Body-Expert").html(body);
+                        }
+                        $('#loading').hide();
+                        event.preventDefault();
                     }
                     else {
-
-                        var body = $("#messages-Body-Expert").html();
-
-                        body += '<li class="media received">';
-                        body += '<div class="media-body">';
-                        body += '<div class="msg-box">';
-                        body += '<div>';
-                        body += '<div class="chat-msg-attachments">';
-                        body += '<div class="chat-attachment">';
-                        body += '<img src="/' + data.data + '" alt="Attachment">';
-                        body += '<div class="chat-attach-caption"></div>';
-                        body += '<a href="/' + data.data + '" class="chat-attach-download" download>';
-                        body += '<i class="fas fa-download"></i>';
-                        body += '</a>';
-                        body += '</div>';
-                        body += '</div>';
-                        body += '<ul class="chat-msg-info">';
-                        body += '<li>';
-                        body += '<div class="chat-time">';
-                        body += '<span>' + time + '</span>';
-                        body += '</div>';
-                        body += '</li>';
-                        body += '</ul>';
-                        body += '</div>';
-                        body += '</div>';
-                        body += '</div>';
-                        body += '</li>';
-
-                        $("#messages-Body-Expert").html("");
-                        $("#messages-Body-Expert").html(body);
+                        swal.fire(
+                            'هشدار!',
+                            data.message,
+                            'warning'
+                        );
+                        $('#loading').hide();
                     }
+                    $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
+                },
+                complete: function() {
                     $('#loading').hide();
-                    event.preventDefault();
-                }
-                else {
-                    swal.fire(
-                        'هشدار!',
-                        data.message,
-                        'warning'
-                    );
+                },
+                fail: function() {
                     $('#loading').hide();
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
                 }
-                $("#chatBody").scrollTop($("#chatBody")[0].scrollHeight);
-            },
-            complete: function() {
-                $('#loading').hide();
-            },
-            fail: function() {
-                $('#loading').hide();
-            },
-            error: function(request, status, error) {
-                alert(request.responseText);
-            }
-        });
+            });
+        }
+
     });
 
     //function FixMessageTime(time) {

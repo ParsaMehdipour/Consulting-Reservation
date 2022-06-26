@@ -87,7 +87,8 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     Data = new ResultAddChatMessageDto()
                     {
                         userId = userId,
-                        messageHour = $"{chatMessage.CreateDate.Minute} : {chatMessage.CreateDate.Hour}",
+                        //messageHour = $"{chatMessage.CreateDate.Minute} : {chatMessage.CreateDate.Hour}",
+                        messageHour = $"{FixMessageTime(chatMessage.CreateDate.Minute)} : {FixMessageTime(chatMessage.CreateDate.Hour)}",
                         onlineStatus = onlineStatus,
                         NotReadCount = notReadCount
                     }
@@ -105,6 +106,14 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     Data = null
                 };
             }
+        }
+        private string FixMessageTime(int time)
+        {
+            string output = time.ToString();
+            if (time < 10)
+                output = "0" + time;
+
+            return output;
         }
     }
 }

@@ -6,6 +6,7 @@ using CR.Core.Services.Interfaces.ChatMessages;
 using CR.Core.Services.Interfaces.ChatUsers;
 using CR.Core.Services.Interfaces.Images;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
 {
@@ -47,6 +48,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
             var result = new ResultDto<string>()
             {
                 IsSuccess = true,
+                dateTime = $"{FixMessageTime(DateTime.Now.Minute)} : {FixMessageTime(DateTime.Now.Hour)}"
             };
 
 
@@ -67,7 +69,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
             {
                 chatUserId = request.chatUserId,
                 file = null,
-                message = request.message
+                message = request.message,
             });
 
             return new JsonResult(result);
@@ -81,6 +83,7 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
             var result = new ResultDto<string>()
             {
                 IsSuccess = true,
+                dateTime = $"{FixMessageTime(DateTime.Now.Minute)} : {FixMessageTime(DateTime.Now.Hour)}"
             };
 
             result = _checkForAppointmentTimeService.Execute(new RequestCheckForAppointmentTimeDto()
@@ -104,6 +107,15 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
             result.Data = filePath;
 
             return new JsonResult(result);
+        }
+
+        private string FixMessageTime(int time)
+        {
+            string output = time.ToString();
+            if (time < 10)
+                output = "0" + time;
+
+            return output;
         }
     }
 }

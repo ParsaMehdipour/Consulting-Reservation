@@ -7,6 +7,7 @@ using CR.Core.Services.Interfaces.ChatUsers;
 using CR.Core.Services.Interfaces.Images;
 using CR.DataAccess.Enums;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
 {
@@ -59,6 +60,7 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
             var result = new ResultDto<string>()
             {
                 IsSuccess = true,
+                dateTime = $"{FixMessageTime(DateTime.Now.Minute)} : {FixMessageTime(DateTime.Now.Hour)}"
             };
 
             result = _checkForAppointmentTimeService.Execute(new RequestCheckForAppointmentTimeDto()
@@ -91,6 +93,14 @@ namespace CR.Presentation.Areas.ConsumerPanel.Controllers.Api
             var result = _checkForAppointmentTimeService.Execute(request);
 
             return new JsonResult(result);
+        }
+        private string FixMessageTime(int time)
+        {
+            string output = time.ToString();
+            if (time < 10)
+                output = "0" + time;
+
+            return output;
         }
     }
 }

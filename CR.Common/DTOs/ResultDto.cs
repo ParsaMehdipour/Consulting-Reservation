@@ -7,6 +7,7 @@
         public AlertType Type { get; set; }
         public string Message { get; set; }
         public T Data { get; set; }
+        public string dateTime { get; set; }
     }
 
     public class ResultDto

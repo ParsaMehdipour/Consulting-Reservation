@@ -50,17 +50,28 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     .Include(_ => _.ChatUserMessages)
                     .FirstOrDefault(_ => _.Id == request.chatUserId);
 
-                if (request.messageFlag == MessageFlag.ExpertMessage && chatUser!.Appointment.TimeOfDay.StartTime <= DateTime.Now && chatUser!.Appointment.TimeOfDay.FinishTime >= DateTime.Now && (chatUser.ChatStatus != ChatStatus.Closed && chatUser.ChatStatus != ChatStatus.Ended))
-                {
-                    chatUser.ChatStatus = ChatStatus.Started;
-                }
-
-                if (chatUser.Appointment.TimeOfDay.FinishTime < DateTime.Now)
+                if (chatUser == null)
                 {
                     return new ResultDto<ResultAddChatMessageDto>()
                     {
                         IsSuccess = false,
                         Message = string.Empty,
+                        Data = null
+                    };
+                }
+
+                if (request.messageFlag == MessageFlag.ExpertMessage && chatUser!.Appointment.TimeOfDay.StartTime <= DateTime.Now && chatUser!.Appointment.TimeOfDay.FinishTime >= DateTime.Now && (chatUser.ChatStatus != ChatStatus.Closed && chatUser.ChatStatus != ChatStatus.Ended))
+                {
+                    chatUser.ChatStatus = ChatStatus.Started;
+                }
+
+                if (request.messageFlag == MessageFlag.ConsumerMessage && chatUser.Appointment.TimeOfDay.FinishTime < DateTime.Now)
+                {
+                    return new ResultDto<ResultAddChatMessageDto>()
+                    {
+                        IsSuccess = false,
+                        Message = string.Empty,
+                        //Message = "زمان مشاوره شما به پایان رسید",
                         Data = null
                     };
                 }
@@ -171,10 +182,12 @@ namespace CR.Core.Services.Implementations.ChatMessages
                     Data = new ResultAddChatMessageDto()
                     {
                         userId = userId,
-                        messageHour = $"{chatMessage.CreateDate.Minute} : {chatMessage.CreateDate.Hour}",
+                        //messageHour = $"{chatMessage.CreateDate.Minute} : {chatMessage.CreateDate.Hour}",
+                        messageHour = $"{FixMessageTime(chatMessage.CreateDate.Minute)} : {FixMessageTime(chatMessage.CreateDate.Hour)}",
                         onlineStatus = onlineStatus,
                         NotReadCount = notReadCount
-                    }
+                    },
+                    dateTime = $"{FixMessageTime(DateTime.Now.Minute)} : {FixMessageTime(DateTime.Now.Hour)}"
                 };
             }
             catch (Exception)
@@ -192,6 +205,14 @@ namespace CR.Core.Services.Implementations.ChatMessages
             {
                 transaction.Dispose();
             }
+        }
+        private string FixMessageTime(int time)
+        {
+            string output = time.ToString();
+            if (time < 10)
+                output = "0" + time;
+
+            return output;
         }
     }
 }

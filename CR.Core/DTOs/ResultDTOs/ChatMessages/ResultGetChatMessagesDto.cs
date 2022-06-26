@@ -11,5 +11,6 @@ namespace CR.Core.DTOs.ResultDTOs.ChatMessages
         public bool isVoice { get; set; }
         public int NotReadCountExpertMessage { get; set; }
         public int NotReadCountConsumerMessage { get; set; }
+        public string dateTime { get; set; }
     }
 }
