@@ -177,15 +177,16 @@
                         </li>
                         <li class="submenu">
                             <a @(TempData["activemenu"].ToString() == ActiveMenu.Appointments || TempData["activemenu"].ToString() == ActiveMenu.Factors || TempData["activemenu"].ToString() == ActiveMenu.FinancialTransactions || TempData["activemenu"].ToString() == ActiveMenu.CheckoutFinancialTransactions ? @"class=active subdrop" : "") href="#">
-                                <i class="fe fe-document"></i> 
-                                <span>گزارشات</span> 
-                                <span class="menu-arrow"></span>
+                                <i class="fe fe-document"></i>
+                                <span>گزارشات</span> <span class="menu-arrow"></span>
+                                <div id="NotReadAllAppointment" class="badge badge-success badge-pill hidden">0</div>
                             </a>
                             <ul style="display: none;">
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Appointments ? @"class=active" : "")>
                                     <a asp-controller="Appointments" asp-action="Index">
-                                        <i class="fe fe-document"></i> 
+                                        <i class="fe fe-document"></i>
                                         <span>نوبت‌دهی</span>
+                                        <div id="NotReadAppointment" class="badge badge-success badge-pill hidden">0</div>
                                     </a>
                                 </li>
                                 <li @(TempData["activemenu"].ToString() == ActiveMenu.Factors ? @"class=active" : "")>
@@ -435,6 +436,21 @@
                             if ($("#NotReadContactUs").hasClass("hidden") === true) {
                                 $("#NotReadContactUs").removeClass("hidden");
                                 $("#NotReadContactUs").addClass("badge badge-success badge-pill");
+                            }
+                        }
+
+                        if (model.notreadallappointment > 0) {
+                            $("#NotReadAllAppointment").text(model.notreadallappointment);
+                            if ($("#NotReadAllAppointment").hasClass("hidden") === true) {
+                                $("#NotReadAllAppointment").removeClass("hidden");
+                                $("#NotReadAllAppointment").addClass("badge badge-success badge-pill");
+                            }
+                        }
+                        if (model.notreadappointment > 0) {
+                            $("#NotReadAppointment").text(model.notreadappointment);
+                            if ($("#NotReadAppointment").hasClass("hidden") === true) {
+                                $("#NotReadAppointment").removeClass("hidden");
+                                $("#NotReadAppointment").addClass("badge badge-success badge-pill");
                             }
                         }
                     }

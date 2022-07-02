@@ -10,5 +10,7 @@
         public string notcheckedexperts { get; set; }
         public string notreadcontactus { get; set; }
         public string notreadallcontactus { get; set; }
+        public string notreadallappointment { get; set; }
+        public string notreadappointment { get; set; }
     }
 }
