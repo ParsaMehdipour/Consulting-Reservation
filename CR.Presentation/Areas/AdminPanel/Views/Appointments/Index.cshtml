@@ -95,6 +95,11 @@
                                         <a onclick="ShowDetails(@appointment.Id)" class="btn btn-sm bg-primary-light">
                                             <i class="fas fa-print"></i> جزئیات
                                         </a>
+
+                                        <a asp-controller="Appointments" asp-action="ChatDetails" asp-route-expertId="@appointment.ExpertId">
+                                            <i class="fas fa-comment"></i> پیام ها
+                                        </a>
+
                                     </td>
                                 </tr>
                             }
