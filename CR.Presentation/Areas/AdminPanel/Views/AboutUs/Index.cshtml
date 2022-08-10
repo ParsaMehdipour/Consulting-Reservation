@@ -1,6 +1,5 @@
 ﻿@model CR.Core.DTOs.AboutUs.AboutUsDto
 
-
 <!-- Page Header -->
 <div class="page-header">
     <div class="row">
@@ -49,94 +48,98 @@
 @section Scripts
 {
 
-<script src="~/assets/js/ckeditor/ckeditor.js"></script>
+    @*<script src="~/assets/js/ckeditor/ckeditor.js"></script>*@
 
-<script>
-    $(document).ready(function () {
-        CKEDITOR.replace('description');
-    });
+    <script src="/lib/ckeditor/ckeditor.js"></script>
+    <script src="/lib/ckeditor/adapters/jquery.js"></script>
 
-    function Add() {
-        if ($("#aboutUsForm").valid()) {
+    <script>
+        $(document).ready(function () {
+            //CKEDITOR.replace('description');
+            $('#aboutUsForm #description').ckeditor();
+        });
 
-            var data = new FormData();
+        function Add() {
+            if ($("#aboutUsForm").valid()) {
 
-            data.append("fullContent",CKEDITOR.instances.description.getData());
+                var data = new FormData();
 
-            $("#aboutUsForm").submit(function( event ) {
-                $.ajax({
-                    type: "POST",
-                    url: '/api/AboutUs/Create',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    beforeSend: function(x) {
-                        $('#loading').show();
-                    },
-                    success: function(data) {
-                        if (data.isSuccess === true) {
-                            swal.fire('موفق!',
-                                data.message,
-                                'success').then(function(isConfirm) {
-                                location.reload();
-                            });
+                data.append("fullContent", CKEDITOR.instances.description.getData());
+
+                $("#aboutUsForm").submit(function (event) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/api/AboutUs/Create',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function (x) {
+                            $('#loading').show();
+                        },
+                        success: function (data) {
+                            if (data.isSuccess === true) {
+                                swal.fire('موفق!',
+                                    data.message,
+                                    'success').then(function (isConfirm) {
+                                        location.reload();
+                                    });
+                            }
+                        },
+                        complete: function () {
+                            $('#loading').hide();
+                        },
+                        fail: function () {
+                            $('#loading').hide();
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
                         }
-                    },
-                    complete: function() {
-                        $('#loading').hide();
-                    },
-                    fail: function() {
-                        $('#loading').hide();
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
-                    }
+                    });
+                    event.preventDefault();
                 });
-                event.preventDefault();
-            });
+            }
         }
-    }
 
-    function Edit(id) {
-        if ($("#aboutUsForm").valid()) {
-                        
-            var data = new FormData();
+        function Edit(id) {
+            if ($("#aboutUsForm").valid()) {
 
-            data.append("id",id);
-            data.append("fullContent",CKEDITOR.instances.description.getData());
+                var data = new FormData();
 
-            $("#aboutUsForm").submit(function( event ) {
-                $.ajax({
-                    type: "POST",
-                    url: '/api/AboutUs/Edit',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    beforeSend: function(x) {
-                        $('#loading').show();
-                    },
-                    success: function(data) {
-                        if (data.isSuccess === true) {
-                            swal.fire('موفق!',
-                                data.message,
-                                'success').then(function(isConfirm) {
-                                location.reload();
-                            });
+                data.append("id", id);
+                data.append("fullContent", CKEDITOR.instances.description.getData());
+
+                $("#aboutUsForm").submit(function (event) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/api/AboutUs/Edit',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function (x) {
+                            $('#loading').show();
+                        },
+                        success: function (data) {
+                            if (data.isSuccess === true) {
+                                swal.fire('موفق!',
+                                    data.message,
+                                    'success').then(function (isConfirm) {
+                                        location.reload();
+                                    });
+                            }
+                        },
+                        complete: function () {
+                            $('#loading').hide();
+                        },
+                        fail: function () {
+                            $('#loading').hide();
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
                         }
-                    },
-                    complete: function() {
-                        $('#loading').hide();
-                    },
-                    fail: function() {
-                        $('#loading').hide();
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
-                    }
+                    });
+                    event.preventDefault();
                 });
-                event.preventDefault();
-            }); 
-        }   
-    }
-</script>
+            }
+        }
+    </script>
 }

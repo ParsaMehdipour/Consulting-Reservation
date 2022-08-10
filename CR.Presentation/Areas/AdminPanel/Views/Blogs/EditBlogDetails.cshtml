@@ -2,9 +2,9 @@
 
 @section Styles
 {
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="~/AdminTemplate/assets/plugins/datatables/datatables.min.css">
-<link rel="stylesheet" href="~/assets/css/style.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="~/AdminTemplate/assets/plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
 }
 
 <!-- Page Header -->
@@ -58,7 +58,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Slug<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" asp-for="slug" id="slug" name="slug" >
+                                    <input class="form-control" type="text" asp-for="slug" id="slug" name="slug">
                                     <span asp-validation-for="slug" class="text-danger"></span>
 
                                 </div>
@@ -172,99 +172,102 @@
 @section Scripts
 {
 
-<script src="~/assets/js/ckeditor/ckeditor.js"></script>
+    @*<script src="~/assets/js/ckeditor/ckeditor.js"></script>*@
+    <script src="/lib/ckeditor/ckeditor.js"></script>
+    <script src="/lib/ckeditor/adapters/jquery.js"></script>
 
-<script>
+    <script>
 
-    $(document).ready(function () {
-        CKEDITOR.replace('description');
-    });
-
-    function makeSlug(source, dist) {
-        var value = $('#' + source).val();
-        $('#' + dist).val(convertToSlug(value));
-    }
-
-    var convertToSlug = function (str) {
-        var $slug = '';
-        var trimmed = $.trim(str);
-        $slug = trimmed.replace(/[^a-z0-9-آ-ی-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-        return $slug.toLowerCase();
-    };
-
-    function checkSlugDuplication(url, dist) {
-        var slug = $('#' + dist).val();
-        var id = convertToSlug(slug);
-        $.get({
-            url: url + '/' + id,
-            success: function (data) {
-                if (data) {
-                    sendNotification('error', 'top right', "خطا", "اسلاگ نمی تواند تکراری باشد");
-                }
-            }
+        $(document).ready(function () {
+            //CKEDITOR.replace('description');
+            $('#editBlogForm #description').ckeditor();
         });
-    }
 
-    function fillField(source, dist) {
-        var value = $('#' + source).val();
-        $('#' + dist).val(value);
-    }
+        function makeSlug(source, dist) {
+            var value = $('#' + source).val();
+            $('#' + dist).val(convertToSlug(value));
+        }
 
-    function EditBlog(Id) {
+        var convertToSlug = function (str) {
+            var $slug = '';
+            var trimmed = $.trim(str);
+            $slug = trimmed.replace(/[^a-z0-9-آ-ی-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+            return $slug.toLowerCase();
+        };
 
-        if ($("#editBlogForm").valid()) {
-
-            var blogCategorySelect = document.getElementById('blogCategoryId');
-
-            var data = new FormData();
-
-            data.append("title",$("#editBlogForm #title").val());
-            data.append("id",Id);
-            data.append("slug",$("#editBlogForm #slug").val());
-            data.append("blogCategoryId",blogCategorySelect.options[blogCategorySelect.selectedIndex].value);
-            data.append("shortDescription",$("#editBlogForm #shortDescription").val());
-            data.append("description",CKEDITOR.instances.description.getData());
-            data.append("shortDescription",$("#editBlogForm #shortDescription").val());
-            data.append("orderNumber",$("#editBlogForm #orderNumber").val());
-            data.append("keyWords",$("#editBlogForm #keyWords").val());
-            data.append("status",$("#editBlogForm #status").is(":checked"));
-            data.append("metaDescription",$("#editBlogForm #metaDescription").val());
-            data.append("publishDate",$("#editBlogForm #publishDate").val());
-            data.append("canonicalAddress",$("#editBlogForm #canonicalAddress").val());
-            data.append("file",$("#editBlogForm #fileImage").get(0).files[0]);
-
-            $( "#editBlogForm" ).submit(function( event ) {
-                $.ajax({
-                    type: "POST",
-                    url: '/api/Blogs/EditBlogDetails',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    beforeSend: function(x) {
-                        $('#loading').show();
-                    },
-                    success: function(data) {
-                        if (data.isSuccess === true) {
-                            swal.fire('موفق!',
-                                data.message,
-                                'success').then(function(isConfirm) {
-                                location.reload();
-                            });
-                        }
-                    },
-                    complete: function() {
-                        $('#loading').hide();
-                    },
-                    fail: function() {
-                        $('#loading').hide();
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
+        function checkSlugDuplication(url, dist) {
+            var slug = $('#' + dist).val();
+            var id = convertToSlug(slug);
+            $.get({
+                url: url + '/' + id,
+                success: function (data) {
+                    if (data) {
+                        sendNotification('error', 'top right', "خطا", "اسلاگ نمی تواند تکراری باشد");
                     }
-                });
-                event.preventDefault();
+                }
             });
         }
-    }
-</script>
+
+        function fillField(source, dist) {
+            var value = $('#' + source).val();
+            $('#' + dist).val(value);
+        }
+
+        function EditBlog(Id) {
+
+            if ($("#editBlogForm").valid()) {
+
+                var blogCategorySelect = document.getElementById('blogCategoryId');
+
+                var data = new FormData();
+
+                data.append("title", $("#editBlogForm #title").val());
+                data.append("id", Id);
+                data.append("slug", $("#editBlogForm #slug").val());
+                data.append("blogCategoryId", blogCategorySelect.options[blogCategorySelect.selectedIndex].value);
+                data.append("shortDescription", $("#editBlogForm #shortDescription").val());
+                data.append("description", CKEDITOR.instances.description.getData());
+                data.append("shortDescription", $("#editBlogForm #shortDescription").val());
+                data.append("orderNumber", $("#editBlogForm #orderNumber").val());
+                data.append("keyWords", $("#editBlogForm #keyWords").val());
+                data.append("status", $("#editBlogForm #status").is(":checked"));
+                data.append("metaDescription", $("#editBlogForm #metaDescription").val());
+                data.append("publishDate", $("#editBlogForm #publishDate").val());
+                data.append("canonicalAddress", $("#editBlogForm #canonicalAddress").val());
+                data.append("file", $("#editBlogForm #fileImage").get(0).files[0]);
+
+                $("#editBlogForm").submit(function (event) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/api/Blogs/EditBlogDetails',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function (x) {
+                            $('#loading').show();
+                        },
+                        success: function (data) {
+                            if (data.isSuccess === true) {
+                                swal.fire('موفق!',
+                                    data.message,
+                                    'success').then(function (isConfirm) {
+                                        location.reload();
+                                    });
+                            }
+                        },
+                        complete: function () {
+                            $('#loading').hide();
+                        },
+                        fail: function () {
+                            $('#loading').hide();
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+                    });
+                    event.preventDefault();
+                });
+            }
+        }
+    </script>
 }

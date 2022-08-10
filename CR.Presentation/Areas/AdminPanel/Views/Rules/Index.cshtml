@@ -1,5 +1,4 @@
 ﻿@model CR.Core.DTOs.Rules.RuleDto
-
 <!-- Page Header -->
 <div class="page-header">
     <div class="row">
@@ -29,7 +28,7 @@
                             <span asp-validation-for="FullContent" class="text-danger"></span>
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <h5 class="card-title">قوانین و مقررات مشاوران </h5>
                     <div class="form-group row">
                         <div class="col-md-12">
@@ -37,7 +36,7 @@
                             <span asp-validation-for="PaymentContent" class="text-danger"></span>
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <h5 class="card-title">قوانین و مقررات رزرو وقت </h5>
                     <div class="form-group row">
                         <div class="col-md-12">
@@ -45,7 +44,7 @@
                             <span asp-validation-for="CommentContent" class="text-danger"></span>
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <h5 class="card-title">قوانین و مقررات پرداخت و برداشت وجه </h5>
                     <div class="form-group row">
                         <div class="col-md-12">
@@ -73,105 +72,112 @@
 @section Scripts
 {
 
-<script src="~/assets/js/ckeditor/ckeditor.js"></script>
+    @*<script src="~/assets/js/ckeditor/ckeditor.js"></script>*@
 
-<script>
+    <script src="/lib/ckeditor/ckeditor.js"></script>
+    <script src="/lib/ckeditor/adapters/jquery.js"></script>
 
-    $(document).ready(function () {
-        CKEDITOR.replace('description');
-        CKEDITOR.replace('paymentDescription');
-        CKEDITOR.replace('commentDescription');
-        CKEDITOR.replace('otherDescription');
-    });
+    <script>
 
-    function Add() {
-        if ($("#ruleForm").valid()) {
+        $(document).ready(function () {
+            //CKEDITOR.replace('description');
+            $('#ruleForm #description').ckeditor();
+            //CKEDITOR.replace('paymentDescription');
+            $('#ruleForm #paymentDescription').ckeditor();
+            //CKEDITOR.replace('commentDescription');
+            $('#ruleForm #commentDescription').ckeditor();
+            //CKEDITOR.replace('otherDescription');
+            $('#ruleForm #otherDescription').ckeditor();
+        });
 
-            var data = new FormData();
+        function Add() {
+            if ($("#ruleForm").valid()) {
 
-            data.append("fullContent", CKEDITOR.instances.description.getData());
-            data.append("paymentContent", CKEDITOR.instances.paymentDescription.getData());
-            data.append("commentContent", CKEDITOR.instances.commentDescription.getData());
-            data.append("otherContent", CKEDITOR.instances.otherDescription.getData());
+                var data = new FormData();
 
-            $("#ruleForm").submit(function( event ) {
-                $.ajax({
-                    type: "POST",
-                    url: '/api/Rules/Create',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    beforeSend: function(x) {
-                        $('#loading').show();
-                    },
-                    success: function(data) {
-                        if (data.isSuccess === true) {
-                            swal.fire('موفق!',
-                                data.message,
-                                'success').then(function(isConfirm) {
-                                location.reload();
-                            });
+                data.append("fullContent", CKEDITOR.instances.description.getData());
+                data.append("paymentContent", CKEDITOR.instances.paymentDescription.getData());
+                data.append("commentContent", CKEDITOR.instances.commentDescription.getData());
+                data.append("otherContent", CKEDITOR.instances.otherDescription.getData());
+
+                $("#ruleForm").submit(function (event) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/api/Rules/Create',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function (x) {
+                            $('#loading').show();
+                        },
+                        success: function (data) {
+                            if (data.isSuccess === true) {
+                                swal.fire('موفق!',
+                                    data.message,
+                                    'success').then(function (isConfirm) {
+                                        location.reload();
+                                    });
+                            }
+                        },
+                        complete: function () {
+                            $('#loading').hide();
+                        },
+                        fail: function () {
+                            $('#loading').hide();
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
                         }
-                    },
-                    complete: function() {
-                        $('#loading').hide();
-                    },
-                    fail: function() {
-                        $('#loading').hide();
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
-                    }
+                    });
+                    event.preventDefault();
                 });
-                event.preventDefault();
-            });
+            }
         }
-    }
 
 
-    function Edit(id) {
-        if ($("#ruleForm").valid()) {
-                        
-            var data = new FormData();
+        function Edit(id) {
+            if ($("#ruleForm").valid()) {
 
-            data.append("id",id);
-            data.append("fullContent",CKEDITOR.instances.description.getData());
-            data.append("paymentContent", CKEDITOR.instances.paymentDescription.getData());
-            data.append("commentContent", CKEDITOR.instances.commentDescription.getData());
-            data.append("otherContent", CKEDITOR.instances.otherDescription.getData());
+                var data = new FormData();
 
-            $("#ruleForm").submit(function( event ) {
-                $.ajax({
-                    type: "POST",
-                    url: '/api/Rules/Edit',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    beforeSend: function(x) {
-                        $('#loading').show();
-                    },
-                    success: function(data) {
-                        if (data.isSuccess === true) {
-                            swal.fire('موفق!',
-                                data.message,
-                                'success').then(function(isConfirm) {
-                                location.reload();
-                            });
+                data.append("id", id);
+                data.append("fullContent", CKEDITOR.instances.description.getData());
+                data.append("paymentContent", CKEDITOR.instances.paymentDescription.getData());
+                data.append("commentContent", CKEDITOR.instances.commentDescription.getData());
+                data.append("otherContent", CKEDITOR.instances.otherDescription.getData());
+
+                $("#ruleForm").submit(function (event) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/api/Rules/Edit',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function (x) {
+                            $('#loading').show();
+                        },
+                        success: function (data) {
+                            if (data.isSuccess === true) {
+                                swal.fire('موفق!',
+                                    data.message,
+                                    'success').then(function (isConfirm) {
+                                        location.reload();
+                                    });
+                            }
+                        },
+                        complete: function () {
+                            $('#loading').hide();
+                        },
+                        fail: function () {
+                            $('#loading').hide();
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
                         }
-                    },
-                    complete: function() {
-                        $('#loading').hide();
-                    },
-                    fail: function() {
-                        $('#loading').hide();
-                    },
-                    error: function(request, status, error) {
-                        alert(request.responseText);
-                    }
+                    });
+                    event.preventDefault();
                 });
-                event.preventDefault();
-            }); 
-        }   
-    }
-</script>
+            }
+        }
+    </script>
 }
