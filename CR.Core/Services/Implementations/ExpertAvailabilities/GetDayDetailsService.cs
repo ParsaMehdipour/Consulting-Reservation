@@ -48,7 +48,7 @@ namespace CR.Core.Services.Implementations.ExpertAvailabilities
                         id = _.Id,
                         timingType = _.TimingType,
                         IsSelected = (timeOfDay.StartHour == _.StartTime_String && timeOfDay.FinishHour == _.EndTime_String)
-                    }).ToList(),
+                    }).OrderBy(a => a.startTime).ToList(),
                     timingTypName = timeOfDay.TimingType.GetDisplayName()
                 };
 

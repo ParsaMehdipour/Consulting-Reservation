@@ -446,7 +446,7 @@
                 for (var i in data.timingDtos) {
                     if (Object.prototype.hasOwnProperty.call(data.timingDtos, i)) {
                         console.log(data.timingDtos[i]);
-                        body2 += '<option value=' + data.timingDtos[i].id + '>' + data.timingDtos[i].startTime + "-" + data.timingDtos[i].endTime + '</option>';
+                        body2 += '<option value=' + data.timingDtos[i].id + '>' + data.timingDtos[i].startTime + " - " + data.timingDtos[i].endTime + '</option>';
                     }
                 }
 
@@ -494,10 +494,10 @@
                     for (var j in data[i].timingDtos) {
                         if (Object.prototype.hasOwnProperty.call(data[i].timingDtos, j)) {
                             if (data[i].timingDtos[j].isSelected === true) {
-                                body2 += '<option value=' + data[i].timingDtos[j].id + ' selected >' + data[i].timingDtos[j].startTime + "-" + data[i].timingDtos[j].endTime + '</option>';
+                                body2 += '<option value=' + data[i].timingDtos[j].id + ' selected >' + data[i].timingDtos[j].startTime + " - " + data[i].timingDtos[j].endTime + '</option>';
                             }
                             else {
-                                body2 += '<option value=' + data[i].timingDtos[j].id + '>' + data[i].timingDtos[j].startTime + "-" + data[i].timingDtos[j].endTime + '</option>';
+                                body2 += '<option value=' + data[i].timingDtos[j].id + '>' + data[i].timingDtos[j].startTime + " - " + data[i].timingDtos[j].endTime + '</option>';
                             }
                         }
                     }
@@ -546,7 +546,7 @@
             </div>
             <br />
             <div id="timingWrapper_Add" class="wrapper" style="margin-right: 17px">
-             @*   <input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0" />
+             @*<input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0" />
                 <input onclick="GetTimings(1)" type="radio" name="timing" id="option-2" value="1" />
                 <input onclick="GetTimings(2)" type="radio" name="timing" id="option-3" value="2" />
                 <label for="option-1" class="option option-1">
@@ -566,20 +566,20 @@
                         <div class="col-12 col-md-10">
                             <div class="row form-row">
                                 <div class="col-12 col-md-11">
-                                    @* <div class="form-group">
+                                    @*<div class="form-group">
                                         <label>زمانبندی</label>
                                         <select class="form-control timingSelect" id="timingSelect" name="timingSelect">
                                         <option>انتخاب نمایید</option>
                                         </select>
-                                        </div>*@
+                                     </div>*@
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                @*   <div class="add-more mb-3">
+                @*<div class="add-more mb-3">
                     <a href="javascript:void(0);" class="add-newHours"><i class="fa fa-plus-circle"></i> افزودن</a>
-                    </div>*@
+                </div>*@
                 <div class="submit-section text-center">
                     <button onclick="AddHours()" type="submit" class="btn btn-primary submit-btn">افزودن زمانبندی ها</button>
                 </div>

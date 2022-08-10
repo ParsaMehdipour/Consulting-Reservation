@@ -31,7 +31,7 @@ namespace CR.Core.Services.Implementations.Timings
                         startTime = t.StartTime_String,
                         endTime = t.EndTime_String,
                         timingType = t.TimingType
-                    }).ToList();
+                    }).OrderBy(a => a.startTime).ToList();
             }
             else if (timingType == TimingType.MediumSpan)
             {
@@ -42,7 +42,7 @@ namespace CR.Core.Services.Implementations.Timings
                         startTime = t.StartTime_String,
                         endTime = t.EndTime_String,
                         timingType = t.TimingType
-                    }).ToList();
+                    }).OrderBy(a => a.startTime).ToList();
             }
             else
             {
@@ -53,7 +53,7 @@ namespace CR.Core.Services.Implementations.Timings
                         startTime = t.StartTime_String,
                         endTime = t.EndTime_String,
                         timingType = t.TimingType
-                    }).ToList();
+                    }).OrderBy(a => a.startTime).ToList();
             }
 
             return new ResultDto<TimingForDropDownDtos>()

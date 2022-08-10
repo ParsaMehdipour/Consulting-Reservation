@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using CR.Core.DTOs.ExpertAvailabilities;
+﻿using CR.Core.DTOs.ExpertAvailabilities;
+using System.Collections.Generic;
 
 namespace CR.Presentation.Areas.ExpertPanel.Models.ViewModels
 {
@@ -7,5 +7,6 @@ namespace CR.Presentation.Areas.ExpertPanel.Models.ViewModels
     {
         public List<DayDto> DayDtos { get; set; }
         public long ExpertInformationId { get; set; }
+        public long ExpertId { get; set; }
     }
 }
