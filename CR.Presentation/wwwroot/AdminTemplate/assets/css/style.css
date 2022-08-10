@@ -3089,7 +3089,7 @@ table.table-inbox tbody tr.checked {
     background-color: #e0e3e4;
     content: "";
     height: 1px;
-    margin-right: 28px;
+    margin-right: 68px;
     position: absolute;
     right: 50%;
     top: 50%;
@@ -3100,7 +3100,7 @@ table.table-inbox tbody tr.checked {
     content: "";
     height: 1px;
     left: 50%;
-    margin-left: 28px;
+    margin-left: 68px;
     position: absolute;
     top: 50%;
     width: 100%;
