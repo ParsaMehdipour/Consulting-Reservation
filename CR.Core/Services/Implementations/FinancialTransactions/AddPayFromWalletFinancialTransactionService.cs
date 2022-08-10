@@ -29,15 +29,15 @@ namespace CR.Core.Services.Implementations.FinancialTransactions
             try
             {
 
-                if (factorId == 0 || price == 0)
-                {
-                    return new ResultDto<ResultAddPayFromWalletDto>()
-                    {
-                        IsSuccess = false,
-                        Message = "لطفا مبلغ را وارد کنید",
-                        Data = new ResultAddPayFromWalletDto()
-                    };
-                }
+                //if (factorId == 0 || price == 0)
+                //{
+                //    return new ResultDto<ResultAddPayFromWalletDto>()
+                //    {
+                //        IsSuccess = false,
+                //        Message = "لطفا مبلغ را وارد کنید",
+                //        Data = new ResultAddPayFromWalletDto()
+                //    };
+                //}
 
                 var sum = _context.FinancialTransactions
                     .Where(_ => _.ReceiverId == userId && (_.TransactionType == TransactionType.ChargeWallet
