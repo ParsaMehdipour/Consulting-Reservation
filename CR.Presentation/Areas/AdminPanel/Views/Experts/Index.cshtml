@@ -27,49 +27,54 @@
                 <div class="table-responsive">
                     <table class="datatable table table-hover table-center mb-0">
                         <thead>
-                        <tr>
-                            <th>نام مشاور</th>
-                            <th>شماره</th>
-                            <th>تخصص</th>
-                            <th>عضویت از</th>
-                            <th>درآمد مشاور</th>
-                            <th>وضعیت اکانت</th>
-                        </tr>
+                            <tr>
+                                <th>نام مشاور</th>
+                                <th>شماره</th>
+                                <th>تخصص</th>
+                                <th>عضویت از</th>
+                                <th>درآمد مشاور</th>
+                                <th>وضعیت اکانت</th>
+                                <th>عملیات</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach (var expert in Model.Experts)
-                        {
-                            <tr>
-                                <td>
-                                    <h2 class="table-avatar">
-                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@expert.Id" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@expert.IconSrc" alt="User Image"></a>
-                                        <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@expert.Id">@expert.FullName</a>
-                                    </h2>
-                                </td>
-                                <td>@expert.PhoneNumber</td>
+                            @foreach (var expert in Model.Experts)
+                            {
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@expert.Id" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="~/@expert.IconSrc" alt="User Image"></a>
+                                            <a asp-controller="Experts" asp-action="ExpertDetails" asp-route-id="@expert.Id">@expert.FullName</a>
+                                        </h2>
+                                    </td>
+                                    <td>@expert.PhoneNumber</td>
 
-                                <td>@expert.Speciality</td>
+                                    <td>@expert.Speciality</td>
 
-                                <td>@expert.RegisterDate</td>
+                                    <td>@expert.RegisterDate</td>
 
-                                <td>@expert.Income تومان</td>
-                                    
-                                <td>
-                                    <div class="status-toggle">
-                                        @if (expert.IsActive == true)
-                                        {
-                                            <input onchange="ChangeStatus(@expert.Id)" type="checkbox" id="status_@expert.Id" name="status" class="check" checked>
-                                        }
-                                        else
-                                        {
-                                            <input onchange="ChangeStatus(@expert.Id)" type="checkbox" id="status_@expert.Id" name="status" class="check">
-                                        }
-                                        <label for="status_@expert.Id" class="checktoggle">checkbox</label>
-                                    </div>
-                                </td>
+                                    <td>@expert.Income تومان</td>
 
-                            </tr>
-                        }
+                                    <td>
+                                        <div class="status-toggle">
+                                            @if (expert.IsActive == true)
+                                            {
+                                                <input onchange="ChangeStatus(@expert.Id)" type="checkbox" id="status_@expert.Id" name="status" class="check" checked>
+                                            }
+                                            else
+                                            {
+                                                <input onchange="ChangeStatus(@expert.Id)" type="checkbox" id="status_@expert.Id" name="status" class="check">
+                                            }
+                                            <label for="status_@expert.Id" class="checktoggle">checkbox</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Experts" asp-action="GetAvailability" asp-route-expertId="@expert.Id">
+                                            <i class="fas fa-hourglass-start"></i> زمانبندی
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

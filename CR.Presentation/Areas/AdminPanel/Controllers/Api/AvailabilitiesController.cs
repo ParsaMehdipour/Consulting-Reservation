@@ -1,11 +1,10 @@
-﻿using CR.Common.Utilities;
-using CR.Core.DTOs.Timings;
+﻿using CR.Core.DTOs.Timings;
 using CR.Core.Services.Interfaces.ExpertAvailabilities;
 using CR.Core.Services.Interfaces.Timings;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
+namespace CR.Presentation.Areas.AdminPanel.Controllers.Api
 {
     [ApiController]
     public class AvailabilitiesController : ControllerBase
@@ -13,23 +12,20 @@ namespace CR.Presentation.Areas.ExpertPanel.Controllers.Api
         private readonly IGetDayDetailsService _getDayDetailsService;
         private readonly IGetAvailableTimingsService _getAvailableTimingsService;
 
-        public AvailabilitiesController(IGetDayDetailsService getDayDetailsService
-           , IGetAvailableTimingsService getAvailableTimingsService)
+        public AvailabilitiesController(IGetDayDetailsService getDayDetailsService, IGetAvailableTimingsService getAvailableTimingsService)
         {
             _getDayDetailsService = getDayDetailsService;
             _getAvailableTimingsService = getAvailableTimingsService;
         }
 
-        [Route("/api/Availabilities/GetDayDetails")]
+        [Route("/api/admin/Availabilities/GetDayDetails")]
         [HttpGet]
-        public List<TimingForEditDto> GetDayDetails(long id)
+        public List<TimingForEditDto> GetDayDetails(long id, long expertId)
         {
-            var expertId = ClaimUtility.GetUserId(User).Value;
-
             return _getDayDetailsService.Execute(id, expertId).Data;
         }
 
-        [Route("/api/Availabilities/GetAvailableTimings")]
+        [Route("/api/admin/Availabilities/GetAvailableTimings")]
         [HttpPost]
         public IActionResult GetAvailableTimings()
         {

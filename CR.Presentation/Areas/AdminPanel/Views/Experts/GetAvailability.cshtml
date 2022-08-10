@@ -1,0 +1,576 @@
+﻿@model CR.Presentation.Areas.ExpertPanel.Models.ViewModels.ExpertAvailabilitiesViewModel
+@{
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/assets/css/RadioButton.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-7 col-auto">
+            <h3 class="page-title">زمانبندی ها</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">دشبرد</a></li>
+                <li class="breadcrumb-item"><a href="javascript:(0);">کاربران و مشاوران</a></li>
+                <li class="breadcrumb-item active">زمانبندی ها</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">زمان‌بندی</h4>
+                                <div class="profile-box">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label>تاریخ نوبت</label>
+                                                <div class="cal-icon">
+                                                    <input type="text" class="form-control datetimepicker" id="availabilityDate" dir="ltr">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="submit-section submit-btn-bottom">
+                                                    <button onclick="AddDay(@Model.ExpertId)" type="submit" class="btn btn-primary submit-btn">افزودن روز</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card schedule-widget mb-0">
+
+                                            <!-- Schedule Header -->
+                                            <div class="schedule-header">
+
+                                                <!-- Schedule Nav -->
+                                                <div class="schedule-nav">
+                                                    <ul class="nav nav-tabs">
+                                                        @foreach (var day in Model.DayDtos)
+                                                        {
+                                                            <li class="nav-item">
+                                                                <a class="text-center nav-link" onclick="SetId(@day.id)" data-toggle="tab" href="#slot_@day.id">@day.dayOfWeek</a>
+                                                                <p class="text-center">@day.date_String</p>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                                <!-- /Schedule Nav -->
+
+                                            </div>
+                                            <!-- /Schedule Header -->
+                                            <!-- Schedule Content -->
+                                            <div class="tab-content schedule-cont">
+                                                @foreach (var day in Model.DayDtos)
+                                                {
+                                                    <div id="slot_@day.id" class="tab-pane fade">
+                                                        <h4 class="card-title d-flex justify-content-between">
+                                                            <span>زمان بندی</span>
+                                                            @if (day.timeOfDayDtos.Count > 0)
+                                                            {
+                                                                <a onclick="ShowDetails(@day.id, @Model.ExpertId)" class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-plus-circle"></i> ویرایش  </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> افزودن  </a>
+                                                            }
+                                                        </h4>
+                                                        @if (day.timeOfDayDtos.Count < 0)
+                                                        {
+                                                            <p class="text-muted mb-0"> موجود نیست </p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="doc-times">
+                                                                @foreach (var time in day.timeOfDayDtos)
+                                                                {
+                                                                    <div class="doc-slot-list">
+                                                                        ساعت @time.start - ساعت @time.finish
+                                                                        <a onclick="RemoveTimeOfDay(@time.id)" class="delete_schedule">
+                                                                            <i class="fa fa-times"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                            <input type="hidden" value="@Model.ExpertInformationId" id="expId" />
+                                            <!-- /Schedule Content -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+
+@section Scripts
+{
+    <script src="~/assets/js/ExpertPanel/Availabilities/Availabilities.js"></script>
+    <script src="~/assets/js/ExpertPanel/layout.js"></script>
+
+    <script>
+
+        var dayId = 0;
+        var startMatches = [];
+        var finishMatches = [];
+
+        $(document).ready(function() {
+
+            var data = {};
+
+            $.ajax({
+                type: "POST",
+                url: '/api/admin/Availabilities/GetAvailableTimings',
+                data: JSON.stringify(data),
+                dataType: "json",
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                enctype: 'application/json',
+                beforeSend: function(x) {
+                    $('#loading').show();
+                },
+                success: function(response) {
+
+                    var data = response.data;
+                    var body3 = "";
+
+                    if (data.isShortSpan === true) {
+                        body3 += '<input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0" />';
+                        body3 += '<label for="option-1" class="option option-1">';
+                        body3 += '<span>کوتاه مدت</span>';
+                        body3 += '</label>';
+                    }
+                    if (data.isMediumSpan === true) {
+                        body3 += '<input onclick="GetTimings(1)" type="radio" name="timing" id="option-2" value="1" />';
+                        body3 += '<label for="option-2" class="option option-2">';
+                        body3 += '<span>میان مدت</span>';
+                        body3 += '</label>';
+                    }
+                    if (data.isLongSpan === true) {
+                        body3 += '<input onclick="GetTimings(2)" type="radio" name="timing" id="option-3" value="2" />';
+                        body3 += '<label for="option-3" class="option option-3">';
+                        body3 += '<span>بلند مدت</span>';
+                        body3 += '</label>';
+                    }
+                    $("#timingWrapper_Add").html(body3);
+                    $("#timingWrapper_Edit").html(body3);
+                },
+                complete: function() {
+                    $('#loading').hide();
+                },
+                fail: function() {
+                    $('#loading').hide();
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+        });
+
+        function AddDay(expertId) {
+
+        var addDayData = new FormData();
+        addDayData.append("date", $("#availabilityDate").val());
+        addDayData.append("expertId", expertId);
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddDay", "Experts")',
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            cache: false,
+            data: addDayData,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    $(".hours-info").on('click',
+        '.trash',
+        function() {
+            $(this).closest('.hours-cont').remove();
+            return false;
+        });
+
+    function SetId(id) {
+        dayId = id;
+    }
+
+    function AddHours() {
+
+        var timings = $('#add_time_slot select').map(function() {
+            return $(this).val();
+        }).get();
+
+        if (timings[0] === "انتخاب نمایید") {
+            swal.fire(
+                'هشدار!',
+                "لطفا یک زمان را انتخاب کنید",
+                'warning'
+            );
+            return;
+        }
+
+        var postDataTimeOFDay = {
+            'dayId': dayId,
+            'expertInformationId': $("#expId").val(),
+            'timings': timings
+        };
+
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddTimeOfDay", "Experts")',
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            cache: false,
+            data: postDataTimeOFDay,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function EditHours() {
+        var timings = $('#edit_time_slot select').map(function() {
+            return $(this).val();
+        }).get();
+
+        if (timings[0] === "انتخاب نمایید") {
+            swal.fire(
+                'هشدار!',
+                "لطفا یک زمان را انتخاب کنید",
+                'warning'
+            );
+            return;
+        }
+
+        var postDataTimeOFDay = {
+            'dayId': dayId,
+            'expertInformationId': $("#expId").val(),
+            'timings': timings
+        };
+
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("EditDetails", "Experts")',
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            cache: false,
+            data: postDataTimeOFDay,
+            success: function(data) {
+                if (data.isSuccess == true) {
+                    swal.fire('موفق!',
+                        data.message,
+                        'success').then(function(isConfirm) {
+                        location.reload();
+                    });
+                } else {
+                    swal.fire('هشدار!',
+                        data.message,
+                        'warning');
+                }
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function RemoveTimeOfDay(id) {
+
+        swal.fire({
+            title: 'حذف زمانبندی',
+            text: "مشاور گرامی از حذف زمانبندی مطمئن هستید؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#7cacbe',
+            confirmButtonText: 'بله ، حذف شود',
+            cancelButtonText: 'خیر'
+        }).then((result) => {
+            if (result.value) {
+                var postData = {
+                    'id': id,
+                };
+                $.ajax({
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    type: "POST",
+                    url: "@Url.Action("RemoveTimeOfDay", "Experts")",
+                    data: postData,
+                    success: function(data) {
+                        if (data.isSuccess == true) {
+                            swal.fire(
+                                'موفق!',
+                                data.message,
+                                'success'
+                            ).then(function(isConfirm) {
+                                location.reload();
+                            });
+                        } else {
+                            swal.fire(
+                                'هشدار!',
+                                data.message,
+                                'warning'
+                            );
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert(request.responseText);
+                    }
+
+                });
+            }
+        })
+    }
+
+    function GetTimings(timingType) {
+        var body2 = "";
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetTimings", "Experts")',
+            data: { timingType: timingType },
+            dataType: "json",
+            success: function(response) {
+
+                var data = response;
+
+                for (var i in data.timingDtos) {
+                    if (Object.prototype.hasOwnProperty.call(data.timingDtos, i)) {
+                        console.log(data.timingDtos[i]);
+                        body2 += '<option value=' + data.timingDtos[i].id + '>' + data.timingDtos[i].startTime + " - " + data.timingDtos[i].endTime + '</option>';
+                    }
+                }
+
+                var hourscontent = '<div class="row form-row hours-cont">' +
+                    '<div class="col-12 col-md-10">' +
+                    '<div class="row form-row">' +
+                    '<div class="col-12 col-md-11">' +
+                    '<div class="form-group">' +
+                    '<label>زمانبندی - ' +
+                    data.label +
+                    '</label>' +
+                    '<select class="form-control timingSelect" id="timingSelect" name="timingSelect">' +
+                    '<option>انتخاب نمایید</option>' +
+                    body2 +
+                    '</select>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>' +
+                    '</div>';
+
+                $(".hours-info").append(hourscontent);
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function ShowDetails(id, expertId) {
+        /* alert(id + "   " + expertId);*/
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetDayDetails", "Availabilities")',
+            data: { id: id, expertId: expertId },
+            dataType: "json",
+            success: function(response) {
+
+                var body = '';
+
+                var data = response;
+
+                for (var i in data) {
+                    var body2 = '';
+                    for (var j in data[i].timingDtos) {
+                        if (Object.prototype.hasOwnProperty.call(data[i].timingDtos, j)) {
+                            if (data[i].timingDtos[j].isSelected === true) {
+                                body2 += '<option value=' + data[i].timingDtos[j].id + ' selected >' + data[i].timingDtos[j].startTime + " - " + data[i].timingDtos[j].endTime + '</option>';
+                            }
+                            else {
+                                body2 += '<option value=' + data[i].timingDtos[j].id + '>' + data[i].timingDtos[j].startTime + " - " + data[i].timingDtos[j].endTime + '</option>';
+                            }
+                        }
+                    }
+
+                    body += '<div class="row form-row hours-cont">';
+                    body += '<div class="col-12 col-md-10">';
+                    body += '<div class="row form-row">';
+                    body += '<div class="col-12 col-md-11">';
+                    body += '<div class="form-group">';
+                    body += '<label>زمانبندی - ' + data[i].timingTypName + '</label>';
+                    body += '<select class="form-control" id="timingSelect" name="timingSelect">';
+                    body += '<option>انتخاب کنید</option>';
+                    body += body2;
+                    body += '</select>';
+                    body += '</div>';
+                    body += '</div>';
+                    body += '</div>';
+                    body += '</div>';
+                    body += '<div class="col-12 col-md-2"><label class="d-md-block d-sm-none d-none">&nbsp;</label><a href="#" class="btn btn-danger trash"><i class="far fa-trash-alt"></i></a></div>';
+                    body += '</div>';
+                }
+
+                $("#edit_time_slot #dayDetails").html(body);
+                $("#edit_time_slot").modal("show");
+
+            },
+            error: function(request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    }
+    </script>
+}
+@section AddModal{
+    <!-- Add Time Slot Modal -->
+    <div class="modal fade custom-modal" id="add_time_slot">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">افزودن زمانبندی</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <br />
+                <div id="timingWrapper_Add" class="wrapper" style="margin-right: 17px">
+                    @*<input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0" />
+                    <input onclick="GetTimings(1)" type="radio" name="timing" id="option-2" value="1" />
+                    <input onclick="GetTimings(2)" type="radio" name="timing" id="option-3" value="2" />
+                    <label for="option-1" class="option option-1">
+                        <span>کوتاه مدت</span>
+                    </label>
+                    <label for="option-2" class="option option-2">
+                        <span>میان مدت</span>
+                    </label>
+                    <label for="option-3" class="option option-3">
+                        <span>بلند مدت</span>
+                    </label>*@
+                </div>
+                <br />
+                <div class="modal-body">
+                    <div class="hours-info">
+                        <div class="row form-row hours-cont">
+                            <div class="col-12 col-md-10">
+                                <div class="row form-row">
+                                    @*<div class="col-12 col-md-11">
+                                        <div class="form-group">
+                                            <label>زمانبندی</label>
+                                            <select class="form-control timingSelect" id="timingSelect" name="timingSelect">
+                                                <option>انتخاب نمایید</option>
+                                            </select>
+                                        </div>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="add-more mb-3">
+                        <a href="javascript:void(0);" class="add-newHours"><i class="fa fa-plus-circle"></i> افزودن</a>
+                    </div>*@
+                    <div class="submit-section text-center">
+                        <button onclick="AddHours()" type="submit" class="btn btn-primary submit-btn">افزودن زمانبندی ها</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Add Time Slot Modal -->
+}
+
+@section Modal{
+    <!-- Edit Time Slot Modal -->
+    <div class="modal fade custom-modal" id="edit_time_slot">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ویرایش زمان بندی</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <br />
+                <div id="timingWrapper_Edit" class="wrapper" style="margin-right: 17px">
+                    @*<input onclick="GetTimings(0)" type="radio" name="timing" id="option-1" value="0" />
+                    <input onclick="GetTimings(1)" type="radio" name="timing" id="option-2" value="1" />
+                    <input onclick="GetTimings(2)" type="radio" name="timing" id="option-3" value="2" />
+                    <label for="option-1" class="option option-1">
+                        <span>کوتاه مدت</span>
+                    </label>
+                    <label for="option-2" class="option option-2">
+                        <span>میان مدت</span>
+                    </label>
+                    <label for="option-3" class="option option-3">
+                        <span>بلند مدت</span>
+                    </label>*@
+                </div>
+                <br />
+                <div class="modal-body">
+
+                    <div id="dayDetails" class="hours-info">
+                    </div>
+
+                    <div class="submit-section text-center">
+                        <button onclick="EditHours()" type="submit" class="btn btn-warning submit-btn">ویرایش زمانبندی ها</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Time Slot Modal -->
+}
